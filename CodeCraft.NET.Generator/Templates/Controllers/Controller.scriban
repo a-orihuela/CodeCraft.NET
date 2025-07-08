@@ -1,0 +1,59 @@
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Commands.Create;
+using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Commands.Delete;
+using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Commands.Update;
+using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Queries.Get{{ Name }}ById;
+using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Queries.Get{{ Name }}WithRelated;
+
+namespace {{ ServerProjectName }}.Controllers.{{ NamePlural }}
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    [Authorize]
+    public partial class {{ Name }}Controller : ControllerBase
+    {
+        private readonly IMediator _mediator;
+
+        public {{ Name }}Controller(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] {{ Name }}Create command)
+        {
+            var id = await _mediator.Send(command);
+            return Ok(new { id });
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] {{ Name }}Update command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _mediator.Send(new {{ Name }}Delete { Id = id });
+            return Ok(result);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var result = await _mediator.Send(new Get{{ Name }}ByIdQuery { Id = id });
+            return Ok(result);
+        }
+
+        [HttpGet("{id}/related")]
+        public async Task<IActionResult> GetWithRelated(int id)
+        {
+            var result = await _mediator.Send(new Get{{ Name }}WithRelatedQuery { Id = id });
+            return Ok(result);
+        }
+    }
+}

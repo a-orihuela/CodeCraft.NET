@@ -1,0 +1,36 @@
+﻿# 📄 Create {{ Name }}
+POST https://localhost:5001/api/{{ NamePlural }}
+Content-Type: application/json
+
+{
+{{~ for prop in Properties ~}}
+{{~ if prop.Name != "Id" && !prop.IsNavigation ~}}
+  "{{ camelcase prop.Name }}": {{ if prop.TypeName == "string" || prop.TypeName == "DateOnly" || prop.TypeName == "DateTime" }}""{{ else }}0{{ end }}{{ if for.last == false }},{{ end }}
+{{~ end ~}}
+{{~ end }}
+}
+###
+
+# 📄 Get {{ Name }} by Id
+GET https://localhost:5001/api/{{ NamePlural }}/1
+Accept: application/json
+
+###
+
+# 📄 Update {{ Name }}
+PUT https://localhost:5001/api/{{ NamePlural }}
+Content-Type: application/json
+
+{
+  "id": 1,
+{{~ for prop in Properties ~}}
+{{~ if prop.Name != "Id" && !prop.IsNavigation ~}}
+  "{{ camelcase prop.Name }}": {{ if prop.TypeName == "string" || prop.TypeName == "DateOnly" || prop.TypeName == "DateTime" }}""{{ else }}0{{ end }}{{ if for.last == false }},{{ end }}
+{{~ end ~}}
+{{~ end }}
+}
+###
+
+# 📄 Delete {{ Name }}
+DELETE https://localhost:5001/api/{{ NamePlural }}/1
+Accept: application/json

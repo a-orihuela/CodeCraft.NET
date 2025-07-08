@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "CodeCraft.NET.Generator": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
