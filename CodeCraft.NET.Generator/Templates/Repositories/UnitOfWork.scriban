@@ -13,7 +13,7 @@ using {{ ApplicationProjectName }}.Contracts.Persistence.Base;
 
 namespace {{ InfrastructureProjectName }}.Persistence;
 
-public partial class {{ UnitOfWorkImplementationFileName }} : {{ UnitOfWorkInterfaceName }}
+public partial class {{ UnitOfWorkImplementationName }} : {{ UnitOfWorkInterfaceName }}
 {
     private Hashtable _repositories;
     private readonly ApplicationDbContext _context;

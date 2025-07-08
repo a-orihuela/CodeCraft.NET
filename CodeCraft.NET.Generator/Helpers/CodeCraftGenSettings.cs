@@ -107,9 +107,20 @@ namespace CodeCraft.NET.Generator.Helpers
 
 		private static CodeCraftConfig LoadConfiguration()
 		{
-			var configPath = Path.Combine(AppContext.BaseDirectory, "codecraft.config.json");
-			if (!File.Exists(configPath))
-				throw new FileNotFoundException("Configuration file 'codecraft.config.json' not found.");
+			// Try multiple potential locations for the config file
+			var locations = new[]
+			{
+				Path.Combine(AppContext.BaseDirectory, "codecraft.config.json"),
+				"codecraft.config.json", // Current directory
+				Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "codecraft.config.json"),
+				Path.Combine(Directory.GetCurrentDirectory(), "codecraft.config.json")
+			};
+
+			string? configPath = locations.FirstOrDefault(File.Exists);
+
+			if (configPath == null)
+				throw new FileNotFoundException("Configuration file 'codecraft.config.json' not found. Searched in: " +
+											   string.Join(", ", locations));
 
 			var json = File.ReadAllText(configPath);
 			return JsonSerializer.Deserialize<CodeCraftConfig>(json)

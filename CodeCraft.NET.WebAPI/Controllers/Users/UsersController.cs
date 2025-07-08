@@ -6,35 +6,35 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Commands.Create;
-using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Commands.Delete;
-using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Commands.Update;
-using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Queries.Get{{ Name }}ById;
-using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Queries.Get{{ Name }}WithRelated;
+using CodeCraft.NET.Application.CQRS.Features.Users.Commands.Create;
+using CodeCraft.NET.Application.CQRS.Features.Users.Commands.Delete;
+using CodeCraft.NET.Application.CQRS.Features.Users.Commands.Update;
+using CodeCraft.NET.Application.CQRS.Features.Users.Queries.GetUserById;
+using CodeCraft.NET.Application.CQRS.Features.Users.Queries.GetUserWithRelated;
 
-namespace {{ ServerProjectName }}.Controllers.{{ NamePlural }}
+namespace CodeCraft.NET.WebAPI.Controllers.Users
 {
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public partial class {{ Name }}Controller : ControllerBase
+    public partial class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public {{ Name }}Controller(IMediator mediator)
+        public UserController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] {{ Name }}Create command)
+        public async Task<IActionResult> Create([FromBody] UserCreate command)
         {
             var id = await _mediator.Send(command);
             return Ok(new { id });
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] {{ Name }}Update command)
+        public async Task<IActionResult> Update([FromBody] UserUpdate command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);
@@ -43,21 +43,21 @@ namespace {{ ServerProjectName }}.Controllers.{{ NamePlural }}
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _mediator.Send(new {{ Name }}Delete { Id = id });
+            var result = await _mediator.Send(new UserDelete { Id = id });
             return Ok(result);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var result = await _mediator.Send(new Get{{ Name }}ByIdQuery { Id = id });
+            var result = await _mediator.Send(new GetUserByIdQuery { Id = id });
             return Ok(result);
         }
 
         [HttpGet("{id}/related")]
         public async Task<IActionResult> GetWithRelated(int id)
         {
-            var result = await _mediator.Send(new Get{{ Name }}WithRelatedQuery { Id = id });
+            var result = await _mediator.Send(new GetUserWithRelatedQuery { Id = id });
             return Ok(result);
         }
     }

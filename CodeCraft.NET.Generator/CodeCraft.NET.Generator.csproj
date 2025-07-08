@@ -15,4 +15,85 @@
     <PackageReference Include="Scriban" Version="6.2.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CodeCraft.NET.Domain\CodeCraft.NET.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Templates\Controllers\Controller.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.Controllers.Controller.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\CQRS\Features\Commands\Create\Create.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Features.Commands.Create.Create.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\CQRS\Features\Commands\Create\CreateHandler.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Features.Commands.Create.CreateHandler.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\CQRS\Features\Commands\Create\CreateValidator.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Features.Commands.Create.CreateValidator.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\CQRS\Features\Commands\Delete\Delete.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Features.Commands.Delete.Delete.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\CQRS\Features\Commands\Delete\DeleteHandler.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Features.Commands.Delete.DeleteHandler.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\CQRS\Features\Commands\Update\Update.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Features.Commands.Update.Update.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\CQRS\Features\Commands\Update\UpdateHandler.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Features.Commands.Update.UpdateHandler.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\CQRS\Features\Commands\Update\UpdateValidator.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Features.Commands.Update.UpdateValidator.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\CQRS\Features\Queries\GetByIdHandler.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Features.Queries.GetByIdHandler.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\CQRS\Features\Queries\GetByIdQuery.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Features.Queries.GetByIdQuery.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\CQRS\Features\Queries\GetWithRelatedHandler.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Features.Queries.GetWithRelatedHandler.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\CQRS\Features\Queries\GetWithRelatedQuery.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Features.Queries.GetWithRelatedQuery.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\CQRS\Specifications\Specification.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Specifications.Specification.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\CQRS\Specifications\SpecificationParams.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Specifications.SpecificationParams.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\CQRS\Specifications\WithRelated.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Specifications.WithRelated.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\CQRS\Specifications\WithRelatedSpecification.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Specifications.WithRelatedSpecification.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\HttpRequests\Requests.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.HttpRequests.Requests.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\Mapping\MappingProfile.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.Mapping.MappingProfile.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\Repositories\IRepository.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.Repositories.IRepository.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\Repositories\IUnitOfWork.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.Repositories.IUnitOfWork.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\Repositories\Repository.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.Repositories.Repository.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\Repositories\UnitOfWork.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.Repositories.UnitOfWork.scriban</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="codecraft.config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

@@ -3,7 +3,6 @@
 //     Manual changes to this file may be overwritten.
 // </auto-generated>
 
-using CodeCraft.NET.Infrastructure.Persistence;
 using CodeCraft.NET.Application.Contracts.Persistence.Repositories;
 using CodeCraft.NET.Domain.Model;
 

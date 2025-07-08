@@ -1,12 +1,12 @@
 {
   "SolutionRootOverride": "",
-  "SolutionFileName": "Solution.sln",
+  "SolutionFileName": "CodeCraft.NET.sln",
   "CodeCraftNETGeneratorName": "CodeCraft.NET.Generator",
   "CodeCraftNETCrossName": "CodeCraft.NET.Cross",
   "DomainProjectName": "CodeCraft.NET.Domain",
   "ApplicationProjectName": "CodeCraft.NET.Application",
-  "InfrastructureProjectName": "Infrastructure",
-  "ServerProjectName": "Server",
+  "InfrastructureProjectName": "CodeCraft.NET.Infrastructure",
+  "ServerProjectName": "CodeCraft.NET.WebAPI",
   "DbContexts": [
     "ApplicationDbContext",
     "BasicIdentityDbContext"
@@ -30,10 +30,10 @@
     "TestsFolder": "Tests",
     "ApiRequestsFolder": "ApiRequests",
     "MappingProfileFileName": "MappingProfile.scriban",
-    "UnitOfWorkInterfaceFileName": "IUnitOfWork.cs",
-    "UnitOfWorkInterfaceName": "IUnitOfWork",
-    "UnitOfWorkImplementationFileName": "UnitOfWork.cs",
-    "UnitOfWorkImplementationName": "UnitOfWork"
+    "UnitOfWorkInterfaceFileName": "ICodeCraftUnitOfWork.cs",
+    "UnitOfWorkInterfaceName": "ICodeCraftUnitOfWork",
+    "UnitOfWorkImplementationFileName": "CodeCraftUnitOfWork.cs",
+    "UnitOfWorkImplementationName": "CodeCraftUnitOfWork"
   },
   "Templates": {
     "CreateTemplate": "Create.scriban",
