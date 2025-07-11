@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36203.30 d17.14
+VisualStudioVersion = 17.14.36203.30
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCraft.NET.Generator", "CodeCraft.NET.Generator\CodeCraft.NET.Generator.csproj", "{0CFE76D2-4848-4817-A8ED-23508F427181}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCraft.NET.Infrastructure", "CodeCraft.NET.Infrastructure\CodeCraft.NET.Infrastructure.csproj", "{E94EAD2B-E862-445A-BDA1-ABDDBBB7692F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCraft.NET.WebAPI", "CodeCraft.NET.WebAPI\CodeCraft.NET.WebAPI.csproj", "{7DEF8B87-C00F-46A4-B52E-28B62293BE87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCraft.NET.Frontend.BlazorWASM", "CodeCraft.NET.Frontend.BlazorWASM\CodeCraft.NET.Frontend.BlazorWASM.csproj", "{C4A29994-E824-490A-A060-A0B774EA4441}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{7DEF8B87-C00F-46A4-B52E-28B62293BE87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DEF8B87-C00F-46A4-B52E-28B62293BE87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DEF8B87-C00F-46A4-B52E-28B62293BE87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4A29994-E824-490A-A060-A0B774EA4441}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4A29994-E824-490A-A060-A0B774EA4441}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4A29994-E824-490A-A060-A0B774EA4441}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4A29994-E824-490A-A060-A0B774EA4441}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
