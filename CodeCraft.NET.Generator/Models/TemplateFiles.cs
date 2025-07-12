@@ -34,6 +34,11 @@
 		public string ControllerTemplate { get; set; }
 		public string HttpRequestTemplate { get; set; }
 
+		//DbContext templates
+		public string DbContextTemplate { get; set; }
+		public string DbContextFactoryTemplate { get; set; }
+
+
 		// Output file suffixes
 		public string CreateSuffix { get; set; }
 		public string CreateHandlerSuffix { get; set; }

@@ -62,6 +62,16 @@
 		public static string GetPathInfraUnitOfWorkFile(string fileName) =>
 			Path.Combine(PathInfraPersistence, fileName);
 
+		public static string GetPathInfraDbContextFile(string suffix)
+		{
+			return Path.Combine(PathInfraPersistence, $"ApplicationDbContext{suffix}");
+		}
+
+		public static string GetPathInfraDbContextFactoryFile(string suffix)
+		{
+			return Path.Combine(PathInfraPersistence, "Factories", $"ApplicationDbContextFactory{suffix}");
+		}
+
 		// -------------------------------
 		// Server
 		// -------------------------------

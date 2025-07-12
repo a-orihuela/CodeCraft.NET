@@ -16,6 +16,7 @@ var renderer = new ScribanTemplateRenderer();
 var CQRSgenerator = new CQRSGenerator(renderer);
 var repoGenerator = new RepositoryGenerator(renderer);
 var controllerGenerator = new ControllerGenerator(renderer);
+var dbContextGenerator = new DbContextGenerator(renderer);
 
 foreach (var entity in entitiesMetadata)
 {
@@ -25,14 +26,12 @@ foreach (var entity in entitiesMetadata)
 CQRSgenerator.GenerateMapping(entitiesMetadata);
 repoGenerator.Generate(entitiesMetadata);
 
+// 1. Generate DbContext first (before anything else that depends on it)
+dbContextGenerator.Generate(entitiesMetadata);
+
+// 2. Generate migrations after DbContext is created
 MigrationGenerator.GenerateAllMigrations();
-
 MigrationChecker.CheckPendingMigrations(
 	PathHelper.InfrastructureRoot,
 	PathHelper.ServerRoot,
-	"ApplicationDbContext");
-
-MigrationChecker.CheckPendingMigrations(
-	PathHelper.InfrastructureRoot,
-	PathHelper.ServerRoot,
-	"BasicIdentityDbContext");
+	"UnifiedDbContext");

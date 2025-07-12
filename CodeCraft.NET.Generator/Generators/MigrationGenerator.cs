@@ -9,14 +9,8 @@ namespace CodeCraft.NET.Generator.Generators
 		{
 			GenerateMigration(
 				context: "ApplicationDbContext",
-				outputDir: "Migrations/Application",
-				migrationPrefix: "AutoGen_App_"
-			);
-
-			GenerateMigration(
-				context: "BasicIdentityDbContext",
-				outputDir: "Migrations/Identity",
-				migrationPrefix: "AutoGen_Identity_"
+				outputDir: "Migrations",
+				migrationPrefix: "AutoGen_"
 			);
 		}
 

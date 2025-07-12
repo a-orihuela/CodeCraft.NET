@@ -191,5 +191,21 @@ namespace CodeCraft.NET.Generator.Models
 				Suffix = CodeCraftGenSettings.HttpRequestSuffix
 			}
 		};
+
+		public static List<TemplateDefinition> GetDbContextTemplates() => new()
+		{
+			new TemplateDefinition {
+				Type = "ApplicationDbContext",
+				Path = BuildTemplatePath(CodeCraftGenSettings.TemplatesFolder, CodeCraftGenSettings.DbContext,
+					CodeCraftGenSettings.DbContextTemplate),
+				Suffix = ".cs"
+			},
+			new TemplateDefinition {
+				Type = "DbContextFactory",
+				Path = BuildTemplatePath(CodeCraftGenSettings.TemplatesFolder, CodeCraftGenSettings.DbContext,
+					CodeCraftGenSettings.DbContextFactoryTemplate),
+				Suffix = ".cs"
+			}
+		};
 	}
 }

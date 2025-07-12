@@ -77,6 +77,8 @@
     "RepositoryInterfaceSuffix": "I{0}Repository.cs",
     "RepositoryImplementationSuffix": "{0}Repository.cs",
     "ControllerSuffix": "{0}Controller.cs",
-    "HttpRequestSuffix": "{0}Requests.http"
+    "HttpRequestSuffix": "{0}Requests.http",
+    "DbContextTemplate": "ApplicationDbContext.scriban",
+    "DbContextFactoryTemplate": "ApplicationDbContextFactory.scriban"
   }
 }

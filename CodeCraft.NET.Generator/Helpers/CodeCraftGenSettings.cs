@@ -31,6 +31,7 @@ namespace CodeCraft.NET.Generator.Helpers
 		public static string RepositoriesFolder => _config.Folders.RepositoriesFolder;
 		public static string ControllersFolder => _config.Folders.ControllersFolder;
 		public static string HttpRequestsFolder => _config.Folders.HttpRequestsFolder;
+		public static string DbContext => _config.Folders.DbContext;
 
 		// Application structure
 		public static string ContractsFolder => _config.Folders.ContractsFolder;
@@ -79,6 +80,10 @@ namespace CodeCraft.NET.Generator.Helpers
 		// Controller templates
 		public static string ControllerTemplate => _config.Templates.ControllerTemplate;
 		public static string HttpRequestTemplate => _config.Templates.HttpRequestTemplate;
+
+		//DbContext templates
+		public static string DbContextTemplate => _config.Templates.DbContextTemplate;
+		public static string DbContextFactoryTemplate => _config.Templates.DbContextFactoryTemplate;
 
 		// Output file suffixes
 		public static string CreateSuffix => _config.Templates.CreateSuffix;
