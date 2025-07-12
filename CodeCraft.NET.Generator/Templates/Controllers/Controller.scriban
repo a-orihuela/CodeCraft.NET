@@ -12,7 +12,7 @@ using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Commands.Updat
 using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Queries.Get{{ Name }}ById;
 using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Queries.Get{{ Name }}WithRelated;
 
-namespace {{ ServerProjectName }}.Controllers.{{ NamePlural }}
+namespace {{ ServerProjectName }}.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

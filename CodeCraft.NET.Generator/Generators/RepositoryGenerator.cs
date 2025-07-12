@@ -6,11 +6,6 @@ namespace CodeCraft.NET.Generator.Generators
 {
 	public class RepositoryGenerator
 	{
-		private const string REPOSITORY_INTERFACE = "RepositoryInterface";
-		private const string REPOSITORY_IMPLEMENTATION = "RepositoryImplementation";
-		private const string UNIT_OF_WORK_INTERFACE = "UnitOfWorkInterface";
-		private const string UNIT_OF_WORK_IMPLEMENTATION = "UnitOfWorkImplementation";
-
 		private readonly ITemplateRenderer _templateRenderer;
 
 		public RepositoryGenerator(ITemplateRenderer templateRenderer)
@@ -20,40 +15,41 @@ namespace CodeCraft.NET.Generator.Generators
 
 		public void Generate(IEnumerable<EntityMetadata> entities)
 		{
-			var templates = TemplateLocator.GetRepositoryTemplates();
-
 			foreach (var entity in entities)
 			{
-				Generate(entity, templates);
+				Generate(entity);
 			}
-			templates = TemplateLocator.GetUnitOfWorkTemplates();
-			GenerateUnitOfWork(templates, entities);
+			GenerateUnitOfWork(entities);
 		}
 
-		private void Generate(EntityMetadata entity, List<TemplateDefinition> templates)
+		private void Generate(EntityMetadata entity)
 		{
-			foreach (var template in templates)
-			{
-				string outputPath = template.Type switch
-				{
-					REPOSITORY_INTERFACE => PathHelper.GetPathAppIRepositoryFile(entity.Name, template.Suffix),
-					REPOSITORY_IMPLEMENTATION => PathHelper.GetPathInfraRepositoryFile(entity.Name, template.Suffix)
-				};
-				_templateRenderer.Render(template.Path, outputPath, entity);
-			}
+			// Repository Interface
+			_templateRenderer.Render(
+				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.RepositoryInterface)),
+				ConfigHelper.GetRepositoryInterfacePath(entity.Name),
+				entity);
+
+			// Repository Implementation
+			_templateRenderer.Render(
+				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.RepositoryImplementation)),
+				ConfigHelper.GetRepositoryImplementationPath(entity.Name),
+				entity);
 		}
 
-		private void GenerateUnitOfWork(List<TemplateDefinition> templates, IEnumerable<EntityMetadata> entities)
+		private void GenerateUnitOfWork(IEnumerable<EntityMetadata> entities)
 		{
-			foreach (var template in templates)
-			{
-				string outputPath = template.Type switch
-				{
-					UNIT_OF_WORK_INTERFACE => PathHelper.GetPathAppIUnitOfWorkFile(template.Suffix),
-					UNIT_OF_WORK_IMPLEMENTATION => PathHelper.GetPathInfraUnitOfWorkFile(template.Suffix)
-				};
-				_templateRenderer.Render(template.Path, outputPath, new { entities });
-			}
+			// Unit of Work Interface
+			_templateRenderer.Render(
+				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.UnitOfWorkInterface)),
+				ConfigHelper.GetUnitOfWorkInterfacePath(),
+				new { entities });
+
+			// Unit of Work Implementation
+			_templateRenderer.Render(
+				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.UnitOfWorkImplementation)),
+				ConfigHelper.GetUnitOfWorkImplementationPath(),
+				new { entities });
 		}
 	}
 }

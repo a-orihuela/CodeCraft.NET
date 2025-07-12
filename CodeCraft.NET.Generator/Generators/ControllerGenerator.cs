@@ -6,8 +6,6 @@ namespace CodeCraft.NET.Generator.Generators
 {
 	public class ControllerGenerator
 	{
-		private const string CONTROLLER = "Controller";
-		private const string HTTP_REQUEST = "HttpRequest";
 		private readonly ITemplateRenderer _templateRenderer;
 
 		public ControllerGenerator(ITemplateRenderer templateRenderer)
@@ -17,19 +15,17 @@ namespace CodeCraft.NET.Generator.Generators
 
 		public void Generate(EntityMetadata entity)
 		{
-			var templates = TemplateLocator.GetControllerTemplates();
+			// Controller
+			_templateRenderer.Render(
+				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.Controller)),
+				ConfigHelper.GetControllerPath(entity.Name),
+				entity);
 
-			foreach (var template in templates)
-			{
-				string outputPath = template.Type switch
-				{
-					CONTROLLER => PathHelper.GetPathServerControllerFile(entity.NamePlural, template.Suffix),
-					HTTP_REQUEST => PathHelper.GetPathTestsAPIRequestsFile(entity.NamePlural, template.Suffix),
-					_ => throw new NotSupportedException($"Unsupported template type: {template.Type}")
-				};
-
-				_templateRenderer.Render(template.Path, outputPath, entity);
-			}
+			// HTTP Request
+			_templateRenderer.Render(
+				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.HttpRequest)),
+				ConfigHelper.GetHttpRequestPath(entity.Name),
+				entity);
 		}
 	}
 }

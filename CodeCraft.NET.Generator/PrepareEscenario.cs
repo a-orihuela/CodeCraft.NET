@@ -1,4 +1,5 @@
 ﻿using CodeCraft.NET.Generator.Helpers;
+using CodeCraft.NET.Generator.Models;
 
 namespace CodeCraft.NET.Generator
 {
@@ -6,89 +7,109 @@ namespace CodeCraft.NET.Generator
 	{
 		public static void DeleteOldFiles()
 		{
-			try
-			{
-				if (Directory.Exists(PathHelper.PathAppFeatures))
-					Directory.Delete(PathHelper.PathAppFeatures, recursive: true);
-			}
-			catch (IOException ex)
-			{
-				Console.WriteLine($"[WARN] Cannot delete {PathHelper.PathTestsAPIRequests}: {ex.Message}");
-			}
-			try
-			{
-				if (Directory.Exists(PathHelper.PathAppSpecifications))
-					Directory.Delete(PathHelper.PathAppSpecifications, recursive: true);
-			}
-			catch (IOException ex)
-			{
-				Console.WriteLine($"[WARN] Cannot delete {PathHelper.PathTestsAPIRequests}: {ex.Message}");
-			}
-			try
-			{
-				if (Directory.Exists(PathHelper.PathAppRepositories))
-					Directory.Delete(PathHelper.PathAppRepositories, recursive: true);
-			}
-			catch (IOException ex)
-			{
-				Console.WriteLine($"[WARN] Cannot delete {PathHelper.PathTestsAPIRequests}: {ex.Message}");
-			}
-			try
-			{
-				if (File.Exists(PathHelper.GetPathAppIUnitOfWorkFile(CodeCraftGenSettings.UnitOfWorkInterfaceName)))
-					File.Delete(PathHelper.GetPathAppIUnitOfWorkFile(CodeCraftGenSettings.UnitOfWorkInterfaceName));
-			}
-			catch (IOException ex)
-			{
-				Console.WriteLine($"[WARN] Cannot delete {PathHelper.PathTestsAPIRequests}: {ex.Message}");
-			}
-			try
-			{
-				if (File.Exists(PathHelper.GetPathAppMappingFile("MappingProfile.cs")))
-					File.Delete(PathHelper.GetPathAppMappingFile("MappingProfile.cs"));
-			}
-			catch (IOException ex)
-			{
-				Console.WriteLine($"[WARN] Cannot delete {PathHelper.PathTestsAPIRequests}: {ex.Message}");
-			}
-			try
-			{
-				if (Directory.Exists(PathHelper.PathInfraRepositories))
-					Directory.Delete(PathHelper.PathInfraRepositories, recursive: true);
-			}
-			catch (IOException ex)
-			{
-				Console.WriteLine($"[WARN] Cannot delete {PathHelper.PathTestsAPIRequests}: {ex.Message}");
-			}
-			try
-			{
-				if (File.Exists(PathHelper.GetPathInfraUnitOfWorkFile(CodeCraftGenSettings.UnitOfWorkImplementationName)))
-					File.Delete(PathHelper.GetPathInfraUnitOfWorkFile(CodeCraftGenSettings.UnitOfWorkImplementationName));
-			}
-			catch (IOException ex)
-			{
-				Console.WriteLine($"[WARN] Cannot delete {PathHelper.PathTestsAPIRequests}: {ex.Message}");
-			}
-			try
-			{
-				if (Directory.Exists(PathHelper.PathServerControllers))
-					Directory.Delete(PathHelper.PathServerControllers, recursive: true);
-			}
-			catch (IOException ex)
-			{
-				Console.WriteLine($"[WARN] Cannot delete {PathHelper.PathTestsAPIRequests}: {ex.Message}");
-			}
-			try
-			{
-				if (Directory.Exists(PathHelper.PathTestsAPIRequests))
-					Directory.Delete(PathHelper.PathTestsAPIRequests, recursive: true);
-			}
-			catch (IOException ex)
-			{
-				Console.WriteLine($"[WARN] Cannot delete {PathHelper.PathTestsAPIRequests}: {ex.Message}");
-			}
-			
+			// Crear instancia para obtener rutas de directorios
+			var config = CodeCraftConfig.Instance;
 
+			// Helper para obtener rutas de directorios
+			string GetDirectoryFromFilePath(string filePath)
+			{
+				var samplePath = string.Format(filePath, "Sample", "Sample");
+				return Path.GetDirectoryName(samplePath) ?? "";
+			}
+
+			try
+			{
+				// Delete CQRS Features directory
+				var featuresDir = GetDirectoryFromFilePath(config.Files.CommandCreate);
+				var appCqrsDir = Path.GetDirectoryName(featuresDir);
+				if (!string.IsNullOrEmpty(appCqrsDir) && Directory.Exists(appCqrsDir))
+					Directory.Delete(appCqrsDir, recursive: true);
+			}
+			catch (IOException ex)
+			{
+				Console.WriteLine($"[WARN] Cannot delete CQRS Features: {ex.Message}");
+			}
+
+			try
+			{
+				// Delete Repositories directory
+				var repoDir = Path.GetDirectoryName(ConfigHelper.GetRepositoryInterfacePath("Sample"));
+				if (!string.IsNullOrEmpty(repoDir) && Directory.Exists(repoDir))
+					Directory.Delete(repoDir, recursive: true);
+			}
+			catch (IOException ex)
+			{
+				Console.WriteLine($"[WARN] Cannot delete Repository interfaces: {ex.Message}");
+			}
+
+			try
+			{
+				// Delete Repository implementations directory
+				var repoImplDir = Path.GetDirectoryName(ConfigHelper.GetRepositoryImplementationPath("Sample"));
+				if (!string.IsNullOrEmpty(repoImplDir) && Directory.Exists(repoImplDir))
+					Directory.Delete(repoImplDir, recursive: true);
+			}
+			catch (IOException ex)
+			{
+				Console.WriteLine($"[WARN] Cannot delete Repository implementations: {ex.Message}");
+			}
+
+			try
+			{
+				// Delete Unit of Work Interface
+				if (File.Exists(ConfigHelper.GetUnitOfWorkInterfacePath()))
+					File.Delete(ConfigHelper.GetUnitOfWorkInterfacePath());
+			}
+			catch (IOException ex)
+			{
+				Console.WriteLine($"[WARN] Cannot delete Unit of Work interface: {ex.Message}");
+			}
+
+			try
+			{
+				// Delete Unit of Work Implementation
+				if (File.Exists(ConfigHelper.GetUnitOfWorkImplementationPath()))
+					File.Delete(ConfigHelper.GetUnitOfWorkImplementationPath());
+			}
+			catch (IOException ex)
+			{
+				Console.WriteLine($"[WARN] Cannot delete Unit of Work implementation: {ex.Message}");
+			}
+
+			try
+			{
+				// Delete Mapping Profile
+				if (File.Exists(ConfigHelper.GetMappingProfilePath()))
+					File.Delete(ConfigHelper.GetMappingProfilePath());
+			}
+			catch (IOException ex)
+			{
+				Console.WriteLine($"[WARN] Cannot delete Mapping Profile: {ex.Message}");
+			}
+
+			try
+			{
+				// Delete Controllers directory
+				var controllerDir = Path.GetDirectoryName(ConfigHelper.GetControllerPath("Sample"));
+				if (!string.IsNullOrEmpty(controllerDir) && Directory.Exists(controllerDir))
+					Directory.Delete(controllerDir, recursive: true);
+			}
+			catch (IOException ex)
+			{
+				Console.WriteLine($"[WARN] Cannot delete Controllers: {ex.Message}");
+			}
+
+			try
+			{
+				// Delete HTTP Requests directory
+				var httpRequestDir = Path.GetDirectoryName(ConfigHelper.GetHttpRequestPath("Sample"));
+				if (!string.IsNullOrEmpty(httpRequestDir) && Directory.Exists(httpRequestDir))
+					Directory.Delete(httpRequestDir, recursive: true);
+			}
+			catch (IOException ex)
+			{
+				Console.WriteLine($"[WARN] Cannot delete HTTP Requests: {ex.Message}");
+			}
 		}
 	}
 }

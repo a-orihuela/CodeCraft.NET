@@ -1,4 +1,5 @@
 ﻿using CodeCraft.NET.Generator.Helpers;
+using CodeCraft.NET.Generator.Models;
 using System.Diagnostics;
 
 namespace CodeCraft.NET.Generator.Generators
@@ -19,19 +20,21 @@ namespace CodeCraft.NET.Generator.Generators
 			string timestamp = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
 			string migrationName = $"{migrationPrefix}{timestamp}";
 
+			var config = CodeCraftConfig.Instance;
+
 			var startInfo = new ProcessStartInfo
 			{
 				FileName = "dotnet",
 				Arguments = $"ef migrations add {migrationName} " +
-							$"--project {CodeCraftGenSettings.InfrastructureProjectName} " +
-							$"--startup-project {CodeCraftGenSettings.ServerProjectName} " +
+							$"--project {config.ProjectNames.Infrastructure} " +
+							$"--startup-project {config.ProjectNames.Server} " +
 							$"--context {context} " +
 							$"--output-dir {outputDir}",
 				RedirectStandardOutput = true,
 				RedirectStandardError = true,
 				UseShellExecute = false,
 				CreateNoWindow = true,
-				WorkingDirectory = Path.GetFullPath(Path.Combine(PathHelper.PathInfraPersistence, "..", ".."))
+				WorkingDirectory = ConfigHelper.GetInfrastructureRoot()
 			};
 
 			using var process = new Process { StartInfo = startInfo };

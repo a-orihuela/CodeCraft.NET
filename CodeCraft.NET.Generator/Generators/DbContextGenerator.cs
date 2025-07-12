@@ -6,9 +6,6 @@ namespace CodeCraft.NET.Generator.Generators
 {
 	public class DbContextGenerator
 	{
-		private const string APP_DBCONTEXT = "ApplicationDbContext";
-		private const string DBCONTEXT_FACTORY = "DbContextFactory";
-
 		private readonly ITemplateRenderer _templateRenderer;
 
 		public DbContextGenerator(ITemplateRenderer templateRenderer)
@@ -18,19 +15,17 @@ namespace CodeCraft.NET.Generator.Generators
 
 		public void Generate(IEnumerable<EntityMetadata> entities)
 		{
-			var templates = TemplateLocator.GetDbContextTemplates();
+			// DbContext
+			_templateRenderer.Render(
+				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.DbContext)),
+				ConfigHelper.GetDbContextPath(),
+				new { entities });
 
-			foreach (var template in templates)
-			{
-				string outputPath = template.Type switch
-				{
-					APP_DBCONTEXT => PathHelper.GetPathInfraDbContextFile(template.Suffix),
-					DBCONTEXT_FACTORY => PathHelper.GetPathInfraDbContextFactoryFile(template.Suffix),
-					_ => throw new ArgumentException($"Unknown template type: {template.Type}")
-				};
-
-				_templateRenderer.Render(template.Path, outputPath, new { entities });
-			}
+			// DbContext Factory
+			_templateRenderer.Render(
+				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.DbContextFactory)),
+				ConfigHelper.GetDbContextFactoryPath(),
+				new { entities });
 		}
 	}
 }

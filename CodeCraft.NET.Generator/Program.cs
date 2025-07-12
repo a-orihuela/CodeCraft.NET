@@ -13,25 +13,31 @@ var entitiesMetadata = EntityAnalyzer.AnalyzeDomainEntities();
 PrepareEscenario.DeleteOldFiles();
 
 var renderer = new ScribanTemplateRenderer();
-var CQRSgenerator = new CQRSGenerator(renderer);
+var cqrsGenerator = new CQRSGenerator(renderer);
 var repoGenerator = new RepositoryGenerator(renderer);
 var controllerGenerator = new ControllerGenerator(renderer);
 var dbContextGenerator = new DbContextGenerator(renderer);
 
-foreach (var entity in entitiesMetadata)
-{
-	CQRSgenerator.Generate(entity);
-	controllerGenerator.Generate(entity);
-}
-CQRSgenerator.GenerateMapping(entitiesMetadata);
-repoGenerator.Generate(entitiesMetadata);
-
 // 1. Generate DbContext first (before anything else that depends on it)
 dbContextGenerator.Generate(entitiesMetadata);
 
-//// 2. Generate migrations after DbContext is created
-//MigrationGenerator.GenerateAllMigrations();
-//MigrationChecker.CheckPendingMigrations(
-//	PathHelper.InfrastructureRoot,
-//	PathHelper.ServerRoot,
-//	"ApplicationDbContext");
+// 2. Generate CQRS and other components
+foreach (var entity in entitiesMetadata)
+{
+	cqrsGenerator.Generate(entity);
+	controllerGenerator.Generate(entity);
+}
+
+cqrsGenerator.GenerateMapping(entitiesMetadata);
+repoGenerator.Generate(entitiesMetadata);
+
+// 3. Generate migrations after DbContext is created
+MigrationGenerator.GenerateAllMigrations();
+
+// 4. Check for pending migrations
+MigrationChecker.CheckPendingMigrations(
+	ConfigHelper.GetInfrastructureRoot(),
+	ConfigHelper.GetServerRoot(),
+	"ApplicationDbContext");
+
+Console.WriteLine("Code generation completed successfully!");

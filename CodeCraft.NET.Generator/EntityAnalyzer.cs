@@ -15,14 +15,14 @@ namespace CodeCraft.NET.Generator
 			{
 				var props = type
 					.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-					.Where(p => p.DeclaringType == type 
+					.Where(p => p.DeclaringType == type
 						|| p.DeclaringType?.Name == "BaseDomainModel")
 					.ToArray();
 
 				var entity = new EntityMetadata
 				{
 					Name = type.Name,
-					NamePlural = PathHelper.PluralizeName(type.Name),
+					NamePlural = ConfigHelper.PluralizeName(type.Name),
 					Properties = props
 						.Select(p => new PropertyMetadata
 						{
@@ -96,11 +96,14 @@ namespace CodeCraft.NET.Generator
 
 		private static List<Type> LoadTypesFromDomainAssembly()
 		{
+			var config = CodeCraftConfig.Instance;
+			var domainProjectName = config.ProjectNames.Domain;
+
 			var domainAssembly = AppDomain.CurrentDomain.GetAssemblies()
-				.FirstOrDefault(a => a.GetName().Name == CodeCraftGenSettings.DomainProjectName);
+				.FirstOrDefault(a => a.GetName().Name == domainProjectName);
 
 			if (domainAssembly == null)
-				domainAssembly = Assembly.Load(CodeCraftGenSettings.DomainProjectName);
+				domainAssembly = Assembly.Load(domainProjectName);
 
 			return domainAssembly.GetTypes()
 				.Where(t => t.IsClass && t.IsPublic && !t.IsAbstract)

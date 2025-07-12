@@ -1,5 +1,6 @@
 ﻿using CodeCraft.NET.Generator.Contracts;
 using CodeCraft.NET.Generator.Helpers;
+using CodeCraft.NET.Generator.Models;
 using Scriban;
 using Scriban.Runtime;
 
@@ -21,18 +22,17 @@ namespace CodeCraft.NET.Generator.Renderers
 			File.WriteAllText(outputPath, result);
 		}
 
-		private static TemplateContext? CreateContext(object model) 
+		private static TemplateContext CreateContext(object model)
 		{
+			var config = CodeCraftConfig.Instance;
 			var context = new TemplateContext();
 			var scriptObject = new ScriptObject
 			{
-				{ "DomainProjectName", CodeCraftGenSettings.DomainProjectName },
-				{ "ApplicationProjectName", CodeCraftGenSettings.ApplicationProjectName },
-				{ "InfrastructureProjectName", CodeCraftGenSettings.InfrastructureProjectName },
-				{ "ServerProjectName", CodeCraftGenSettings.ServerProjectName },
-				{ "CodeCraftNETCrossName", CodeCraftGenSettings.CodeCraftNETCrossName },
-				{ "UnitOfWorkInterfaceName", CodeCraftGenSettings.UnitOfWorkInterfaceName },
-				{ "UnitOfWorkImplementationName", CodeCraftGenSettings.UnitOfWorkImplementationName },
+				{ "DomainProjectName", config.ProjectNames.Domain },
+				{ "ApplicationProjectName", config.ProjectNames.Application },
+				{ "InfrastructureProjectName", config.ProjectNames.Infrastructure },
+				{ "ServerProjectName", config.ProjectNames.Server },
+				{ "CodeCraftNETCrossName", config.ProjectNames.Cross },
 			};
 
 			scriptObject.Import(model, renamer: member => member.Name);
