@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\Identity\" />
+    <Folder Include="Persistence\Factories\" />
   </ItemGroup>
 
 </Project>
