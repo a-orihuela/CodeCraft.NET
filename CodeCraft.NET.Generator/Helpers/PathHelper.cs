@@ -9,7 +9,6 @@
 		private static string InfrastructureBase => GetSolutionRelativePath(CodeCraftGenSettings.InfrastructureProjectName);
 		private static string ServerBase => GetSolutionRelativePath(CodeCraftGenSettings.ServerProjectName);
 		private static string CodeCraftGen => GetSolutionRelativePath(CodeCraftGenSettings.CodeCraftNETGeneratorName);
-		private static string CodeCraftCross => GetSolutionRelativePath(CodeCraftGenSettings.CodeCraftNETCrossName);
 
 		// -------------------------------
 		//  Templates
@@ -62,14 +61,14 @@
 		public static string GetPathInfraUnitOfWorkFile(string fileName) =>
 			Path.Combine(PathInfraPersistence, fileName);
 
-		public static string GetPathInfraDbContextFile(string suffix)
+		public static string GetPathInfraDbContextFile(string fileName)
 		{
-			return Path.Combine(PathInfraPersistence, $"ApplicationDbContext{suffix}");
+			return Path.Combine(PathInfraPersistence, fileName);
 		}
 
-		public static string GetPathInfraDbContextFactoryFile(string suffix)
+		public static string GetPathInfraDbContextFactoryFile(string fileName)
 		{
-			return Path.Combine(PathInfraPersistence, "Factories", $"ApplicationDbContextFactory{suffix}");
+			return Path.Combine(PathInfraPersistence, "Factories", fileName);
 		}
 
 		// -------------------------------

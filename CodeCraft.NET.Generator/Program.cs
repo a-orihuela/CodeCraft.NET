@@ -29,9 +29,9 @@ repoGenerator.Generate(entitiesMetadata);
 // 1. Generate DbContext first (before anything else that depends on it)
 dbContextGenerator.Generate(entitiesMetadata);
 
-// 2. Generate migrations after DbContext is created
-MigrationGenerator.GenerateAllMigrations();
-MigrationChecker.CheckPendingMigrations(
-	PathHelper.InfrastructureRoot,
-	PathHelper.ServerRoot,
-	"UnifiedDbContext");
+//// 2. Generate migrations after DbContext is created
+//MigrationGenerator.GenerateAllMigrations();
+//MigrationChecker.CheckPendingMigrations(
+//	PathHelper.InfrastructureRoot,
+//	PathHelper.ServerRoot,
+//	"UnifiedDbContext");

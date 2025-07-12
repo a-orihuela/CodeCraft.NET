@@ -9,6 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Templates\Persistence\ApplicationDbContext.scriban" />
+    <None Remove="Templates\Persistence\ApplicationDbContextFactory.scriban" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="9.0.7" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.7" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1" />
@@ -77,6 +82,8 @@
     <EmbeddedResource Include="Templates\Mapping\MappingProfile.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.Mapping.MappingProfile.scriban</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="Templates\Persistence\ApplicationDbContext.scriban" />
+    <EmbeddedResource Include="Templates\Persistence\ApplicationDbContextFactory.scriban" />
     <EmbeddedResource Include="Templates\Repositories\IRepository.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.Repositories.IRepository.scriban</LogicalName>
     </EmbeddedResource>
@@ -95,9 +102,5 @@
     <None Update="codecraft.config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Templates\Persistence\" />
   </ItemGroup>
 </Project>

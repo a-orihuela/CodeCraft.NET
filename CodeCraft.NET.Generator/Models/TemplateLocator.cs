@@ -196,15 +196,15 @@ namespace CodeCraft.NET.Generator.Models
 		{
 			new TemplateDefinition {
 				Type = "ApplicationDbContext",
-				Path = BuildTemplatePath(CodeCraftGenSettings.TemplatesFolder, CodeCraftGenSettings.DbContext,
+				Path = BuildTemplatePath(CodeCraftGenSettings.TemplatesFolder, CodeCraftGenSettings.PersistenceFolder,
 					CodeCraftGenSettings.DbContextTemplate),
-				Suffix = ".cs"
+				Suffix = "ApplicationDbContext.cs"
 			},
 			new TemplateDefinition {
 				Type = "DbContextFactory",
-				Path = BuildTemplatePath(CodeCraftGenSettings.TemplatesFolder, CodeCraftGenSettings.DbContext,
+				Path = BuildTemplatePath(CodeCraftGenSettings.TemplatesFolder, CodeCraftGenSettings.PersistenceFolder,
 					CodeCraftGenSettings.DbContextFactoryTemplate),
-				Suffix = ".cs"
+				Suffix = "ApplicationDbContextFactory.cs"
 			}
 		};
 	}

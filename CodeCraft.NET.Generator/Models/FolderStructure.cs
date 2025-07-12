@@ -16,7 +16,6 @@
 		public string RepositoriesFolder { get; set; }
 		public string ControllersFolder { get; set; }
 		public string HttpRequestsFolder { get; set; }
-		public string DbContext {  get; set; }
 
 		// Application structure
 		public string ContractsFolder { get; set; }
