@@ -29,13 +29,6 @@ namespace CodeCraft.NET.Infrastructure
 			return services;
 		}
 
-		private static void AddIdentity(IServiceCollection services)
-		{
-			services.AddIdentity<ApplicationUser, IdentityRole>()
-				.AddEntityFrameworkStores<BasicIdentityDbContext>()
-				.AddDefaultTokenProviders();
-		}
-
 		private static void AddRepositories(IServiceCollection services)
 		{
 			// Register generic adapter
@@ -68,6 +61,13 @@ namespace CodeCraft.NET.Infrastructure
 			}
 		}
 
+		private static void AddIdentity(IServiceCollection services)
+		{
+			services.AddIdentity<ApplicationUser, IdentityRole>()
+				.AddEntityFrameworkStores<ApplicationDbContext>()
+				.AddDefaultTokenProviders();
+		}
+
 		private static void AddDbContext(IServiceCollection services, IConfiguration configuration, string appConnection, string identityConnection)
 		{
 			services.AddDbContext<ApplicationDbContext>(options =>
@@ -77,10 +77,10 @@ namespace CodeCraft.NET.Infrastructure
 				)
 			);
 
-			services.AddDbContext<BasicIdentityDbContext>(options =>
+			services.AddDbContext<ApplicationDbContext>(options =>
 				options.UseNpgsql(
 					identityConnection,
-					x => x.MigrationsAssembly(typeof(BasicIdentityDbContext).Assembly.FullName)
+					x => x.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
 				)
 			);
 		}

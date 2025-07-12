@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Persistence\Custom\Repositories\" />
     <Folder Include="Persistence\Factories\" />
   </ItemGroup>
 

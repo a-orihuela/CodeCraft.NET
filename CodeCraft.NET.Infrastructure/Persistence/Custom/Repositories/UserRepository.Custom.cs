@@ -12,10 +12,5 @@ namespace CodeCraft.NET.Infrastructure.Persistence.Repositories
 				.FirstOrDefaultAsync(u => u.IdentityId == identityId, cancellationToken);
 
 		}
-
-		public async Task<User> GetByEmailAsync(string email, CancellationToken cancellationToken = default)
-		{
-			throw new NotImplementedException();
-		}
 	}
 }

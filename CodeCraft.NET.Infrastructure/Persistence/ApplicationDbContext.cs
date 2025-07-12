@@ -11,9 +11,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CodeCraft.NET.Infrastructure.Persistence
 {
-    public class UnifiedDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public UnifiedDbContext(DbContextOptions<UnifiedDbContext> options) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
 
@@ -44,7 +44,7 @@ namespace CodeCraft.NET.Infrastructure.Persistence
             base.OnModelCreating(modelBuilder);
             
             // Apply all configurations from assembly
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(UnifiedDbContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         }
     }
 }

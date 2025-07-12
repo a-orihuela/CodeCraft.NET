@@ -34,4 +34,4 @@ dbContextGenerator.Generate(entitiesMetadata);
 //MigrationChecker.CheckPendingMigrations(
 //	PathHelper.InfrastructureRoot,
 //	PathHelper.ServerRoot,
-//	"UnifiedDbContext");
+//	"ApplicationDbContext");

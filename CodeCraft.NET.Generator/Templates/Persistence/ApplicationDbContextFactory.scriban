@@ -9,9 +9,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace {{ InfrastructureProjectName }}.Persistence.Factories
 {
-    public class UnifiedDbContextFactory : IDesignTimeDbContextFactory<UnifiedDbContext>
+    public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
     {
-        public UnifiedDbContext CreateDbContext(string[] args)
+        public ApplicationDbContext CreateDbContext(string[] args)
         {
             var basePath = Directory.GetCurrentDirectory();
 
@@ -33,10 +33,10 @@ namespace {{ InfrastructureProjectName }}.Persistence.Factories
             if (string.IsNullOrWhiteSpace(connectionString))
                 throw new InvalidOperationException("Missing connection string.");
 
-            var optionsBuilder = new DbContextOptionsBuilder<UnifiedDbContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
             optionsBuilder.UseNpgsql(connectionString);
 
-            return new UnifiedDbContext(optionsBuilder.Options);
+            return new ApplicationDbContext(optionsBuilder.Options);
         }
     }
 }
