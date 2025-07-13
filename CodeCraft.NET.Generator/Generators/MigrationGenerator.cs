@@ -22,19 +22,28 @@ namespace CodeCraft.NET.Generator.Generators
 
 			var config = CodeCraftConfig.Instance;
 
+			// Construir las rutas completas a los archivos .csproj
+			var infrastructureProjectPath = Path.Combine(
+				config.GetSolutionRelativePath(config.ProjectNames.Infrastructure),
+				$"{config.ProjectNames.Infrastructure}.csproj");
+
+			var serverProjectPath = Path.Combine(
+				config.GetSolutionRelativePath(config.ProjectNames.Server),
+				$"{config.ProjectNames.Server}.csproj");
+
 			var startInfo = new ProcessStartInfo
 			{
 				FileName = "dotnet",
 				Arguments = $"ef migrations add {migrationName} " +
-							$"--project {config.ProjectNames.Infrastructure} " +
-							$"--startup-project {config.ProjectNames.Server} " +
+							$"--project \"{infrastructureProjectPath}\" " +
+							$"--startup-project \"{serverProjectPath}\" " +
 							$"--context {context} " +
 							$"--output-dir {outputDir}",
 				RedirectStandardOutput = true,
 				RedirectStandardError = true,
 				UseShellExecute = false,
 				CreateNoWindow = true,
-				WorkingDirectory = ConfigHelper.GetInfrastructureRoot()
+				WorkingDirectory = config.GetSolutionRelativePath("")
 			};
 
 			using var process = new Process { StartInfo = startInfo };

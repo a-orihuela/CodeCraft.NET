@@ -35,9 +35,6 @@ repoGenerator.Generate(entitiesMetadata);
 MigrationGenerator.GenerateAllMigrations();
 
 // 4. Check for pending migrations
-MigrationChecker.CheckPendingMigrations(
-	ConfigHelper.GetInfrastructureRoot(),
-	ConfigHelper.GetServerRoot(),
-	"ApplicationDbContext");
+MigrationChecker.CheckPendingMigrations("ApplicationDbContext");
 
 Console.WriteLine("Code generation completed successfully!");

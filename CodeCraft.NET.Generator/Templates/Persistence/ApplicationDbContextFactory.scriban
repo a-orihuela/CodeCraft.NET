@@ -14,24 +14,38 @@ namespace {{ InfrastructureProjectName }}.Persistence.Factories
         public ApplicationDbContext CreateDbContext(string[] args)
         {
             var basePath = Directory.GetCurrentDirectory();
+            
+            // Lista de posibles ubicaciones para encontrar appsettings.json
+            var configPaths = new[]
+            {
+                Path.Combine(basePath, "appsettings.json"),
+                Path.Combine(basePath, "../{{ ServerProjectName }}/appsettings.json"),
+                Path.Combine(basePath, "..", "{{ ServerProjectName }}", "appsettings.json"),
+                Path.Combine(Directory.GetCurrentDirectory(), "..", "{{ ServerProjectName }}", "appsettings.json")
+            };
 
-            var serverConfigPath = Path.Combine(basePath, "../{{ ServerProjectName }}/appsettings.json");
-            var localConfigPath = Path.Combine(basePath, "appsettings.json");
-
-            IConfigurationRoot configuration = new ConfigurationBuilder()
+            var configPath = configPaths.FirstOrDefault(File.Exists);
+            
+            var configBuilder = new ConfigurationBuilder()
                 .SetBasePath(basePath)
-                .AddJsonFile(File.Exists(localConfigPath) ? "appsettings.json" : serverConfigPath, optional: true)
-                .AddEnvironmentVariables()
-                .Build();
+                .AddEnvironmentVariables();
+                
+            if (!string.IsNullOrEmpty(configPath))
+            {
+                configBuilder.AddJsonFile(configPath, optional: true);
+            }
+            
+            var configuration = configBuilder.Build();
 
-            var connectionString =
+            // Buscar la cadena de conexión en múltiples ubicaciones
+            var connectionString = 
                 configuration["ConnectionStrings:Default"] ??
-                configuration["DEFAULT_CONNECTION_STRING"] ??
                 configuration["ConnectionStrings:Application"] ??
-                configuration["APPLICATION_CONNECTION_STRING"];
+                configuration["DEFAULT_CONNECTION_STRING"] ??
+                configuration["APPLICATION_CONNECTION_STRING"] ??
+                "Server=localhost;Database=CodeCraftDb;User Id=sa;Password=yourStrong(!)Password;TrustServerCertificate=true;"; // Fallback por defecto
 
-            if (string.IsNullOrWhiteSpace(connectionString))
-                throw new InvalidOperationException("Missing connection string.");
+            Console.WriteLine($"Using connection string: {connectionString}");
 
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
             optionsBuilder.UseNpgsql(connectionString);

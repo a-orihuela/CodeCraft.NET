@@ -1,19 +1,32 @@
-﻿using System.Diagnostics;
+﻿using CodeCraft.NET.Generator.Models;
+using System.Diagnostics;
 
 namespace CodeCraft.NET.Generator.Helpers
 {
 	public static class MigrationChecker
 	{
-		public static void CheckPendingMigrations(string projectPath, string startupProjectPath, string context)
+		public static void CheckPendingMigrations(string context)
 		{
+			var config = CodeCraftConfig.Instance;
+
+			// Construir las rutas completas a los archivos .csproj
+			var infrastructureProjectPath = Path.Combine(
+				config.GetSolutionRelativePath(config.ProjectNames.Infrastructure),
+				$"{config.ProjectNames.Infrastructure}.csproj");
+
+			var serverProjectPath = Path.Combine(
+				config.GetSolutionRelativePath(config.ProjectNames.Server),
+				$"{config.ProjectNames.Server}.csproj");
+
 			var psi = new ProcessStartInfo
 			{
 				FileName = "dotnet",
-				Arguments = $"ef migrations list --project \"{projectPath}\" --startup-project \"{startupProjectPath}\" --context {context}",
+				Arguments = $"ef migrations list --project \"{infrastructureProjectPath}\" --startup-project \"{serverProjectPath}\" --context {context}",
 				RedirectStandardOutput = true,
 				RedirectStandardError = true,
 				UseShellExecute = false,
-				CreateNoWindow = true
+				CreateNoWindow = true,
+				WorkingDirectory = config.GetSolutionRelativePath("") // Directorio raíz de la solución
 			};
 
 			using var process = Process.Start(psi);
