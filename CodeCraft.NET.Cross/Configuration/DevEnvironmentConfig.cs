@@ -5,7 +5,6 @@ namespace CodeCraft.NET.Cross.Configuration
 	public class DevEnvironmentConfig
 	{
 		public string ConnectionString { get; set; } = string.Empty;
-		public DockerServiceConfig DockerServices { get; set; } = new DockerServiceConfig();
 
 		private static DevEnvironmentConfig? _instance;
 		public static DevEnvironmentConfig Instance => _instance ??= LoadConfig();
@@ -37,8 +36,7 @@ namespace CodeCraft.NET.Cross.Configuration
 			// Return default configuration if file not found
 			return new DevEnvironmentConfig
 			{
-				ConnectionString = "Host=localhost;Port=5432;Database=CodeCraftDb;Username=postgres;Password=yourStrong(!)Password;",
-				DockerServices = new DockerServiceConfig()
+				ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=CodeCraftDb;Trusted_Connection=true;MultipleActiveResultSets=true;"
 			};
 		}
 
@@ -53,31 +51,5 @@ namespace CodeCraft.NET.Cross.Configuration
 
 			return dir.FullName;
 		}
-	}
-
-	public class DockerServiceConfig
-	{
-		public string ComposeFileName { get; set; } = "docker-compose.yml";
-		public PostgreSqlConfig PostgreSql { get; set; } = new PostgreSqlConfig();
-		public PgAdminConfig PgAdmin { get; set; } = new PgAdminConfig();
-	}
-
-	public class PostgreSqlConfig
-	{
-		public string ContainerName { get; set; } = "codecraft-postgres";
-		public string Host { get; set; } = "localhost";
-		public int Port { get; set; } = 5432;
-		public string Database { get; set; } = "CodeCraftDb";
-		public string Username { get; set; } = "postgres";
-		public string Password { get; set; } = "yourStrong(!)Password";
-	}
-
-	public class PgAdminConfig
-	{
-		public string ContainerName { get; set; } = "codecraft-pgadmin";
-		public string Host { get; set; } = "localhost";
-		public int Port { get; set; } = 8080;
-		public string Email { get; set; } = "admin@codecraft.com";
-		public string Password { get; set; } = "admin123";
 	}
 }

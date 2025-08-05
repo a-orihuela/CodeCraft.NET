@@ -71,7 +71,7 @@ namespace CodeCraft.NET.Infrastructure
 		private static void AddDbContext(IServiceCollection services, IConfiguration configuration, string appConnection)
 		{
 			services.AddDbContext<ApplicationDbContext>(options =>
-				options.UseNpgsql(
+				options.UseSqlServer(
 					appConnection,
 					x => x.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
 				)

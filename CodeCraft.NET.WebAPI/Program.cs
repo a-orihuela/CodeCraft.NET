@@ -1,5 +1,4 @@
 ﻿using CodeCraft.NET.Application.Middleware;
-using CodeCraft.NET.Cross.Services;
 using CodeCraft.NET.Infrastructure;
 using CodeCraft.NET.Infrastructure.Persistence;
 using CodeCraft.NET.WebAPI.Configuration;
@@ -8,8 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
 using PARA.Platform.Application;
-
-await DockerManager.EnsureDatabaseIsRunningAsync();
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables();

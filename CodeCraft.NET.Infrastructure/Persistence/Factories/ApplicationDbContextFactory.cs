@@ -34,7 +34,7 @@ namespace CodeCraft.NET.Infrastructure.Persistence.Factories
                 throw new InvalidOperationException("Missing connection string.");
 
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            optionsBuilder.UseNpgsql(connectionString);
+            optionsBuilder.UseSqlServer(connectionString);
 
             return new ApplicationDbContext(optionsBuilder.Options);
         }
