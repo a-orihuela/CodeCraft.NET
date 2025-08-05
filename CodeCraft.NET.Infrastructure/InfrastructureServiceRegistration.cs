@@ -15,12 +15,12 @@ namespace CodeCraft.NET.Infrastructure
 {
     public static class InfrastructureServiceRegistration
     {
-		public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration, string appConnection, string identityConnection)
+		public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration, string appConnection)
 		{
 			services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
 			services.AddSingleton(sp => sp.GetRequiredService<IOptions<JwtSettings>>().Value);
 
-			AddDbContext(services, configuration, appConnection, identityConnection);
+			AddDbContext(services, configuration, appConnection);
 			AddIdentity(services);
 			AddRepositories(services);
 
@@ -68,18 +68,11 @@ namespace CodeCraft.NET.Infrastructure
 				.AddDefaultTokenProviders();
 		}
 
-		private static void AddDbContext(IServiceCollection services, IConfiguration configuration, string appConnection, string identityConnection)
+		private static void AddDbContext(IServiceCollection services, IConfiguration configuration, string appConnection)
 		{
 			services.AddDbContext<ApplicationDbContext>(options =>
 				options.UseNpgsql(
 					appConnection,
-					x => x.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
-				)
-			);
-
-			services.AddDbContext<ApplicationDbContext>(options =>
-				options.UseNpgsql(
-					identityConnection,
 					x => x.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
 				)
 			);

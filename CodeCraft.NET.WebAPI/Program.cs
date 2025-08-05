@@ -1,28 +1,29 @@
-using CodeCraft.NET.Application.Middleware;
+﻿using CodeCraft.NET.Application.Middleware;
+using CodeCraft.NET.Cross.Services;
 using CodeCraft.NET.Infrastructure;
-using CodeCraft.NET.Server.Configuration;
+using CodeCraft.NET.Infrastructure.Persistence;
+using CodeCraft.NET.WebAPI.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
 using PARA.Platform.Application;
 
+await DockerManager.EnsureDatabaseIsRunningAsync();
+
 var builder = WebApplication.CreateBuilder(args);
-
-
 builder.Configuration.AddEnvironmentVariables();
 var configuration = builder.Configuration;
-var (appConnection, identityConnection, jwtSettings, adminEmail, adminUsername, adminPassword, adminRole) = EnvironmentConfig.Load(configuration);
+var (appConnection, jwtSettings, adminEmail, adminUsername, adminPassword, adminRole) = EnvironmentConfig.Load(configuration);
 var environment = builder.Environment;
 
-
 // 1. Register layers
-builder.Services.AddInfrastructureServices(builder.Configuration, appConnection, identityConnection);
+builder.Services.AddInfrastructureServices(builder.Configuration, appConnection);
 builder.Services.AddApplicationServices();
 
 // 2. JWT Authentication Config
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 	.AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
-
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -54,6 +55,7 @@ builder.Services.AddSwaggerGen(c =>
 		{ jwtSecurityScheme, Array.Empty<string>() }
 	});
 });
+
 builder.Services.AddCors(options =>
 {
 	options.AddPolicy("CorsPolicy", builder =>
@@ -77,8 +79,24 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// ✅ Auto-migrate in development
+if (app.Environment.IsDevelopment())
+{
+	using var scope = app.Services.CreateScope();
+	try
+	{
+		var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+		await context.Database.MigrateAsync();
+		Console.WriteLine("✅ Database migrations applied successfully.");
+	}
+	catch (Exception ex)
+	{
+		Console.WriteLine($"⚠️ Migration error: {ex.Message}");
+		Console.WriteLine("⚠️ Continuing without database migrations...");
+	}
+}
 
+// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
 	app.UseSwagger();
@@ -95,6 +113,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseCors("CorsPolicy");
 app.MapControllers();
+
 if (!app.Environment.IsDevelopment())
 {
 	app.MapFallbackToFile("/index.html");

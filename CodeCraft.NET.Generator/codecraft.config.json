@@ -1,6 +1,6 @@
 {
   "DataBaseConfig": {
-    "ConnectionString": "Server=localhost;Database=CodeCraftDb;User Id=sa;Password=yourStrong(!)Password;",
+    "ConnectionString": "Host=localhost;Port=5432;Database=CodeCraftDb;Username=postgres;Password=yourStrong(!)Password;",
     "MigrationsAssembly": "CodeCraft.NET.Infrastructure"
   },
   "Files": {

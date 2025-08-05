@@ -1,12 +1,11 @@
 ﻿using CodeCraft.NET.Application.DTOs.Identity;
 
-namespace CodeCraft.NET.Server.Configuration
+namespace CodeCraft.NET.WebAPI.Configuration
 {
 	public static class EnvironmentConfig
 	{
 		public static (
 			string AppConnection, 
-			string IdentityConnection, 
 			JwtSettings JwtSettings,
 			string AdminEmail, 
 			string AdminUsername, 
@@ -15,7 +14,6 @@ namespace CodeCraft.NET.Server.Configuration
 			Load(IConfiguration configuration)
 		{
 			var appConnection = configuration.GetConnectionString("Application");
-			var identityConnection = configuration.GetConnectionString("Identity");
 			var issuer = configuration["JwtSettings:Issuer"];
 			var audience = configuration["JwtSettings:Audience"];
 			var key = configuration["JwtSettings:Key"];
@@ -27,8 +25,6 @@ namespace CodeCraft.NET.Server.Configuration
 
 			if (string.IsNullOrWhiteSpace(appConnection))
 				throw new InvalidOperationException("Missing 'ConnectionStrings:Application'. Please set it via environment or appsettings.");
-			if (string.IsNullOrWhiteSpace(identityConnection))
-				throw new InvalidOperationException("Missing 'ConnectionStrings:Identity'. Please set it via environment or appsettings.");
 			if(string.IsNullOrWhiteSpace(issuer))
 				throw new InvalidOperationException("Missing 'JwtSettings:Issuer'. Please set it via environment or appsettings.");
 			if (string.IsNullOrWhiteSpace(audience))
@@ -54,7 +50,7 @@ namespace CodeCraft.NET.Server.Configuration
 				DurationInMinutes = durationInMinutes
 			};
 
-			return (appConnection, identityConnection, jwtSettings, adminEmail, adminUsername, adminPassword, adminRole);
+			return (appConnection, jwtSettings, adminEmail, adminUsername, adminPassword, adminRole);
 		}
 	}
 }
