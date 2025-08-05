@@ -1,0 +1,81 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Tu Nombre",
+  "classifications": ["Web", "API", "Clean Architecture"],
+  "identity": "CodeCraft.NET.Template",
+  "name": "CodeCraft.NET Clean Architecture Template",
+  "shortName": "codecraft",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "description": "A Clean Architecture template with CQRS, Entity Framework, and code generation",
+  "sourceName": "CodeCraft.NET",
+  "preferNameDirectory": true,
+  "symbols": {
+    "ProjectName": {
+      "type": "parameter",
+      "datatype": "string",
+      "defaultValue": "MyProject",
+      "replaces": "CodeCraft.NET",
+      "fileRename": "CodeCraft.NET"
+    },
+    "CompanyName": {
+      "type": "parameter",
+      "datatype": "string",
+      "defaultValue": "MyCompany",
+      "replaces": "CodeCraft"
+    },
+    "DatabaseProvider": {
+      "type": "parameter",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "SqlServer",
+          "description": "SQL Server"
+        },
+        {
+          "choice": "PostgreSQL",
+          "description": "PostgreSQL"
+        }
+      ],
+      "defaultValue": "SqlServer"
+    },
+    "UseDocker": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "false",
+      "description": "Include Docker support"
+    }
+  },
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "condition": "(!UseDocker)",
+          "exclude": [
+            "**/Dockerfile",
+            "**/docker-compose.yml",
+            "**/DockerManager.cs"
+          ]
+        }
+      ]
+    }
+  ],
+  "postActions": [
+    {
+      "condition": "(OS != \"Windows\")",
+      "description": "Make scripts executable",
+      "manualInstructions": [
+        {
+          "text": "Run 'chmod +x *.sh'"
+        }
+      ],
+      "actionId": "cb9a6cf3-4f5c-4860-b9d2-03a574959774",
+      "args": {
+        "+x": "*.sh"
+      },
+      "continueOnError": true
+    }
+  ]
+}

@@ -22,7 +22,7 @@ namespace CodeCraft.NET.Generator.Generators
 
 			var config = CodeCraftConfig.Instance;
 
-			// Construir las rutas completas a los archivos .csproj
+			// Build complete paths to .csproj files
 			var infrastructureProjectPath = Path.Combine(
 				config.GetSolutionRelativePath(config.ProjectNames.Infrastructure),
 				$"{config.ProjectNames.Infrastructure}.csproj");

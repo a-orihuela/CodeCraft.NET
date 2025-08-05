@@ -7,10 +7,10 @@ namespace CodeCraft.NET.Generator
 	{
 		public static void DeleteOldFiles()
 		{
-			// Crear instancia para obtener rutas de directorios
+			// Create instance to get directory paths
 			var config = CodeCraftConfig.Instance;
 
-			// Helper para obtener rutas de directorios
+			// Helper to get directory paths
 			string GetDirectoryFromFilePath(string filePath)
 			{
 				var samplePath = string.Format(filePath, "Sample", "Sample");
@@ -89,6 +89,20 @@ namespace CodeCraft.NET.Generator
 
 			try
 			{
+				// Delete DbContext files
+				if (File.Exists(ConfigHelper.GetDbContextPath()))
+					File.Delete(ConfigHelper.GetDbContextPath());
+
+				if (File.Exists(ConfigHelper.GetDbContextFactoryPath()))
+					File.Delete(ConfigHelper.GetDbContextFactoryPath());
+			}
+			catch (IOException ex)
+			{
+				Console.WriteLine($"[WARN] Cannot delete DbContext files: {ex.Message}");
+			}
+
+			try
+			{
 				// Delete Controllers directory
 				var controllerDir = Path.GetDirectoryName(ConfigHelper.GetControllerPath("Sample"));
 				if (!string.IsNullOrEmpty(controllerDir) && Directory.Exists(controllerDir))
@@ -97,18 +111,6 @@ namespace CodeCraft.NET.Generator
 			catch (IOException ex)
 			{
 				Console.WriteLine($"[WARN] Cannot delete Controllers: {ex.Message}");
-			}
-
-			try
-			{
-				// Delete HTTP Requests directory
-				var httpRequestDir = Path.GetDirectoryName(ConfigHelper.GetHttpRequestPath("Sample"));
-				if (!string.IsNullOrEmpty(httpRequestDir) && Directory.Exists(httpRequestDir))
-					Directory.Delete(httpRequestDir, recursive: true);
-			}
-			catch (IOException ex)
-			{
-				Console.WriteLine($"[WARN] Cannot delete HTTP Requests: {ex.Message}");
 			}
 		}
 	}

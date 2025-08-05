@@ -9,7 +9,7 @@ namespace CodeCraft.NET.Generator.Helpers
 		{
 			var config = CodeCraftConfig.Instance;
 
-			// Construir las rutas completas a los archivos .csproj
+			// Build complete paths to .csproj files
 			var infrastructureProjectPath = Path.Combine(
 				config.GetSolutionRelativePath(config.ProjectNames.Infrastructure),
 				$"{config.ProjectNames.Infrastructure}.csproj");
@@ -26,7 +26,7 @@ namespace CodeCraft.NET.Generator.Helpers
 				RedirectStandardError = true,
 				UseShellExecute = false,
 				CreateNoWindow = true,
-				WorkingDirectory = config.GetSolutionRelativePath("") // Directorio raíz de la solución
+				WorkingDirectory = config.GetSolutionRelativePath("") // Solution root directory
 			};
 
 			using var process = Process.Start(psi);

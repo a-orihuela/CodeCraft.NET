@@ -6,7 +6,7 @@ namespace CodeCraft.NET.Generator.Helpers
 	{
 		private static CodeCraftConfig Config => CodeCraftConfig.Instance;
 
-		// Métodos para obtener rutas de archivos con formato
+		// Methods to get formatted file paths
 		public static string GetFilePath(string filePattern, params object[] args)
 		{
 			var fullPath = string.Format(filePattern, args);
@@ -20,7 +20,7 @@ namespace CodeCraft.NET.Generator.Helpers
 			return fullPath;
 		}
 
-		// Métodos específicos para cada tipo de archivo
+		// Specific methods for each file type
 		public static string GetControllerPath(string entityName)
 			=> GetFilePath(Config.Files.Controller, entityName);
 
@@ -103,7 +103,7 @@ namespace CodeCraft.NET.Generator.Helpers
 		public static string GetDbContextFactoryPath()
 			=> Config.Files.DbContextFactory;
 
-		// Obtener rutas de templates
+		// Get template paths
 		public static string GetTemplatePath(string templateProperty)
 		{
 			var templatePath = templateProperty switch

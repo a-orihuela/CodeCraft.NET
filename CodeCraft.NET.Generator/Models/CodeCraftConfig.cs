@@ -36,7 +36,7 @@ namespace CodeCraft.NET.Generator.Models
 			return data;
 		}
 
-		// Métodos de conveniencia para obtener rutas
+		// Convenience methods to get paths
 		public string GetSolutionRelativePath(string projectName)
 		{
 			var dir = new DirectoryInfo(AppContext.BaseDirectory);
