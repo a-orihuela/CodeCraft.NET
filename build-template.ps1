@@ -2,7 +2,7 @@
 Write-Host "Building CodeCraft.NET Template Package..." -ForegroundColor Cyan
 
 # Variables
-$PackageVersion = "1.0.1"
+$PackageVersion = "1.0.0"  # Synchronized with template.csproj
 $PackageDir = ".\nupkg"
 $ProjectFile = "template.csproj"
 

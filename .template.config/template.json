@@ -1,6 +1,6 @@
 {
   "$schema": "http://json.schemastore.org/template",
-  "author": "Abraham Orihuela Mayor",
+  "author": "AbrahamOM",
   "classifications": ["Web", "API", "Clean Architecture", "CQRS", "Template"],
   "identity": "CodeCraft.NET.CleanArchitecture.Template",
   "name": "CodeCraft.NET Clean Architecture Template",

@@ -25,7 +25,7 @@
     <LocalizeTemplates>false</LocalizeTemplates>
   </PropertyGroup>
 
-  <!-- Explicitly include only the source files we want -->
+  <!-- Template content to include -->
   <ItemGroup>
     <!-- Include .template.config -->
     <Content Include=".template.config\**\*" Pack="true" PackagePath="content/.template.config/" />
@@ -62,9 +62,6 @@
              Exclude="README.md;PUBLISHING.md;icon-readme.txt;EMOJI-REMOVAL-SUMMARY.md;POST-PUBLICATION-SUCCESS.md;BUILD-COMMANDS.md;CodeCraft.NET.Frontend.BlazorWASM\**" 
              Pack="true" 
              PackagePath="content/" />
-    
-    <!-- Include scripts -->
-    <Content Include="init.sh;init.bat" Pack="true" PackagePath="content/" />
   </ItemGroup>
 
   <!-- Remove all compilation -->
