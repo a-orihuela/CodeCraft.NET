@@ -6,12 +6,14 @@
 
 ## Installation
 
-### From NuGet (Recommended)# Install the template
+### From NuGet (Recommended)
+# Install the template
 dotnet new install CodeCraft.NET.CleanArchitecture.Template
 
 # Verify installation
 dotnet new list codecraft
-### From Source# Clone repository
+### From Source
+# Clone repository
 git clone https://github.com/yourusername/CodeCraft.NET.git
 cd CodeCraft.NET
 
@@ -34,18 +36,20 @@ dotnet new codecraft -n "MyProject" \
 | `DatabaseProvider` | Database provider | SqlServer, PostgreSQL | SqlServer |
 
 ## Generated Structure
-MyProject/
-??? MyProject.Domain/          # Entities and domain logic
-??? MyProject.Application/     # CQRS, DTOs, Contracts
-??? MyProject.Infrastructure/  # Entity Framework, Repositories
-??? MyProject.WebAPI/         # Controllers, Configuration
-??? MyProject.Cross/          # Shared utilities
-??? MyProject.Generator/      # Code generator
+- MyProject/
+    - MyProject.Domain/         # Entities and domain logic
+    - MyProject.Application/    # CQRS, DTOs, Contracts
+    - MyProject.Infrastructure/  # Entity Framework, Repositories
+    - MyProject.WebAPI/         # Controllers, Configuration
+    - MyProject.Cross/          # Shared utilities
+    - MyProject.Generator/      # Code generator
+
 ## What is CodeCraft.NET?
 
 CodeCraft.NET is a **powerful project template** that combines **Clean Architecture** with **automatic code generation**. It's designed to help developers create enterprise-grade .NET applications in minutes, not hours.
 
-### Key Features:
+### Key Features
+
 - **Clean Architecture** with proper layer separation
 - **CQRS + MediatR** for scalable command/query operations
 - **Entity Framework Core** with automatic migrations
@@ -58,28 +62,34 @@ CodeCraft.NET is a **powerful project template** that combines **Clean Architect
 
 ## Quick Start Guide (5 Minutes)
 
-### Step 1: Install Templatedotnet new install CodeCraft.NET.CleanArchitecture.Template
-### Step 2: Create Projectdotnet new codecraft -n "ProductCatalog"
+### Step 1: Install Template
+dotnet new install CodeCraft.NET.CleanArchitecture.Template
+### Step 2: Create Project
+dotnet new codecraft -n "ProductCatalog"
 cd ProductCatalog
 ### Step 3: Create Your First Entity
 
 Create a new domain entity in `ProductCatalog.Domain/Model/`:
-using CodeCraft.NET.Cross.Domain;
+    using CodeCraft.NET.Cross.Domain;
 
-namespace ProductCatalog.Domain.Model;
+    namespace ProductCatalog.Domain.Model;
 
-public class Product : BaseDomainModel
-{
-    public string Name { get; set; } = string.Empty;
-    public string Description { get; set; } = string.Empty;
-    public decimal Price { get; set; }
-    public string Category { get; set; } = string.Empty;
-    public int Stock { get; set; }
-    public bool IsAvailable { get; set; }
-}
-### Step 4: Run the Code Generatordotnet run --project ProductCatalog.Generator
-### Step 5: Apply Database Migrationsdotnet ef database update --project ProductCatalog.Infrastructure --startup-project ProductCatalog.WebAPI
-### Step 6: Run Your APIdotnet run --project ProductCatalog.WebAPI
+    public class Product : BaseDomainModel
+    {
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public decimal Price { get; set; }
+        public string Category { get; set; } = string.Empty;
+        public int Stock { get; set; }
+        public bool IsAvailable { get; set; }
+    }
+
+### Step 4: Run the Code Generator
+dotnet run --project ProductCatalog.Generator
+### Step 5: Apply Database Migrations
+dotnet ef database update --project ProductCatalog.Infrastructure --startup-project ProductCatalog.WebAPI
+### Step 6: Run Your API
+dotnet run --project ProductCatalog.WebAPI
 ### Step 7: Test Your API
 
 Navigate to `https://localhost:7202/swagger` and you'll see:
@@ -95,22 +105,27 @@ Navigate to `https://localhost:7202/swagger` and you'll see:
 
 When you run the generator, it automatically creates:
 
-### In Application Layer:Application/
-??? CQRS/Features/Products/
-?   ??? Commands/
-?   ?   ??? Create/ProductCreate.cs, ProductCreateHandler.cs, ProductCreateValidator.cs
-?   ?   ??? Update/ProductUpdate.cs, ProductUpdateHandler.cs, ProductUpdateValidator.cs
-?   ?   ??? Delete/ProductDelete.cs, ProductDeleteHandler.cs
-?   ??? Queries/
-?       ??? GetProductById.cs, GetProductByIdHandler.cs
-?       ??? GetProductWithRelated.cs, GetProductWithRelatedHandler.cs
-??? Contracts/Persistence/Repositories/IProductRepository.cs
-??? Mapping/MappingProfile.cs (updated)
-### In Infrastructure Layer:Infrastructure/
-??? Persistence/Repositories/ProductRepository.cs
-??? Persistence/Custom/Repositories/ProductRepository.Custom.cs
-??? ApplicationDbContext.cs (updated with Product DbSet)
-### In WebAPI Layer:WebAPI/Controllers/ProductController.cs
+### In Application Layer
+- Application/
+  - CQRS/Features/Products/
+    - Commands/
+      - Create/ProductCreate.cs, ProductCreateHandler.cs, ProductCreateValidator.cs
+      - Update/ProductUpdate.cs, ProductUpdateHandler.cs, ProductUpdateValidator.cs
+      - Delete/ProductDelete.cs, ProductDeleteHandler.cs
+    - Queries/
+      - GetProductById.cs, GetProductByIdHandler.cs
+      - GetProductWithRelated.cs, GetProductWithRelatedHandler.cs
+    - Contracts/Persistence/Repositories/IProductRepository.cs
+    - Mapping/MappingProfile.cs (updated)
+
+### In Infrastructure Layer
+- Infrastructure/
+  - Persistence/Repositories/ProductRepository.cs
+  - Persistence/Custom/Repositories/ProductRepository.Custom.cs
+  - ApplicationDbContext.cs (updated with Product DbSet)
+
+### In WebAPI Layer
+- WebAPI/Controllers/ProductController.cs
 ## Extending Functionality with Custom Features
 
 ### Adding Custom Commands
@@ -144,30 +159,31 @@ public class DiscountProductHandler : IRequestHandler<DiscountProductCommand, bo
 ### Adding Custom Repository Methods
 
 Extend repositories with custom queries:
-// Application/Contracts/Persistence/Custom/IProductRepository.Custom.cs
-public partial interface IProductRepository
-{
-    Task<IEnumerable<Product>> GetProductsByCategory(string category);
-    Task<IEnumerable<Product>> GetLowStockProducts(int threshold);
-}
+    // Application/Contracts/Persistence/Custom/IProductRepository.Custom.cs
+    public partial interface IProductRepository
+    {
+        Task<IEnumerable<Product>> GetProductsByCategory(string category);
+        Task<IEnumerable<Product>> GetLowStockProducts(int threshold);
+    }
 
-// Infrastructure/Persistence/Custom/Repositories/ProductRepository.Custom.cs
-public partial class ProductRepository
-{
-    public async Task<IEnumerable<Product>> GetProductsByCategory(string category)
+    // Infrastructure/Persistence/Custom/Repositories/ProductRepository.Custom.cs
+    public partial class ProductRepository
     {
-        return await _context.Products
-            .Where(p => p.Category == category && p.Active)
-            .ToListAsync();
-    }
+        public async Task<IEnumerable<Product>> GetProductsByCategory(string category)
+        {
+            return await _context.Products
+                .Where(p => p.Category == category && p.Active)
+                .ToListAsync();
+        }
     
-    public async Task<IEnumerable<Product>> GetLowStockProducts(int threshold)
-    {
-        return await _context.Products
-            .Where(p => p.Stock <= threshold && p.Active)
-            .ToListAsync();
+        public async Task<IEnumerable<Product>> GetLowStockProducts(int threshold)
+        {
+            return await _context.Products
+                .Where(p => p.Stock <= threshold && p.Active)
+                .ToListAsync();
+        }
     }
-}
+
 ### Adding Custom Controllers
 
 Create specialized endpoints:
@@ -195,19 +211,22 @@ public class ProductManagementController : ControllerBase
 
 The template includes built-in authentication:
 
-### JWT Authentication// Login endpoint automatically available
+### JWT Authentication
+// Login endpoint automatically available
 POST /api/Auth/login
 {
     "email": "admin@localhost.com",
     "password": "admin"
 }
-### Register New UsersPOST /api/Auth/register
+### Register New Users
+POST /api/Auth/register
 {
     "email": "user@example.com",
     "password": "SecurePassword123!",
     "fullName": "John Doe"
 }
-### Protect Your Endpoints[Authorize]
+### Protect Your Endpoints
+[Authorize]
 [HttpGet]
 public async Task<IActionResult> GetProducts()
 {
@@ -223,10 +242,12 @@ public async Task<IActionResult> DeleteProduct(int id)
 ## Database Features
 
 ### Automatic Migrations
+
 The generator creates and applies migrations automatically:
 # Generated migration includes your new entities
 dotnet ef migrations add AutoGen_20240101120000 --project Infrastructure --startup-project WebAPI
 ### Built-in Auditing
+
 Every entity inherits from `BaseDomainModel`:
 - `Id` - Primary key
 - `CreatedDate` - When record was created
@@ -247,6 +268,7 @@ Use the built-in Swagger UI at `https://localhost:7202/swagger`:
 ## Configuration
 
 ### Database Provider
+
 Switch between SQL Server and PostgreSQL in `appsettings.json`:
 {
   "ConnectionStrings": {
@@ -254,6 +276,7 @@ Switch between SQL Server and PostgreSQL in `appsettings.json`:
   }
 }
 ### JWT Settings
+
 Configure authentication in `appsettings.Development.json`:
 {
   "JwtSettings": {
@@ -275,9 +298,13 @@ Configure authentication in `appsettings.Development.json`:
 ## Advanced Features
 
 ### Pagination
-All list endpoints support pagination:GET /api/Product?PageNumber=1&PageSize=10&OrderBy=Name
+
+All list endpoints support pagination:
+GET /api/Product?PageNumber=1&PageSize=10&OrderBy=Name
 ### Filtering
-Use specifications for complex queries:// Application/CQRS/Specifications/Products/ProductSpecification.cs
+
+Use specifications for complex queries:
+// Application/CQRS/Specifications/Products/ProductSpecification.cs
 public class ProductSpecification : BaseSpecification<Product>
 {
     public ProductSpecification(ProductSpecificationParams @params)
@@ -290,7 +317,9 @@ public class ProductSpecification : BaseSpecification<Product>
     }
 }
 ### Validation
-FluentValidation is integrated automatically:public class ProductCreateValidator : AbstractValidator<ProductCreate>
+
+FluentValidation is integrated automatically:
+public class ProductCreateValidator : AbstractValidator<ProductCreate>
 {
     public ProductCreateValidator()
     {
@@ -305,22 +334,30 @@ FluentValidation is integrated automatically:public class ProductCreateValidator
 ## Architecture Deep Dive
 
 ### Clean Architecture Layers
-???????????????????
-?    WebAPI       ?  ? Controllers, Middleware, Configuration
-???????????????????
-?  Application    ?  ? CQRS, Validators, DTOs, Contracts
-???????????????????
-? Infrastructure  ?  ? EF Core, Repositories, External Services
-???????????????????
-?    Domain       ?  ? Entities, Value Objects, Domain Logic
-???????????????????
+
+- **WebAPI Layer**
+  - Controllers, Middleware, Configuration
+- **Application Layer**
+  - CQRS, Validators, DTOs, Contracts
+- **Infrastructure Layer**
+  - EF Core, Repositories, External Services
+- **Domain Layer**
+  - Entities, Value Objects, Domain Logic
+
 ### CQRS Pattern
+
 - **Commands**: Modify data (Create, Update, Delete)
 - **Queries**: Read data (GetById, GetAll, Search)
 - **Handlers**: Business logic implementation
 - **Validators**: Input validation rules
 
 ## What's New
+
+### Version 1.0.2
+- Improved template build script with semantic versioning
+- Enhanced PowerShell build automation
+- Cleaner template structure
+- Better documentation formatting
 
 ### Version 1.0.0
 - Initial release

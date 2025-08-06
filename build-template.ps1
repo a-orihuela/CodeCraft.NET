@@ -36,12 +36,16 @@ if ($Major -and $Minor) {
 # Read current version from template.csproj
 function Get-ProjectVersion {
     [xml]$projectXml = Get-Content $ProjectFile
-    $version = $projectXml.Project.PropertyGroup.PackageVersion
-    if ([string]::IsNullOrEmpty($version)) {
-        Write-Host "Warning: No PackageVersion found in $ProjectFile, using 1.0.0" -ForegroundColor Yellow
-        return "1.0.0"
+    
+    # Look for PackageVersion in all PropertyGroup elements
+    foreach ($propertyGroup in $projectXml.Project.PropertyGroup) {
+        if ($propertyGroup.PackageVersion) {
+            return $propertyGroup.PackageVersion
+        }
     }
-    return $version
+    
+    Write-Host "Warning: No PackageVersion found in $ProjectFile, using 1.0.0" -ForegroundColor Yellow
+    return "1.0.0"
 }
 
 # Increment version based on semantic versioning
@@ -91,7 +95,25 @@ function Update-ProjectVersion {
     param([string]$newVersion)
     
     [xml]$projectXml = Get-Content $ProjectFile
-    $projectXml.Project.PropertyGroup.PackageVersion = $newVersion
+    
+    # Find and update PackageVersion in the correct PropertyGroup
+    $updated = $false
+    foreach ($propertyGroup in $projectXml.Project.PropertyGroup) {
+        if ($propertyGroup.PackageVersion) {
+            $propertyGroup.PackageVersion = $newVersion
+            $updated = $true
+            break
+        }
+    }
+    
+    # If PackageVersion wasn't found, add it to the first PropertyGroup
+    if (-not $updated) {
+        $firstPropertyGroup = $projectXml.Project.PropertyGroup[0]
+        $packageVersionElement = $projectXml.CreateElement("PackageVersion")
+        $packageVersionElement.InnerText = $newVersion
+        $firstPropertyGroup.AppendChild($packageVersionElement) | Out-Null
+    }
+    
     $projectXml.Save($ProjectFile)
     Write-Host "Updated $ProjectFile to version $newVersion" -ForegroundColor Green
 }
