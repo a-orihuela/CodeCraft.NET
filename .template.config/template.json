@@ -1,17 +1,20 @@
 {
   "$schema": "http://json.schemastore.org/template",
-  "author": "Tu Nombre",
-  "classifications": ["Web", "API", "Clean Architecture"],
-  "identity": "CodeCraft.NET.Template",
+  "author": "Abraham Orihuela Mayor",
+  "classifications": ["Web", "API", "Clean Architecture", "CQRS", "Template"],
+  "identity": "CodeCraft.NET.CleanArchitecture.Template",
   "name": "CodeCraft.NET Clean Architecture Template",
   "shortName": "codecraft",
   "tags": {
     "language": "C#",
     "type": "project"
   },
-  "description": "A Clean Architecture template with CQRS, Entity Framework, and code generation",
+  "description": "A Clean Architecture template for .NET with CQRS, Entity Framework, automatic code generation, and JWT authentication",
   "sourceName": "CodeCraft.NET",
   "preferNameDirectory": true,
+  "guids": [
+    "09bae888-39a7-46e2-90f5-7ccd2ce188fb"
+  ],
   "symbols": {
     "ProjectName": {
       "type": "parameter",
@@ -20,44 +23,37 @@
       "replaces": "CodeCraft.NET",
       "fileRename": "CodeCraft.NET"
     },
-    "CompanyName": {
-      "type": "parameter",
-      "datatype": "string",
-      "defaultValue": "MyCompany",
-      "replaces": "CodeCraft"
-    },
     "DatabaseProvider": {
       "type": "parameter",
       "datatype": "choice",
       "choices": [
         {
           "choice": "SqlServer",
-          "description": "SQL Server"
+          "description": "Use SQL Server as database provider"
         },
         {
           "choice": "PostgreSQL",
-          "description": "PostgreSQL"
+          "description": "Use PostgreSQL as database provider"
         }
       ],
-      "defaultValue": "SqlServer"
-    },
-    "UseDocker": {
-      "type": "parameter",
-      "datatype": "bool",
-      "defaultValue": "false",
-      "description": "Include Docker support"
+      "defaultValue": "SqlServer",
+      "description": "The database provider to use"
     }
   },
   "sources": [
     {
       "modifiers": [
         {
-          "condition": "(!UseDocker)",
-          "exclude": [
-            "**/Dockerfile",
-            "**/docker-compose.yml",
-            "**/DockerManager.cs"
-          ]
+          "condition": "(DatabaseProvider == \"SqlServer\")",
+          "exclude": [],
+          "include": [],
+          "rename": {}
+        },
+        {
+          "condition": "(DatabaseProvider == \"PostgreSQL\")",
+          "exclude": [],
+          "include": [],
+          "rename": {}
         }
       ]
     }
@@ -68,13 +64,23 @@
       "description": "Make scripts executable",
       "manualInstructions": [
         {
-          "text": "Run 'chmod +x *.sh'"
+          "text": "Run 'chmod +x *.sh' to make shell scripts executable"
         }
       ],
       "actionId": "cb9a6cf3-4f5c-4860-b9d2-03a574959774",
       "args": {
         "+x": "*.sh"
       },
+      "continueOnError": true
+    },
+    {
+      "description": "Restore NuGet packages",
+      "manualInstructions": [
+        {
+          "text": "Run 'dotnet restore' in the project directory"
+        }
+      ],
+      "actionId": "210D431B-A78B-4D2F-B762-4ED3E3EA9025",
       "continueOnError": true
     }
   ]

@@ -70,12 +70,22 @@ namespace CodeCraft.NET.Infrastructure
 
 		private static void AddDbContext(IServiceCollection services, IConfiguration configuration, string appConnection)
 		{
+//#if (DatabaseProvider == "SqlServer")
 			services.AddDbContext<ApplicationDbContext>(options =>
 				options.UseSqlServer(
 					appConnection,
 					x => x.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
 				)
 			);
+//#endif
+//#if (DatabaseProvider == "PostgreSQL")
+//			services.AddDbContext<ApplicationDbContext>(options =>
+//				options.UseNpgsql(
+//					appConnection,
+//					x => x.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
+//				)
+//			);
+//#endif
 		}
 	}
 }

@@ -2,23 +2,79 @@
 
   <PropertyGroup>
     <PackageType>Template</PackageType>
+    <PackageId>CodeCraft.NET.CleanArchitecture.Template</PackageId>
     <PackageVersion>1.0.0</PackageVersion>
-    <PackageId>CodeCraft.NET.Template</PackageId>
     <Title>CodeCraft.NET Clean Architecture Template</Title>
-    <Authors>Tu Nombre</Authors>
-    <Description>A Clean Architecture template for .NET with CQRS, Entity Framework, and automatic code generation</Description>
-    <PackageTags>dotnet-new;templates;clean-architecture;cqrs;entityframework</PackageTags>
-    <TargetFramework>net9.0</TargetFramework>
+    <Description>A comprehensive Clean Architecture template for .NET applications featuring CQRS, Entity Framework, automatic code generation, and JWT authentication. Perfect for enterprise-grade applications.</Description>
+    <Authors>Your Name</Authors>
+    <Company>Your Company</Company>
+    <PackageTags>dotnet-new;templates;clean-architecture;cqrs;entityframework;jwt;swagger;template;webapi;net9</PackageTags>
+    <PackageProjectUrl>https://github.com/yourusername/CodeCraft.NET</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/yourusername/CodeCraft.NET</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <IncludeContentInPack>true</IncludeContentInPack>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <ContentTargetFolders>content</ContentTargetFolders>
     <NoWarn>$(NoWarn);NU5128</NoWarn>
-    <NoDefaultExcludes>true</NoDefaultExcludes>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <LocalizeTemplates>false</LocalizeTemplates>
+  </PropertyGroup>
+
+  <!-- Explicitly include only the source files we want -->
   <ItemGroup>
-    <Content Include="**/*" Exclude="bin/**;obj/**;.vs/**;*.user;packages/**;build-template.sh;template.csproj" />
-    <Compile Remove="**/*" />
+    <!-- Include .template.config -->
+    <Content Include=".template.config\**\*" Pack="true" PackagePath="content/.template.config/" />
+    
+    <!-- Include all C# source files -->
+    <Content Include="**\*.cs" 
+             Exclude="bin\**;obj\**;nupkg\**;CodeCraft.NET.Frontend.BlazorWASM\**" 
+             Pack="true" 
+             PackagePath="content/" />
+    
+    <!-- Include project files -->
+    <Content Include="**\*.csproj" 
+             Exclude="template.csproj;bin\**;obj\**;nupkg\**;CodeCraft.NET.Frontend.BlazorWASM\**" 
+             Pack="true" 
+             PackagePath="content/" />
+    
+    <!-- Include solution file -->
+    <Content Include="*.sln" Pack="true" PackagePath="content/" />
+    
+    <!-- Include configuration files -->
+    <Content Include="**\*.json" 
+             Exclude="bin\**;obj\**;nupkg\**;CodeCraft.NET.Frontend.BlazorWASM\**" 
+             Pack="true" 
+             PackagePath="content/" />
+    
+    <!-- Include template files -->
+    <Content Include="**\*.scriban" 
+             Exclude="CodeCraft.NET.Frontend.BlazorWASM\**" 
+             Pack="true" 
+             PackagePath="content/" />
+    
+    <!-- Include other important files -->
+    <Content Include="**\*.md" 
+             Exclude="README.md;PUBLISHING.md;icon-readme.txt;EMOJI-REMOVAL-SUMMARY.md;POST-PUBLICATION-SUCCESS.md;BUILD-COMMANDS.md;CodeCraft.NET.Frontend.BlazorWASM\**" 
+             Pack="true" 
+             PackagePath="content/" />
+    
+    <!-- Include scripts -->
+    <Content Include="init.sh;init.bat" Pack="true" PackagePath="content/" />
+  </ItemGroup>
+
+  <!-- Remove all compilation -->
+  <ItemGroup>
+    <Compile Remove="**\*" />
+  </ItemGroup>
+
+  <!-- Include README in package root -->
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>

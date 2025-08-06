@@ -1,27 +1,39 @@
 # CodeCraft.NET Clean Architecture Template
 
-## ?? Installation
-# Install the template
-dotnet new install .
+[![NuGet](https://img.shields.io/nuget/v/CodeCraft.NET.CleanArchitecture.Template.svg)](https://www.nuget.org/packages/CodeCraft.NET.CleanArchitecture.Template/)
+[![Downloads](https://img.shields.io/nuget/dt/CodeCraft.NET.CleanArchitecture.Template.svg)](https://www.nuget.org/packages/CodeCraft.NET.CleanArchitecture.Template/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-# Or from NuGet (when published)
-dotnet new install CodeCraft.NET.Template
-## ?? Usage
-# Create new project
+## Installation
+
+### From NuGet (Recommended)# Install the template
+dotnet new install CodeCraft.NET.CleanArchitecture.Template
+
+# Verify installation
+dotnet new list codecraft
+### From Source# Clone repository
+git clone https://github.com/yourusername/CodeCraft.NET.git
+cd CodeCraft.NET
+
+# Install locally
+dotnet new install .
+## Usage
+# Create new project with default settings
 dotnet new codecraft -n "MyNewProject"
 
-# With custom options
-dotnet new codecraft -n "MyProject" --CompanyName "MyCompany" --DatabaseProvider "PostgreSQL" --UseDocker true
-## ?? Available Parameters
+# Create with custom options
+dotnet new codecraft -n "MyProject" \
+  --CompanyName "MyCompany" \
+  --DatabaseProvider "PostgreSQL"
+### Available Parameters
 
 | Parameter | Description | Values | Default |
 |-----------|-------------|---------|---------|
 | `ProjectName` | Project name | string | MyProject |
 | `CompanyName` | Company name | string | MyCompany |
 | `DatabaseProvider` | Database provider | SqlServer, PostgreSQL | SqlServer |
-| `UseDocker` | Include Docker support | true, false | false |
 
-## ??? Generated Structure
+## Generated Structure
 MyProject/
 ??? MyProject.Domain/          # Entities and domain logic
 ??? MyProject.Application/     # CQRS, DTOs, Contracts
@@ -29,29 +41,32 @@ MyProject/
 ??? MyProject.WebAPI/         # Controllers, Configuration
 ??? MyProject.Cross/          # Shared utilities
 ??? MyProject.Generator/      # Code generator
-## ?? What is CodeCraft.NET?
+## What is CodeCraft.NET?
 
 CodeCraft.NET is a **powerful project template** that combines **Clean Architecture** with **automatic code generation**. It's designed to help developers create enterprise-grade .NET applications in minutes, not hours.
 
 ### Key Features:
-- ??? **Clean Architecture** with proper layer separation
-- ?? **CQRS + MediatR** for scalable command/query operations
-- ??? **Entity Framework Core** with automatic migrations
-- ? **Automatic Code Generator** that creates boilerplate code
-- ?? **JWT Authentication** and Azure AD integration
-- ?? **Swagger/OpenAPI** documentation
-- ?? **Repository + Unit of Work** patterns
-- ??? **AutoMapper** for object mapping
-- ? **FluentValidation** for input validation
+- **Clean Architecture** with proper layer separation
+- **CQRS + MediatR** for scalable command/query operations
+- **Entity Framework Core** with automatic migrations
+- **Automatic Code Generator** that creates boilerplate code
+- **JWT Authentication** and Azure AD integration
+- **Swagger/OpenAPI** documentation
+- **Repository + Unit of Work** patterns
+- **AutoMapper** for object mapping
+- **FluentValidation** for input validation
 
-## ?? Quick Start Guide (5 Minutes)
+## Quick Start Guide (5 Minutes)
 
-### Step 1: Create Your First Entity
+### Step 1: Install Templatedotnet new install CodeCraft.NET.CleanArchitecture.Template
+### Step 2: Create Projectdotnet new codecraft -n "ProductCatalog"
+cd ProductCatalog
+### Step 3: Create Your First Entity
 
-Create a new domain entity in `MyProject.Domain/Model/`:
+Create a new domain entity in `ProductCatalog.Domain/Model/`:
 using CodeCraft.NET.Cross.Domain;
 
-namespace MyProject.Domain.Model;
+namespace ProductCatalog.Domain.Model;
 
 public class Product : BaseDomainModel
 {
@@ -62,28 +77,25 @@ public class Product : BaseDomainModel
     public int Stock { get; set; }
     public bool IsAvailable { get; set; }
 }
-### Step 2: Run the Code Generator
-dotnet run --project MyProject.Generator
-### Step 3: Apply Database Migrations
-dotnet ef database update --project MyProject.Infrastructure --startup-project MyProject.WebAPI
-### Step 4: Run Your API
-dotnet run --project MyProject.WebAPI
-### Step 5: Test Your API
+### Step 4: Run the Code Generatordotnet run --project ProductCatalog.Generator
+### Step 5: Apply Database Migrationsdotnet ef database update --project ProductCatalog.Infrastructure --startup-project ProductCatalog.WebAPI
+### Step 6: Run Your APIdotnet run --project ProductCatalog.WebAPI
+### Step 7: Test Your API
 
 Navigate to `https://localhost:7202/swagger` and you'll see:
 
-? **Automatically Generated Endpoints:**
+**Automatically Generated Endpoints:**
 - `GET /api/Product` - Get all products with pagination
 - `GET /api/Product/{id}` - Get product by ID
 - `POST /api/Product` - Create new product
 - `PUT /api/Product/{id}` - Update existing product
 - `DELETE /api/Product/{id}` - Delete product
 
-## ?? What the Generator Creates
+## What the Generator Creates
 
 When you run the generator, it automatically creates:
 
-### ?? In Application Layer:Application/
+### In Application Layer:Application/
 ??? CQRS/Features/Products/
 ?   ??? Commands/
 ?   ?   ??? Create/ProductCreate.cs, ProductCreateHandler.cs, ProductCreateValidator.cs
@@ -94,12 +106,12 @@ When you run the generator, it automatically creates:
 ?       ??? GetProductWithRelated.cs, GetProductWithRelatedHandler.cs
 ??? Contracts/Persistence/Repositories/IProductRepository.cs
 ??? Mapping/MappingProfile.cs (updated)
-### ?? In Infrastructure Layer:Infrastructure/
+### In Infrastructure Layer:Infrastructure/
 ??? Persistence/Repositories/ProductRepository.cs
 ??? Persistence/Custom/Repositories/ProductRepository.Custom.cs
 ??? ApplicationDbContext.cs (updated with Product DbSet)
-### ?? In WebAPI Layer:WebAPI/Controllers/ProductController.cs
-## ?? Extending Functionality with Custom Features
+### In WebAPI Layer:WebAPI/Controllers/ProductController.cs
+## Extending Functionality with Custom Features
 
 ### Adding Custom Commands
 
@@ -179,7 +191,7 @@ public class ProductManagementController : ControllerBase
         return Ok(result);
     }
 }
-## ?? Authentication & Authorization
+## Authentication & Authorization
 
 The template includes built-in authentication:
 
@@ -208,7 +220,7 @@ public async Task<IActionResult> DeleteProduct(int id)
 {
     // Only administrators can delete
 }
-## ?? Database Features
+## Database Features
 
 ### Automatic Migrations
 The generator creates and applies migrations automatically:
@@ -223,7 +235,7 @@ Every entity inherits from `BaseDomainModel`:
 - `LastModifiedBy` - Who last updated the record
 - `Active` - Soft delete flag
 
-## ?? Testing Your API
+## Testing Your API
 
 Use the built-in Swagger UI at `https://localhost:7202/swagger`:
 
@@ -232,7 +244,7 @@ Use the built-in Swagger UI at `https://localhost:7202/swagger`:
 3. **Test Endpoints**: Try all the CRUD operations
 4. **View Schemas**: See all DTOs and models
 
-## ?? Configuration
+## Configuration
 
 ### Database Provider
 Switch between SQL Server and PostgreSQL in `appsettings.json`:
@@ -251,7 +263,7 @@ Configure authentication in `appsettings.Development.json`:
     "DurationInMinutes": 60
   }
 }
-## ?? Development Workflow
+## Development Workflow
 
 1. **Define Domain Entities** in `Domain/Model/`
 2. **Run Code Generator** with `dotnet run --project Generator`
@@ -260,7 +272,7 @@ Configure authentication in `appsettings.Development.json`:
 5. **Test with Swagger** or your preferred API client
 6. **Deploy** your application
 
-## ??? Advanced Features
+## Advanced Features
 
 ### Pagination
 All list endpoints support pagination:GET /api/Product?PageNumber=1&PageSize=10&OrderBy=Name
@@ -290,7 +302,7 @@ FluentValidation is integrated automatically:public class ProductCreateValidator
             .GreaterThan(0).WithMessage("Price must be greater than 0");
     }
 }
-## ?? Architecture Deep Dive
+## Architecture Deep Dive
 
 ### Clean Architecture Layers
 ???????????????????
@@ -308,10 +320,43 @@ FluentValidation is integrated automatically:public class ProductCreateValidator
 - **Handlers**: Business logic implementation
 - **Validators**: Input validation rules
 
-## ?? Contributing
+## What's New
 
-This template is designed to be a starting point for .NET projects following Clean Architecture principles. Feel free to customize it according to your specific needs.
+### Version 1.0.0
+- Initial release
+- Clean Architecture foundation
+- CQRS + MediatR implementation
+- Automatic code generation
+- JWT Authentication
+- Swagger documentation
+- Repository + Unit of Work patterns
+- FluentValidation integration
 
-## ?? License
+## Contributing
 
-This template is provided as-is for educational and commercial use.
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Clean Architecture by Robert C. Martin
+- CQRS pattern implementation
+- MediatR for request/response patterns
+- Entity Framework Core team
+- FluentValidation for validation rules
+
+## Support
+
+- [Documentation](https://github.com/yourusername/CodeCraft.NET/wiki)
+- [Issue Tracker](https://github.com/yourusername/CodeCraft.NET/issues)
+- [Discussions](https://github.com/yourusername/CodeCraft.NET/discussions)
+- [Email Support](mailto:support@yourcompany.com)
+
+---
+
+**Star this repository** if you find it helpful!
+
+**Happy coding with CodeCraft.NET!**

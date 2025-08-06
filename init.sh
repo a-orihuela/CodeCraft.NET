@@ -1,37 +1,37 @@
 #!/bin/bash
 
-echo "?? Inicializando proyecto CodeCraft.NET..."
+echo "Initializing CodeCraft.NET project..."
 
-# Obtener el nombre del proyecto del directorio actual
+# Get project name from current directory
 PROJECT_NAME=$(basename "$PWD")
-echo "?? Proyecto: $PROJECT_NAME"
+echo "Project: $PROJECT_NAME"
 
-# Renombrar archivos de solución
+# Rename solution files
 if [ -f "CodeCraft.NET.sln" ]; then
     mv "CodeCraft.NET.sln" "$PROJECT_NAME.sln"
-    echo "? Solución renombrada a $PROJECT_NAME.sln"
+    echo "Solution renamed to $PROJECT_NAME.sln"
 fi
 
-# Restaurar paquetes NuGet
-echo "?? Restaurando paquetes NuGet..."
+# Restore NuGet packages
+echo "Restoring NuGet packages..."
 dotnet restore
 
-# Aplicar migraciones si existe la base de datos
-echo "??? Configurando base de datos..."
+# Apply migrations if database exists
+echo "Setting up database..."
 if dotnet ef migrations list --project "$PROJECT_NAME.Infrastructure" --startup-project "$PROJECT_NAME.WebAPI" > /dev/null 2>&1; then
     dotnet ef database update --project "$PROJECT_NAME.Infrastructure" --startup-project "$PROJECT_NAME.WebAPI"
-    echo "? Base de datos actualizada"
+    echo "Database updated"
 else
-    echo "?? No se encontraron migraciones. Ejecute el generador primero."
+    echo "No migrations found. Run the generator first."
 fi
 
-# Compilar la solución
-echo "?? Compilando solución..."
+# Build the solution
+echo "Building solution..."
 dotnet build
 
-echo "? ¡Proyecto inicializado correctamente!"
+echo "Project initialized successfully!"
 echo ""
-echo "?? Próximos pasos:"
-echo "  1. Ejecutar: dotnet run --project $PROJECT_NAME.WebAPI"
-echo "  2. Visitar: https://localhost:7202/swagger"
-echo "  3. Generar código: dotnet run --project $PROJECT_NAME.Generator"
+echo "Next steps:"
+echo "  1. Run: dotnet run --project $PROJECT_NAME.WebAPI"
+echo "  2. Visit: https://localhost:7202/swagger"
+echo "  3. Generate code: dotnet run --project $PROJECT_NAME.Generator"

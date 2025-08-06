@@ -1,41 +1,100 @@
 #!/bin/bash
 
-echo "?? Creando package del template CodeCraft.NET..."
+echo "Building CodeCraft.NET Template Package..."
 
-# Crear directorio para el package
-PACKAGE_DIR="./template-package"
+# Variables
+PACKAGE_VERSION="1.0.0"
+PACKAGE_DIR="./nupkg"
+NUGET_SOURCE="https://api.nuget.org/v3/index.json"
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+echo -e "${BLUE}Template Package Build Process${NC}"
+echo "=================================="
+
+# Clean previous packages
+echo -e "${YELLOW}Cleaning previous packages...${NC}"
 rm -rf $PACKAGE_DIR
 mkdir -p $PACKAGE_DIR
 
-# Copiar archivos del template
-echo "?? Copiando archivos del template..."
-cp -r . $PACKAGE_DIR/
+# Validate required files
+echo -e "${YELLOW}Validating required files...${NC}"
 
-# Limpiar archivos innecesarios del package
-echo "?? Limpiando archivos innecesarios..."
-cd $PACKAGE_DIR
+if [ ! -f ".template.config/template.json" ]; then
+    echo -e "${RED}Missing .template.config/template.json${NC}"
+    exit 1
+fi
 
-# Eliminar directorios de build y temporales
-find . -name "bin" -type d -exec rm -rf {} + 2>/dev/null
-find . -name "obj" -type d -exec rm -rf {} + 2>/dev/null
-find . -name ".vs" -type d -exec rm -rf {} + 2>/dev/null
-find . -name "*.user" -delete 2>/dev/null
+if [ ! -f "template.csproj" ]; then
+    echo -e "${RED}Missing template.csproj${NC}"
+    exit 1
+fi
 
-# Eliminar archivos específicos que no deben estar en el template
-rm -f .gitignore
-rm -f *.md 2>/dev/null
-rm -f build-template.sh
+if [ ! -f "README.md" ]; then
+    echo -e "${RED}Missing README.md${NC}"
+    exit 1
+fi
 
-cd ..
+echo -e "${GREEN}All required files found${NC}"
 
-# Crear el package NuGet
-echo "?? Creando package NuGet..."
-dotnet pack $PACKAGE_DIR -o ./packages --include-source --include-symbols
+# Build the package
+echo -e "${YELLOW}Building NuGet package...${NC}"
+dotnet pack template.csproj -o $PACKAGE_DIR -p:PackageVersion=$PACKAGE_VERSION --nologo
 
-echo "? Template package creado en ./packages/"
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}Package built successfully!${NC}"
+    
+    # List generated package
+    PACKAGE_FILE=$(ls $PACKAGE_DIR/*.nupkg | head -1)
+    echo -e "${BLUE}Generated package: $(basename $PACKAGE_FILE)${NC}"
+    
+    # Show package info
+    echo -e "${BLUE}Package Information:${NC}"
+    echo "   Location: $PACKAGE_FILE"
+    echo "   Size: $(ls -lh $PACKAGE_FILE | awk '{print $5}')"
+    echo "   Version: $PACKAGE_VERSION"
+    
+else
+    echo -e "${RED}Package build failed!${NC}"
+    exit 1
+fi
+
+# Ask for publication
 echo ""
-echo "?? Para instalar el template:"
-echo "  dotnet new install ./packages/CodeCraft.NET.Template.*.nupkg"
+echo -e "${YELLOW}Do you want to publish to NuGet.org? (y/N)${NC}"
+read -r response
+
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+    echo -e "${YELLOW}Please enter your NuGet API key:${NC}"
+    read -s NUGET_API_KEY
+    
+    if [ -z "$NUGET_API_KEY" ]; then
+        echo -e "${RED}API key is required for publishing${NC}"
+        exit 1
+    fi
+    
+    echo -e "${YELLOW}Publishing to NuGet.org...${NC}"
+    dotnet nuget push $PACKAGE_FILE --api-key $NUGET_API_KEY --source $NUGET_SOURCE --no-symbols
+    
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}Successfully published to NuGet.org!${NC}"
+        echo -e "${BLUE}Your template can now be installed with:${NC}"
+        echo "   dotnet new install CodeCraft.NET.CleanArchitecture.Template"
+    else
+        echo -e "${RED}Publication failed!${NC}"
+        exit 1
+    fi
+else
+    echo -e "${BLUE}Package ready for manual publication:${NC}"
+    echo "   1. Go to https://www.nuget.org/packages/manage/upload"
+    echo "   2. Upload: $PACKAGE_FILE"
+    echo "   3. Or use: dotnet nuget push $PACKAGE_FILE --api-key YOUR_API_KEY --source $NUGET_SOURCE"
+fi
+
 echo ""
-echo "?? Para usar el template:"
-echo "  dotnet new codecraft -n \"MiNuevoProyecto\""
+echo -e "${GREEN}Build process completed!${NC}"

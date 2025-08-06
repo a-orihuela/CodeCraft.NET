@@ -76,7 +76,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// ✅ Auto-migrate in development
+// Auto-migrate in development
 if (app.Environment.IsDevelopment())
 {
 	using var scope = app.Services.CreateScope();
@@ -84,12 +84,12 @@ if (app.Environment.IsDevelopment())
 	{
 		var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 		await context.Database.MigrateAsync();
-		Console.WriteLine("✅ Database migrations applied successfully.");
+		Console.WriteLine("Database migrations applied successfully.");
 	}
 	catch (Exception ex)
 	{
-		Console.WriteLine($"⚠️ Migration error: {ex.Message}");
-		Console.WriteLine("⚠️ Continuing without database migrations...");
+		Console.WriteLine($"Migration error: {ex.Message}");
+		Console.WriteLine("Continuing without database migrations...");
 	}
 }
 
