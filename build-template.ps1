@@ -1,10 +1,116 @@
-# CodeCraft.NET Template Build Script
+# CodeCraft.NET Template Build Script with Semantic Versioning
+param(
+    [switch]$Major,
+    [switch]$Minor,
+    [switch]$Help
+)
+
+if ($Help) {
+    Write-Host "`nCodeCraft.NET Template Build Script" -ForegroundColor Cyan
+    Write-Host "====================================" -ForegroundColor Cyan
+    Write-Host "`nUsage:" -ForegroundColor Yellow
+    Write-Host "  .\build-template.ps1              # Increment patch version (1.0.0 -> 1.0.1)" -ForegroundColor White
+    Write-Host "  .\build-template.ps1 -Minor       # Increment minor version (1.0.5 -> 1.1.0)" -ForegroundColor White
+    Write-Host "  .\build-template.ps1 -Major       # Increment major version (1.2.3 -> 2.0.0)" -ForegroundColor White
+    Write-Host "  .\build-template.ps1 -Help        # Show this help" -ForegroundColor White
+    Write-Host "`nSemantic Versioning:" -ForegroundColor Yellow
+    Write-Host "  MAJOR.MINOR.PATCH" -ForegroundColor White
+    Write-Host "  - MAJOR: Breaking changes" -ForegroundColor Gray
+    Write-Host "  - MINOR: New features (backward compatible)" -ForegroundColor Gray
+    Write-Host "  - PATCH: Bug fixes (backward compatible)" -ForegroundColor Gray
+    exit 0
+}
+
 Write-Host "Building CodeCraft.NET Template Package..." -ForegroundColor Cyan
 
 # Variables
-$PackageVersion = "1.0.0"  # Synchronized with template.csproj
-$PackageDir = ".\nupkg"
 $ProjectFile = "template.csproj"
+$PackageDir = ".\nupkg"
+
+# Validate parameters
+if ($Major -and $Minor) {
+    Write-Host "Error: Cannot specify both -Major and -Minor flags" -ForegroundColor Red
+    exit 1
+}
+
+# Read current version from template.csproj
+function Get-ProjectVersion {
+    [xml]$projectXml = Get-Content $ProjectFile
+    $version = $projectXml.Project.PropertyGroup.PackageVersion
+    if ([string]::IsNullOrEmpty($version)) {
+        Write-Host "Warning: No PackageVersion found in $ProjectFile, using 1.0.0" -ForegroundColor Yellow
+        return "1.0.0"
+    }
+    return $version
+}
+
+# Increment version based on semantic versioning
+function Get-NextVersion {
+    param(
+        [string]$currentVersion,
+        [string]$incrementType = "patch"
+    )
+    
+    $versionParts = $currentVersion.Split('.')
+    if ($versionParts.Length -lt 3) {
+        Write-Host "Invalid version format. Expected x.y.z, got: $currentVersion" -ForegroundColor Red
+        exit 1
+    }
+    
+    $major = [int]$versionParts[0]
+    $minor = [int]$versionParts[1]
+    $patch = [int]$versionParts[2]
+    
+    switch ($incrementType.ToLower()) {
+        "major" {
+            $major += 1
+            $minor = 0
+            $patch = 0
+            Write-Host "Incrementing MAJOR version (breaking changes)" -ForegroundColor Red
+        }
+        "minor" {
+            $minor += 1
+            $patch = 0
+            Write-Host "Incrementing MINOR version (new features)" -ForegroundColor Yellow
+        }
+        "patch" {
+            $patch += 1
+            Write-Host "Incrementing PATCH version (bug fixes)" -ForegroundColor Green
+        }
+        default {
+            Write-Host "Invalid increment type: $incrementType" -ForegroundColor Red
+            exit 1
+        }
+    }
+    
+    return "$major.$minor.$patch"
+}
+
+# Update project file with new version
+function Update-ProjectVersion {
+    param([string]$newVersion)
+    
+    [xml]$projectXml = Get-Content $ProjectFile
+    $projectXml.Project.PropertyGroup.PackageVersion = $newVersion
+    $projectXml.Save($ProjectFile)
+    Write-Host "Updated $ProjectFile to version $newVersion" -ForegroundColor Green
+}
+
+# Determine increment type based on parameters
+$incrementType = "patch"  # Default
+if ($Major) {
+    $incrementType = "major"
+} elseif ($Minor) {
+    $incrementType = "minor"
+}
+
+# Auto-increment version
+$CurrentVersion = Get-ProjectVersion
+Write-Host "Current version: $CurrentVersion" -ForegroundColor Blue
+
+$PackageVersion = Get-NextVersion $CurrentVersion $incrementType
+Write-Host "New version: $PackageVersion" -ForegroundColor Cyan
+Update-ProjectVersion $PackageVersion
 
 # Create output directory
 if (Test-Path $PackageDir) {
@@ -12,10 +118,10 @@ if (Test-Path $PackageDir) {
 }
 New-Item -ItemType Directory -Path $PackageDir -Force | Out-Null
 
-Write-Host "Building package..." -ForegroundColor Yellow
+Write-Host "`nBuilding package with version $PackageVersion..." -ForegroundColor Yellow
 
 try {
-    # Build the package with minimal verbosity
+    # Build the package with the auto-incremented version
     dotnet pack $ProjectFile -o $PackageDir -p:PackageVersion=$PackageVersion --verbosity minimal --nologo
     
     if ($LASTEXITCODE -eq 0) {
@@ -25,9 +131,12 @@ try {
         $PackageFile = Get-ChildItem "$PackageDir\*.nupkg" | Select-Object -First 1
         
         if ($PackageFile) {
+            Write-Host "`nPackage Information:" -ForegroundColor Blue
             Write-Host "Generated: $($PackageFile.Name)" -ForegroundColor Blue
             Write-Host "Location: $($PackageFile.FullName)" -ForegroundColor Blue
             Write-Host "Size: $([math]::Round($PackageFile.Length / 1MB, 2)) MB" -ForegroundColor Blue
+            Write-Host "Version: $PackageVersion" -ForegroundColor Blue
+            Write-Host "Increment Type: $($incrementType.ToUpper())" -ForegroundColor Blue
             
             Write-Host "`nNext Steps:" -ForegroundColor Cyan
             Write-Host "1. Test locally: dotnet new install `"$($PackageFile.FullName)`"" -ForegroundColor White
