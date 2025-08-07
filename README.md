@@ -8,25 +8,31 @@
 
 ### From NuGet (Recommended)
 # Install the template
-dotnet new install CodeCraft.NET.CleanArchitecture.Template
+    dotnet new install CodeCraft.NET.CleanArchitecture.Template
 
 # Verify installation
-dotnet new list codecraft
+    dotnet new list codecraft
+
 ### From Source
 # Clone repository
-git clone https://github.com/yourusername/CodeCraft.NET.git
-cd CodeCraft.NET
+    git clone https://github.com/yourusername/CodeCraft.NET.git
+    cd CodeCraft.NET
 
 # Install locally
-dotnet new install .
+
+    dotnet new install .
+
 ## Usage
 # Create new project with default settings
-dotnet new codecraft -n "MyNewProject"
+
+    dotnet new codecraft -n "MyNewProject"
 
 # Create with custom options
-dotnet new codecraft -n "MyProject" \
-  --CompanyName "MyCompany" \
-  --DatabaseProvider "PostgreSQL"
+
+    dotnet new codecraft -n "MyProject" \
+      --CompanyName "MyCompany" \
+      --DatabaseProvider "PostgreSQL"
+
 ### Available Parameters
 
 | Parameter | Description | Values | Default |
@@ -63,13 +69,18 @@ CodeCraft.NET is a **powerful project template** that combines **Clean Architect
 ## Quick Start Guide (5 Minutes)
 
 ### Step 1: Install Template
-dotnet new install CodeCraft.NET.CleanArchitecture.Template
+
+    dotnet new install CodeCraft.NET.CleanArchitecture.Template
+
 ### Step 2: Create Project
-dotnet new codecraft -n "ProductCatalog"
-cd ProductCatalog
+
+    dotnet new codecraft -n "ProductCatalog"
+    cd ProductCatalog
+
 ### Step 3: Create Your First Entity
 
 Create a new domain entity in `ProductCatalog.Domain/Model/`:
+
     using CodeCraft.NET.Cross.Domain;
 
     namespace ProductCatalog.Domain.Model;
@@ -85,11 +96,17 @@ Create a new domain entity in `ProductCatalog.Domain/Model/`:
     }
 
 ### Step 4: Run the Code Generator
-dotnet run --project ProductCatalog.Generator
+
+    dotnet run --project ProductCatalog.Generator
+
 ### Step 5: Apply Database Migrations
-dotnet ef database update --project ProductCatalog.Infrastructure --startup-project ProductCatalog.WebAPI
+
+    dotnet ef database update --project ProductCatalog.Infrastructure --startup-project ProductCatalog.WebAPI
+
 ### Step 6: Run Your API
-dotnet run --project ProductCatalog.WebAPI
+
+    dotnet run --project ProductCatalog.WebAPI
+
 ### Step 7: Test Your API
 
 Navigate to `https://localhost:7202/swagger` and you'll see:
@@ -106,6 +123,7 @@ Navigate to `https://localhost:7202/swagger` and you'll see:
 When you run the generator, it automatically creates:
 
 ### In Application Layer
+
 - Application/
   - CQRS/Features/Products/
     - Commands/
@@ -119,46 +137,52 @@ When you run the generator, it automatically creates:
     - Mapping/MappingProfile.cs (updated)
 
 ### In Infrastructure Layer
+
 - Infrastructure/
   - Persistence/Repositories/ProductRepository.cs
   - Persistence/Custom/Repositories/ProductRepository.Custom.cs
   - ApplicationDbContext.cs (updated with Product DbSet)
 
 ### In WebAPI Layer
+
 - WebAPI/Controllers/ProductController.cs
+
 ## Extending Functionality with Custom Features
 
 ### Adding Custom Commands
 
 Create custom business logic in the `Custom` folders:
-// Application/CQRS/Custom/Features/Products/Commands/DiscountProduct/
-public class DiscountProductCommand : IRequest<bool>
-{
-    public int ProductId { get; set; }
-    public decimal DiscountPercentage { get; set; }
-}
 
-public class DiscountProductHandler : IRequestHandler<DiscountProductCommand, bool>
-{
-    private readonly ICodeCraftUnitOfWork _unitOfWork;
-    
-    public DiscountProductHandler(ICodeCraftUnitOfWork unitOfWork)
+    // Application/CQRS/Custom/Features/Products/Commands/DiscountProduct/
+    public class DiscountProductCommand : IRequest<bool>
     {
-        _unitOfWork = unitOfWork;
+	    public int ProductId { get; set; }
+	    public decimal DiscountPercentage { get; set; }
     }
-    
-    public async Task<bool> Handle(DiscountProductCommand request, CancellationToken cancellationToken)
+
+    public class DiscountProductHandler : IRequestHandler<DiscountProductCommand, bool>
     {
-        var product = await _unitOfWork.Repository<Product>().GetByIdAsync(request.ProductId);
-        product.Price = product.Price * (1 - request.DiscountPercentage / 100);
-        
-        _unitOfWork.Repository<Product>().UpdateEntity(product);
-        return await _unitOfWork.Complete() > 0;
+	    private readonly ICodeCraftUnitOfWork _unitOfWork;
+    
+	    public DiscountProductHandler(ICodeCraftUnitOfWork unitOfWork)
+	    {
+	        _unitOfWork = unitOfWork;
+	    }
+    
+	    public async Task<bool> Handle(DiscountProductCommand request, CancellationToken cancellationToken)
+	    {
+	        var product = await _unitOfWork.Repository<Product>().GetByIdAsync(request.ProductId);
+	        product.Price = product.Price * (1 - request.DiscountPercentage / 100);
+	    
+	        _unitOfWork.Repository<Product>().UpdateEntity(product);
+	        return await _unitOfWork.Complete() > 0;
+	    }
     }
-}
+
 ### Adding Custom Repository Methods
 
 Extend repositories with custom queries:
+
     // Application/Contracts/Persistence/Custom/IProductRepository.Custom.cs
     public partial interface IProductRepository
     {
@@ -187,65 +211,76 @@ Extend repositories with custom queries:
 ### Adding Custom Controllers
 
 Create specialized endpoints:
-// WebAPI/Controllers/Custom/ProductManagementController.cs
-[ApiController]
-[Route("api/[controller]")]
-public class ProductManagementController : ControllerBase
-{
-    private readonly IMediator _mediator;
-    
-    public ProductManagementController(IMediator mediator)
+
+    // WebAPI/Controllers/Custom/ProductManagementController.cs
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ProductManagementController : ControllerBase
     {
-        _mediator = mediator;
-    }
+        private readonly IMediator _mediator;
     
-    [HttpPost("{id}/discount")]
-    public async Task<IActionResult> ApplyDiscount(int id, [FromBody] DiscountProductCommand command)
-    {
-        command.ProductId = id;
-        var result = await _mediator.Send(command);
-        return Ok(result);
+        public ProductManagementController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+    
+        [HttpPost("{id}/discount")]
+        public async Task<IActionResult> ApplyDiscount(int id, [FromBody] DiscountProductCommand command)
+        {
+            command.ProductId = id;
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
     }
-}
+
 ## Authentication & Authorization
 
 The template includes built-in authentication:
 
 ### JWT Authentication
-// Login endpoint automatically available
-POST /api/Auth/login
-{
-    "email": "admin@localhost.com",
-    "password": "admin"
-}
-### Register New Users
-POST /api/Auth/register
-{
-    "email": "user@example.com",
-    "password": "SecurePassword123!",
-    "fullName": "John Doe"
-}
-### Protect Your Endpoints
-[Authorize]
-[HttpGet]
-public async Task<IActionResult> GetProducts()
-{
-    // Only authenticated users can access
-}
 
-[Authorize(Roles = "Administrator")]
-[HttpDelete("{id}")]
-public async Task<IActionResult> DeleteProduct(int id)
-{
-    // Only administrators can delete
-}
+    // Login endpoint automatically available
+    POST /api/Auth/login
+    {
+        "email": "admin@localhost.com",
+        "password": "admin"
+    }
+
+### Register New Users
+
+    POST /api/Auth/register
+    {
+        "email": "user@example.com",
+        "password": "SecurePassword123!",
+        "fullName": "John Doe"
+    }
+
+### Protect Your Endpoints
+
+    [Authorize]
+    [HttpGet]
+    public async Task<IActionResult> GetProducts()
+    {
+        // Only authenticated users can access
+    }
+
+    [Authorize(Roles = "Administrator")]
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteProduct(int id)
+    {
+        // Only administrators can delete
+    }
+
 ## Database Features
 
 ### Automatic Migrations
 
 The generator creates and applies migrations automatically:
+
 # Generated migration includes your new entities
-dotnet ef migrations add AutoGen_20240101120000 --project Infrastructure --startup-project WebAPI
+
+    dotnet ef migrations add AutoGen_20240101120000 --project Infrastructure --startup-project WebAPI
+
 ### Built-in Auditing
 
 Every entity inherits from `BaseDomainModel`:
@@ -270,22 +305,26 @@ Use the built-in Swagger UI at `https://localhost:7202/swagger`:
 ### Database Provider
 
 Switch between SQL Server and PostgreSQL in `appsettings.json`:
-{
-  "ConnectionStrings": {
-    "Application": "Server=(localdb)\\mssqllocaldb;Database=MyProjectDb;Trusted_Connection=true;MultipleActiveResultSets=true;"
-  }
-}
+
+    {
+      "ConnectionStrings": {
+        "Application": "Server=(localdb)\\mssqllocaldb;Database=MyProjectDb;Trusted_Connection=true;MultipleActiveResultSets=true;"
+      }
+    }
+
 ### JWT Settings
 
 Configure authentication in `appsettings.Development.json`:
-{
-  "JwtSettings": {
-    "Issuer": "MyProject.API",
-    "Audience": "frontend",
-    "Key": "YourSuperSecretSecurityKeyOfAtLeast32Chars",
-    "DurationInMinutes": 60
-  }
-}
+
+    {
+        "JwtSettings": {
+        "Issuer": "MyProject.API",
+        "Audience": "frontend",
+        "Key": "YourSuperSecretSecurityKeyOfAtLeast32Chars",
+        "DurationInMinutes": 60
+        }
+    }
+
 ## Development Workflow
 
 1. **Define Domain Entities** in `Domain/Model/`
@@ -300,37 +339,43 @@ Configure authentication in `appsettings.Development.json`:
 ### Pagination
 
 All list endpoints support pagination:
-GET /api/Product?PageNumber=1&PageSize=10&OrderBy=Name
+
+    GET /api/Product?PageNumber=1&PageSize=10&OrderBy=Name
+
 ### Filtering
 
 Use specifications for complex queries:
-// Application/CQRS/Specifications/Products/ProductSpecification.cs
-public class ProductSpecification : BaseSpecification<Product>
-{
-    public ProductSpecification(ProductSpecificationParams @params)
+
+    // Application/CQRS/Specifications/Products/ProductSpecification.cs
+    public class ProductSpecification : BaseSpecification<Product>
     {
-        if (!string.IsNullOrEmpty(@params.Category))
-            AndCriteria(x => x.Category == @params.Category);
+        public ProductSpecification(ProductSpecificationParams @params)
+        {
+            if (!string.IsNullOrEmpty(@params.Category))
+                AndCriteria(x => x.Category == @params.Category);
             
-        if (@params.MinPrice.HasValue)
-            AndCriteria(x => x.Price >= @params.MinPrice.Value);
+            if (@params.MinPrice.HasValue)
+                AndCriteria(x => x.Price >= @params.MinPrice.Value);
+        }
     }
-}
+
 ### Validation
 
 FluentValidation is integrated automatically:
-public class ProductCreateValidator : AbstractValidator<ProductCreate>
-{
-    public ProductCreateValidator()
+    
+    public class ProductCreateValidator : AbstractValidator<ProductCreate>
     {
-        RuleFor(x => x.Name)
-            .NotEmpty().WithMessage("Product name is required")
-            .MaximumLength(100);
+        public ProductCreateValidator()
+        {
+            RuleFor(x => x.Name)
+                .NotEmpty().WithMessage("Product name is required")
+                .MaximumLength(100);
             
-        RuleFor(x => x.Price)
-            .GreaterThan(0).WithMessage("Price must be greater than 0");
+            RuleFor(x => x.Price)
+                .GreaterThan(0).WithMessage("Price must be greater than 0");
+        }
     }
-}
+
 ## Architecture Deep Dive
 
 ### Clean Architecture Layers
@@ -354,12 +399,14 @@ public class ProductCreateValidator : AbstractValidator<ProductCreate>
 ## What's New
 
 ### Version 1.0.2
+
 - Improved template build script with semantic versioning
 - Enhanced PowerShell build automation
 - Cleaner template structure
 - Better documentation formatting
 
 ### Version 1.0.0
+
 - Initial release
 - Clean Architecture foundation
 - CQRS + MediatR implementation
@@ -368,10 +415,6 @@ public class ProductCreateValidator : AbstractValidator<ProductCreate>
 - Swagger documentation
 - Repository + Unit of Work patterns
 - FluentValidation integration
-
-## Contributing
-
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
 ## License
 
@@ -384,15 +427,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - MediatR for request/response patterns
 - Entity Framework Core team
 - FluentValidation for validation rules
-
-## Support
-
-- [Documentation](https://github.com/yourusername/CodeCraft.NET/wiki)
-- [Issue Tracker](https://github.com/yourusername/CodeCraft.NET/issues)
-- [Discussions](https://github.com/yourusername/CodeCraft.NET/discussions)
-- [Email Support](mailto:support@yourcompany.com)
-
----
 
 **Star this repository** if you find it helpful!
 
