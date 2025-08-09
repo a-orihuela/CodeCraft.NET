@@ -25,10 +25,10 @@ jobs:
         dotnet-version: ${{ env.DOTNET_VERSION }}
     
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore CodeCraft.NET.sln
     
     - name: Build solution
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build CodeCraft.NET.sln --configuration Release --no-restore
     
     - name: Install template locally
       run: dotnet new install .
@@ -82,7 +82,7 @@ jobs:
         dotnet-version: ${{ env.DOTNET_VERSION }}
     
     - name: Build solution
-      run: dotnet build --configuration Release
+      run: dotnet build CodeCraft.NET.sln --configuration Release
     
     - name: Pack template
       run: dotnet pack template.csproj --configuration Release --output ./nupkg
