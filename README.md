@@ -15,7 +15,7 @@
 
 ### From Source
 # Clone repository
-    git clone https://github.com/yourusername/CodeCraft.NET.git
+    git clone https://github.com/a-orihuela/CodeCraft.NET.git
     cd CodeCraft.NET
 
 # Install locally
