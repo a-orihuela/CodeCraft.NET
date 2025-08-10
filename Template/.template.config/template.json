@@ -20,8 +20,7 @@
       "type": "parameter",
       "datatype": "string",
       "defaultValue": "MyProject",
-      "replaces": "CodeCraft.NET",
-      "fileRename": "CodeCraft.NET"
+      "replaces": "CodeCraft.NET"
     },
     "DatabaseProvider": {
       "type": "parameter",
@@ -40,20 +39,23 @@
       "description": "The database provider to use"
     }
   },
+  "primaryOutputs": [
+    {
+      "path": "CodeCraft.NET.sln"
+    }
+  ],
   "sources": [
     {
       "modifiers": [
         {
           "condition": "(DatabaseProvider == \"SqlServer\")",
           "exclude": [],
-          "include": [],
-          "rename": {}
+          "include": []
         },
         {
           "condition": "(DatabaseProvider == \"PostgreSQL\")",
           "exclude": [],
-          "include": [],
-          "rename": {}
+          "include": []
         }
       ]
     }
