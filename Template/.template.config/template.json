@@ -32,25 +32,8 @@
       ],
       "defaultValue": "SqlServer",
       "description": "The database provider to use"
-    },
-    "SkipTemplateProject": {
-      "type": "computed",
-      "value": "true"
     }
   },
-  "sources": [
-    {
-      "modifiers": [
-        {
-          "condition": "(SkipTemplateProject)",
-          "exclude": [
-            "**/Template/**",
-            "Template/**"
-          ]
-        }
-      ]
-    }
-  ],
   "primaryOutputs": [
     {
       "path": "CodeCraft.NET.sln"

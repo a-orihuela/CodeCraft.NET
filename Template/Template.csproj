@@ -30,7 +30,7 @@
   <ItemGroup>
     <None Include="..\README.md" Pack="true" PackagePath="\" />
     <Content Include=".template.config\template.json" Pack="true" PackagePath="content/.template.config/" />
-    <Content Include="CodeCraft.NET.Template.sln" Pack="true" PackagePath="content\CodeCraft.NET.sln" />
+    <Content Include="CodeCraft.NET.sln" Pack="true" PackagePath="content\CodeCraft.NET.sln" />
     <Content Include="..\CodeCraft.NET.Domain\**\*.cs" Exclude="..\CodeCraft.NET.Domain\bin\**;..\CodeCraft.NET.Domain\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Domain\" />
     <Content Include="..\CodeCraft.NET.Domain\*.csproj" Pack="true" PackagePath="content\CodeCraft.NET.Domain\" />
     <Content Include="..\CodeCraft.NET.Application\**\*.cs" Exclude="..\CodeCraft.NET.Application\bin\**;..\CodeCraft.NET.Application\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Application\" />
@@ -49,6 +49,7 @@
     <Content Include="..\.gitignore" Pack="true" PackagePath="content\" />
     <Content Include="..\*.md" Pack="true" PackagePath="content\" />
     <Content Include="..\**\*.ps1" Exclude="..\Template\build-template.ps1;..\bin\**;..\obj\**" Pack="true" PackagePath="content\" />
+    <None Include="CodeCraft.NET.sln" />
     <None Include="icon.png" Pack="true" PackagePath="\" Condition="Exists('icon.png')" />
   </ItemGroup>
   <ItemGroup>

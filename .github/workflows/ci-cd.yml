@@ -39,10 +39,15 @@ jobs:
         cd test-sqlserver
         dotnet new codecraft -n TestProjectSqlServer --DatabaseProvider SqlServer
         cd TestProjectSqlServer
+        # Debug: List all files to understand the structure
+        echo "Files in project directory:"
+        find . -name "*.sln" -o -name "*.csproj" | head -10
         # Find and build the solution file
         SOLUTION_FILE=$(find . -name "*.sln" -type f | head -n 1)
         if [ -z "$SOLUTION_FILE" ]; then
           echo "Error: No solution file found!"
+          echo "Directory contents:"
+          ls -la
           exit 1
         fi
         echo "Building solution: $SOLUTION_FILE"
@@ -55,10 +60,15 @@ jobs:
         cd test-postgresql
         dotnet new codecraft -n TestProjectPostgreSQL --DatabaseProvider PostgreSQL
         cd TestProjectPostgreSQL
+        # Debug: List all files to understand the structure
+        echo "Files in project directory:"
+        find . -name "*.sln" -o -name "*.csproj" | head -10
         # Find and build the solution file
         SOLUTION_FILE=$(find . -name "*.sln" -type f | head -n 1)
         if [ -z "$SOLUTION_FILE" ]; then
           echo "Error: No solution file found!"
+          echo "Directory contents:"
+          ls -la
           exit 1
         fi
         echo "Building solution: $SOLUTION_FILE"
