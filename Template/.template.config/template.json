@@ -13,15 +13,10 @@
   "sourceName": "CodeCraft.NET",
   "preferNameDirectory": true,
   "guids": [
-    "09bae888-39a7-46e2-90f5-7ccd2ce188fb"
+    "09bae888-39a7-46e2-90f5-7ccd2ce188fb",
+    "A4F6432E-650D-227A-08A0-8733AEB4B29B"
   ],
   "symbols": {
-    "ProjectName": {
-      "type": "parameter",
-      "datatype": "string",
-      "defaultValue": "MyProject",
-      "replaces": "CodeCraft.NET"
-    },
     "DatabaseProvider": {
       "type": "parameter",
       "datatype": "choice",
@@ -37,27 +32,28 @@
       ],
       "defaultValue": "SqlServer",
       "description": "The database provider to use"
+    },
+    "SkipTemplateProject": {
+      "type": "computed",
+      "value": "true"
     }
   },
-  "primaryOutputs": [
-    {
-      "path": "CodeCraft.NET.sln"
-    }
-  ],
   "sources": [
     {
       "modifiers": [
         {
-          "condition": "(DatabaseProvider == \"SqlServer\")",
-          "exclude": [],
-          "include": []
-        },
-        {
-          "condition": "(DatabaseProvider == \"PostgreSQL\")",
-          "exclude": [],
-          "include": []
+          "condition": "(SkipTemplateProject)",
+          "exclude": [
+            "**/Template/**",
+            "Template/**"
+          ]
         }
       ]
+    }
+  ],
+  "primaryOutputs": [
+    {
+      "path": "CodeCraft.NET.sln"
     }
   ],
   "postActions": [

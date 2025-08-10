@@ -2,7 +2,7 @@
   <PropertyGroup>
     <PackageType>Template</PackageType>
     <PackageId>CodeCraft.NET.CleanArchitecture.Template</PackageId>
-    <PackageVersion>1.0.7</PackageVersion>
+    <PackageVersion>1.0.19</PackageVersion>
     <Title>CodeCraft.NET Clean Architecture Template</Title>
     <Description>A comprehensive Clean Architecture template for .NET applications featuring CQRS, Entity Framework, automatic code generation, and JWT authentication. Perfect for enterprise-grade applications.</Description>
     <Authors>Abraham Orihuela</Authors>
@@ -19,6 +19,8 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <TargetFramework>net9.0</TargetFramework>
     <PackageIcon>icon.png</PackageIcon>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
   </PropertyGroup>
   <PropertyGroup>
     <LocalizeTemplates>false</LocalizeTemplates>
@@ -28,32 +30,24 @@
   <ItemGroup>
     <None Include="..\README.md" Pack="true" PackagePath="\" />
     <Content Include=".template.config\template.json" Pack="true" PackagePath="content/.template.config/" />
-    <Content Include="..\CodeCraft.NET.sln" Pack="true" PackagePath="content\" />
-    <!-- Archivos del proyecto Domain -->
+    <Content Include="CodeCraft.NET.Template.sln" Pack="true" PackagePath="content\CodeCraft.NET.sln" />
     <Content Include="..\CodeCraft.NET.Domain\**\*.cs" Exclude="..\CodeCraft.NET.Domain\bin\**;..\CodeCraft.NET.Domain\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Domain\" />
     <Content Include="..\CodeCraft.NET.Domain\*.csproj" Pack="true" PackagePath="content\CodeCraft.NET.Domain\" />
-    <!-- Archivos del proyecto Application -->
     <Content Include="..\CodeCraft.NET.Application\**\*.cs" Exclude="..\CodeCraft.NET.Application\bin\**;..\CodeCraft.NET.Application\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Application\" />
     <Content Include="..\CodeCraft.NET.Application\*.csproj" Pack="true" PackagePath="content\CodeCraft.NET.Application\" />
-    <!-- Archivos del proyecto Infrastructure -->
     <Content Include="..\CodeCraft.NET.Infrastructure\**\*.cs" Exclude="..\CodeCraft.NET.Infrastructure\bin\**;..\CodeCraft.NET.Infrastructure\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Infrastructure\" />
     <Content Include="..\CodeCraft.NET.Infrastructure\*.csproj" Pack="true" PackagePath="content\CodeCraft.NET.Infrastructure\" />
-    <!-- Archivos del proyecto WebAPI -->
     <Content Include="..\CodeCraft.NET.WebAPI\**\*.cs" Exclude="..\CodeCraft.NET.WebAPI\bin\**;..\CodeCraft.NET.WebAPI\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.WebAPI\" />
     <Content Include="..\CodeCraft.NET.WebAPI\*.csproj" Pack="true" PackagePath="content\CodeCraft.NET.WebAPI\" />
     <Content Include="..\CodeCraft.NET.WebAPI\**\*.json" Exclude="..\CodeCraft.NET.WebAPI\bin\**;..\CodeCraft.NET.WebAPI\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.WebAPI\" />
-    <!-- Archivos del proyecto Cross -->
     <Content Include="..\CodeCraft.NET.Cross\**\*.cs" Exclude="..\CodeCraft.NET.Cross\bin\**;..\CodeCraft.NET.Cross\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Cross\" />
     <Content Include="..\CodeCraft.NET.Cross\*.csproj" Pack="true" PackagePath="content\CodeCraft.NET.Cross\" />
-    <!-- Archivos del proyecto Generator -->
     <Content Include="..\CodeCraft.NET.Generator\**\*.cs" Exclude="..\CodeCraft.NET.Generator\bin\**;..\CodeCraft.NET.Generator\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Generator\" />
     <Content Include="..\CodeCraft.NET.Generator\*.csproj" Pack="true" PackagePath="content\CodeCraft.NET.Generator\" />
     <Content Include="..\CodeCraft.NET.Generator\**\*.json" Exclude="..\CodeCraft.NET.Generator\bin\**;..\CodeCraft.NET.Generator\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Generator\" />
     <Content Include="..\CodeCraft.NET.Generator\**\*.scriban" Exclude="..\CodeCraft.NET.Generator\bin\**;..\CodeCraft.NET.Generator\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Generator\" />
-    <!-- Archivos de configuraciÃ³n globales -->
     <Content Include="..\.gitignore" Pack="true" PackagePath="content\" />
     <Content Include="..\*.md" Pack="true" PackagePath="content\" />
-    <!-- Scripts de construcciÃ³n pero excluir el build-template.ps1 -->
     <Content Include="..\**\*.ps1" Exclude="..\Template\build-template.ps1;..\bin\**;..\obj\**" Pack="true" PackagePath="content\" />
     <None Include="icon.png" Pack="true" PackagePath="\" Condition="Exists('icon.png')" />
   </ItemGroup>
