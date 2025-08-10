@@ -19,7 +19,7 @@ Thank you for your interest in contributing to CodeCraft.NET! This document prov
 
 2. **Install the template locally**
    ```bash
-   dotnet new install .
+   dotnet new install ./Template
    ```
 
 3. **Test the template**
@@ -45,6 +45,8 @@ Thank you for your interest in contributing to CodeCraft.NET! This document prov
 
 3. **Test the template**
    ```bash
+   # Navigate to Template directory
+   cd Template
    # Use the build script to test
    .\build-template.ps1 -SkipTests  # Quick build without testing
    .\build-template.ps1             # Full build with testing
@@ -60,14 +62,17 @@ Thank you for your interest in contributing to CodeCraft.NET! This document prov
 
 ```
 CodeCraft.NET/
-??? .template.config/          # Template configuration
+??? .template.config/          # Template configuration (deprecated - use Template folder)
 ??? CodeCraft.NET.Application/ # Application layer
 ??? CodeCraft.NET.Domain/      # Domain layer
 ??? CodeCraft.NET.Infrastructure/ # Infrastructure layer
 ??? CodeCraft.NET.WebAPI/      # Web API layer
 ??? CodeCraft.NET.Cross/       # Cross-cutting concerns
 ??? CodeCraft.NET.Generator/   # Code generation engine
-??? template.csproj           # Template package configuration
+??? Template/                  # Template package
+    ??? .template.config/      # Template configuration
+    ??? Template.csproj        # Template package configuration
+    ??? build-template.ps1     # Template build script
 ```
 
 ## ?? Code Style Guidelines
@@ -97,6 +102,9 @@ CodeCraft.NET/
 
 1. **Build and test locally**
    ```bash
+   # Navigate to Template directory
+   cd Template
+   
    # Patch version increment with testing
    .\build-template.ps1
    
@@ -135,7 +143,7 @@ CodeCraft.NET/
 ### Before Submitting
 
 - [ ] Code builds without errors
-- [ ] All tests pass (`.\build-template.ps1` completes successfully)
+- [ ] All tests pass (`.\build-template.ps1` in Template directory completes successfully)
 - [ ] Template generates working projects
 - [ ] Documentation is updated
 - [ ] CHANGELOG.md is updated
@@ -153,7 +161,7 @@ Brief description of changes
 - [ ] Documentation update
 
 ## Testing
-- [ ] Template builds successfully (`.\build-template.ps1`)
+- [ ] Template builds successfully (`.\build-template.ps1` in Template directory)
 - [ ] Generated project compiles
 - [ ] All features work as expected
 - [ ] Documentation updated

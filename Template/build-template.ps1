@@ -32,7 +32,7 @@ if ($Help) {
 Write-Host "?? Building CodeCraft.NET Template Package..." -ForegroundColor Cyan
 
 # Variables
-$ProjectFile = "template.csproj"
+$ProjectFile = "Template.csproj"
 $PackageDir = ".\nupkg"
 
 # Validate parameters
@@ -53,7 +53,7 @@ Remove-Item -Path $PackageDir -Recurse -Force -ErrorAction SilentlyContinue
 Remove-Item -Path ".\bin" -Recurse -Force -ErrorAction SilentlyContinue
 Remove-Item -Path ".\obj" -Recurse -Force -ErrorAction SilentlyContinue
 
-# Read current version from template.csproj
+# Read current version from Template.csproj
 function Get-ProjectVersion {
     [xml]$projectXml = Get-Content $ProjectFile
     
@@ -135,7 +135,7 @@ function Update-ProjectVersion {
     }
     
     $projectXml.Save($ProjectFile)
-    Write-Host "?? Updated $ProjectFile to version $newVersion" -ForegroundColor Green
+    Write-Host "? Updated $ProjectFile to version $newVersion" -ForegroundColor Green
 }
 
 # Determine increment type based on parameters
@@ -157,13 +157,19 @@ Update-ProjectVersion $PackageVersion
 # Create output directory
 New-Item -ItemType Directory -Path $PackageDir -Force | Out-Null
 
-# Build the solution first
-Write-Host "??? Building solution..." -ForegroundColor Yellow
-dotnet build --configuration Release --verbosity minimal --nologo
+# Build the solution first (from parent directory)
+Write-Host "?? Building solution..." -ForegroundColor Yellow
+Push-Location ..
+try {
+    dotnet build CodeCraft.NET.sln --configuration Release --verbosity minimal --nologo
 
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "? Build failed!" -ForegroundColor Red
-    exit 1
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "? Build failed!" -ForegroundColor Red
+        exit 1
+    }
+}
+finally {
+    Pop-Location
 }
 
 Write-Host "?? Creating NuGet package with version $PackageVersion..." -ForegroundColor Yellow

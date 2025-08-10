@@ -31,7 +31,7 @@ jobs:
       run: dotnet build CodeCraft.NET.sln --configuration Release --no-restore
     
     - name: Install template locally
-      run: dotnet new install .
+      run: dotnet new install ./Template
     
     - name: Test template creation (SQL Server)
       run: |
@@ -85,7 +85,7 @@ jobs:
       run: dotnet build CodeCraft.NET.sln --configuration Release
     
     - name: Pack template
-      run: dotnet pack template.csproj --configuration Release --output ./nupkg
+      run: dotnet pack Template/Template.csproj --configuration Release --output ./nupkg
     
     - name: Upload NuGet package
       uses: actions/upload-artifact@v3
