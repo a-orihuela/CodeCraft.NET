@@ -54,6 +54,13 @@ if (-not (Test-Path $ProjectFile)) {
     exit 1
 }
 
+# Ensure project is restored to prevent NETSDK1004 errors
+Write-Host "🔄 Ensuring project is restored..." -ForegroundColor Yellow
+dotnet restore $ProjectFile --verbosity minimal --nologo
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "⚠️ Warning: Restore completed with warnings, continuing..." -ForegroundColor Yellow
+}
+
 # Clean previous builds
 Write-Host "🧹 Cleaning previous builds..." -ForegroundColor Yellow
 Remove-Item -Path $PackageDir -Recurse -Force -ErrorAction SilentlyContinue
@@ -165,18 +172,18 @@ Update-ProjectVersion $PackageVersion
 # Create output directory
 New-Item -ItemType Directory -Path $PackageDir -Force | Out-Null
 
-# Skip solution build for template creation to avoid dependency issues
+# Note: Skipping solution build for template creation since we've already restored dependencies
 Write-Host "ℹ️ Skipping solution build - creating template package directly..." -ForegroundColor Cyan
 
 Write-Host "📦 Creating NuGet package with version $PackageVersion..." -ForegroundColor Yellow
 
 try {
-    # Build only the template package without building the entire solution
+    # Build only the template package (project is already restored)
     dotnet pack $ProjectFile -o $PackageDir -p:PackageVersion=$PackageVersion --configuration Release --verbosity minimal --nologo --no-build
     
     if ($LASTEXITCODE -ne 0) {
-        # Try without --no-build if the first attempt fails
-        Write-Host "🔄 Retrying package creation without solution dependencies..." -ForegroundColor Yellow
+        # Try without --no-build if the first attempt fails (includes implicit restore)
+        Write-Host "🔄 Retrying package creation with build..." -ForegroundColor Yellow
         dotnet pack $ProjectFile -o $PackageDir -p:PackageVersion=$PackageVersion --configuration Release --verbosity minimal --nologo
         
         if ($LASTEXITCODE -ne 0) {
@@ -227,16 +234,36 @@ try {
                     exit 1
                 }
                 
-                # Test build
-                Write-Host "🔨 Testing generated project build..." -ForegroundColor Yellow
-                dotnet build --verbosity minimal --nologo
-                if ($LASTEXITCODE -ne 0) {
-                    Write-Host "❌ Generated project build failed!" -ForegroundColor Red
-                    Pop-Location
-                    exit 1
+                # Move to the generated project directory
+                Push-Location "TestProject"
+                try {
+                    # Test build
+                    Write-Host "🔨 Testing generated project build..." -ForegroundColor Yellow
+                    
+                    # Debug information
+                    Write-Host "   Current directory: $(Get-Location)" -ForegroundColor Gray
+                    Write-Host "   Directory contents:" -ForegroundColor Gray
+                    Get-ChildItem | ForEach-Object { Write-Host "     $($_.Name)" -ForegroundColor Gray }
+                    
+                    # Find the solution file dynamically
+                    $solutionFile = Get-ChildItem -Name -Filter "*.sln" | Select-Object -First 1
+                    if (-not $solutionFile) {
+                        Write-Host "❌ No solution file found in generated project!" -ForegroundColor Red
+                        exit 1
+                    }
+                    
+                    Write-Host "   Found solution: $solutionFile" -ForegroundColor Gray
+                    dotnet build $solutionFile --verbosity minimal --nologo
+                    if ($LASTEXITCODE -ne 0) {
+                        Write-Host "❌ Generated project build failed!" -ForegroundColor Red
+                        exit 1
+                    }
+                    
+                    Write-Host "✅ Template testing completed successfully!" -ForegroundColor Green
                 }
-                
-                Write-Host "✅ Template testing completed successfully!" -ForegroundColor Green
+                finally {
+                    Pop-Location  # Exit TestProject directory
+                }
             }
             finally {
                 Pop-Location

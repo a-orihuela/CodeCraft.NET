@@ -2,7 +2,7 @@
   <PropertyGroup>
     <PackageType>Template</PackageType>
     <PackageId>CodeCraft.NET.CleanArchitecture.Template</PackageId>
-    <PackageVersion>1.0.19</PackageVersion>
+    <PackageVersion>1.0.31</PackageVersion>
     <Title>CodeCraft.NET Clean Architecture Template</Title>
     <Description>A comprehensive Clean Architecture template for .NET applications featuring CQRS, Entity Framework, automatic code generation, and JWT authentication. Perfect for enterprise-grade applications.</Description>
     <Authors>Abraham Orihuela</Authors>
