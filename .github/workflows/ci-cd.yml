@@ -38,16 +38,32 @@ jobs:
         mkdir test-sqlserver
         cd test-sqlserver
         dotnet new codecraft -n TestProjectSqlServer --DatabaseProvider SqlServer
-        dotnet build
-        cd ..
+        cd TestProjectSqlServer
+        # Find and build the solution file
+        SOLUTION_FILE=$(find . -name "*.sln" -type f | head -n 1)
+        if [ -z "$SOLUTION_FILE" ]; then
+          echo "Error: No solution file found!"
+          exit 1
+        fi
+        echo "Building solution: $SOLUTION_FILE"
+        dotnet build "$SOLUTION_FILE"
+        cd ../..
     
     - name: Test template creation (PostgreSQL)
       run: |
         mkdir test-postgresql  
         cd test-postgresql
         dotnet new codecraft -n TestProjectPostgreSQL --DatabaseProvider PostgreSQL
-        dotnet build
-        cd ..
+        cd TestProjectPostgreSQL
+        # Find and build the solution file
+        SOLUTION_FILE=$(find . -name "*.sln" -type f | head -n 1)
+        if [ -z "$SOLUTION_FILE" ]; then
+          echo "Error: No solution file found!"
+          exit 1
+        fi
+        echo "Building solution: $SOLUTION_FILE"
+        dotnet build "$SOLUTION_FILE"
+        cd ../..
     
     - name: Test code generation
       run: |
@@ -65,7 +81,12 @@ jobs:
         # Run code generator
         dotnet run --project TestProjectSqlServer.Generator
         # Build again to ensure generated code compiles
-        dotnet build
+        SOLUTION_FILE=$(find . -name "*.sln" -type f | head -n 1)
+        if [ -n "$SOLUTION_FILE" ]; then
+          dotnet build "$SOLUTION_FILE"
+        else
+          echo "Warning: No solution file found for final build"
+        fi
         cd ../..
 
   build-and-pack:
