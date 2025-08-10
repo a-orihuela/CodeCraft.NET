@@ -30,8 +30,26 @@ jobs:
     - name: Build solution
       run: dotnet build CodeCraft.NET.sln --configuration Release --no-restore
     
+    - name: Pack template
+      run: dotnet pack Template/Template.csproj --configuration Release --output ./template-package
+    
     - name: Install template locally
-      run: dotnet new install ./Template
+      run: |
+        # Uninstall any existing version first
+        dotnet new uninstall CodeCraft.NET.CleanArchitecture.Template || true
+        # Clear template cache
+        rm -rf ~/.templateengine || true
+        # Install from the packaged template
+        TEMPLATE_PACKAGE=$(find ./template-package -name "*.nupkg" | head -n 1)
+        echo "Installing template package: $TEMPLATE_PACKAGE"
+        dotnet new install "$TEMPLATE_PACKAGE" --force
+    
+    - name: Verify template installation
+      run: |
+        echo "Installed templates:"
+        dotnet new list | grep -i codecraft || echo "CodeCraft template not found!"
+        echo "Template details:"
+        dotnet new codecraft --help || echo "Template help failed!"
     
     - name: Test template creation (SQL Server)
       run: |
