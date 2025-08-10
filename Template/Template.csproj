@@ -53,9 +53,12 @@
     <Content Include="..\CodeCraft.NET.Generator\*.csproj" Pack="true" PackagePath="content\CodeCraft.NET.Generator\" />
     <Content Include="..\CodeCraft.NET.Generator\**\*.json" Exclude="..\CodeCraft.NET.Generator\bin\**;..\CodeCraft.NET.Generator\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Generator\" />
     <Content Include="..\CodeCraft.NET.Generator\**\*.scriban" Exclude="..\CodeCraft.NET.Generator\bin\**;..\CodeCraft.NET.Generator\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Generator\" />
-    <!-- Archivos de configuración globales -->
+    <!-- Archivos de configuración específicos (no todos los .md) -->
     <Content Include="..\.gitignore" Pack="true" PackagePath="content\" />
-    <Content Include="..\*.md" Pack="true" PackagePath="content\" />
+    <Content Include="..\CHANGELOG.md" Pack="true" PackagePath="content\" />
+    <Content Include="..\CONTRIBUTING.md" Pack="true" PackagePath="content\" />
+    <Content Include="..\LICENSE" Pack="true" PackagePath="content\" />
+    
     <!-- Scripts de construcción pero excluir el build-template.ps1 -->
     <Content Include="..\**\*.ps1" Exclude="..\Template\build-template.ps1;..\bin\**;..\obj\**" Pack="true" PackagePath="content\" />
     <!-- Incluir icon.png solo si existe -->

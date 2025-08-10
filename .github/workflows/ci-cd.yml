@@ -33,6 +33,12 @@ jobs:
     - name: Pack template
       run: dotnet pack Template/Template.csproj --configuration Release --output ./template-package
     
+    - name: Debug template package contents
+      run: |
+        echo "Template package contents:"
+        unzip -l ./template-package/*.nupkg | head -20
+        echo "Package created successfully"
+    
     - name: Install template locally
       run: |
         # Uninstall any existing version first
@@ -53,8 +59,12 @@ jobs:
     
     - name: Test template creation (SQL Server)
       run: |
-        mkdir test-sqlserver
+        # Create test directory with proper permissions
+        mkdir -p test-sqlserver
         cd test-sqlserver
+        # Ensure we have write permissions in the current directory
+        chmod 755 .
+        echo "Creating project in directory: $(pwd)"
         dotnet new codecraft -n TestProjectSqlServer --DatabaseProvider SqlServer
         cd TestProjectSqlServer
         # Debug: List all files to understand the structure
@@ -74,8 +84,12 @@ jobs:
     
     - name: Test template creation (PostgreSQL)
       run: |
-        mkdir test-postgresql  
+        # Create test directory with proper permissions
+        mkdir -p test-postgresql
         cd test-postgresql
+        # Ensure we have write permissions in the current directory
+        chmod 755 .
+        echo "Creating project in directory: $(pwd)"
         dotnet new codecraft -n TestProjectPostgreSQL --DatabaseProvider PostgreSQL
         cd TestProjectPostgreSQL
         # Debug: List all files to understand the structure
