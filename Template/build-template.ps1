@@ -1,4 +1,4 @@
-# CodeCraft.NET Template Build Script with Semantic Versioning
+﻿# CodeCraft.NET Template Build Script with Semantic Versioning
 param(
     [switch]$Major,
     [switch]$Minor,
@@ -29,29 +29,36 @@ if ($Help) {
     exit 0
 }
 
-Write-Host "?? Building CodeCraft.NET Template Package..." -ForegroundColor Cyan
+Write-Host "🚀 Building CodeCraft.NET Template Package..." -ForegroundColor Cyan
 
-# Variables
-$ProjectFile = "Template.csproj"
-$PackageDir = ".\nupkg"
+# Variables - Automatically detect paths
+$ScriptDirectory = Split-Path -Parent $MyInvocation.MyCommand.Definition
+$ProjectFile = Join-Path $ScriptDirectory "Template.csproj"
+$PackageDir = Join-Path $ScriptDirectory "nupkg"
 
 # Validate parameters
 if ($Major -and $Minor) {
-    Write-Host "? Error: Cannot specify both -Major and -Minor flags" -ForegroundColor Red
+    Write-Host "❌ Error: Cannot specify both -Major and -Minor flags" -ForegroundColor Red
     exit 1
 }
 
 if ($PublishToNuGet -and [string]::IsNullOrEmpty($ApiKey)) {
-    Write-Host "? Error: API Key is required for publishing to NuGet!" -ForegroundColor Red
+    Write-Host "❌ Error: API Key is required for publishing to NuGet!" -ForegroundColor Red
     Write-Host "Usage: .\build-template.ps1 -PublishToNuGet -ApiKey YOUR_API_KEY" -ForegroundColor Yellow
     exit 1
 }
 
+# Verify Template.csproj exists
+if (-not (Test-Path $ProjectFile)) {
+    Write-Host "❌ Error: Template.csproj not found at: $ProjectFile" -ForegroundColor Red
+    exit 1
+}
+
 # Clean previous builds
-Write-Host "?? Cleaning previous builds..." -ForegroundColor Yellow
+Write-Host "🧹 Cleaning previous builds..." -ForegroundColor Yellow
 Remove-Item -Path $PackageDir -Recurse -Force -ErrorAction SilentlyContinue
-Remove-Item -Path ".\bin" -Recurse -Force -ErrorAction SilentlyContinue
-Remove-Item -Path ".\obj" -Recurse -Force -ErrorAction SilentlyContinue
+Remove-Item -Path (Join-Path $ScriptDirectory "bin") -Recurse -Force -ErrorAction SilentlyContinue
+Remove-Item -Path (Join-Path $ScriptDirectory "obj") -Recurse -Force -ErrorAction SilentlyContinue
 
 # Read current version from Template.csproj
 function Get-ProjectVersion {
@@ -64,7 +71,7 @@ function Get-ProjectVersion {
         }
     }
     
-    Write-Host "?? Warning: No PackageVersion found in $ProjectFile, using 1.0.0" -ForegroundColor Yellow
+    Write-Host "⚠️ Warning: No PackageVersion found in $ProjectFile, using 1.0.0" -ForegroundColor Yellow
     return "1.0.0"
 }
 
@@ -77,7 +84,7 @@ function Get-NextVersion {
     
     $versionParts = $currentVersion.Split('.')
     if ($versionParts.Length -lt 3) {
-        Write-Host "? Invalid version format. Expected x.y.z, got: $currentVersion" -ForegroundColor Red
+        Write-Host "❌ Invalid version format. Expected x.y.z, got: $currentVersion" -ForegroundColor Red
         exit 1
     }
     
@@ -90,19 +97,19 @@ function Get-NextVersion {
             $major += 1
             $minor = 0
             $patch = 0
-            Write-Host "?? Incrementing MAJOR version (breaking changes)" -ForegroundColor Red
+            Write-Host "🔴 Incrementing MAJOR version (breaking changes)" -ForegroundColor Red
         }
         "minor" {
             $minor += 1
             $patch = 0
-            Write-Host "?? Incrementing MINOR version (new features)" -ForegroundColor Yellow
+            Write-Host "🟡 Incrementing MINOR version (new features)" -ForegroundColor Yellow
         }
         "patch" {
             $patch += 1
-            Write-Host "?? Incrementing PATCH version (bug fixes)" -ForegroundColor Green
+            Write-Host "🟢 Incrementing PATCH version (bug fixes)" -ForegroundColor Green
         }
         default {
-            Write-Host "? Invalid increment type: $incrementType" -ForegroundColor Red
+            Write-Host "❌ Invalid increment type: $incrementType" -ForegroundColor Red
             exit 1
         }
     }
@@ -134,8 +141,9 @@ function Update-ProjectVersion {
         $firstPropertyGroup.AppendChild($packageVersionElement) | Out-Null
     }
     
+    # Save using absolute path
     $projectXml.Save($ProjectFile)
-    Write-Host "? Updated $ProjectFile to version $newVersion" -ForegroundColor Green
+    Write-Host "✅ Updated $ProjectFile to version $newVersion" -ForegroundColor Green
 }
 
 # Determine increment type based on parameters
@@ -148,23 +156,24 @@ if ($Major) {
 
 # Auto-increment version
 $CurrentVersion = Get-ProjectVersion
-Write-Host "?? Current version: $CurrentVersion" -ForegroundColor Blue
+Write-Host "📋 Current version: $CurrentVersion" -ForegroundColor Blue
 
 $PackageVersion = Get-NextVersion $CurrentVersion $incrementType
-Write-Host "?? New version: $PackageVersion" -ForegroundColor Cyan
+Write-Host "🔄 New version: $PackageVersion" -ForegroundColor Cyan
 Update-ProjectVersion $PackageVersion
 
 # Create output directory
 New-Item -ItemType Directory -Path $PackageDir -Force | Out-Null
 
 # Build the solution first (from parent directory)
-Write-Host "?? Building solution..." -ForegroundColor Yellow
-Push-Location ..
+Write-Host "🔨 Building solution..." -ForegroundColor Yellow
+$SolutionDirectory = Split-Path -Parent $ScriptDirectory
+Push-Location $SolutionDirectory
 try {
     dotnet build CodeCraft.NET.sln --configuration Release --verbosity minimal --nologo
 
     if ($LASTEXITCODE -ne 0) {
-        Write-Host "? Build failed!" -ForegroundColor Red
+        Write-Host "❌ Build failed!" -ForegroundColor Red
         exit 1
     }
 }
@@ -172,24 +181,24 @@ finally {
     Pop-Location
 }
 
-Write-Host "?? Creating NuGet package with version $PackageVersion..." -ForegroundColor Yellow
+Write-Host "📦 Creating NuGet package with version $PackageVersion..." -ForegroundColor Yellow
 
 try {
     # Build the package with the auto-incremented version
     dotnet pack $ProjectFile -o $PackageDir -p:PackageVersion=$PackageVersion --configuration Release --verbosity minimal --nologo
     
     if ($LASTEXITCODE -ne 0) {
-        Write-Host "? Pack failed!" -ForegroundColor Red
+        Write-Host "❌ Pack failed!" -ForegroundColor Red
         exit 1
     }
     
-    Write-Host "? Package created successfully!" -ForegroundColor Green
+    Write-Host "✅ Package created successfully!" -ForegroundColor Green
     
     # Find the generated package
     $PackageFile = Get-ChildItem "$PackageDir\*.nupkg" | Select-Object -First 1
     
     if ($PackageFile) {
-        Write-Host "`n?? Package Information:" -ForegroundColor Blue
+        Write-Host "`n📊 Package Information:" -ForegroundColor Blue
         Write-Host "   Generated: $($PackageFile.Name)" -ForegroundColor Blue
         Write-Host "   Location: $($PackageFile.FullName)" -ForegroundColor Blue
         Write-Host "   Size: $([math]::Round($PackageFile.Length / 1MB, 2)) MB" -ForegroundColor Blue
@@ -198,7 +207,7 @@ try {
         
         # Test the template if not skipped
         if (-not $SkipTests) {
-            Write-Host "`n?? Testing template installation..." -ForegroundColor Yellow
+            Write-Host "`n🧪 Testing template installation..." -ForegroundColor Yellow
             
             # Uninstall previous version
             dotnet new uninstall CodeCraft.NET.CleanArchitecture.Template 2>$null
@@ -206,13 +215,13 @@ try {
             # Install from local package
             dotnet new install $PackageFile.FullName --force
             if ($LASTEXITCODE -ne 0) {
-                Write-Host "? Template installation failed!" -ForegroundColor Red
+                Write-Host "❌ Template installation failed!" -ForegroundColor Red
                 exit 1
             }
             
             # Test template creation
-            Write-Host "?? Testing template creation..." -ForegroundColor Yellow
-            $testDir = ".\test-output"
+            Write-Host "🧪 Testing template creation..." -ForegroundColor Yellow
+            $testDir = Join-Path $ScriptDirectory "test-output"
             Remove-Item -Path $testDir -Recurse -Force -ErrorAction SilentlyContinue
             New-Item -ItemType Directory -Path $testDir -Force | Out-Null
             
@@ -220,21 +229,21 @@ try {
             try {
                 dotnet new codecraft -n "TestProject" --DatabaseProvider "SqlServer" --force
                 if ($LASTEXITCODE -ne 0) {
-                    Write-Host "? Template creation test failed!" -ForegroundColor Red
+                    Write-Host "❌ Template creation test failed!" -ForegroundColor Red
                     Pop-Location
                     exit 1
                 }
                 
                 # Test build
-                Write-Host "?? Testing generated project build..." -ForegroundColor Yellow
+                Write-Host "🔨 Testing generated project build..." -ForegroundColor Yellow
                 dotnet build --verbosity minimal --nologo
                 if ($LASTEXITCODE -ne 0) {
-                    Write-Host "? Generated project build failed!" -ForegroundColor Red
+                    Write-Host "❌ Generated project build failed!" -ForegroundColor Red
                     Pop-Location
                     exit 1
                 }
                 
-                Write-Host "? Template testing completed successfully!" -ForegroundColor Green
+                Write-Host "✅ Template testing completed successfully!" -ForegroundColor Green
             }
             finally {
                 Pop-Location
@@ -244,20 +253,20 @@ try {
         
         # Publish to NuGet if requested
         if ($PublishToNuGet) {
-            Write-Host "`n?? Publishing to NuGet..." -ForegroundColor Yellow
+            Write-Host "`n🚀 Publishing to NuGet..." -ForegroundColor Yellow
             dotnet nuget push $PackageFile.FullName --api-key $ApiKey --source https://api.nuget.org/v3/index.json --skip-duplicate
             
             if ($LASTEXITCODE -eq 0) {
-                Write-Host "? Successfully published to NuGet!" -ForegroundColor Green
-                Write-Host "?? Package URL: https://www.nuget.org/packages/CodeCraft.NET.CleanArchitecture.Template/$PackageVersion" -ForegroundColor Cyan
+                Write-Host "✅ Successfully published to NuGet!" -ForegroundColor Green
+                Write-Host "🌐 Package URL: https://www.nuget.org/packages/CodeCraft.NET.CleanArchitecture.Template/$PackageVersion" -ForegroundColor Cyan
             } else {
-                Write-Host "? Failed to publish to NuGet!" -ForegroundColor Red
+                Write-Host "❌ Failed to publish to NuGet!" -ForegroundColor Red
                 exit 1
             }
         }
         
-        Write-Host "`n?? CodeCraft.NET Template v$PackageVersion is ready!" -ForegroundColor Green
-        Write-Host "`n?? Next Steps:" -ForegroundColor Cyan
+        Write-Host "`n🎉 CodeCraft.NET Template v$PackageVersion is ready!" -ForegroundColor Green
+        Write-Host "`n📋 Next Steps:" -ForegroundColor Cyan
         
         if (-not $PublishToNuGet) {
             Write-Host "1. Test locally: dotnet new install `"$($PackageFile.FullName)`"" -ForegroundColor White
@@ -273,8 +282,8 @@ try {
     }
     
 } catch {
-    Write-Host "? Error: $($_.Exception.Message)" -ForegroundColor Red
+    Write-Host "❌ Error: $($_.Exception.Message)" -ForegroundColor Red
     exit 1
 }
 
-Write-Host "`n? Build completed successfully!" -ForegroundColor Green
+Write-Host "`n✅ Build completed successfully!" -ForegroundColor Green

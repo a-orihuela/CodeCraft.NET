@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageType>Template</PackageType>
     <PackageId>CodeCraft.NET.CleanArchitecture.Template</PackageId>
-    <PackageVersion>1.0.3</PackageVersion>
+    <PackageVersion>1.0.4</PackageVersion>
     <Title>CodeCraft.NET Clean Architecture Template</Title>
     <Description>A comprehensive Clean Architecture template for .NET applications featuring CQRS, Entity Framework, automatic code generation, and JWT authentication. Perfect for enterprise-grade applications.</Description>
     <Authors>Abraham Orihuela</Authors>
@@ -20,17 +20,16 @@
     <TargetFramework>net9.0</TargetFramework>
     <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
-  
   <PropertyGroup>
     <LocalizeTemplates>false</LocalizeTemplates>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
   </PropertyGroup>
-  
   <!-- Template content to include -->
   <ItemGroup>
     <None Include="..\README.md" Pack="true" PackagePath="\" />
     <Content Include=".template.config\**\*" Pack="true" PackagePath="content/.template.config/" />
     <Content Include="**\*.cs" Exclude="bin\**;obj\**;nupkg\**" Pack="true" PackagePath="content/" />
-    <Content Include="**\*.csproj" Exclude="template.csproj;bin\**;obj\**;nupkg\**" Pack="true" PackagePath="content/" />
+    <Content Include="**\*.csproj" Exclude="Template.csproj;bin\**;obj\**;nupkg\**" Pack="true" PackagePath="content/" />
     <Content Include="*.sln" Pack="true" PackagePath="content/" />
     <Content Include="**\*.json" Exclude="bin\**;obj\**;nupkg\**" Pack="true" PackagePath="content/" />
     <Content Include="**\*.md" Exclude="bin\**;obj\**;nupkg\**" Pack="true" PackagePath="content/" />
