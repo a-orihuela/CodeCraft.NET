@@ -30,8 +30,7 @@
 # Create with custom options
 
     dotnet new codecraft -n "MyProject" \
-      --CompanyName "MyCompany" \
-      --DatabaseProvider "PostgreSQL"
+      --CompanyName "MyCompany"
 
 ### Available Parameters
 
@@ -39,7 +38,6 @@
 |-----------|-------------|---------|---------|
 | `ProjectName` | Project name | string | MyProject |
 | `CompanyName` | Company name | string | MyCompany |
-| `DatabaseProvider` | Database provider | SqlServer, PostgreSQL | SqlServer |
 
 ## Generated Structure
 - MyProject/
@@ -58,9 +56,9 @@ CodeCraft.NET is a **powerful project template** that combines **Clean Architect
 
 - **Clean Architecture** with proper layer separation
 - **CQRS + MediatR** for scalable command/query operations
-- **Entity Framework Core** with automatic migrations
+- **Entity Framework Core with SQL Server** for data persistence
 - **Automatic Code Generator** that creates boilerplate code
-- **JWT Authentication** and Azure AD integration
+- **JWT Authentication** and role-based authorization
 - **Swagger/OpenAPI** documentation
 - **Repository + Unit of Work** patterns
 - **AutoMapper** for object mapping
@@ -302,9 +300,9 @@ Use the built-in Swagger UI at `https://localhost:7202/swagger`:
 
 ## Configuration
 
-### Database Provider
+### Database Connection
 
-Switch between SQL Server and PostgreSQL in `appsettings.json`:
+Configure your SQL Server connection in `appsettings.json`:
 
     {
       "ConnectionStrings": {

@@ -31,7 +31,7 @@ namespace CodeCraft.NET.Infrastructure.Persistence.Factories
                 configuration["APPLICATION_CONNECTION_STRING"];
 
             if (string.IsNullOrWhiteSpace(connectionString))
-                throw new InvalidOperationException("Missing connection string.");
+                connectionString = "Server=(localdb)\\mssqllocaldb;Database=CodeCraftDb;Trusted_Connection=true;MultipleActiveResultSets=true;";
 
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
             optionsBuilder.UseSqlServer(connectionString);

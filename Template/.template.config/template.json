@@ -9,7 +9,7 @@
     "language": "C#",
     "type": "project"
   },
-  "description": "A Clean Architecture template for .NET with CQRS, Entity Framework, automatic code generation, and JWT authentication",
+  "description": "A Clean Architecture template for .NET with CQRS, Entity Framework Core with SQL Server, automatic code generation, and JWT authentication",
   "sourceName": "CodeCraft.NET",
   "preferNameDirectory": true,
   "guids": [
@@ -17,21 +17,11 @@
     "A4F6432E-650D-227A-08A0-8733AEB4B29B"
   ],
   "symbols": {
-    "DatabaseProvider": {
+    "CompanyName": {
       "type": "parameter",
-      "datatype": "choice",
-      "choices": [
-        {
-          "choice": "SqlServer",
-          "description": "Use SQL Server as database provider"
-        },
-        {
-          "choice": "PostgreSQL",
-          "description": "Use PostgreSQL as database provider"
-        }
-      ],
-      "defaultValue": "SqlServer",
-      "description": "The database provider to use"
+      "datatype": "string",
+      "defaultValue": "MyCompany",
+      "description": "The name of your company or organization"
     }
   },
   "primaryOutputs": [

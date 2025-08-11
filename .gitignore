@@ -416,3 +416,9 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Template testing directories and packages
+test-simple/
+test-*/
+test-package/
+*.test/

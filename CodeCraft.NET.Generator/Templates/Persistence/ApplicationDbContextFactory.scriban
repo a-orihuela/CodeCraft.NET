@@ -42,13 +42,15 @@ namespace {{ InfrastructureProjectName }}.Persistence.Factories
                 configuration["ConnectionStrings:Default"] ??
                 configuration["ConnectionStrings:Application"] ??
                 configuration["DEFAULT_CONNECTION_STRING"] ??
-                configuration["APPLICATION_CONNECTION_STRING"] ??
-                "Server=localhost;Database=CodeCraftDb;User Id=sa;Password=yourStrong(!)Password;TrustServerCertificate=true;"; // Fallback por defecto
+                configuration["APPLICATION_CONNECTION_STRING"];
 
-            Console.WriteLine($"Using connection string: {connectionString}");
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                connectionString = "Server=(localdb)\\mssqllocaldb;Database=CodeCraftDb;Trusted_Connection=true;MultipleActiveResultSets=true;";
+            }
 
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            optionsBuilder.UseNpgsql(connectionString);
+            optionsBuilder.UseSqlServer(connectionString);
 
             return new ApplicationDbContext(optionsBuilder.Options);
         }
