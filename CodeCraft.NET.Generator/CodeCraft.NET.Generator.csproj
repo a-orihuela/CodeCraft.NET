@@ -97,8 +97,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="codecraft.config.json">
+    <Content Include="codecraft.config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
 </Project>

@@ -26,7 +26,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-	c.SwaggerDoc("v1", new OpenApiInfo { Title = "CodeCraft.WebAPI API V1", Version = "v1" });
+	c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI API V1", Version = "v1" });
 
 	// JWT Bearer setup
 	var jwtSecurityScheme = new OpenApiSecurityScheme
@@ -99,7 +99,7 @@ if (app.Environment.IsDevelopment())
 	app.UseSwagger();
 	app.UseSwaggerUI(c =>
 	{
-		c.SwaggerEndpoint("/swagger/v1/swagger.json", "CodeCraft.WebAPI API V1");
+		c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI API V1");
 		c.RoutePrefix = "swagger";
 	});
 }

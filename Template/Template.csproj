@@ -2,7 +2,7 @@
   <PropertyGroup>
     <PackageType>Template</PackageType>
     <PackageId>CodeCraft.NET.CleanArchitecture.Template</PackageId>
-    <PackageVersion>1.0.12</PackageVersion>
+    <PackageVersion>1.0.18</PackageVersion>
     <Title>CodeCraft.NET Clean Architecture Template</Title>
     <Description>A comprehensive Clean Architecture template for .NET applications featuring CQRS, Entity Framework, automatic code generation, and JWT authentication. Perfect for enterprise-grade applications.</Description>
     <Authors>Abraham Orihuela</Authors>
@@ -30,10 +30,8 @@
   <ItemGroup>
     <None Include="..\README.md" Pack="true" PackagePath="\" />
     <Content Include=".template.config\template.json" Pack="true" PackagePath="content/.template.config/" />
-    <!-- Archivo de soluciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n limpio sin proyecto Template -->
+    <!-- Archivo de solucion limpio sin proyecto Template -->
     <Content Include="CodeCraft.NET.sln" Pack="true" PackagePath="content\CodeCraft.NET.sln" />
-    <!-- Archivo de configuraciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n del generador (usar el completo del Generator) -->
-    <Content Include="..\CodeCraft.NET.Generator\codecraft.config.json" Pack="true" PackagePath="content\codecraft.config.json" />
     <!-- Archivos del proyecto Domain -->
     <Content Include="..\CodeCraft.NET.Domain\**\*.cs" Exclude="..\CodeCraft.NET.Domain\bin\**;..\CodeCraft.NET.Domain\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Domain\" />
     <Content Include="..\CodeCraft.NET.Domain\*.csproj" Pack="true" PackagePath="content\CodeCraft.NET.Domain\" />
@@ -54,6 +52,8 @@
     <Content Include="..\CodeCraft.NET.Generator\**\*.cs" Exclude="..\CodeCraft.NET.Generator\bin\**;..\CodeCraft.NET.Generator\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Generator\" />
     <Content Include="..\CodeCraft.NET.Generator\*.csproj" Pack="true" PackagePath="content\CodeCraft.NET.Generator\" />
     <Content Include="..\CodeCraft.NET.Generator\**\*.scriban" Exclude="..\CodeCraft.NET.Generator\bin\**;..\CodeCraft.NET.Generator\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Generator\" />
+    <!-- Archivo de configuracion del generador (copiarlo al directorio Generator) -->
+    <Content Include="..\CodeCraft.NET.Generator\codecraft.config.json" Pack="true" PackagePath="content\CodeCraft.NET.Generator\codecraft.config.json" />
     <!-- Solo archivos esenciales y seguros -->
     <Content Include="..\.gitignore" Pack="true" PackagePath="content\" />
     <!-- Incluir icon.png solo si existe -->
