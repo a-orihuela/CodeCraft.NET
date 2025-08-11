@@ -34,6 +34,9 @@
     <!-- Archivo de solución limpio sin proyecto Template -->
     <Content Include="CodeCraft.NET.sln" Pack="true" PackagePath="content\CodeCraft.NET.sln" />
     
+    <!-- Archivo de configuración del generador (usar el completo del Generator) -->
+    <Content Include="..\CodeCraft.NET.Generator\codecraft.config.json" Pack="true" PackagePath="content\codecraft.config.json" />
+    
     <!-- Archivos del proyecto Domain -->
     <Content Include="..\CodeCraft.NET.Domain\**\*.cs" Exclude="..\CodeCraft.NET.Domain\bin\**;..\CodeCraft.NET.Domain\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Domain\" />
     <Content Include="..\CodeCraft.NET.Domain\*.csproj" Pack="true" PackagePath="content\CodeCraft.NET.Domain\" />
@@ -62,7 +65,6 @@
     
     <!-- Solo archivos esenciales y seguros -->
     <Content Include="..\.gitignore" Pack="true" PackagePath="content\" />
-    <Content Include="..\codecraft.config.json" Pack="true" PackagePath="content\" />
     
     <!-- Incluir icon.png solo si existe -->
     <None Include="icon.png" Pack="true" PackagePath="\" Condition="Exists('icon.png')" />
