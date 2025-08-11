@@ -227,7 +227,7 @@ try {
             
             Push-Location $testDir
             try {
-                dotnet new codecraft -n "TestProject" --DatabaseProvider "SqlServer" --force
+                dotnet new codecraft -n "TestProject" --CompanyName "TestCompany" --force
                 if ($LASTEXITCODE -ne 0) {
                     Write-Host "❌ Template creation test failed!" -ForegroundColor Red
                     Pop-Location
@@ -290,12 +290,12 @@ try {
         
         if (-not $PublishToNuGet) {
             Write-Host "1. Test locally: dotnet new install `"$($PackageFile.FullName)`"" -ForegroundColor White
-            Write-Host "2. Test template: dotnet new codecraft -n MyTestProject" -ForegroundColor White
+            Write-Host "2. Test template: dotnet new codecraft -n MyTestProject --CompanyName MyCompany" -ForegroundColor White
             Write-Host "3. Uninstall: dotnet new uninstall CodeCraft.NET.CleanArchitecture.Template" -ForegroundColor White
             Write-Host "4. Publish: .\build-template.ps1 -PublishToNuGet -ApiKey YOUR_API_KEY" -ForegroundColor White
         } else {
             Write-Host "1. Install published version: dotnet new install CodeCraft.NET.CleanArchitecture.Template::$PackageVersion" -ForegroundColor White
-            Write-Host "2. Create project: dotnet new codecraft -n MyProject" -ForegroundColor White
+            Write-Host "2. Create project: dotnet new codecraft -n MyProject --CompanyName MyCompany" -ForegroundColor White
             Write-Host "3. Update GitHub repository and create release tag: git tag v$PackageVersion" -ForegroundColor White
             Write-Host "4. Share on social media and communities!" -ForegroundColor White
         }
