@@ -31,20 +31,25 @@ jobs:
       run: dotnet build CodeCraft.NET.sln --configuration Release --no-restore
     
     - name: Pack template
-      run: dotnet pack Template/Template.csproj --configuration Release --output ./template-package
+      run: |
+        # Clean previous packages
+        rm -rf ./template-package
+        # Pack template with a unique version to avoid caching issues
+        dotnet pack Template/Template.csproj --configuration Release --output ./template-package -p:PackageVersion=99.99.99-ci-${{ github.run_number }}
     
     - name: Debug template package contents
       run: |
         echo "Template package contents:"
-        unzip -l ./template-package/*.nupkg | head -20
+        unzip -l ./template-package/*.nupkg | grep -E "(content/|\.cs|\.csproj|\.sln)" | head -20
         echo "Package created successfully"
     
     - name: Install template locally
       run: |
         # Uninstall any existing version first
         dotnet new uninstall CodeCraft.NET.CleanArchitecture.Template || true
-        # Clear template cache
+        # Clear template cache completely
         rm -rf ~/.templateengine || true
+        rm -rf ~/.dotnet/templating || true
         # Install from the packaged template
         TEMPLATE_PACKAGE=$(find ./template-package -name "*.nupkg" | head -n 1)
         echo "Installing template package: $TEMPLATE_PACKAGE"
@@ -53,9 +58,9 @@ jobs:
     - name: Verify template installation
       run: |
         echo "Installed templates:"
-        dotnet new list | grep -i codecraft || echo "CodeCraft template not found!"
-        echo "Template details:"
-        dotnet new codecraft --help || echo "Template help failed!"
+        dotnet new list codecraft
+        echo "Template help output:"
+        dotnet new codecraft --help
     
     - name: Test template creation (SQL Server)
       run: |
@@ -65,7 +70,16 @@ jobs:
         # Ensure we have write permissions in the current directory
         chmod 755 .
         echo "Creating project in directory: $(pwd)"
-        dotnet new codecraft -n TestProjectSqlServer --DatabaseProvider SqlServer
+        echo "Available disk space:"
+        df -h .
+        echo "Current user permissions:"
+        id
+        # Test template creation with verbose output
+        dotnet new codecraft -n TestProjectSqlServer --DatabaseProvider SqlServer --verbosity diagnostic || {
+          echo "Template creation failed. Checking for any partial files:"
+          find . -name "*" -type f 2>/dev/null || echo "No files found"
+          exit 1
+        }
         cd TestProjectSqlServer
         # Debug: List all files to understand the structure
         echo "Files in project directory:"
