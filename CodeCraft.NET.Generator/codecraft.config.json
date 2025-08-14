@@ -5,7 +5,7 @@
   },
   "Files": {
     "Controller": "CodeCraft.NET.WebAPI/Controllers/{0}Controller.cs",
-    "HttpRequest": "CodeCraft.NET.WebAPI/Tests/ApiRequests/{0}Requests.cs",
+    "HttpRequest": "CodeCraft.NET.WebAPI/Tests/ApiRequests/{0}Requests.http",
     "CommandCreate": "CodeCraft.NET.Application/CQRS/Features/{0}/Commands/Create/{1}Create.cs",
     "CommandCreateHandler": "CodeCraft.NET.Application/CQRS/Features/{0}/Commands/Create/{1}CreateHandler.cs",
     "CommandCreateValidator": "CodeCraft.NET.Application/CQRS/Features/{0}/Commands/Create/{1}CreateValidator.cs",
@@ -28,7 +28,9 @@
     "RepositoryInterface": "CodeCraft.NET.Application/Contracts/Persistence/Repositories/I{0}Repository.cs",
     "RepositoryImplementation": "CodeCraft.NET.Infrastructure/Persistence/Repositories/{0}Repository.cs",
     "UnitOfWorkInterface": "CodeCraft.NET.Application/Contracts/Persistence/ICodeCraftUnitOfWork.cs",
-    "UnitOfWorkImplementation": "CodeCraft.NET.Infrastructure/Persistence/CodeCraftUnitOfWork.cs"
+    "UnitOfWorkImplementation": "CodeCraft.NET.Infrastructure/Persistence/CodeCraftUnitOfWork.cs",
+    "UnitOfWorkInterfaceName": "ICodeCraftUnitOfWork",
+    "UnitOfWorkImplementationName": "CodeCraftUnitOfWork"
   },
   "Folders": {
     "RootFolder": "CodeCraft.NET",

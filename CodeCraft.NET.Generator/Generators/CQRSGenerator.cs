@@ -24,7 +24,62 @@ namespace CodeCraft.NET.Generator.Generators
 		{
 			var templatePath = ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.MappingProfile));
 			var outputPath = ConfigHelper.GetMappingProfilePath();
-			_templateRenderer.Render(templatePath, outputPath, new { entities });
+
+			var config = CodeCraftConfig.Instance;
+			var context = new
+			{
+				entities,
+				ApplicationProjectName = config.ProjectNames.Application,
+				DomainProjectName = config.ProjectNames.Domain,
+				InfrastructureProjectName = config.ProjectNames.Infrastructure,
+				UnitOfWorkInterfaceName = config.Files.UnitOfWorkInterfaceName
+			};
+
+			_templateRenderer.Render(templatePath, outputPath, context);
+		}
+
+		private object CreateTemplateContext(EntityMetadata entity, object? additionalData = null)
+		{
+			var config = CodeCraftConfig.Instance;
+			var baseContext = new
+			{
+				// Entity data
+				entity.Name,
+				entity.NamePlural,
+				entity.Properties,
+				entity.Usings,
+
+				// Project names
+				ApplicationProjectName = config.ProjectNames.Application,
+				DomainProjectName = config.ProjectNames.Domain,
+				InfrastructureProjectName = config.ProjectNames.Infrastructure,
+
+				// Interface names
+				UnitOfWorkInterfaceName = config.Files.UnitOfWorkInterfaceName
+			};
+
+			// If we have additional data, merge it with the base context
+			if (additionalData != null)
+			{
+				var additionalProps = additionalData.GetType().GetProperties();
+				var mergedData = new Dictionary<string, object>();
+
+				// Add base context properties
+				foreach (var prop in baseContext.GetType().GetProperties())
+				{
+					mergedData[prop.Name] = prop.GetValue(baseContext)!;
+				}
+
+				// Add additional properties
+				foreach (var prop in additionalProps)
+				{
+					mergedData[prop.Name] = prop.GetValue(additionalData)!;
+				}
+
+				return mergedData;
+			}
+
+			return baseContext;
 		}
 
 		private void GenerateCommands(EntityMetadata entity)
@@ -35,49 +90,49 @@ namespace CodeCraft.NET.Generator.Generators
 			_templateRenderer.Render(
 				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.CommandCreate)),
 				ConfigHelper.GetCommandCreatePath(entityPlural, entity.Name),
-				entity);
+				CreateTemplateContext(entity));
 
 			// Create Handler
 			_templateRenderer.Render(
 				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.CommandCreateHandler)),
 				ConfigHelper.GetCommandCreateHandlerPath(entityPlural, entity.Name),
-				entity);
+				CreateTemplateContext(entity));
 
 			// Create Validator
 			_templateRenderer.Render(
 				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.CommandCreateValidator)),
 				ConfigHelper.GetCommandCreateValidatorPath(entityPlural, entity.Name),
-				entity);
+				CreateTemplateContext(entity));
 
 			// Update Command
 			_templateRenderer.Render(
 				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.CommandUpdate)),
 				ConfigHelper.GetCommandUpdatePath(entityPlural, entity.Name),
-				entity);
+				CreateTemplateContext(entity));
 
 			// Update Handler
 			_templateRenderer.Render(
 				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.CommandUpdateHandler)),
 				ConfigHelper.GetCommandUpdateHandlerPath(entityPlural, entity.Name),
-				entity);
+				CreateTemplateContext(entity));
 
 			// Update Validator
 			_templateRenderer.Render(
 				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.CommandUpdateValidator)),
 				ConfigHelper.GetCommandUpdateValidatorPath(entityPlural, entity.Name),
-				entity);
+				CreateTemplateContext(entity));
 
 			// Delete Command
 			_templateRenderer.Render(
 				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.CommandDelete)),
 				ConfigHelper.GetCommandDeletePath(entityPlural, entity.Name),
-				entity);
+				CreateTemplateContext(entity));
 
 			// Delete Handler
 			_templateRenderer.Render(
 				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.CommandDeleteHandler)),
 				ConfigHelper.GetCommandDeleteHandlerPath(entityPlural, entity.Name),
-				entity);
+				CreateTemplateContext(entity));
 		}
 
 		private void GenerateQueries(EntityMetadata entity)
@@ -88,25 +143,25 @@ namespace CodeCraft.NET.Generator.Generators
 			_templateRenderer.Render(
 				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.QueryGetById)),
 				ConfigHelper.GetQueryGetByIdPath(entityPlural, entity.Name),
-				entity);
+				CreateTemplateContext(entity));
 
 			// GetById Handler
 			_templateRenderer.Render(
 				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.QueryGetByIdHandler)),
 				ConfigHelper.GetQueryGetByIdHandlerPath(entityPlural, entity.Name),
-				entity);
+				CreateTemplateContext(entity));
 
 			// GetWithRelated Query
 			_templateRenderer.Render(
 				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.QueryGetWithRelated)),
 				ConfigHelper.GetQueryGetWithRelatedPath(entityPlural, entity.Name),
-				entity);
+				CreateTemplateContext(entity));
 
 			// GetWithRelated Handler
 			_templateRenderer.Render(
 				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.QueryGetWithRelatedHandler)),
 				ConfigHelper.GetQueryGetWithRelatedHandlerPath(entityPlural, entity.Name),
-				entity);
+				CreateTemplateContext(entity));
 		}
 
 		private void GenerateSpecifications(EntityMetadata entity)
@@ -117,25 +172,25 @@ namespace CodeCraft.NET.Generator.Generators
 			_templateRenderer.Render(
 				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.Specification)),
 				ConfigHelper.GetSpecificationPath(entityPlural, entity.Name),
-				entity);
+				CreateTemplateContext(entity));
 
 			// Specification Params
 			_templateRenderer.Render(
 				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.SpecificationParams)),
 				ConfigHelper.GetSpecificationParamsPath(entityPlural, entity.Name),
-				entity);
+				CreateTemplateContext(entity));
 
 			// WithRelated
 			_templateRenderer.Render(
 				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.WithRelated)),
 				ConfigHelper.GetWithRelatedPath(entityPlural, entity.Name),
-				entity);
+				CreateTemplateContext(entity));
 
 			// WithRelated Specification
 			_templateRenderer.Render(
 				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.WithRelatedSpecification)),
 				ConfigHelper.GetWithRelatedSpecificationPath(entityPlural, entity.Name),
-				entity);
+				CreateTemplateContext(entity));
 		}
 	}
 }

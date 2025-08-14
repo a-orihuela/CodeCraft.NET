@@ -19,13 +19,57 @@ namespace CodeCraft.NET.Generator.Generators
 			_templateRenderer.Render(
 				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.Controller)),
 				ConfigHelper.GetControllerPath(entity.Name),
-				entity);
+				CreateTemplateContext(entity));
 
 			// HTTP Request
 			_templateRenderer.Render(
 				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.HttpRequest)),
 				ConfigHelper.GetHttpRequestPath(entity.Name),
-				entity);
+				CreateTemplateContext(entity));
+		}
+
+		private object CreateTemplateContext(EntityMetadata entity, object? additionalData = null)
+		{
+			var config = CodeCraftConfig.Instance;
+			var baseContext = new
+			{
+				// Entity data
+				entity.Name,
+				entity.NamePlural,
+				entity.Properties,
+				entity.Usings,
+
+				// Project names
+				ApplicationProjectName = config.ProjectNames.Application,
+				DomainProjectName = config.ProjectNames.Domain,
+				InfrastructureProjectName = config.ProjectNames.Infrastructure,
+
+				// Interface names
+				UnitOfWorkInterfaceName = config.Files.UnitOfWorkInterfaceName
+			};
+
+			// If we have additional data, merge it with the base context
+			if (additionalData != null)
+			{
+				var additionalProps = additionalData.GetType().GetProperties();
+				var mergedData = new Dictionary<string, object>();
+
+				// Add base context properties
+				foreach (var prop in baseContext.GetType().GetProperties())
+				{
+					mergedData[prop.Name] = prop.GetValue(baseContext)!;
+				}
+
+				// Add additional properties
+				foreach (var prop in additionalProps)
+				{
+					mergedData[prop.Name] = prop.GetValue(additionalData)!;
+				}
+
+				return mergedData;
+			}
+
+			return baseContext;
 		}
 	}
 }
