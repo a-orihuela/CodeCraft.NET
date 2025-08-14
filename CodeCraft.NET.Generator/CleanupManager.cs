@@ -8,7 +8,7 @@ namespace CodeCraft.NET.Generator
 		/// <summary>
 		/// Cleans all generated files including example entities from Domain project
 		/// </summary>
-		public static void CleanAllGeneratedFiles()
+		public static void CleanAll()
 		{
 			CleanGeneratedFiles(includeDomainEntities: true);
 		}
@@ -119,21 +119,14 @@ namespace CodeCraft.NET.Generator
 			int count = 0;
 			try
 			{
-				// Get CQRS Features root directory from any command path
-				var samplePath = string.Format(config.Files.CommandCreate, "Sample", "Sample");
-				var featuresPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(samplePath))); // Go up 3 levels from Commands/Create/
-				
-				if (!string.IsNullOrEmpty(featuresPath))
-				{
-					var fullFeaturesPath = config.GetSolutionRoot();
-					var relativePath = featuresPath.Replace('\\', '/');
-					fullFeaturesPath = Path.Combine(fullFeaturesPath, relativePath);
+				// Get CQRS Features root directory directly
+				var featuresPath = "CodeCraft.NET.Application/CQRS/Features";
+				var fullFeaturesPath = Path.Combine(config.GetSolutionRoot(), featuresPath);
 
-					if (Directory.Exists(fullFeaturesPath))
-					{
-						count = Directory.GetFiles(fullFeaturesPath, "*", SearchOption.AllDirectories).Length;
-						Directory.Delete(fullFeaturesPath, recursive: true);
-					}
+				if (Directory.Exists(fullFeaturesPath))
+				{
+					count = Directory.GetFiles(fullFeaturesPath, "*", SearchOption.AllDirectories).Length;
+					Directory.Delete(fullFeaturesPath, recursive: true);
 				}
 			}
 			catch (Exception ex)

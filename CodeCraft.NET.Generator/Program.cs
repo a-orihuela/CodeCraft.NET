@@ -8,10 +8,20 @@ try
 	Console.WriteLine("🚀 CodeCraft.NET Generator Starting...");
 
 	// Check for command line arguments
+	if (args.Length > 0 && args[0].Equals("cleanAll", StringComparison.OrdinalIgnoreCase))
+	{
+		Console.WriteLine("🧹 Clean mode activated - Removing all generated files...");
+		CleanupManager.CleanAll();
+		Console.WriteLine("✅ Template cleaned successfully!");
+		Console.WriteLine("💡 You can now use the template as a clean base or add your own entities to the Domain project.");
+		return;
+	}
+
+	// Check for command line arguments
 	if (args.Length > 0 && args[0].Equals("clean", StringComparison.OrdinalIgnoreCase))
 	{
 		Console.WriteLine("🧹 Clean mode activated - Removing all generated files...");
-		CleanupManager.CleanAllGeneratedFiles();
+		CleanupManager.CleanGeneratedFilesOnly();
 		Console.WriteLine("✅ Template cleaned successfully!");
 		Console.WriteLine("💡 You can now use the template as a clean base or add your own entities to the Domain project.");
 		return;
@@ -93,15 +103,18 @@ static void ShowHelp()
 	Console.WriteLine();
 	Console.WriteLine("Commands:");
 	Console.WriteLine("  dotnet run                - Generate code for all entities in Domain project");
-	Console.WriteLine("  dotnet run clean          - Clean all generated files (reset template)");
+	Console.WriteLine("  dotnet run clean          - Clean generated files (keep Domain entities)");
+	Console.WriteLine("  dotnet run cleanAll       - Clean all generated files and example entities");
 	Console.WriteLine("  dotnet run help           - Show this help message");
 	Console.WriteLine();
 	Console.WriteLine("Examples:");
-	Console.WriteLine("  dotnet run                # Generate CRUD for Product entity");
-	Console.WriteLine("  dotnet run clean          # Remove all generated files");
+	Console.WriteLine("  dotnet run                # Generate CRUD for all entities");
+	Console.WriteLine("  dotnet run clean          # Remove generated files, keep your entities");
+	Console.WriteLine("  dotnet run cleanAll       # Complete reset, remove everything");
 	Console.WriteLine();
 	Console.WriteLine("💡 Quick Start:");
 	Console.WriteLine("  1. Add your entities to CodeCraft.NET.Domain/Model/");
 	Console.WriteLine("  2. Run 'dotnet run' to generate all CRUD operations");
-	Console.WriteLine("  3. Run 'dotnet run clean' to reset and start fresh");
+	Console.WriteLine("  3. Run 'dotnet run clean' to clean generated files only");
+	Console.WriteLine("  4. Run 'dotnet run cleanAll' to reset template completely");
 }
