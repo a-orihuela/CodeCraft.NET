@@ -1,15 +1,10 @@
-﻿using CodeCraft.NET.Application.Contracts.Identity;
-using CodeCraft.NET.Application.Contracts.Persistence;
+﻿using CodeCraft.NET.Application.Contracts.Persistence;
 using CodeCraft.NET.Application.Contracts.Persistence.Base;
-using CodeCraft.NET.Application.DTOs.Identity;
 using CodeCraft.NET.Infrastructure.Persistence;
-using CodeCraft.NET.Infrastructure.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Options;
 
 namespace CodeCraft.NET.Infrastructure
 {
@@ -17,14 +12,8 @@ namespace CodeCraft.NET.Infrastructure
     {
 		public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration, string appConnection)
 		{
-			services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
-			services.AddSingleton(sp => sp.GetRequiredService<IOptions<JwtSettings>>().Value);
-
 			AddDbContext(services, configuration, appConnection);
-			AddIdentity(services);
 			AddRepositories(services);
-
-			services.AddTransient<IAuthService, AuthService>();
 
 			return services;
 		}
@@ -59,13 +48,6 @@ namespace CodeCraft.NET.Infrastructure
 					services.TryAddScoped(interfaceType, implementationType);
 				}
 			}
-		}
-
-		private static void AddIdentity(IServiceCollection services)
-		{
-			services.AddIdentity<ApplicationUser, IdentityRole>()
-				.AddEntityFrameworkStores<ApplicationDbContext>()
-				.AddDefaultTokenProviders();
 		}
 
 		private static void AddDbContext(IServiceCollection services, IConfiguration configuration, string appConnection)

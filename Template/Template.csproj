@@ -4,10 +4,10 @@
     <PackageId>CodeCraft.NET.CleanArchitecture.Template</PackageId>
     <PackageVersion>1.0.19</PackageVersion>
     <Title>CodeCraft.NET Clean Architecture Template</Title>
-    <Description>A comprehensive Clean Architecture template for .NET applications featuring CQRS, Entity Framework, automatic code generation, and JWT authentication. Perfect for enterprise-grade applications.</Description>
+    <Description>A comprehensive Clean Architecture template for .NET applications featuring CQRS, Entity Framework, and automatic code generation. Perfect for enterprise-grade applications.</Description>
     <Authors>Abraham Orihuela</Authors>
     <Company>CodeCraft Solutions</Company>
-    <PackageTags>dotnet-new;templates;clean-architecture;cqrs;entityframework;jwt;swagger;template;webapi;net9;codecraft;boilerplate;generator</PackageTags>
+    <PackageTags>dotnet-new;templates;clean-architecture;cqrs;entityframework;swagger;template;webapi;net9;codecraft;boilerplate;generator</PackageTags>
     <PackageProjectUrl>https://github.com/a-orihuela/CodeCraft.NET</PackageProjectUrl>
     <RepositoryUrl>https://github.com/a-orihuela/CodeCraft.NET</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -52,6 +52,7 @@
     <Content Include="..\CodeCraft.NET.Generator\**\*.cs" Exclude="..\CodeCraft.NET.Generator\bin\**;..\CodeCraft.NET.Generator\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Generator\" />
     <Content Include="..\CodeCraft.NET.Generator\*.csproj" Pack="true" PackagePath="content\CodeCraft.NET.Generator\" />
     <Content Include="..\CodeCraft.NET.Generator\**\*.scriban" Exclude="..\CodeCraft.NET.Generator\bin\**;..\CodeCraft.NET.Generator\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Generator\" />
+    <Content Remove="..\CodeCraft.NET.Infrastructure\Persistence\CodeCraftUnitOfWork.cs" />
     <!-- Archivo de configuracion del generador (copiarlo al directorio Generator) -->
     <Content Include="..\CodeCraft.NET.Generator\codecraft.config.json" Pack="true" PackagePath="content\CodeCraft.NET.Generator\codecraft.config.json" />
     <!-- Solo archivos esenciales y seguros -->

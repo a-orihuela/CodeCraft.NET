@@ -58,7 +58,6 @@ CodeCraft.NET is a **powerful project template** that combines **Clean Architect
 - **CQRS + MediatR** for scalable command/query operations
 - **Entity Framework Core with SQL Server** for data persistence
 - **Automatic Code Generator** that creates boilerplate code
-- **JWT Authentication** and role-based authorization
 - **Swagger/OpenAPI** documentation
 - **Repository + Unit of Work** patterns
 - **AutoMapper** for object mapping
@@ -97,15 +96,11 @@ Create a new domain entity in `ProductCatalog.Domain/Model/`:
 
     dotnet run --project ProductCatalog.Generator
 
-### Step 5: Apply Database Migrations
-
-    dotnet ef database update --project ProductCatalog.Infrastructure --startup-project ProductCatalog.WebAPI
-
-### Step 6: Run Your API
+### Step 5: Run Your API
 
     dotnet run --project ProductCatalog.WebAPI
 
-### Step 7: Test Your API
+### Step 6: Test Your API
 
 Navigate to `https://localhost:7202/swagger` and you'll see:
 
@@ -116,158 +111,116 @@ Navigate to `https://localhost:7202/swagger` and you'll see:
 - `PUT /api/Product/{id}` - Update existing product
 - `DELETE /api/Product/{id}` - Delete product
 
-## What the Generator Creates
+### Clean Template (Optional)
 
-When you run the generator, it automatically creates:
+Want to start fresh or clean up example files?
 
-### In Application Layer
+    # Remove all generated files and example entities
+    dotnet run clean --project ProductCatalog.Generator
 
-- Application/
-  - CQRS/Features/Products/
-    - Commands/
-      - Create/ProductCreate.cs, ProductCreateHandler.cs, ProductCreateValidator.cs
-      - Update/ProductUpdate.cs, ProductUpdateHandler.cs, ProductUpdateValidator.cs
-      - Delete/ProductDelete.cs, ProductDeleteHandler.cs
-    - Queries/
-      - GetProductById.cs, GetProductByIdHandler.cs
-      - GetProductWithRelated.cs, GetProductWithRelatedHandler.cs
-    - Contracts/Persistence/Repositories/IProductRepository.cs
-    - Mapping/MappingProfile.cs (updated)
+This removes:
+- All generated CRUD operations 
+- Example entities (Product.cs)
+- Auto-generated migrations
+- Empty directories
 
-### In Infrastructure Layer
+Perfect for starting with a clean template base!
 
-- Infrastructure/
-  - Persistence/Repositories/ProductRepository.cs
-  - Persistence/Custom/Repositories/ProductRepository.Custom.cs
-  - ApplicationDbContext.cs (updated with Product DbSet)
+## Code Generator Commands
 
-### In WebAPI Layer
+CodeCraft.NET includes a powerful code generator that creates all the boilerplate for you:
 
-- WebAPI/Controllers/ProductController.cs
+### Available Commands
 
-## Extending Functionality with Custom Features
+```bash
+# Generate CRUD for all entities in Domain project  
+dotnet run --project YourProject.Generator
 
-### Adding Custom Commands
+# Clean all generated files (reset template)
+dotnet run clean --project YourProject.Generator  
 
-Create custom business logic in the `Custom` folders:
+# Show help and usage information
+dotnet run help --project YourProject.Generator
+```
 
-    // Application/CQRS/Custom/Features/Products/Commands/DiscountProduct/
-    public class DiscountProductCommand : IRequest<bool>
-    {
-	    public int ProductId { get; set; }
-	    public decimal DiscountPercentage { get; set; }
-    }
+### Generator Workflow
 
-    public class DiscountProductHandler : IRequestHandler<DiscountProductCommand, bool>
-    {
-	    private readonly ICodeCraftUnitOfWork _unitOfWork;
-    
-	    public DiscountProductHandler(ICodeCraftUnitOfWork unitOfWork)
-	    {
-	        _unitOfWork = unitOfWork;
-	    }
-    
-	    public async Task<bool> Handle(DiscountProductCommand request, CancellationToken cancellationToken)
-	    {
-	        var product = await _unitOfWork.Repository<Product>().GetByIdAsync(request.ProductId);
-	        product.Price = product.Price * (1 - request.DiscountPercentage / 100);
-	    
-	        _unitOfWork.Repository<Product>().UpdateEntity(product);
-	        return await _unitOfWork.Complete() > 0;
-	    }
-    }
+1. **Analyze Domain**: Scans `Domain/Model/` for entities inheriting from `BaseDomainModel`
+2. **Generate Code**: Creates CQRS commands, queries, handlers, validators, repositories, and controllers
+3. **Update DbContext**: Adds DbSets for new entities
+4. **Create Migrations**: Automatically generates EF Core migrations
+5. **Build & Validate**: Ensures all generated code compiles successfully
 
-### Adding Custom Repository Methods
+### What Gets Generated
 
-Extend repositories with custom queries:
+For each entity (e.g., `Product`), the generator creates:
 
-    // Application/Contracts/Persistence/Custom/IProductRepository.Custom.cs
-    public partial interface IProductRepository
-    {
-        Task<IEnumerable<Product>> GetProductsByCategory(string category);
-        Task<IEnumerable<Product>> GetLowStockProducts(int threshold);
-    }
+**Application Layer** (30+ files):
+- Commands: `ProductCreate`, `ProductUpdate`, `ProductDelete` with handlers and validators
+- Queries: `GetProductById`, `GetProductWithRelated` with handlers  
+- Specifications: `ProductSpecification`, `ProductSpecificationParams`
+- Contracts: `IProductRepository`
+- Mapping: Updates `MappingProfile.cs`
 
-    // Infrastructure/Persistence/Custom/Repositories/ProductRepository.Custom.cs
-    public partial class ProductRepository
-    {
-        public async Task<IEnumerable<Product>> GetProductsByCategory(string category)
-        {
-            return await _context.Products
-                .Where(p => p.Category == category && p.Active)
-                .ToListAsync();
-        }
-    
-        public async Task<IEnumerable<Product>> GetLowStockProducts(int threshold)
-        {
-            return await _context.Products
-                .Where(p => p.Stock <= threshold && p.Active)
-                .ToListAsync();
-        }
-    }
+**Infrastructure Layer**:
+- Repository: `ProductRepository.cs` implementing `IProductRepository`
+- DbContext: Updates `ApplicationDbContext.cs` with `DbSet<Product>`
+- UnitOfWork: Updates or creates `CodeCraftUnitOfWork.cs`
 
-### Adding Custom Controllers
+**WebAPI Layer**:
+- Controller: `ProductController.cs` with full CRUD endpoints
+- HTTP Tests: `ProductRequests.http` for testing
 
-Create specialized endpoints:
+**Database**:
+- Migration: Auto-generated EF Core migration
 
-    // WebAPI/Controllers/Custom/ProductManagementController.cs
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ProductManagementController : ControllerBase
-    {
-        private readonly IMediator _mediator;
-    
-        public ProductManagementController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
-    
-        [HttpPost("{id}/discount")]
-        public async Task<IActionResult> ApplyDiscount(int id, [FromBody] DiscountProductCommand command)
-        {
-            command.ProductId = id;
-            var result = await _mediator.Send(command);
-            return Ok(result);
-        }
-    }
+### Example: Adding a Customer Entity
 
-## Authentication & Authorization
+```csharp
+// 1. Create Domain/Model/Customer.cs
+public class Customer : BaseDomainModel
+{
+    public string FirstName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
+    public DateTime DateOfBirth { get; set; }
+}
 
-The template includes built-in authentication:
+// 2. Run generator
+dotnet run --project YourProject.Generator
 
-### JWT Authentication
+// 3. Instantly get 30+ generated files:
+//    - CustomerController with CRUD endpoints
+//    - CustomerCreate, CustomerUpdate, CustomerDelete commands
+//    - GetCustomerById, GetCustomerWithRelated queries  
+//    - CustomerRepository and ICustomerRepository
+//    - CustomerSpecification for filtering
+//    - CustomerCreateValidator, CustomerUpdateValidator
+//    - Updated DbContext with DbSet<Customer>
+//    - Auto-generated migration
+```
 
-    // Login endpoint automatically available
-    POST /api/Auth/login
-    {
-        "email": "admin@localhost.com",
-        "password": "admin"
-    }
+### Clean Template
 
-### Register New Users
+Use the clean command to reset your template:
 
-    POST /api/Auth/register
-    {
-        "email": "user@example.com",
-        "password": "SecurePassword123!",
-        "fullName": "John Doe"
-    }
+```bash
+dotnet run clean --project YourProject.Generator
+```
 
-### Protect Your Endpoints
+This removes:
+- ? All generated CRUD files (Commands, Queries, Handlers, Validators)
+- ? Generated Controllers and API endpoints  
+- ? Generated Repositories and UnitOfWork files
+- ? Generated DbContext and Mapping files
+- ? Example entities (Product.cs, User.cs, etc.)
+- ? Auto-generated migrations
+- ? Empty directories and cleanup
 
-    [Authorize]
-    [HttpGet]
-    public async Task<IActionResult> GetProducts()
-    {
-        // Only authenticated users can access
-    }
-
-    [Authorize(Roles = "Administrator")]
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteProduct(int id)
-    {
-        // Only administrators can delete
-    }
+Perfect for:
+- ?? **Testing**: Generate ? Test ? Clean ? Repeat
+- ?? **Demos**: Clean template for presentations
+- ?? **Production**: Start with a clean base for real projects
 
 ## Database Features
 
@@ -409,7 +362,6 @@ FluentValidation is integrated automatically:
 - Clean Architecture foundation
 - CQRS + MediatR implementation
 - Automatic code generation
-- JWT Authentication
 - Swagger documentation
 - Repository + Unit of Work patterns
 - FluentValidation integration
