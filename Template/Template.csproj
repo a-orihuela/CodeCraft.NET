@@ -64,9 +64,9 @@
     <!-- Only essential and safe files -->
     <Content Include="..\.gitignore" Pack="true" PackagePath="content\" />
     <!-- Base template files to ensure template compiles -->
-    <Content Include="BaseInfrastructureServiceRegistration.cs" Pack="true" PackagePath="content\CodeCraft.NET.Infrastructure\InfrastructureServiceRegistration.cs" />
-    <Content Include="BaseApplicationDbContext.cs" Pack="true" PackagePath="content\CodeCraft.NET.Infrastructure\Persistence\ApplicationDbContext.cs" />
-    <Content Include="BaseApplicationDbContextFactory.cs" Pack="true" PackagePath="content\CodeCraft.NET.Infrastructure\Persistence\Factories\ApplicationDbContextFactory.cs" />
+    <Content Include="BaseInfrastructureServiceRegistration.txt" Pack="true" PackagePath="content\CodeCraft.NET.Infrastructure\InfrastructureServiceRegistration.cs" />
+    <Content Include="BaseApplicationDbContext.txt" Pack="true" PackagePath="content\CodeCraft.NET.Infrastructure\Persistence\ApplicationDbContext.cs" />
+    <Content Include="BaseApplicationDbContextFactory.txt" Pack="true" PackagePath="content\CodeCraft.NET.Infrastructure\Persistence\Factories\ApplicationDbContextFactory.cs" />
     <!-- Include icon.png only if it exists -->
     <None Include="icon.png" Pack="true" PackagePath="\" Condition="Exists('icon.png')" />
   </ItemGroup>
