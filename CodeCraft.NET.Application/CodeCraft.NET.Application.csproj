@@ -23,9 +23,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CQRS\Custom\Features\Users\Queries\" />
+    <Folder Include="Contracts\Persistence\Custom\" />
+    <Folder Include="Contracts\Persistence\Repositories\" />
+    <Folder Include="CQRS\Custom\Features\" />
+    <Folder Include="CQRS\Custom\Specifications\" />
     <Folder Include="CQRS\Features\" />
     <Folder Include="CQRS\Specifications\" />
+    <Folder Include="DTOs\" />
   </ItemGroup>
 
 </Project>
