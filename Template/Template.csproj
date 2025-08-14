@@ -30,34 +30,34 @@
   <ItemGroup>
     <None Include="..\README.md" Pack="true" PackagePath="\" />
     <Content Include=".template.config\template.json" Pack="true" PackagePath="content/.template.config/" />
-    <!-- Archivo de solucion limpio sin proyecto Template -->
+    <!-- Clean solution file without Template project -->
     <Content Include="CodeCraft.NET.sln" Pack="true" PackagePath="content\CodeCraft.NET.sln" />
-    <!-- Archivos del proyecto Domain -->
+    <!-- Domain project files -->
     <Content Include="..\CodeCraft.NET.Domain\**\*.cs" Exclude="..\CodeCraft.NET.Domain\bin\**;..\CodeCraft.NET.Domain\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Domain\" />
     <Content Include="..\CodeCraft.NET.Domain\*.csproj" Pack="true" PackagePath="content\CodeCraft.NET.Domain\" />
-    <!-- Archivos del proyecto Application -->
+    <!-- Application project files -->
     <Content Include="..\CodeCraft.NET.Application\**\*.cs" Exclude="..\CodeCraft.NET.Application\bin\**;..\CodeCraft.NET.Application\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Application\" />
     <Content Include="..\CodeCraft.NET.Application\*.csproj" Pack="true" PackagePath="content\CodeCraft.NET.Application\" />
-    <!-- Archivos del proyecto Infrastructure -->
+    <!-- Infrastructure project files -->
     <Content Include="..\CodeCraft.NET.Infrastructure\**\*.cs" Exclude="..\CodeCraft.NET.Infrastructure\bin\**;..\CodeCraft.NET.Infrastructure\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Infrastructure\" />
     <Content Include="..\CodeCraft.NET.Infrastructure\*.csproj" Pack="true" PackagePath="content\CodeCraft.NET.Infrastructure\" />
-    <!-- Archivos del proyecto WebAPI -->
+    <!-- WebAPI project files -->
     <Content Include="..\CodeCraft.NET.WebAPI\**\*.cs" Exclude="..\CodeCraft.NET.WebAPI\bin\**;..\CodeCraft.NET.WebAPI\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.WebAPI\" />
     <Content Include="..\CodeCraft.NET.WebAPI\*.csproj" Pack="true" PackagePath="content\CodeCraft.NET.WebAPI\" />
     <Content Include="..\CodeCraft.NET.WebAPI\**\*.json" Exclude="..\CodeCraft.NET.WebAPI\bin\**;..\CodeCraft.NET.WebAPI\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.WebAPI\" />
-    <!-- Archivos del proyecto Cross -->
+    <!-- Cross project files -->
     <Content Include="..\CodeCraft.NET.Cross\**\*.cs" Exclude="..\CodeCraft.NET.Cross\bin\**;..\CodeCraft.NET.Cross\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Cross\" />
     <Content Include="..\CodeCraft.NET.Cross\*.csproj" Pack="true" PackagePath="content\CodeCraft.NET.Cross\" />
-    <!-- Archivos del proyecto Generator -->
+    <!-- Generator project files -->
     <Content Include="..\CodeCraft.NET.Generator\**\*.cs" Exclude="..\CodeCraft.NET.Generator\bin\**;..\CodeCraft.NET.Generator\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Generator\" />
     <Content Include="..\CodeCraft.NET.Generator\*.csproj" Pack="true" PackagePath="content\CodeCraft.NET.Generator\" />
     <Content Include="..\CodeCraft.NET.Generator\**\*.scriban" Exclude="..\CodeCraft.NET.Generator\bin\**;..\CodeCraft.NET.Generator\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Generator\" />
     <Content Remove="..\CodeCraft.NET.Infrastructure\Persistence\CodeCraftUnitOfWork.cs" />
-    <!-- Archivo de configuracion del generador (copiarlo al directorio Generator) -->
+    <!-- Generator configuration file (copy to Generator directory) -->
     <Content Include="..\CodeCraft.NET.Generator\codecraft.config.json" Pack="true" PackagePath="content\CodeCraft.NET.Generator\codecraft.config.json" />
-    <!-- Solo archivos esenciales y seguros -->
+    <!-- Only essential and safe files -->
     <Content Include="..\.gitignore" Pack="true" PackagePath="content\" />
-    <!-- Incluir icon.png solo si existe -->
+    <!-- Include icon.png only if it exists -->
     <None Include="icon.png" Pack="true" PackagePath="\" Condition="Exists('icon.png')" />
   </ItemGroup>
   <ItemGroup>

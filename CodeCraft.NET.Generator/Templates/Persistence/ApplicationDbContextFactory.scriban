@@ -15,7 +15,6 @@ namespace {{ InfrastructureProjectName }}.Persistence.Factories
         {
             var basePath = Directory.GetCurrentDirectory();
             
-            // Lista de posibles ubicaciones para encontrar appsettings.json
             var configPaths = new[]
             {
                 Path.Combine(basePath, "appsettings.json"),
@@ -37,7 +36,6 @@ namespace {{ InfrastructureProjectName }}.Persistence.Factories
             
             var configuration = configBuilder.Build();
 
-            // Buscar la cadena de conexión en múltiples ubicaciones
             var connectionString = 
                 configuration["ConnectionStrings:Default"] ??
                 configuration["ConnectionStrings:Application"] ??

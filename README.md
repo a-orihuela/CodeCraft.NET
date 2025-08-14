@@ -71,60 +71,59 @@ CodeCraft.NET is a **powerful project template** that combines **Clean Architect
 
 ### Step 2: Create Project
 
-    dotnet new codecraft -n "ProductCatalog"
-    cd ProductCatalog
+    dotnet new codecraft -n "CustomerManagement"
+    cd CustomerManagement
 
-### Step 3: Create Your First Entity
+### Step 3: Run the Code Generator
 
-Create a new domain entity in `ProductCatalog.Domain/Model/`:
+The template includes a sample `Customer` entity in `CustomerManagement.Domain/Model/Customer.cs`:
 
-    using CodeCraft.NET.Cross.Domain;
+```csharp
+public class Customer : BaseDomainModel
+{
+    public string FirstName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
+    public DateTime DateOfBirth { get; set; }
+}
+```
 
-    namespace ProductCatalog.Domain.Model;
+Generate all CRUD operations for this entity:
 
-    public class Product : BaseDomainModel
-    {
-        public string Name { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        public decimal Price { get; set; }
-        public string Category { get; set; } = string.Empty;
-        public int Stock { get; set; }
-        public bool IsAvailable { get; set; }
-    }
+    dotnet run --project CustomerManagement.Generator
 
-### Step 4: Run the Code Generator
+### Step 4: Run Your API
 
-    dotnet run --project ProductCatalog.Generator
+    dotnet run --project CustomerManagement.WebAPI
 
-### Step 5: Run Your API
-
-    dotnet run --project ProductCatalog.WebAPI
-
-### Step 6: Test Your API
+### Step 5: Test Your API
 
 Navigate to `https://localhost:7202/swagger` and you'll see:
 
 **Automatically Generated Endpoints:**
-- `GET /api/Product` - Get all products with pagination
-- `GET /api/Product/{id}` - Get product by ID
-- `POST /api/Product` - Create new product
-- `PUT /api/Product/{id}` - Update existing product
-- `DELETE /api/Product/{id}` - Delete product
+- `GET /api/Customer` - Get all customers with pagination
+- `GET /api/Customer/{id}` - Get customer by ID
+- `POST /api/Customer` - Create new customer
+- `PUT /api/Customer/{id}` - Update existing customer
+- `DELETE /api/Customer/{id}` - Delete customer
 
 ### Clean Template (Optional)
 
 Want to start fresh or clean up example files?
 
-    # Remove all generated files and example entities
-    dotnet run clean --project ProductCatalog.Generator
+    # Remove only generated files (keep your Domain entities)
+    dotnet run clean --project CustomerManagement.Generator
+    
+    # Remove all generated files and example entities (complete reset)
+    dotnet run cleanAll --project CustomerManagement.Generator
 
-This removes:
-- All generated CRUD operations 
-- Example entities (Product.cs)
-- Auto-generated migrations
-- Empty directories
+**Two cleaning levels:**
+- `clean` - Removes generated files but keeps your Domain entities
+- `cleanAll` - Complete reset, removes everything including example entities
 
-Perfect for starting with a clean template base!
+Perfect for:
+- **Development**: Use `clean` to regenerate code while keeping your entities
+- **Fresh Start**: Use `cleanAll` for a completely clean template base!
 
 ## Code Generator Commands
 
@@ -136,8 +135,11 @@ CodeCraft.NET includes a powerful code generator that creates all the boilerplat
 # Generate CRUD for all entities in Domain project  
 dotnet run --project YourProject.Generator
 
-# Clean all generated files (reset template)
-dotnet run clean --project YourProject.Generator  
+# Clean generated files only (keep Domain entities)
+dotnet run clean --project YourProject.Generator
+
+# Clean all generated files and example entities (complete reset)
+dotnet run cleanAll --project YourProject.Generator
 
 # Show help and usage information
 dotnet run help --project YourProject.Generator
@@ -153,84 +155,93 @@ dotnet run help --project YourProject.Generator
 
 ### What Gets Generated
 
-For each entity (e.g., `Product`), the generator creates:
+For each entity (e.g., `Customer`), the generator creates:
 
 **Application Layer** (30+ files):
-- Commands: `ProductCreate`, `ProductUpdate`, `ProductDelete` with handlers and validators
-- Queries: `GetProductById`, `GetProductWithRelated` with handlers  
-- Specifications: `ProductSpecification`, `ProductSpecificationParams`
-- Contracts: `IProductRepository`
+- Commands: `CustomerCreate`, `CustomerUpdate`, `CustomerDelete` with handlers and validators
+- Queries: `GetCustomerById`, `GetCustomerWithRelated` with handlers  
+- Specifications: `CustomerSpecification`, `CustomerSpecificationParams`
+- Contracts: `ICustomerRepository`
 - Mapping: Updates `MappingProfile.cs`
 
 **Infrastructure Layer**:
-- Repository: `ProductRepository.cs` implementing `IProductRepository`
-- DbContext: Updates `ApplicationDbContext.cs` with `DbSet<Product>`
+- Repository: `CustomerRepository.cs` implementing `ICustomerRepository`
+- DbContext: Updates `ApplicationDbContext.cs` with `DbSet<Customer>`
 - UnitOfWork: Updates or creates `CodeCraftUnitOfWork.cs`
 
 **WebAPI Layer**:
-- Controller: `ProductController.cs` with full CRUD endpoints
-- HTTP Tests: `ProductRequests.http` for testing
+- Controller: `CustomerController.cs` with full CRUD endpoints
+- HTTP Tests: `CustomerRequests.http` for testing
 
 **Database**:
 - Migration: Auto-generated EF Core migration
 
-### Example: Adding a Customer Entity
+### Example: Adding a Product Entity
 
 ```csharp
-// 1. Create Domain/Model/Customer.cs
-public class Customer : BaseDomainModel
+// 1. Create Domain/Model/Product.cs
+public class Product : BaseDomainModel
 {
-    public string FirstName { get; set; } = string.Empty;
-    public string LastName { get; set; } = string.Empty;
-    public string Email { get; set; } = string.Empty;
-    public DateTime DateOfBirth { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+    public decimal Price { get; set; }
+    public string Category { get; set; } = string.Empty;
+    public int Stock { get; set; }
+    public bool IsAvailable { get; set; }
 }
 
 // 2. Run generator
 dotnet run --project YourProject.Generator
 
 // 3. Instantly get 30+ generated files:
-//    - CustomerController with CRUD endpoints
-//    - CustomerCreate, CustomerUpdate, CustomerDelete commands
-//    - GetCustomerById, GetCustomerWithRelated queries  
-//    - CustomerRepository and ICustomerRepository
-//    - CustomerSpecification for filtering
-//    - CustomerCreateValidator, CustomerUpdateValidator
-//    - Updated DbContext with DbSet<Customer>
+//    - ProductController with CRUD endpoints
+//    - ProductCreate, ProductUpdate, ProductDelete commands
+//    - GetProductById, GetProductWithRelated queries  
+//    - ProductRepository and IProductRepository
+//    - ProductSpecification for filtering
+//    - ProductCreateValidator, ProductUpdateValidator
+//    - Updated DbContext with DbSet<Product>
 //    - Auto-generated migration
 ```
 
 ### Clean Template
 
-Use the clean command to reset your template:
+The generator provides two levels of cleaning:
 
 ```bash
+# Clean generated files only (keeps your Domain entities)
 dotnet run clean --project YourProject.Generator
+
+# Complete template reset (removes everything)
+dotnet run cleanAll --project YourProject.Generator
 ```
 
-This removes:
-- ? All generated CRUD files (Commands, Queries, Handlers, Validators)
+**`clean` command removes:**
+- ? Generated CRUD files (Commands, Queries, Handlers, Validators)
 - ? Generated Controllers and API endpoints  
 - ? Generated Repositories and UnitOfWork files
 - ? Generated DbContext and Mapping files
-- ? Example entities (Product.cs, User.cs, etc.)
 - ? Auto-generated migrations
 - ? Empty directories and cleanup
+- ? **Keeps your Domain entities untouched**
+
+**`cleanAll` command removes:**
+- ? Everything from `clean` command above
+- ? Example entities (Customer.cs, etc.)
+- ? Model directory if empty
 
 Perfect for:
-- ?? **Testing**: Generate ? Test ? Clean ? Repeat
-- ?? **Demos**: Clean template for presentations
-- ?? **Production**: Start with a clean base for real projects
+- ?? **Development**: Use `clean` to regenerate without losing your entities
+- ?? **Demos**: Use `cleanAll` for clean template presentations
+- ?? **Production**: Use `cleanAll` to start fresh for real projects
 
 ## Database Features
 
 ### Automatic Migrations
 
-The generator creates and applies migrations automatically:
+The generator creates and applies migrations automatically. You can also create custom migrations:
 
-# Generated migration includes your new entities
-
-    dotnet ef migrations add AutoGen_20240101120000 --project Infrastructure --startup-project WebAPI
+    dotnet ef migrations add YourMigrationName --project Infrastructure --startup-project WebAPI
 
 ### Built-in Auditing
 
@@ -246,10 +257,10 @@ Every entity inherits from `BaseDomainModel`:
 
 Use the built-in Swagger UI at `https://localhost:7202/swagger`:
 
-1. **Authenticate**: Use the Auth endpoints to get a JWT token
-2. **Authorize**: Click "Authorize" and paste your token
-3. **Test Endpoints**: Try all the CRUD operations
-4. **View Schemas**: See all DTOs and models
+1. **Test Endpoints**: Try all the CRUD operations
+2. **View Schemas**: See all DTOs and models
+3. **Interactive Documentation**: Test your API directly from the browser
+4. **Response Examples**: See sample request/response formats
 
 ## Configuration
 
@@ -263,50 +274,28 @@ Configure your SQL Server connection in `appsettings.json`:
       }
     }
 
-### JWT Settings
-
-Configure authentication in `appsettings.Development.json`:
-
-    {
-        "JwtSettings": {
-        "Issuer": "MyProject.API",
-        "Audience": "frontend",
-        "Key": "YourSuperSecretSecurityKeyOfAtLeast32Chars",
-        "DurationInMinutes": 60
-        }
-    }
-
-## Development Workflow
-
-1. **Define Domain Entities** in `Domain/Model/`
-2. **Run Code Generator** with `dotnet run --project Generator`
-3. **Customize Generated Code** in `Custom/` folders
-4. **Add Business Logic** in handlers and repositories
-5. **Test with Swagger** or your preferred API client
-6. **Deploy** your application
-
-## Advanced Features
+### Advanced Features
 
 ### Pagination
 
 All list endpoints support pagination:
 
-    GET /api/Product?PageNumber=1&PageSize=10&OrderBy=Name
+    GET /api/Customer?PageNumber=1&PageSize=10&OrderBy=FirstName
 
 ### Filtering
 
 Use specifications for complex queries:
 
-    // Application/CQRS/Specifications/Products/ProductSpecification.cs
-    public class ProductSpecification : BaseSpecification<Product>
+    // Application/CQRS/Specifications/Customers/CustomerSpecification.cs
+    public class CustomerSpecification : BaseSpecification<Customer>
     {
-        public ProductSpecification(ProductSpecificationParams @params)
+        public CustomerSpecification(CustomerSpecificationParams @params)
         {
-            if (!string.IsNullOrEmpty(@params.Category))
-                AndCriteria(x => x.Category == @params.Category);
+            if (!string.IsNullOrEmpty(@params.Email))
+                AndCriteria(x => x.Email.Contains(@params.Email));
             
-            if (@params.MinPrice.HasValue)
-                AndCriteria(x => x.Price >= @params.MinPrice.Value);
+            if (@params.MinAge.HasValue)
+                AndCriteria(x => x.DateOfBirth <= DateTime.Now.AddYears(-@params.MinAge.Value));
         }
     }
 
@@ -314,70 +303,16 @@ Use specifications for complex queries:
 
 FluentValidation is integrated automatically:
     
-    public class ProductCreateValidator : AbstractValidator<ProductCreate>
+    public class CustomerCreateValidator : AbstractValidator<CustomerCreate>
     {
-        public ProductCreateValidator()
+        public CustomerCreateValidator()
         {
-            RuleFor(x => x.Name)
-                .NotEmpty().WithMessage("Product name is required")
-                .MaximumLength(100);
+            RuleFor(x => x.FirstName)
+                .NotEmpty().WithMessage("First name is required")
+                .MaximumLength(50);
             
-            RuleFor(x => x.Price)
-                .GreaterThan(0).WithMessage("Price must be greater than 0");
+            RuleFor(x => x.Email)
+                .NotEmpty().WithMessage("Email is required")
+                .EmailAddress().WithMessage("Valid email address is required");
         }
     }
-
-## Architecture Deep Dive
-
-### Clean Architecture Layers
-
-- **WebAPI Layer**
-  - Controllers, Middleware, Configuration
-- **Application Layer**
-  - CQRS, Validators, DTOs, Contracts
-- **Infrastructure Layer**
-  - EF Core, Repositories, External Services
-- **Domain Layer**
-  - Entities, Value Objects, Domain Logic
-
-### CQRS Pattern
-
-- **Commands**: Modify data (Create, Update, Delete)
-- **Queries**: Read data (GetById, GetAll, Search)
-- **Handlers**: Business logic implementation
-- **Validators**: Input validation rules
-
-## What's New
-
-### Version 1.0.2
-
-- Improved template build script with semantic versioning
-- Enhanced PowerShell build automation
-- Cleaner template structure
-- Better documentation formatting
-
-### Version 1.0.0
-
-- Initial release
-- Clean Architecture foundation
-- CQRS + MediatR implementation
-- Automatic code generation
-- Swagger documentation
-- Repository + Unit of Work patterns
-- FluentValidation integration
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- Clean Architecture by Robert C. Martin
-- CQRS pattern implementation
-- MediatR for request/response patterns
-- Entity Framework Core team
-- FluentValidation for validation rules
-
-**Star this repository** if you find it helpful!
-
-**Happy coding with CodeCraft.NET!**
