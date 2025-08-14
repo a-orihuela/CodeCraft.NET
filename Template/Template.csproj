@@ -29,6 +29,7 @@
   <!-- Template content to include -->
   <ItemGroup>
     <None Include="..\README.md" Pack="true" PackagePath="\" />
+    <None Include="TEMPLATE_SETUP.md" Pack="true" PackagePath="\" />
     <Content Include=".template.config\template.json" Pack="true" PackagePath="content/.template.config/" />
     <!-- Clean solution file without Template project -->
     <Content Include="CodeCraft.NET.sln" Pack="true" PackagePath="content\CodeCraft.NET.sln" />
@@ -36,13 +37,19 @@
     <Content Include="..\CodeCraft.NET.Domain\**\*.cs" Exclude="..\CodeCraft.NET.Domain\bin\**;..\CodeCraft.NET.Domain\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Domain\" />
     <Content Include="..\CodeCraft.NET.Domain\*.csproj" Pack="true" PackagePath="content\CodeCraft.NET.Domain\" />
     <!-- Application project files -->
-    <Content Include="..\CodeCraft.NET.Application\**\*.cs" Exclude="..\CodeCraft.NET.Application\bin\**;..\CodeCraft.NET.Application\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Application\" />
+    <Content Include="..\CodeCraft.NET.Application\**\*.cs" 
+             Exclude="..\CodeCraft.NET.Application\bin\**;..\CodeCraft.NET.Application\obj\**;..\CodeCraft.NET.Application\CQRS\Features\**;..\CodeCraft.NET.Application\CQRS\Specifications\**;..\CodeCraft.NET.Application\Contracts\Persistence\Repositories\**;..\CodeCraft.NET.Application\Contracts\Persistence\ICodeCraftUnitOfWork.cs;..\CodeCraft.NET.Application\Mapping\MappingProfile.cs" 
+             Pack="true" PackagePath="content\CodeCraft.NET.Application\" />
     <Content Include="..\CodeCraft.NET.Application\*.csproj" Pack="true" PackagePath="content\CodeCraft.NET.Application\" />
     <!-- Infrastructure project files -->
-    <Content Include="..\CodeCraft.NET.Infrastructure\**\*.cs" Exclude="..\CodeCraft.NET.Infrastructure\bin\**;..\CodeCraft.NET.Infrastructure\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Infrastructure\" />
+    <Content Include="..\CodeCraft.NET.Infrastructure\**\*.cs" 
+             Exclude="..\CodeCraft.NET.Infrastructure\bin\**;..\CodeCraft.NET.Infrastructure\obj\**;..\CodeCraft.NET.Infrastructure\Persistence\Repositories\**;..\CodeCraft.NET.Infrastructure\Persistence\CodeCraftUnitOfWork.cs;..\CodeCraft.NET.Infrastructure\Persistence\ApplicationDbContext.cs;..\CodeCraft.NET.Infrastructure\Persistence\Factories\**;..\CodeCraft.NET.Infrastructure\Migrations\**" 
+             Pack="true" PackagePath="content\CodeCraft.NET.Infrastructure\" />
     <Content Include="..\CodeCraft.NET.Infrastructure\*.csproj" Pack="true" PackagePath="content\CodeCraft.NET.Infrastructure\" />
     <!-- WebAPI project files -->
-    <Content Include="..\CodeCraft.NET.WebAPI\**\*.cs" Exclude="..\CodeCraft.NET.WebAPI\bin\**;..\CodeCraft.NET.WebAPI\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.WebAPI\" />
+    <Content Include="..\CodeCraft.NET.WebAPI\**\*.cs" 
+             Exclude="..\CodeCraft.NET.WebAPI\bin\**;..\CodeCraft.NET.WebAPI\obj\**;..\CodeCraft.NET.WebAPI\Controllers\**" 
+             Pack="true" PackagePath="content\CodeCraft.NET.WebAPI\" />
     <Content Include="..\CodeCraft.NET.WebAPI\*.csproj" Pack="true" PackagePath="content\CodeCraft.NET.WebAPI\" />
     <Content Include="..\CodeCraft.NET.WebAPI\**\*.json" Exclude="..\CodeCraft.NET.WebAPI\bin\**;..\CodeCraft.NET.WebAPI\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.WebAPI\" />
     <!-- Cross project files -->
@@ -52,11 +59,14 @@
     <Content Include="..\CodeCraft.NET.Generator\**\*.cs" Exclude="..\CodeCraft.NET.Generator\bin\**;..\CodeCraft.NET.Generator\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Generator\" />
     <Content Include="..\CodeCraft.NET.Generator\*.csproj" Pack="true" PackagePath="content\CodeCraft.NET.Generator\" />
     <Content Include="..\CodeCraft.NET.Generator\**\*.scriban" Exclude="..\CodeCraft.NET.Generator\bin\**;..\CodeCraft.NET.Generator\obj\**" Pack="true" PackagePath="content\CodeCraft.NET.Generator\" />
-    <Content Remove="..\CodeCraft.NET.Infrastructure\Persistence\CodeCraftUnitOfWork.cs" />
     <!-- Generator configuration file (copy to Generator directory) -->
     <Content Include="..\CodeCraft.NET.Generator\codecraft.config.json" Pack="true" PackagePath="content\CodeCraft.NET.Generator\codecraft.config.json" />
     <!-- Only essential and safe files -->
     <Content Include="..\.gitignore" Pack="true" PackagePath="content\" />
+    <!-- Base template files to ensure template compiles -->
+    <Content Include="BaseInfrastructureServiceRegistration.cs" Pack="true" PackagePath="content\CodeCraft.NET.Infrastructure\InfrastructureServiceRegistration.cs" />
+    <Content Include="BaseApplicationDbContext.cs" Pack="true" PackagePath="content\CodeCraft.NET.Infrastructure\Persistence\ApplicationDbContext.cs" />
+    <Content Include="BaseApplicationDbContextFactory.cs" Pack="true" PackagePath="content\CodeCraft.NET.Infrastructure\Persistence\Factories\ApplicationDbContextFactory.cs" />
     <!-- Include icon.png only if it exists -->
     <None Include="icon.png" Pack="true" PackagePath="\" Condition="Exists('icon.png')" />
   </ItemGroup>
