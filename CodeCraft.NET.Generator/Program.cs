@@ -34,6 +34,13 @@ try
 		return;
 	}
 
+	// Check for force migration flag
+	bool forceMigration = args.Contains("--force-migration") || args.Contains("-f");
+	if (forceMigration)
+	{
+		Console.WriteLine("🔧 Force migration mode activated");
+	}
+
 	var rootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../"));
 	var envPath = Path.Combine(rootPath, ".env");
 
@@ -83,10 +90,21 @@ try
 	Console.WriteLine("🗄️ Creating database migrations...");
 
 	// 3. Generate migrations after DbContext is created
-	MigrationGenerator.GenerateAllMigrations();
+	if (forceMigration)
+	{
+		Console.WriteLine("   🔧 Forcing migration creation...");
+		MigrationGenerator.ForceGenerateMigration();
+	}
+	else
+	{
+		MigrationGenerator.GenerateAllMigrations();
+	}
 
-	// 4. Check for pending migrations
-	MigrationChecker.CheckPendingMigrations("ApplicationDbContext");
+	if (!forceMigration)
+	{
+		// 4. Check for pending migrations
+		MigrationChecker.CheckPendingMigrations("ApplicationDbContext");
+	}
 
 	Console.WriteLine("✅ Code generation completed successfully!");
 }
@@ -102,15 +120,24 @@ static void ShowHelp()
 	Console.WriteLine("🔧 CodeCraft.NET Generator - Usage:");
 	Console.WriteLine();
 	Console.WriteLine("Commands:");
-	Console.WriteLine("  dotnet run                - Generate code for all entities in Domain project");
-	Console.WriteLine("  dotnet run clean          - Clean generated files (keep Domain entities)");
-	Console.WriteLine("  dotnet run cleanAll       - Clean all generated files and example entities");
-	Console.WriteLine("  dotnet run help           - Show this help message");
+	Console.WriteLine("  dotnet run                       - Generate code for all entities in Domain project");
+	Console.WriteLine("  dotnet run clean                 - Clean generated files (keep Domain entities)");
+	Console.WriteLine("  dotnet run cleanAll              - Clean all generated files and example entities");
+	Console.WriteLine("  dotnet run help                  - Show this help message");
+	Console.WriteLine();
+	Console.WriteLine("Options:");
+	Console.WriteLine("  --force-migration, -f            - Force migration creation even if no changes detected");
 	Console.WriteLine();
 	Console.WriteLine("Examples:");
-	Console.WriteLine("  dotnet run                # Generate CRUD for all entities");
-	Console.WriteLine("  dotnet run clean          # Remove generated files, keep your entities");
-	Console.WriteLine("  dotnet run cleanAll       # Complete reset, remove everything");
+	Console.WriteLine("  dotnet run                       # Generate CRUD for all entities");
+	Console.WriteLine("  dotnet run --force-migration     # Generate with forced migration creation");
+	Console.WriteLine("  dotnet run clean                 # Remove generated files, keep your entities");
+	Console.WriteLine("  dotnet run cleanAll              # Complete reset, remove everything");
+	Console.WriteLine();
+	Console.WriteLine("💡 Migration Behavior:");
+	Console.WriteLine("  - By default, migrations are created only when model changes are detected");
+	Console.WriteLine("  - Use --force-migration to always create a migration");
+	Console.WriteLine("  - Recent migrations (within 2 minutes) are automatically skipped");
 	Console.WriteLine();
 	Console.WriteLine("💡 Quick Start:");
 	Console.WriteLine("  1. Add your entities to CodeCraft.NET.Domain/Model/");
