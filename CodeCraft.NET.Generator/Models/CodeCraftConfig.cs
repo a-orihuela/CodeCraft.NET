@@ -26,11 +26,11 @@ namespace CodeCraft.NET.Generator.Models
 				// 4. Solo el nombre del archivo (buscar en el PATH)
 				"codecraft.config.json",
 				// 5. En la raíz de la solución (go up from bin directories)
-				Path.Combine(GetSolutionRoot(), "codecraft.config.json"),
+				Path.Combine(FindSolutionRoot(), "codecraft.config.json"),
 				// 6. En el directorio Generator específicamente dentro de la solución
-				Path.Combine(GetSolutionRoot(), "CodeCraft.NET.Generator", "codecraft.config.json"),
+				Path.Combine(FindSolutionRoot(), "CodeCraft.NET.Generator", "codecraft.config.json"),
 				// 7. Buscar en directorio padre (para proyectos generados por template)
-				Path.Combine(GetSolutionRoot(), "*Generator", "codecraft.config.json")
+				Path.Combine(FindSolutionRoot(), "*Generator", "codecraft.config.json")
 			};
 
 			string? configPath = null;
@@ -40,7 +40,7 @@ namespace CodeCraft.NET.Generator.Models
 			{
 				if (location.Contains("*Generator"))
 				{
-					var solutionRoot = GetSolutionRoot();
+					var solutionRoot = FindSolutionRoot();
 					var generatorDirs = Directory.GetDirectories(solutionRoot, "*Generator", SearchOption.TopDirectoryOnly);
 					foreach (var genDir in generatorDirs)
 					{
@@ -69,7 +69,7 @@ namespace CodeCraft.NET.Generator.Models
 				}
 				
 				// También mostrar directorios Generator encontrados
-				var solutionRoot = GetSolutionRoot();
+				var solutionRoot = FindSolutionRoot();
 				var generatorDirs = Directory.GetDirectories(solutionRoot, "*Generator", SearchOption.TopDirectoryOnly);
 				if (generatorDirs.Any())
 				{
@@ -94,37 +94,54 @@ namespace CodeCraft.NET.Generator.Models
 			return data;
 		}
 
-		private static string GetSolutionRoot()
+		private static string FindSolutionRoot()
 		{
-			var currentDir = new DirectoryInfo(AppContext.BaseDirectory);
+			// Start from the current directory (where the generator is executed)
+			var currentDir = new DirectoryInfo(Directory.GetCurrentDirectory());
 			
-			// Navigate up from bin/Debug/net9.0 to solution root
+			// First, try to find the solution file from current directory
 			while (currentDir != null)
 			{
-				// Look for solution file or characteristic files
-				if (currentDir.GetFiles("*.sln").Any() || 
-					currentDir.GetDirectories().Any(d => d.Name.Contains("Generator")))
+				if (currentDir.GetFiles("*.sln").Any())
 				{
 					return currentDir.FullName;
 				}
 				currentDir = currentDir.Parent;
 			}
 			
-			// Fallback to current directory
+			// Fallback: try from AppContext.BaseDirectory (bin/Debug/net9.0)
+			currentDir = new DirectoryInfo(AppContext.BaseDirectory);
+			
+			// Navigate up from bin/Debug/net9.0 to solution root
+			while (currentDir != null)
+			{
+				if (currentDir.GetFiles("*.sln").Any())
+				{
+					return currentDir.FullName;
+				}
+				currentDir = currentDir.Parent;
+			}
+			
+			// Hard-coded fallback for the specific case
+			var hardcodedPath = @"C:\Repos\CodeCraft.NET";
+			if (Directory.Exists(hardcodedPath) && Directory.GetFiles(hardcodedPath, "*.sln").Any())
+			{
+				return hardcodedPath;
+			}
+			
+			// Last fallback to current directory
 			return Directory.GetCurrentDirectory();
 		}
+
+		// Public method to access solution root
+		public string GetSolutionRoot() => FindSolutionRoot();
 
 		// Convenience methods to get paths
 		public string GetSolutionRelativePath(string projectName)
 		{
-			var dir = new DirectoryInfo(AppContext.BaseDirectory);
-			while (dir != null && !File.Exists(Path.Combine(dir.FullName, ProjectNames.SolutionFileName)))
-				dir = dir.Parent;
-
-			if (dir == null)
-				throw new InvalidOperationException("Solution root not found. Check codecraft.config.json.");
-
-			return Path.Combine(dir.FullName, projectName);
+			var solutionRoot = FindSolutionRoot();
+			var result = Path.Combine(solutionRoot, projectName);
+			return result;
 		}
 
 		public string PluralizeName(string name)

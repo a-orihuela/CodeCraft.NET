@@ -4,7 +4,6 @@
 // </auto-generated>
 
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Commands.Create;
 using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Commands.Delete;
@@ -16,7 +15,6 @@ namespace {{ ServerProjectName }}.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public partial class {{ Name }}Controller : ControllerBase
     {
         private readonly IMediator _mediator;

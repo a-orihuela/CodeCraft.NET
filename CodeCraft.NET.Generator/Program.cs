@@ -7,14 +7,46 @@ try
 {
 	Console.WriteLine("🚀 CodeCraft.NET Generator Starting...");
 
+	// Check for command line arguments
+	if (args.Length > 0 && args[0].Equals("clean", StringComparison.OrdinalIgnoreCase))
+	{
+		Console.WriteLine("🧹 Clean mode activated - Removing all generated files...");
+		CleanupManager.CleanAllGeneratedFiles();
+		Console.WriteLine("✅ Template cleaned successfully!");
+		Console.WriteLine("💡 You can now use the template as a clean base or add your own entities to the Domain project.");
+		return;
+	}
+
+	// Show available commands
+	if (args.Length > 0 && (args[0].Equals("help", StringComparison.OrdinalIgnoreCase) || args[0].Equals("--help", StringComparison.OrdinalIgnoreCase) || args[0].Equals("-h", StringComparison.OrdinalIgnoreCase)))
+	{
+		ShowHelp();
+		return;
+	}
+
 	var rootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../"));
 	var envPath = Path.Combine(rootPath, ".env");
 
 	EnvLoader.LoadEnvFile(envPath);
 
 	var entitiesMetadata = EntityAnalyzer.AnalyzeDomainEntities();
+	
+	Console.WriteLine($"📊 Found {entitiesMetadata.Count} entities:");
+	foreach (var entity in entitiesMetadata)
+	{
+		Console.WriteLine($"   - {entity.Name} ({entity.Properties.Count} properties)");
+	}
 
-	PrepareEscenario.DeleteOldFiles();
+	if (entitiesMetadata.Count == 0)
+	{
+		Console.WriteLine("⚠️  No entities found in Domain project.");
+		Console.WriteLine("💡 Add entities to CodeCraft.NET.Domain/Model/ and run the generator again.");
+		Console.WriteLine("💡 Or run 'dotnet run clean' to clean all generated files.");
+		return;
+	}
+
+	// Clean previously generated files (without touching Domain entities)
+	CleanupManager.CleanGeneratedFilesOnly();
 
 	var renderer = new ScribanTemplateRenderer();
 	var cqrsGenerator = new CQRSGenerator(renderer);
@@ -30,6 +62,7 @@ try
 	// 2. Generate CQRS and other components
 	foreach (var entity in entitiesMetadata)
 	{
+		Console.WriteLine($"   📝 Generating files for {entity.Name}...");
 		cqrsGenerator.Generate(entity);
 		controllerGenerator.Generate(entity);
 	}
@@ -50,5 +83,25 @@ try
 catch (Exception ex)
 {
 	Console.WriteLine($"❌ Error during code generation: {ex.Message}");
+	Console.WriteLine($"Stack trace: {ex.StackTrace}");
 	Environment.Exit(1);
+}
+
+static void ShowHelp()
+{
+	Console.WriteLine("🔧 CodeCraft.NET Generator - Usage:");
+	Console.WriteLine();
+	Console.WriteLine("Commands:");
+	Console.WriteLine("  dotnet run                - Generate code for all entities in Domain project");
+	Console.WriteLine("  dotnet run clean          - Clean all generated files (reset template)");
+	Console.WriteLine("  dotnet run help           - Show this help message");
+	Console.WriteLine();
+	Console.WriteLine("Examples:");
+	Console.WriteLine("  dotnet run                # Generate CRUD for Product entity");
+	Console.WriteLine("  dotnet run clean          # Remove all generated files");
+	Console.WriteLine();
+	Console.WriteLine("💡 Quick Start:");
+	Console.WriteLine("  1. Add your entities to CodeCraft.NET.Domain/Model/");
+	Console.WriteLine("  2. Run 'dotnet run' to generate all CRUD operations");
+	Console.WriteLine("  3. Run 'dotnet run clean' to reset and start fresh");
 }

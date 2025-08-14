@@ -18,6 +18,11 @@ public partial class {{ UnitOfWorkImplementationName }} : {{ UnitOfWorkInterface
     private Hashtable _repositories;
     private readonly ApplicationDbContext _context;
 
+    public {{ UnitOfWorkImplementationName }}(ApplicationDbContext context)
+    {
+        _context = context;
+    }
+
     {{~ for entity in entities ~}}
     private I{{ entity.Name }}Repository _{{ entity.Name }}Repository { get; set; }
     public I{{ entity.Name }}Repository {{ entity.Name }}Repository => _{{ entity.Name }}Repository ??= new {{ entity.Name }}Repository(_context);

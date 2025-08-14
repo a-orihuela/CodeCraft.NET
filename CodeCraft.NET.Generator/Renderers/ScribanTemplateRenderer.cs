@@ -10,6 +10,14 @@ namespace CodeCraft.NET.Generator.Renderers
 	{
 		public void Render(string templatePath, string outputPath, object model)
 		{
+			// Ensure outputPath is absolute
+			if (!Path.IsPathRooted(outputPath))
+			{
+				var config = CodeCraftConfig.Instance;
+				var solutionRoot = config.GetSolutionRoot();
+				outputPath = Path.Combine(solutionRoot, outputPath);
+			}
+			
 			var templateContent = EmbeddedResourceHelper.LoadTemplate(templatePath);
 			var template = Template.Parse(templateContent);
 
@@ -20,6 +28,8 @@ namespace CodeCraft.NET.Generator.Renderers
 			var result = template.Render(context);
 			Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
 			File.WriteAllText(outputPath, result);
+			
+			Console.WriteLine($"   ✅ Generated: {Path.GetFileName(outputPath)}");
 		}
 
 		private static TemplateContext CreateContext(object model)
