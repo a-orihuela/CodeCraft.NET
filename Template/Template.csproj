@@ -43,7 +43,7 @@
     <Content Include="..\CodeCraft.NET.Application\*.csproj" Pack="true" PackagePath="content\CodeCraft.NET.Application\" />
     <!-- Infrastructure project files -->
     <Content Include="..\CodeCraft.NET.Infrastructure\**\*.cs" 
-             Exclude="..\CodeCraft.NET.Infrastructure\bin\**;..\CodeCraft.NET.Infrastructure\obj\**;..\CodeCraft.NET.Infrastructure\Persistence\Repositories\**;..\CodeCraft.NET.Infrastructure\Persistence\CodeCraftUnitOfWork.cs;..\CodeCraft.NET.Infrastructure\Persistence\ApplicationDbContext.cs;..\CodeCraft.NET.Infrastructure\Persistence\Factories\**;..\CodeCraft.NET.Infrastructure\Migrations\**" 
+             Exclude="..\CodeCraft.NET.Infrastructure\bin\**;..\CodeCraft.NET.Infrastructure\obj\**;..\CodeCraft.NET.Infrastructure\Persistence\Repositories\**;..\CodeCraft.NET.Infrastructure\Persistence\CodeCraftUnitOfWork.cs;..\CodeCraft.NET.Infrastructure\Persistence\ApplicationDbContext.cs;..\CodeCraft.NET.Infrastructure\Persistence\Factories\**;..\CodeCraft.NET.Infrastructure\Migrations\**;..\CodeCraft.NET.Infrastructure\InfrastructureServiceRegistration.cs" 
              Pack="true" PackagePath="content\CodeCraft.NET.Infrastructure\" />
     <Content Include="..\CodeCraft.NET.Infrastructure\*.csproj" Pack="true" PackagePath="content\CodeCraft.NET.Infrastructure\" />
     <!-- WebAPI project files -->

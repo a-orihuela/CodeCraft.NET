@@ -127,5 +127,11 @@ dotnet run --force-migration --project MyProject.Generator
 - The template is designed to compile immediately after installation
 - No need to run the generator in CI/CD for basic compilation
 - Generated files are not included in the template package
+- **Important**: Ensure the target directory is clean before template creation
+- If you get "file already exists" errors, clean the directory first:
+  ```bash
+  rm -rf TestProjectSqlServer/
+  dotnet new codecraft -n TestProjectSqlServer
+  ```
 
 For more information, see the main README.md file.
