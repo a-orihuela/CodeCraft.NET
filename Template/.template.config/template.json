@@ -12,6 +12,7 @@
   "description": "A Clean Architecture template for .NET with CQRS, Entity Framework Core with SQL Server, automatic code generation, and JWT authentication",
   "sourceName": "CodeCraft.NET",
   "preferNameDirectory": false,
+  "createInOutputSubdirectory": false,
   "placeholderFilename": "template",
   "guids": [
     "09bae888-39a7-46e2-90f5-7ccd2ce188fb",

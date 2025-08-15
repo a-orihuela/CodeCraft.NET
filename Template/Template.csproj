@@ -2,7 +2,7 @@
   <PropertyGroup>
     <PackageType>Template</PackageType>
     <PackageId>CodeCraft.NET.CleanArchitecture.Template</PackageId>
-    <PackageVersion>1.1.1</PackageVersion>
+    <PackageVersion>1.1.5</PackageVersion>
     <Title>CodeCraft.NET Clean Architecture Template</Title>
     <Description>Clean Architecture template for .NET with CQRS and code generation</Description>
     <Authors>Abraham Orihuela</Authors>
