@@ -223,7 +223,7 @@ if ($PackageFile) {
     
     Push-Location $testDir
     try {
-        dotnet new codecraft -n "TestProject" --CompanyName "TestCompany" --force
+        dotnet new codecraft -n "TestProject" --force
         if ($LASTEXITCODE -ne 0) {
             Write-Host "? Template creation test failed!" -ForegroundColor Red
             Pop-Location

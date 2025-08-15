@@ -11,39 +11,18 @@
   },
   "description": "A Clean Architecture template for .NET with CQRS, Entity Framework Core with SQL Server, automatic code generation, and JWT authentication",
   "sourceName": "CodeCraft.NET",
-  "preferNameDirectory": true,
+  "preferNameDirectory": false,
+  "placeholderFilename": "template",
   "guids": [
     "09bae888-39a7-46e2-90f5-7ccd2ce188fb",
     "A4F6432E-650D-227A-08A0-8733AEB4B29B"
   ],
-  "symbols": {
-    "CompanyName": {
-      "type": "parameter",
-      "datatype": "string",
-      "defaultValue": "MyCompany",
-      "description": "The name of your company or organization"
-    }
-  },
   "primaryOutputs": [
     {
       "path": "CodeCraft.NET.sln"
     }
   ],
   "postActions": [
-    {
-      "condition": "(OS != \"Windows\")",
-      "description": "Make scripts executable",
-      "manualInstructions": [
-        {
-          "text": "Run 'chmod +x *.sh' to make shell scripts executable"
-        }
-      ],
-      "actionId": "cb9a6cf3-4f5c-4860-b9d2-03a574959774",
-      "args": {
-        "+x": "*.sh"
-      },
-      "continueOnError": true
-    },
     {
       "description": "Restore NuGet packages",
       "manualInstructions": [
