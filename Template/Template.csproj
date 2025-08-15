@@ -2,12 +2,13 @@
   <PropertyGroup>
     <PackageType>Template</PackageType>
     <PackageId>CodeCraft.NET.CleanArchitecture.Template</PackageId>
-    <PackageVersion>1.0.3919</PackageVersion>
+    <PackageVersion>1.1.1</PackageVersion>
     <Title>CodeCraft.NET Clean Architecture Template</Title>
     <Description>Clean Architecture template for .NET with CQRS and code generation</Description>
     <Authors>Abraham Orihuela</Authors>
     <PackageTags>dotnet-new;clean-architecture;cqrs;template;net9</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeContentInPack>true</IncludeContentInPack>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <ContentTargetFolders>content</ContentTargetFolders>
@@ -17,6 +18,10 @@
   <!-- Template configuration -->
   <ItemGroup>
     <Content Include=".template.config\template.json" Pack="true" PackagePath="content/.template.config/" />
+  </ItemGroup>
+  <!-- Package README -->
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
   <!-- Include all source files and project files, exclude .gitignore items -->
   <ItemGroup>
