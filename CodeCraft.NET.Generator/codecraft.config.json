@@ -1,12 +1,15 @@
 {
   "DataBaseConfig": {
     "ConnectionString": "Server=(localdb)\\mssqllocaldb;Database=CodeCraftDb;Trusted_Connection=true;MultipleActiveResultSets=true;",
-    "MigrationsAssembly": "CodeCraft.NET.Infrastructure"
+    "SqliteConnectionString": "Data Source=CodeCraftDb.db",
+    "MigrationsAssembly": "CodeCraft.NET.Infrastructure",
+    "DatabaseProvider": "SqlServer"
   },
   "Files": {
     "Controller": "CodeCraft.NET.WebAPI/Controllers/{0}Controller.cs",
     "DesktopService": "CodeCraft.NET.DesktopAPI/Services/{0}Service.cs",
     "DesktopServiceRegistration": "CodeCraft.NET.DesktopAPI/DesktopApiServiceRegistration.cs",
+    "InfrastructureServiceRegistration": "CodeCraft.NET.Infrastructure/InfrastructureServiceRegistration.cs",
     "HttpRequest": "CodeCraft.NET.WebAPI/Tests/ApiRequests/{0}Requests.http",
     "CommandCreate": "CodeCraft.NET.Application/CQRS/Features/{0}/Commands/Create/{1}Create.cs",
     "CommandCreateHandler": "CodeCraft.NET.Application/CQRS/Features/{0}/Commands/Create/{1}CreateHandler.cs",
@@ -58,6 +61,7 @@
     "Controller": "CodeCraft.NET.Generator.Templates.Controllers.Controller.scriban",
     "DesktopService": "CodeCraft.NET.Generator.Templates.Services.DesktopService.scriban",
     "DesktopServiceRegistration": "CodeCraft.NET.Generator.Templates.Services.DesktopApiServiceRegistration.scriban",
+    "InfrastructureServiceRegistration": "CodeCraft.NET.Generator.Templates.Infrastructure.InfrastructureServiceRegistration.scriban",
     "CommandCreate": "CodeCraft.NET.Generator.Templates.CQRS.Features.Commands.Create.Create.scriban",
     "CommandCreateHandler": "CodeCraft.NET.Generator.Templates.CQRS.Features.Commands.Create.CreateHandler.scriban",
     "CommandCreateValidator": "CodeCraft.NET.Generator.Templates.CQRS.Features.Commands.Create.CreateValidator.scriban",

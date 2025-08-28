@@ -29,7 +29,7 @@ namespace CodeCraft.NET.Generator
 
 			if (includeDomainEntities)
 			{
-				Console.WriteLine("???  Cleaning generated files and example entities...");
+				Console.WriteLine("Cleaning generated files and example entities...");
 				// Clean example entities from Domain
 				filesDeleted += CleanExampleEntities(config);
 			}
@@ -72,9 +72,9 @@ namespace CodeCraft.NET.Generator
 
 			if (includeDomainEntities)
 			{
-				Console.WriteLine($"?? Cleanup completed:");
-				Console.WriteLine($"   ?? Files deleted: {filesDeleted}");
-				Console.WriteLine($"   ?? Directories cleaned: {directoriesDeleted}");
+				Console.WriteLine("Cleanup completed:");
+				Console.WriteLine($"   Files deleted: {filesDeleted}");
+				Console.WriteLine($"   Directories cleaned: {directoriesDeleted}");
 			}
 		}
 
@@ -98,7 +98,7 @@ namespace CodeCraft.NET.Generator
 						{
 							File.Delete(filePath);
 							count++;
-							Console.WriteLine($"   ? Deleted example entity: {entityFile}");
+							Console.WriteLine($"   Deleted example entity: {entityFile}");
 						}
 					}
 
@@ -106,13 +106,13 @@ namespace CodeCraft.NET.Generator
 					if (Directory.GetFiles(modelPath).Length == 0 && Directory.GetDirectories(modelPath).Length == 0)
 					{
 						Directory.Delete(modelPath);
-						Console.WriteLine($"   ? Deleted empty Model directory");
+						Console.WriteLine("   Deleted empty Model directory");
 					}
 				}
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine($"   ??  Could not clean example entities: {ex.Message}");
+				Console.WriteLine($"   Could not clean example entities: {ex.Message}");
 			}
 			return count;
 		}

@@ -9,7 +9,7 @@ namespace {{ DesktopProjectName }}
     public static class DesktopApiServiceRegistration
     {
         /// <summary>
-        /// Registers Desktop API services for MAUI/Desktop applications
+        /// Registers Desktop API services for MAUI/Desktop applications using SQL Server
         /// </summary>
         /// <param name="services">Service collection</param>
         /// <param name="configuration">Configuration instance</param>
@@ -19,6 +19,27 @@ namespace {{ DesktopProjectName }}
         {
             // Add Infrastructure services (Database, repositories, etc.)
             services.AddInfrastructureServices(configuration, connectionString);
+            
+            // Add Application services (CQRS, MediatR, etc.)
+            services.AddApplicationServices();
+            
+            // Register all generated desktop services automatically
+            RegisterDesktopServices(services);
+            
+            return services;
+        }
+
+        /// <summary>
+        /// Registers Desktop API services for MAUI/Desktop applications with provider selection
+        /// </summary>
+        /// <param name="services">Service collection</param>
+        /// <param name="connectionString">Database connection string</param>
+        /// <param name="provider">Database provider (SqlServer or SQLite)</param>
+        /// <returns>Configured service collection</returns>
+        public static IServiceCollection AddDesktopApiServices(this IServiceCollection services, string connectionString, DatabaseProvider provider = DatabaseProvider.SqlServer)
+        {
+            // Add Infrastructure services (Database, repositories, etc.)
+            services.AddInfrastructureServices(connectionString, provider);
             
             // Add Application services (CQRS, MediatR, etc.)
             services.AddApplicationServices();

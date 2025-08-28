@@ -7,11 +7,48 @@ A comprehensive Clean Architecture template for .NET 9 with CQRS, automatic code
 - **Clean Architecture** with proper layer separation
 - **CQRS + MediatR** for scalable operations  
 - **Dual API Support**: Web API (HTTP) + Desktop API (Direct)
+- **Multi-Database Support**: SQL Server and SQLite providers
 - **Entity Framework Core** with SQL Server support
 - **Automatic Code Generator** for complete CRUD operations
 - **JWT Authentication** with role-based authorization
 - **Swagger/OpenAPI** documentation
 - **MAUI/Desktop Ready** for offline-first applications
+
+## Database Provider Support
+
+CodeCraft.NET supports both SQL Server and SQLite database providers:
+
+### Configuration
+Set your preferred provider in `codecraft.config.json`:
+
+```json
+{
+  "DataBaseConfig": {
+    "ConnectionString": "Server=(localdb)\\mssqllocaldb;Database=CodeCraftDb;Trusted_Connection=true;MultipleActiveResultSets=true;",
+    "SqliteConnectionString": "Data Source=CodeCraftDb.db",
+    "MigrationsAssembly": "CodeCraft.NET.Infrastructure",
+    "DatabaseProvider": "SqlServer"
+  }
+}
+```
+
+### Command Line Usage
+```bash
+# Use SQL Server (default)
+dotnet run --project MyProject.Generator --sqlserver
+
+# Use SQLite (perfect for MAUI)
+dotnet run --project MyProject.Generator --sqlite
+
+# Combined with other options
+dotnet run --project MyProject.Generator --sqlite --force-migration
+```
+
+### When to Use Each Provider
+- **SQL Server**: Web applications, enterprise scenarios, high concurrency
+- **SQLite**: MAUI/Desktop apps, offline-first, single-user scenarios
+
+For detailed information, see [Database Providers Guide](CodeCraft.NET.Generator/DATABASE_PROVIDERS.md).
 
 ## Installation
 
@@ -59,6 +96,13 @@ dotnet run cleanAll --project MyProject.Generator
 
 # Force migration creation
 dotnet run --project MyProject.Generator --force-migration
+
+# Database provider selection
+dotnet run --project MyProject.Generator --sqlite          # Use SQLite
+dotnet run --project MyProject.Generator --sqlserver       # Use SQL Server
+
+# Combined options
+dotnet run --project MyProject.Generator --sqlite -f       # SQLite with force migration
 ```
 
 ## Architecture
@@ -253,7 +297,11 @@ Task<ProductWithRelatedDto?> GetWithRelatedAsync(int id)
 
 3. **Generate Code**:
    ```bash
-   dotnet run --project MyAwesomeProject.Generator
+   # For web applications (SQL Server)
+   dotnet run --project MyAwesomeProject.Generator --sqlserver
+   
+   # For MAUI/Desktop applications (SQLite)
+   dotnet run --project MyAwesomeProject.Generator --sqlite
    ```
 
 4. **Run Web API**:

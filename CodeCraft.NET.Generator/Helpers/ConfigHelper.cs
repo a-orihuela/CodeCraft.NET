@@ -30,6 +30,9 @@ namespace CodeCraft.NET.Generator.Helpers
 		public static string GetDesktopServiceRegistrationPath()
 			=> Config.Files.DesktopServiceRegistration;
 
+		public static string GetInfrastructureServiceRegistrationPath()
+			=> Config.Files.InfrastructureServiceRegistration;
+
 		public static string GetHttpRequestPath(string entityName)
 			=> GetFilePath(Config.Files.HttpRequest, entityName);
 
@@ -117,6 +120,7 @@ namespace CodeCraft.NET.Generator.Helpers
 				nameof(Config.Templates.Controller) => Config.Templates.Controller,
 				nameof(Config.Templates.DesktopService) => Config.Templates.DesktopService,
 				nameof(Config.Templates.DesktopServiceRegistration) => Config.Templates.DesktopServiceRegistration,
+				nameof(Config.Templates.InfrastructureServiceRegistration) => Config.Templates.InfrastructureServiceRegistration,
 				nameof(Config.Templates.CommandCreate) => Config.Templates.CommandCreate,
 				nameof(Config.Templates.CommandCreateHandler) => Config.Templates.CommandCreateHandler,
 				nameof(Config.Templates.CommandCreateValidator) => Config.Templates.CommandCreateValidator,

@@ -1,6 +1,7 @@
 ﻿using CodeCraft.NET.Generator;
 using CodeCraft.NET.Generator.Generators;
 using CodeCraft.NET.Generator.Helpers;
+using CodeCraft.NET.Generator.Models;
 using CodeCraft.NET.Generator.Renderers;
 
 try
@@ -32,6 +33,26 @@ try
 	{
 		ShowHelp();
 		return;
+	}
+
+	// Check for database provider selection
+	string databaseProvider = "SqlServer"; // Default
+	if (args.Contains("--sqlite"))
+	{
+		databaseProvider = "SQLite";
+		Console.WriteLine("Using SQLite database provider");
+	}
+	else if (args.Contains("--sqlserver"))
+	{
+		databaseProvider = "SqlServer";
+		Console.WriteLine("Using SQL Server database provider");
+	}
+	else
+	{
+		// Check configuration file for default provider
+		var config = CodeCraftConfig.Instance;
+		databaseProvider = config.DataBaseConfig.DatabaseProvider ?? "SqlServer";
+		Console.WriteLine($"Using configured database provider: {databaseProvider}");
 	}
 
 	// Check for force migration flag
@@ -71,13 +92,17 @@ try
 	var controllerGenerator = new ControllerGenerator(renderer);
 	var desktopApiGenerator = new DesktopApiGenerator(renderer);
 	var dbContextGenerator = new DbContextGenerator(renderer);
+	var infrastructureGenerator = new InfrastructureGenerator(renderer);
 
 	Console.WriteLine("Generating code files...");
 
-	// 1. Generate DbContext first (before anything else that depends on it)
+	// 1. Generate Infrastructure services with selected database provider
+	infrastructureGenerator.Generate(databaseProvider);
+
+	// 2. Generate DbContext first (before anything else that depends on it)
 	dbContextGenerator.Generate(entitiesMetadata);
 
-	// 2. Generate CQRS and other components
+	// 3. Generate CQRS and other components
 	foreach (var entity in entitiesMetadata)
 	{
 		Console.WriteLine($"   Generating files for {entity.Name}...");
@@ -92,7 +117,7 @@ try
 
 	Console.WriteLine("Creating database migrations...");
 
-	// 3. Generate migrations after DbContext is created
+	// 4. Generate migrations after DbContext is created
 	if (forceMigration)
 	{
 		Console.WriteLine("   Forcing migration creation...");
@@ -105,12 +130,13 @@ try
 
 	if (!forceMigration)
 	{
-		// 4. Check for pending migrations
+		// 5. Check for pending migrations
 		MigrationChecker.CheckPendingMigrations("ApplicationDbContext");
 	}
 
 	Console.WriteLine("Code generation completed successfully!");
-	Console.WriteLine("Generated Desktop API services for local/MAUI applications");
+	Console.WriteLine($"Generated for {databaseProvider} database provider");
+	Console.WriteLine("Generated Web API and Desktop API services");
 }
 catch (Exception ex)
 {
@@ -129,14 +155,25 @@ static void ShowHelp()
 	Console.WriteLine("  dotnet run cleanAll              - Clean all generated files and example entities");
 	Console.WriteLine("  dotnet run help                  - Show this help message");
 	Console.WriteLine();
-	Console.WriteLine("Options:");
+	Console.WriteLine("Database Options:");
+	Console.WriteLine("  --sqlite                         - Use SQLite database provider");
+	Console.WriteLine("  --sqlserver                      - Use SQL Server database provider (default)");
+	Console.WriteLine();
+	Console.WriteLine("Other Options:");
 	Console.WriteLine("  --force-migration, -f            - Force migration creation even if no changes detected");
 	Console.WriteLine();
 	Console.WriteLine("Examples:");
-	Console.WriteLine("  dotnet run                       # Generate CRUD for all entities");
-	Console.WriteLine("  dotnet run --force-migration     # Generate with forced migration creation");
+	Console.WriteLine("  dotnet run                       # Generate CRUD with default provider");
+	Console.WriteLine("  dotnet run --sqlite              # Generate CRUD with SQLite");
+	Console.WriteLine("  dotnet run --sqlserver           # Generate CRUD with SQL Server");
+	Console.WriteLine("  dotnet run --sqlite -f           # Generate with SQLite and force migration");
 	Console.WriteLine("  dotnet run clean                 # Remove generated files, keep your entities");
 	Console.WriteLine("  dotnet run cleanAll              # Complete reset, remove everything");
+	Console.WriteLine();
+	Console.WriteLine("Database Provider Notes:");
+	Console.WriteLine("  - SQLite: Perfect for MAUI/Desktop apps, single file database");
+	Console.WriteLine("  - SQL Server: Best for web applications and production scenarios");
+	Console.WriteLine("  - Default provider can be set in codecraft.config.json");
 	Console.WriteLine();
 	Console.WriteLine("Migration Behavior:");
 	Console.WriteLine("  - By default, migrations are created only when model changes are detected");
@@ -145,7 +182,7 @@ static void ShowHelp()
 	Console.WriteLine();
 	Console.WriteLine("Quick Start:");
 	Console.WriteLine("  1. Add your entities to CodeCraft.NET.Domain/Model/");
-	Console.WriteLine("  2. Run 'dotnet run' to generate all CRUD operations");
+	Console.WriteLine("  2. Run 'dotnet run --sqlite' for MAUI apps or 'dotnet run --sqlserver' for web");
 	Console.WriteLine("  3. Run 'dotnet run clean' to clean generated files only");
 	Console.WriteLine("  4. Run 'dotnet run cleanAll' to reset template completely");
 	Console.WriteLine();
@@ -155,4 +192,5 @@ static void ShowHelp()
 	Console.WriteLine("  - CQRS Commands and Queries");
 	Console.WriteLine("  - Repository patterns");
 	Console.WriteLine("  - Entity Framework migrations");
+	Console.WriteLine("  - Database provider configuration");
 }

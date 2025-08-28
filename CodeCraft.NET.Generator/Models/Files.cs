@@ -3,6 +3,9 @@
 	public class Files
 	{
 		public string Controller { get; set; } = string.Empty;
+		public string DesktopService { get; set; } = string.Empty;
+		public string DesktopServiceRegistration { get; set; } = string.Empty;
+		public string InfrastructureServiceRegistration { get; set; } = string.Empty;
 		public string HttpRequest { get; set; } = string.Empty;
 		public string CommandCreate { get; set; } = string.Empty;
 		public string CommandCreateHandler { get; set; } = string.Empty;
@@ -29,7 +32,5 @@
 		public string UnitOfWorkImplementation { get; set; } = string.Empty;
 		public string UnitOfWorkInterfaceName { get; set; } = string.Empty;
 		public string UnitOfWorkImplementationName { get; set; } = string.Empty;
-		public string DesktopService { get; set; } = string.Empty;
-		public string DesktopServiceRegistration { get; set; } = string.Empty;
 	}
 }

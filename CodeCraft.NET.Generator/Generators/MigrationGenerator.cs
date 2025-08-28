@@ -20,19 +20,19 @@ namespace CodeCraft.NET.Generator.Generators
 		/// </summary>
 		private static void GenerateSmartMigration(string context, string outputDir, string migrationPrefix)
 		{
-			Console.WriteLine("🔍 Checking for model changes...");
+			Console.WriteLine("Checking for model changes...");
 
 			// Check if there's a recent migration to avoid duplicates
 			if (ModelChangeDetector.HasRecentMigration(context, migrationPrefix, withinMinutes: 2))
 			{
-				Console.WriteLine("   ⏭️  Skipping migration - recent migration already exists");
+				Console.WriteLine("   Skipping migration - recent migration already exists");
 				return;
 			}
 
 			// Check if this is the first migration (no migrations exist)
 			if (ModelChangeDetector.ShouldCreateInitialMigration(context))
 			{
-				Console.WriteLine("   🆕 Creating initial migration...");
+				Console.WriteLine("   Creating initial migration...");
 				GenerateMigration(context, outputDir, $"{migrationPrefix}Initial");
 				return;
 			}
@@ -40,12 +40,12 @@ namespace CodeCraft.NET.Generator.Generators
 			// Check if there are actual model changes
 			if (!ModelChangeDetector.HasPendingModelChanges(context))
 			{
-				Console.WriteLine("   ⏭️  Skipping migration - no model changes detected");
+				Console.WriteLine("   Skipping migration - no model changes detected");
 				return;
 			}
 
 			// Generate migration since there are actual changes
-			Console.WriteLine("   📝 Creating migration for detected changes...");
+			Console.WriteLine("   Creating migration for detected changes...");
 			GenerateMigration(context, outputDir, migrationPrefix);
 		}
 
@@ -94,11 +94,11 @@ namespace CodeCraft.NET.Generator.Generators
 				// Check if the migration was actually created or if no changes were detected
 				if (output.Contains("No changes were detected") || output.Contains("No model changes"))
 				{
-					Console.WriteLine("   ℹ️  No model changes detected by EF Core");
+					Console.WriteLine("   No model changes detected by EF Core");
 				}
 				else
 				{
-					Console.WriteLine($"✅ Migration created successfully: {migrationName}");
+					Console.WriteLine($"Migration created successfully: {migrationName}");
 				}
 				
 				if (!string.IsNullOrWhiteSpace(output) && !output.Contains("No changes"))
@@ -118,7 +118,7 @@ namespace CodeCraft.NET.Generator.Generators
 			}
 			else
 			{
-				Console.WriteLine($"⚠️  Migration creation completed with warnings: {migrationName}");
+				Console.WriteLine($"Migration creation completed with warnings: {migrationName}");
 				if (!string.IsNullOrWhiteSpace(error))
 				{
 					// Filter and show only relevant errors
@@ -130,7 +130,7 @@ namespace CodeCraft.NET.Generator.Generators
 					
 					foreach (var line in errorLines)
 					{
-						Console.WriteLine($"   ⚠️  {line.Trim()}");
+						Console.WriteLine($"   {line.Trim()}");
 					}
 				}
 			}
@@ -141,7 +141,7 @@ namespace CodeCraft.NET.Generator.Generators
 		/// </summary>
 		public static void ForceGenerateMigration()
 		{
-			Console.WriteLine("🔧 Forcing migration creation...");
+			Console.WriteLine("Forcing migration creation...");
 			GenerateMigration(
 				context: "ApplicationDbContext",
 				outputDir: "Migrations",

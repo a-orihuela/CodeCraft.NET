@@ -32,6 +32,9 @@
     <EmbeddedResource Include="Templates\Services\DesktopApiServiceRegistration.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.Services.DesktopApiServiceRegistration.scriban</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="Templates\Infrastructure\InfrastructureServiceRegistration.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.Infrastructure.InfrastructureServiceRegistration.scriban</LogicalName>
+    </EmbeddedResource>
     <EmbeddedResource Include="Templates\CQRS\Features\Commands\Create\Create.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Features.Commands.Create.Create.scriban</LogicalName>
     </EmbeddedResource>
