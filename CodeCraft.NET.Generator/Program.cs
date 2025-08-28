@@ -55,6 +55,13 @@ try
 		Console.WriteLine($"Using configured database provider: {databaseProvider}");
 	}
 
+	// Check for MAUI generation flag
+	bool generateMaui = args.Contains("--maui");
+	if (generateMaui)
+	{
+		Console.WriteLine("MAUI generation enabled");
+	}
+
 	// Check for force migration flag
 	bool forceMigration = args.Contains("--force-migration") || args.Contains("-f");
 	if (forceMigration)
@@ -93,6 +100,7 @@ try
 	var desktopApiGenerator = new DesktopApiGenerator(renderer);
 	var dbContextGenerator = new DbContextGenerator(renderer);
 	var infrastructureGenerator = new InfrastructureGenerator(renderer);
+	var mauiGenerator = new MauiGenerator(renderer);
 
 	Console.WriteLine("Generating code files...");
 
@@ -115,9 +123,15 @@ try
 	repoGenerator.Generate(entitiesMetadata);
 	desktopApiGenerator.GenerateServiceRegistration(entitiesMetadata);
 
+	// 4. Generate MAUI components if requested
+	if (generateMaui)
+	{
+		mauiGenerator.Generate(entitiesMetadata);
+	}
+
 	Console.WriteLine("Creating database migrations...");
 
-	// 4. Generate migrations after DbContext is created
+	// 5. Generate migrations after DbContext is created
 	if (forceMigration)
 	{
 		Console.WriteLine("   Forcing migration creation...");
@@ -130,7 +144,7 @@ try
 
 	if (!forceMigration)
 	{
-		// 5. Check for pending migrations
+		// 6. Check for pending migrations
 		MigrationChecker.CheckPendingMigrations("ApplicationDbContext");
 	}
 
@@ -159,6 +173,9 @@ static void ShowHelp()
 	Console.WriteLine("  --sqlite                         - Use SQLite database provider");
 	Console.WriteLine("  --sqlserver                      - Use SQL Server database provider (default)");
 	Console.WriteLine();
+	Console.WriteLine("MAUI Options:");
+	Console.WriteLine("  --maui                           - Generate MAUI ViewModels and Pages");
+	Console.WriteLine();
 	Console.WriteLine("Other Options:");
 	Console.WriteLine("  --force-migration, -f            - Force migration creation even if no changes detected");
 	Console.WriteLine();
@@ -166,6 +183,7 @@ static void ShowHelp()
 	Console.WriteLine("  dotnet run                       # Generate CRUD with default provider");
 	Console.WriteLine("  dotnet run --sqlite              # Generate CRUD with SQLite");
 	Console.WriteLine("  dotnet run --sqlserver           # Generate CRUD with SQL Server");
+	Console.WriteLine("  dotnet run --sqlite --maui       # Generate with SQLite and MAUI components");
 	Console.WriteLine("  dotnet run --sqlite -f           # Generate with SQLite and force migration");
 	Console.WriteLine("  dotnet run clean                 # Remove generated files, keep your entities");
 	Console.WriteLine("  dotnet run cleanAll              # Complete reset, remove everything");
@@ -174,6 +192,13 @@ static void ShowHelp()
 	Console.WriteLine("  - SQLite: Perfect for MAUI/Desktop apps, single file database");
 	Console.WriteLine("  - SQL Server: Best for web applications and production scenarios");
 	Console.WriteLine("  - Default provider can be set in codecraft.config.json");
+	Console.WriteLine();
+	Console.WriteLine("MAUI Generation Notes:");
+	Console.WriteLine("  - Generates ViewModels with MVVM pattern using CommunityToolkit");
+	Console.WriteLine("  - Creates base XAML pages (.Generated.xaml) that are always regenerated");
+	Console.WriteLine("  - Creates customizable XAML pages (.xaml) that preserve your changes");
+	Console.WriteLine("  - Includes navigation services, dialog services, and dependency injection");
+	Console.WriteLine("  - Compatible with SQLite for offline-first MAUI applications");
 	Console.WriteLine();
 	Console.WriteLine("Migration Behavior:");
 	Console.WriteLine("  - By default, migrations are created only when model changes are detected");

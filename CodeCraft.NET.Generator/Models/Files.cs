@@ -6,6 +6,26 @@
 		public string DesktopService { get; set; } = string.Empty;
 		public string DesktopServiceRegistration { get; set; } = string.Empty;
 		public string InfrastructureServiceRegistration { get; set; } = string.Empty;
+		
+		// MAUI Files
+		public string MauiListPageGenerated { get; set; } = string.Empty;
+		public string MauiListPage { get; set; } = string.Empty;
+		public string MauiCreatePageGenerated { get; set; } = string.Empty;
+		public string MauiCreatePage { get; set; } = string.Empty;
+		public string MauiEditPageGenerated { get; set; } = string.Empty;
+		public string MauiEditPage { get; set; } = string.Empty;
+		public string MauiDetailPageGenerated { get; set; } = string.Empty;
+		public string MauiDetailPage { get; set; } = string.Empty;
+		public string MauiListViewModel { get; set; } = string.Empty;
+		public string MauiListViewModelCustom { get; set; } = string.Empty;
+		public string MauiCreateViewModel { get; set; } = string.Empty;
+		public string MauiCreateViewModelCustom { get; set; } = string.Empty;
+		public string MauiEditViewModel { get; set; } = string.Empty;
+		public string MauiEditViewModelCustom { get; set; } = string.Empty;
+		public string MauiDetailViewModel { get; set; } = string.Empty;
+		public string MauiDetailViewModelCustom { get; set; } = string.Empty;
+		public string MauiServiceRegistration { get; set; } = string.Empty;
+		
 		public string HttpRequest { get; set; } = string.Empty;
 		public string CommandCreate { get; set; } = string.Empty;
 		public string CommandCreateHandler { get; set; } = string.Empty;

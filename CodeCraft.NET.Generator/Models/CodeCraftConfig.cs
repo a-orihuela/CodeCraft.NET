@@ -6,6 +6,7 @@ namespace CodeCraft.NET.Generator.Models
 	public class CodeCraftConfig
 	{
 		public DataBaseConfig DataBaseConfig { get; set; } = new DataBaseConfig();
+		public MauiConfig MauiConfig { get; set; } = new();
 		public Files Files { get; set; } = new Files();
 		public Folders Folders { get; set; } = new Folders();
 		public ProjectNames ProjectNames { get; set; } = new ProjectNames();

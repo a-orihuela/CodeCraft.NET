@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 
+    This file is customizable and will not be overwritten by the generator.
+    Inherits from {{ Name }}ListPageGenerated for base functionality.
+    Add your customizations here.
+-->
+<views:{{ Name }}ListPageGenerated x:Class="{{ MauiProjectName }}.Views.{{ NamePlural }}.{{ Name }}ListPage"
+                                   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                                   xmlns:views="clr-namespace:{{ MauiProjectName }}.Views.{{ NamePlural }}">
+
+    <!-- 
+        This page inherits all functionality from {{ Name }}ListPageGenerated.
+        You can override styles, add custom content, or modify the layout here.
+        
+        Examples of customizations you can add:
+        
+        1. Custom Styles:
+        <ContentPage.Resources>
+            <ResourceDictionary>
+                <Style x:Key="CustomButtonStyle" TargetType="Button">
+                    <Setter Property="BackgroundColor" Value="Blue"/>
+                </Style>
+            </ResourceDictionary>
+        </ContentPage.Resources>
+        
+        2. Custom Toolbar Items:
+        <ContentPage.ToolbarItems>
+            <ToolbarItem Text="Settings" Command="{Binding SettingsCommand}"/>
+        </ContentPage.ToolbarItems>
+        
+        3. Override Content (uncomment and modify as needed):
+        <Grid>
+            // Your custom layout here
+            // This will replace the entire generated content
+        </Grid>
+    -->
+
+</views:{{ Name }}ListPageGenerated>
