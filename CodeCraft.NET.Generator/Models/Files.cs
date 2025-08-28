@@ -29,5 +29,7 @@
 		public string UnitOfWorkImplementation { get; set; } = string.Empty;
 		public string UnitOfWorkInterfaceName { get; set; } = string.Empty;
 		public string UnitOfWorkImplementationName { get; set; } = string.Empty;
+		public string DesktopService { get; set; } = string.Empty;
+		public string DesktopServiceRegistration { get; set; } = string.Empty;
 	}
 }

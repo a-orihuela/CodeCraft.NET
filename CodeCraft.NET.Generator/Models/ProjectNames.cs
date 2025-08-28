@@ -9,6 +9,7 @@
 		public string Application { get; set; } = string.Empty;
 		public string Infrastructure { get; set; } = string.Empty;
 		public string Server { get; set; } = string.Empty;
+		public string Desktop { get; set; } = string.Empty;
 		public string Frontend { get; set; } = string.Empty;
 	}
 }

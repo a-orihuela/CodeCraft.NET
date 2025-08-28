@@ -27,5 +27,7 @@
 		public string RepositoryImplementation { get; set; } = string.Empty;
 		public string UnitOfWorkInterface { get; set; } = string.Empty;
 		public string UnitOfWorkImplementation { get; set; } = string.Empty;
+		public string DesktopService { get; set; } = string.Empty;
+		public string DesktopServiceRegistration { get; set; } = string.Empty;
 	}
 }

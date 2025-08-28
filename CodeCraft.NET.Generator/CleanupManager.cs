@@ -55,6 +55,9 @@ namespace CodeCraft.NET.Generator
 			// Clean Controllers (WebAPI)
 			filesDeleted += CleanControllers(config);
 
+			// Clean Desktop Services (DesktopAPI)
+			filesDeleted += CleanDesktopServices(config);
+
 			// Clean API Request files
 			filesDeleted += CleanApiRequestFiles(config);
 
@@ -300,6 +303,36 @@ namespace CodeCraft.NET.Generator
 			return count;
 		}
 
+		private static int CleanDesktopServices(CodeCraftConfig config)
+		{
+			int count = 0;
+			try
+			{
+				var servicePath = ConfigHelper.GetDesktopServicePath("Sample");
+				var servicesDir = Path.GetDirectoryName(servicePath);
+				
+				if (!string.IsNullOrEmpty(servicesDir))
+				{
+					var fullPath = Path.Combine(config.GetSolutionRoot(), servicesDir);
+					if (Directory.Exists(fullPath))
+					{
+						var serviceFiles = Directory.GetFiles(fullPath, "*Service.cs", SearchOption.AllDirectories);
+						count = serviceFiles.Length;
+						
+						foreach (var file in serviceFiles)
+						{
+							File.Delete(file);
+						}
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($"   [WARN] Cannot delete Desktop Services: {ex.Message}");
+			}
+			return count;
+		}
+
 		private static int CleanApiRequestFiles(CodeCraftConfig config)
 		{
 			int count = 0;
@@ -393,7 +426,8 @@ namespace CodeCraft.NET.Generator
 				{
 					config.GetSolutionRelativePath(config.ProjectNames.Application),
 					config.GetSolutionRelativePath(config.ProjectNames.Infrastructure),
-					config.GetSolutionRelativePath(config.ProjectNames.Server)
+					config.GetSolutionRelativePath(config.ProjectNames.Server),
+					config.GetSolutionRelativePath(config.ProjectNames.Desktop)
 				};
 
 				foreach (var projectPath in projectPaths)

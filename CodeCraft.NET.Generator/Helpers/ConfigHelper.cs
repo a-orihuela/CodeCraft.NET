@@ -24,6 +24,12 @@ namespace CodeCraft.NET.Generator.Helpers
 		public static string GetControllerPath(string entityName)
 			=> GetFilePath(Config.Files.Controller, entityName);
 
+		public static string GetDesktopServicePath(string entityName)
+			=> GetFilePath(Config.Files.DesktopService, entityName);
+
+		public static string GetDesktopServiceRegistrationPath()
+			=> Config.Files.DesktopServiceRegistration;
+
 		public static string GetHttpRequestPath(string entityName)
 			=> GetFilePath(Config.Files.HttpRequest, entityName);
 
@@ -109,6 +115,8 @@ namespace CodeCraft.NET.Generator.Helpers
 			var templatePath = templateProperty switch
 			{
 				nameof(Config.Templates.Controller) => Config.Templates.Controller,
+				nameof(Config.Templates.DesktopService) => Config.Templates.DesktopService,
+				nameof(Config.Templates.DesktopServiceRegistration) => Config.Templates.DesktopServiceRegistration,
 				nameof(Config.Templates.CommandCreate) => Config.Templates.CommandCreate,
 				nameof(Config.Templates.CommandCreateHandler) => Config.Templates.CommandCreateHandler,
 				nameof(Config.Templates.CommandCreateValidator) => Config.Templates.CommandCreateValidator,
@@ -143,5 +151,6 @@ namespace CodeCraft.NET.Generator.Helpers
 
 		public static string GetInfrastructureRoot() => Config.GetSolutionRelativePath(Config.ProjectNames.Infrastructure);
 		public static string GetServerRoot() => Config.GetSolutionRelativePath(Config.ProjectNames.Server);
+		public static string GetDesktopRoot() => Config.GetSolutionRelativePath(Config.ProjectNames.Desktop);
 	}
 }
