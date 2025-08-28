@@ -135,6 +135,7 @@ namespace CodeCraft.NET.Generator.Helpers
 				nameof(Config.Templates.MauiCreateViewModel) => Config.Templates.MauiCreateViewModel,
 				nameof(Config.Templates.MauiEditViewModel) => Config.Templates.MauiEditViewModel,
 				nameof(Config.Templates.MauiDetailViewModel) => Config.Templates.MauiDetailViewModel,
+				nameof(Config.Templates.MauiCustomViewModel) => Config.Templates.MauiCustomViewModel,
 				nameof(Config.Templates.MauiServiceRegistration) => Config.Templates.MauiServiceRegistration,
 				nameof(Config.Templates.MauiShellRouting) => Config.Templates.MauiShellRouting,
 				nameof(Config.Templates.MauiCommonServices) => Config.Templates.MauiCommonServices,

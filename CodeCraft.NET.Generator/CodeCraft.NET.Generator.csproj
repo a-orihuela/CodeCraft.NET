@@ -48,6 +48,9 @@
     <EmbeddedResource Include="Templates\MAUI\ViewModels\DetailViewModel.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.ViewModels.DetailViewModel.scriban</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="Templates\MAUI\ViewModels\CustomViewModel.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.ViewModels.CustomViewModel.scriban</LogicalName>
+    </EmbeddedResource>
     <EmbeddedResource Include="Templates\MAUI\Pages\ListPageGenerated.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.Pages.ListPageGenerated.scriban</LogicalName>
     </EmbeddedResource>

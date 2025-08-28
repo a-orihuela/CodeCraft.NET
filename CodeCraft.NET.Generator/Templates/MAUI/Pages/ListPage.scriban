@@ -1,38 +1,75 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- 
-    This file is customizable and will not be overwritten by the generator.
+    ============================================
+    CUSTOM {{ Name }} LIST PAGE
+    ============================================
+    This file is customizable and will NOT be overwritten by the generator.
     Inherits from {{ Name }}ListPageGenerated for base functionality.
-    Add your customizations here.
+    
+    CUSTOMIZATION OPTIONS:
+    1. Override the entire content
+    2. Add custom styles and resources
+    3. Add custom toolbar items
+    4. Modify layout and appearance
+    ============================================
 -->
-<views:{{ Name }}ListPageGenerated x:Class="{{ MauiProjectName }}.Views.{{ NamePlural }}.{{ Name }}ListPage"
+<views:{{ Name }}ListPageGenerated x:Class="CodeCraft.NET.MAUI.Views.Custom.{{ NamePlural }}.{{ Name }}ListPage"
                                    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                                    xmlns:views="clr-namespace:{{ MauiProjectName }}.Views.{{ NamePlural }}">
 
     <!-- 
-        This page inherits all functionality from {{ Name }}ListPageGenerated.
-        You can override styles, add custom content, or modify the layout here.
+        ============================================
+        EXAMPLE CUSTOMIZATIONS (uncomment to use):
+        ============================================
         
-        Examples of customizations you can add:
-        
-        1. Custom Styles:
+        1. CUSTOM STYLES:
         <ContentPage.Resources>
             <ResourceDictionary>
-                <Style x:Key="CustomButtonStyle" TargetType="Button">
-                    <Setter Property="BackgroundColor" Value="Blue"/>
+                <Style x:Key="CustomListItemStyle" TargetType="Grid">
+                    <Setter Property="BackgroundColor" Value="LightBlue"/>
+                    <Setter Property="Margin" Value="10"/>
                 </Style>
             </ResourceDictionary>
         </ContentPage.Resources>
         
-        2. Custom Toolbar Items:
+        2. CUSTOM TOOLBAR:
         <ContentPage.ToolbarItems>
-            <ToolbarItem Text="Settings" Command="{Binding SettingsCommand}"/>
+            <ToolbarItem Text="Settings" 
+                         Command="{Binding CustomSettingsCommand}"
+                         IconImageSource="settings_icon.png"/>
+            <ToolbarItem Text="Export" 
+                         Command="{Binding ExportCommand}"
+                         IconImageSource="export_icon.png"/>
         </ContentPage.ToolbarItems>
         
-        3. Override Content (uncomment and modify as needed):
+        3. OVERRIDE ENTIRE CONTENT:
         <Grid>
-            // Your custom layout here
-            // This will replace the entire generated content
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Your custom header -->
+            <StackLayout Grid.Row="0" BackgroundColor="Purple" Padding="20">
+                <Label Text="My Custom {{ Name }} List" 
+                       TextColor="White" 
+                       FontSize="24" 
+                       HorizontalTextAlignment="Center"/>
+            </StackLayout>
+            
+            <!-- Your custom content -->
+            <CollectionView Grid.Row="1" 
+                           ItemsSource="{Binding {{ name }}s}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <!-- Your custom item template -->
+                        <Grid Padding="15" BackgroundColor="LightGray">
+                            <Label Text="{Binding Name}" FontSize="18"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </Grid>
     -->
 

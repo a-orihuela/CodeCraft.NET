@@ -8,29 +8,29 @@ namespace CodeCraft.NET.Generator.Helpers
 		{
 			var config = CodeCraftConfig.Instance.MauiConfig;
 			
-			// Archivos que nunca se regeneran
+			// Files that are never regenerated
 			var protectedPatterns = new[]
 			{
 				"**/Custom/**",
 				"**/*.Custom.*",
 				"**/*Override.*",
-				"**/*.xaml" // Archivos XAML personalizables se preservan por defecto
+				"**/*.xaml" // Customizable XAML files are preserved by default
 			};
 			
-			// Archivos generados que siempre se sobrescriben
+			// Generated files that are always overwritten
 			var generatedPatterns = new[]
 			{
 				"**/*.Generated.*",
 				"**/*Generated.*"
 			};
 			
-			// Si es un archivo generado, no preservar
+			// If it's a generated file, don't preserve
 			if (generatedPatterns.Any(pattern => FilePathMatches(filePath, pattern)))
 			{
 				return false;
 			}
 			
-			// Si coincide con patrones protegidos, preservar
+			// If it matches protected patterns, preserve
 			return protectedPatterns.Any(pattern => FilePathMatches(filePath, pattern)) ||
 				   config.GenerateOnlyIfNotExists.Any(pattern => FilePathMatches(filePath, pattern));
 		}
@@ -53,7 +53,7 @@ namespace CodeCraft.NET.Generator.Helpers
 		
 		private static bool FilePathMatches(string filePath, string pattern)
 		{
-			// Convertir patrón a regex simple
+			// Convert pattern to simple regex
 			var regexPattern = pattern
 				.Replace("**", ".*")
 				.Replace("*", "[^/\\\\]*")

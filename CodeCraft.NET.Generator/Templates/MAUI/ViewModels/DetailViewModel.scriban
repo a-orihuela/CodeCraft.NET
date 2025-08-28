@@ -20,10 +20,10 @@ namespace {{ MauiProjectName }}.ViewModels.{{ NamePlural }}
         private readonly INavigationService _navigationService;
 
         [ObservableProperty]
-        private int {{ name }}Id;
+        private int entityId;
 
         [ObservableProperty]
-        private {{ Name }}WithRelatedDto? {{ name }};
+        private {{ Name }}WithRelatedDto? entity;
 
         [ObservableProperty]
         private bool isLoading;
@@ -44,20 +44,26 @@ namespace {{ MauiProjectName }}.ViewModels.{{ NamePlural }}
             _navigationService = navigationService;
         }
 
+        public int {{ Name }}Id
+        {
+            get => entityId;
+            set => SetProperty(ref entityId, value);
+        }
+
         [RelayCommand]
         public async Task LoadAsync()
         {
-            if ({{ name }}Id <= 0) return;
+            if (entityId <= 0) return;
 
             IsLoading = true;
             try
             {
-                {{ name }} = await _{{ name }}Service.GetWithRelatedAsync({{ name }}Id);
-                if ({{ name }} != null)
+                entity = await _{{ name }}Service.GetWithRelatedAsync(entityId);
+                if (entity != null)
                 {
                     {{~ for property in Properties ~}}
                     {{~ if property.Name != "Id" && !property.IsNavigation && property.Type == "string" ~}}
-                    Title = $"{{ Name }} - {{{ name }}.{{ property.Name }}}";
+                    Title = $"{{ Name }} - {entity.{{ property.Name }}}";
                     {{~ break ~}}
                     {{~ end ~}}
                     {{~ end ~}}
@@ -88,15 +94,15 @@ namespace {{ MauiProjectName }}.ViewModels.{{ NamePlural }}
         [RelayCommand]
         public async Task EditAsync()
         {
-            if ({{ name }} == null) return;
+            if (entity == null) return;
             
-            await _navigationService.NavigateToAsync($"{{ Name }}EditPage", {{ name }}.Id);
+            await _navigationService.NavigateToAsync($"{{ Name }}EditPage", entity.Id);
         }
 
         [RelayCommand]
         public async Task DeleteAsync()
         {
-            if ({{ name }} == null || IsDeleting) return;
+            if (entity == null || IsDeleting) return;
 
             var confirmed = await _dialogService.ShowConfirmAsync(
                 "Confirm Delete", 
@@ -107,7 +113,7 @@ namespace {{ MauiProjectName }}.ViewModels.{{ NamePlural }}
             IsDeleting = true;
             try
             {
-                await _{{ name }}Service.DeleteAsync({{ name }}.Id);
+                await _{{ name }}Service.DeleteAsync(entity.Id);
                 await _dialogService.ShowInfoAsync("Success", "{{ Name }} deleted successfully");
                 await _navigationService.GoBackAsync();
             }
@@ -124,14 +130,11 @@ namespace {{ MauiProjectName }}.ViewModels.{{ NamePlural }}
         [RelayCommand]
         public async Task ShareAsync()
         {
-            if ({{ name }} == null) return;
+            if (entity == null) return;
 
             try
             {
                 var shareText = CreateShareText();
-                // Implement sharing logic here
-                // await Share.RequestAsync(new ShareTextRequest { Text = shareText, Title = "Share {{ Name }}" });
-                
                 await _dialogService.ShowInfoAsync("Share", shareText);
             }
             catch (Exception ex)
@@ -154,35 +157,27 @@ namespace {{ MauiProjectName }}.ViewModels.{{ NamePlural }}
 
         private string CreateShareText()
         {
-            if ({{ name }} == null) return string.Empty;
+            if (entity == null) return string.Empty;
 
             var text = $"{{ Name }} Details:{Environment.NewLine}";
             {{~ for property in Properties ~}}
             {{~ if property.Name != "Id" && !property.IsNavigation ~}}
-            text += $"{{ property.Name }}: {{{ name }}.{{ property.Name }}}{Environment.NewLine}";
+            text += $"{{ property.Name }}: {entity.{{ property.Name }}}{Environment.NewLine}";
             {{~ end ~}}
             {{~ end ~}}
             
             return text;
         }
 
-        partial void On{{ Name }}IdChanged(int value)
-        {
-            if (value > 0)
-            {
-                _ = LoadAsync();
-            }
-        }
-
         // Property accessors for easy binding
         {{~ for property in Properties ~}}
         {{~ if property.Name != "Id" && !property.IsNavigation ~}}
-        public {{ property.Type | string.downcase }} {{ property.Name }} => {{ name }}?.{{ property.Name }} ?? {{~ if property.Type == "string" ~}}string.Empty{{~ else if property.Type == "int" || property.Type == "decimal" || property.Type == "double" || property.Type == "float" ~}}0{{~ else if property.Type == "bool" ~}}false{{~ else if property.Type == "DateTime" ~}}DateTime.MinValue{{~ else ~}}default{{~ end ~}};
+        public {{ property.Type | string.downcase }} {{ property.Name }} => entity?.{{ property.Name }} ?? {{~ if property.Type == "string" ~}}string.Empty{{~ else if property.Type == "int" || property.Type == "decimal" || property.Type == "double" || property.Type == "float" ~}}0{{~ else if property.Type == "bool" ~}}false{{~ else if property.Type == "DateTime" ~}}DateTime.MinValue{{~ else ~}}default{{~ end ~}};
         {{~ end ~}}
         {{~ end ~}}
 
-        public bool CanEdit => {{ name }} != null && !IsLoading && !IsDeleting;
-        public bool CanDelete => {{ name }} != null && !IsLoading && !IsDeleting;
-        public bool CanShare => {{ name }} != null && !IsLoading;
+        public bool CanEdit => entity != null && !IsLoading && !IsDeleting;
+        public bool CanDelete => entity != null && !IsLoading && !IsDeleting;
+        public bool CanShare => entity != null && !IsLoading;
     }
 }

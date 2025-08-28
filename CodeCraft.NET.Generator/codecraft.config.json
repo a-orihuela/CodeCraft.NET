@@ -3,7 +3,7 @@
     "ConnectionString": "Server=(localdb)\\mssqllocaldb;Database=CodeCraftDb;Trusted_Connection=true;MultipleActiveResultSets=true;",
     "SqliteConnectionString": "Data Source=CodeCraftDb.db",
     "MigrationsAssembly": "CodeCraft.NET.Infrastructure",
-    "DatabaseProvider": "SqlServer"
+    "DatabaseProvider": "SQLite"
   },
   "MauiConfig": {
     "GenerationStrategy": "BaseAndCustom",
@@ -11,8 +11,9 @@
     "CustomFilesSuffix": "",
     "GeneratedFilesSuffix": ".Generated",
     "GenerateOnlyIfNotExists": [
-      "Views/**/Custom/*.xaml",
-      "Views/**/*.Custom.xaml"
+      "Views/Custom/**/*.xaml",
+      "Views/**/*.Custom.xaml",
+      "ViewModels/Custom/**/*.cs"
     ]
   },
   "Files": {
@@ -47,21 +48,21 @@
     "UnitOfWorkInterfaceName": "ICodeCraftUnitOfWork",
     "UnitOfWorkImplementationName": "CodeCraftUnitOfWork",
     "MauiListPageGenerated": "CodeCraft.NET.MAUI/Views/{0}/{0}ListPage.Generated.xaml",
-    "MauiListPage": "CodeCraft.NET.MAUI/Views/{0}/{0}ListPage.xaml",
+    "MauiListPage": "CodeCraft.NET.MAUI/Views/Custom/{0}/{0}ListPage.xaml",
     "MauiCreatePageGenerated": "CodeCraft.NET.MAUI/Views/{0}/{0}CreatePage.Generated.xaml",
-    "MauiCreatePage": "CodeCraft.NET.MAUI/Views/{0}/{0}CreatePage.xaml",
+    "MauiCreatePage": "CodeCraft.NET.MAUI/Views/Custom/{0}/{0}CreatePage.xaml",
     "MauiEditPageGenerated": "CodeCraft.NET.MAUI/Views/{0}/{0}EditPage.Generated.xaml",
-    "MauiEditPage": "CodeCraft.NET.MAUI/Views/{0}/{0}EditPage.xaml",
+    "MauiEditPage": "CodeCraft.NET.MAUI/Views/Custom/{0}/{0}EditPage.xaml",
     "MauiDetailPageGenerated": "CodeCraft.NET.MAUI/Views/{0}/{0}DetailPage.Generated.xaml",
-    "MauiDetailPage": "CodeCraft.NET.MAUI/Views/{0}/{0}DetailPage.xaml",
+    "MauiDetailPage": "CodeCraft.NET.MAUI/Views/Custom/{0}/{0}DetailPage.xaml",
     "MauiListViewModel": "CodeCraft.NET.MAUI/ViewModels/{0}/{0}ListViewModel.cs",
-    "MauiListViewModelCustom": "CodeCraft.NET.MAUI/ViewModels/{0}/{0}ListViewModel.Custom.cs",
+    "MauiListViewModelCustom": "CodeCraft.NET.MAUI/ViewModels/Custom/{0}ListViewModel.Custom.cs",
     "MauiCreateViewModel": "CodeCraft.NET.MAUI/ViewModels/{0}/{0}CreateViewModel.cs",
-    "MauiCreateViewModelCustom": "CodeCraft.NET.MAUI/ViewModels/{0}/{0}CreateViewModel.Custom.cs",
+    "MauiCreateViewModelCustom": "CodeCraft.NET.MAUI/ViewModels/Custom/{0}CreateViewModel.Custom.cs",
     "MauiEditViewModel": "CodeCraft.NET.MAUI/ViewModels/{0}/{0}EditViewModel.cs",
-    "MauiEditViewModelCustom": "CodeCraft.NET.MAUI/ViewModels/{0}/{0}EditViewModel.Custom.cs",
+    "MauiEditViewModelCustom": "CodeCraft.NET.MAUI/ViewModels/Custom/{0}EditViewModel.Custom.cs",
     "MauiDetailViewModel": "CodeCraft.NET.MAUI/ViewModels/{0}/{0}DetailViewModel.cs",
-    "MauiDetailViewModelCustom": "CodeCraft.NET.MAUI/ViewModels/{0}/{0}DetailViewModel.Custom.cs",
+    "MauiDetailViewModelCustom": "CodeCraft.NET.MAUI/ViewModels/Custom/{0}DetailViewModel.Custom.cs",
     "MauiServiceRegistration": "CodeCraft.NET.MAUI/MauiServiceRegistration.cs"
   },
   "Folders": {
@@ -101,6 +102,7 @@
     "MauiCreateViewModel": "CodeCraft.NET.Generator.Templates.MAUI.ViewModels.CreateViewModel.scriban",
     "MauiEditViewModel": "CodeCraft.NET.Generator.Templates.MAUI.ViewModels.EditViewModel.scriban",
     "MauiDetailViewModel": "CodeCraft.NET.Generator.Templates.MAUI.ViewModels.DetailViewModel.scriban",
+    "MauiCustomViewModel": "CodeCraft.NET.Generator.Templates.MAUI.ViewModels.CustomViewModel.scriban",
     "MauiServiceRegistration": "CodeCraft.NET.Generator.Templates.MAUI.Services.MauiServiceRegistration.scriban",
     "MauiShellRouting": "CodeCraft.NET.Generator.Templates.MAUI.Services.ShellRouting.scriban",
     "MauiCommonServices": "CodeCraft.NET.Generator.Templates.MAUI.Services.CommonServices.scriban",

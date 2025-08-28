@@ -1,0 +1,111 @@
+using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace {{ MauiProjectName }}.ViewModels.{{ Name }}
+{
+	/// <summary>
+	/// Custom partial class for {{ Name }}{{ ViewType }}ViewModel
+	/// This file is never regenerated, so your customizations are safe
+	/// </summary>
+	public partial class {{ Name }}{{ ViewType }}ViewModel
+	{
+		// ============================================
+		// CUSTOM PROPERTIES AND METHODS
+		// ============================================
+		// Add your custom properties, commands, and methods here
+		// These will extend the base ViewModel functionality
+		
+		//[ObservableProperty]
+		//private string customProperty = string.Empty;
+		
+		//[ObservableProperty] 
+		//private bool isCustomOperationRunning;
+		
+		//[RelayCommand]
+		//private async Task CustomOperationAsync()
+		//{
+		//    IsCustomOperationRunning = true;
+		//    try
+		//    {
+		//        // Your custom logic here
+		//        await Task.Delay(1000);
+		//    }
+		//    finally
+		//    {
+		//        IsCustomOperationRunning = false;
+		//    }
+		//}
+		
+		// ============================================
+		// CUSTOM EVENT HANDLERS
+		// ============================================
+		//partial void OnCustomPropertyChanged(string value)
+		//{
+		//	// Custom logic when property changes
+		//	Console.WriteLine($"Custom property changed to: {value}");
+		//}
+		
+		// ============================================
+		// OVERRIDE BASE METHODS (if needed)
+		// ============================================
+		//partial void OnActivated()
+		//{
+		//    // Called when ViewModel is activated
+		//    // Add custom initialization logic here
+		//}
+		
+		//partial void OnDeactivated()
+		//{
+		//    // Called when ViewModel is deactivated
+		//    // Add custom cleanup logic here
+		//}
+		
+		// ============================================
+		// ENTITY-SPECIFIC CUSTOM METHODS
+		// ============================================
+		{{~ if ViewType == "List" ~}}
+		//[RelayCommand]
+		//private async Task ExportToExcelAsync()
+		//{
+		//    // Custom export functionality for {{ Name }} list
+		//}
+		
+		//[RelayCommand]
+		//private async Task BulkOperationAsync()
+		//{
+		//    // Custom bulk operations for selected {{ name }}s
+		//}
+		{{~ else if ViewType == "Create" ~}}
+		//partial void OnBeforeCreate()
+		//{
+		//    // Custom validation or preparation before creating {{ name }}
+		//}
+		
+		//partial void OnAfterCreate({{ Name }}Dto created{{ Name }})
+		//{
+		//    // Custom actions after {{ name }} is created
+		//}
+		{{~ else if ViewType == "Edit" ~}}
+		//partial void OnBeforeSave()
+		//{
+		//    // Custom validation or preparation before saving changes
+		//}
+		
+		//partial void OnAfterSave({{ Name }}Dto updated{{ Name }})
+		//{
+		//    // Custom actions after {{ name }} is saved
+		//}
+		{{~ else if ViewType == "Detail" ~}}
+		//[RelayCommand]
+		//private async Task PrintAsync()
+		//{
+		//    // Custom print functionality for {{ name }} details
+		//}
+		
+		//[RelayCommand]
+		//private async Task ExportToPdfAsync()
+		//{
+		//    // Custom PDF export for {{ name }}
+		//}
+		{{~ end ~}}
+	}
+}

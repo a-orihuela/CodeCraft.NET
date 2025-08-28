@@ -3,7 +3,7 @@
 //     Manual changes to this file may be overwritten.
 // </auto-generated>
 
-namespace {{ MauiProjectName }}.Services
+namespace CodeCraft.NET.MAUI.Services
 {
     public interface IDialogService
     {

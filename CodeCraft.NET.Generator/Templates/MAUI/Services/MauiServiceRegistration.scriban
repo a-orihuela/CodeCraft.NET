@@ -3,14 +3,13 @@
 //     Manual changes to this file may be overwritten.
 // </auto-generated>
 
-using {{ MauiProjectName }}.Services;
-using {{ MauiProjectName }}.ViewModels.{{ entities[0].NamePlural }};
+using CodeCraft.NET.MAUI.Services;
 {{~ for entity in entities ~}}
-using {{ MauiProjectName }}.ViewModels.{{ entity.NamePlural }};
-using {{ MauiProjectName }}.Views.{{ entity.NamePlural }};
+using CodeCraft.NET.MAUI.ViewModels.{{ entity.NamePlural }};
+using CodeCraft.NET.MAUI.Views.{{ entity.NamePlural }};
 {{~ end ~}}
 
-namespace {{ MauiProjectName }}
+namespace CodeCraft.NET.MAUI
 {
     public static class MauiServiceRegistration
     {
@@ -56,4 +55,4 @@ namespace {{ MauiProjectName }}
             {{~ end ~}}
         }
     }
-}
+}}

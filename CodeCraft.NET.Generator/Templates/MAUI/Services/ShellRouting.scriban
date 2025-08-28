@@ -3,12 +3,11 @@
 //     Manual changes to this file may be overwritten.
 // </auto-generated>
 
-using {{ MauiProjectName }}.Views.{{ entities[0].NamePlural }};
 {{~ for entity in entities ~}}
-using {{ MauiProjectName }}.Views.{{ entity.NamePlural }};
+using CodeCraft.NET.MAUI.Views.{{ entity.NamePlural }};
 {{~ end ~}}
 
-namespace {{ MauiProjectName }}
+namespace CodeCraft.NET.MAUI
 {
     public static class ShellRouting
     {
@@ -26,4 +25,4 @@ namespace {{ MauiProjectName }}
             {{~ end ~}}
         }
     }
-}
+}}
