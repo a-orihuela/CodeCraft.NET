@@ -1,48 +1,4 @@
-# CodeCraft.NET Clean Architecture Template
-
-A Clean Architecture template for .NET 9 with CQRS and automatic code generation.
-
-## Installation
-
-```bash
-dotnet new install CodeCraft.NET.CleanArchitecture.Template
-```
-
-## Usage
-
-```bash
-# Create new project
-dotnet new codecraft -n "MyProject"
-cd MyProject
-
-# Build and run
-dotnet build
-dotnet run --project MyProject.WebAPI
-```
-
-## Development Workflow
-
-### Building and Packaging
-
-```bash
-# Build solution and create template package (patch version)
-.\build.ps1
-
-# Create new minor version (new features)
-.\build.ps1 -Minor
-
-# Create new major version (breaking changes) 
-.\build.ps1 -Major
-
-# Publish to NuGet
-.\build.ps1 -PublishToNuGet -ApiKey YOUR_API_KEY
-```
-
-### Semantic Versioning
-
-- **PATCH** (default): Bug fixes and minor updates
-- **MINOR** (`-Minor`): New features, backward compatible
-- **MAJOR** (`-Major`): Breaking changes
+# CodeCraft.NET Clean Architecture
 
 ## Features
 
@@ -51,14 +7,6 @@ dotnet run --project MyProject.WebAPI
 - **Entity Framework Core** with SQL Server
 - **Automatic Code Generator** for CRUD operations
 - **Swagger/OpenAPI** documentation
-
-## Quick Start
-
-1. **Create project**: `dotnet new codecraft -n "MyProject"`
-2. **Build**: `dotnet build`
-3. **Generate CRUD**: `dotnet run --project MyProject.Generator`
-4. **Run API**: `dotnet run --project MyProject.WebAPI`
-5. **Test**: Navigate to `https://localhost:7202/swagger`
 
 ## Code Generator
 

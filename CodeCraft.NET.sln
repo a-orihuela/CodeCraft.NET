@@ -15,17 +15,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCraft.NET.Infrastructur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCraft.NET.WebAPI", "CodeCraft.NET.WebAPI\CodeCraft.NET.WebAPI.csproj", "{31E9E34E-22B0-4ACD-9F40-11AF06AF38D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template", "Template\Template.csproj", "{A4F6432E-650D-227A-08A0-8733AEB4B29B}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		.nugetignore = .nugetignore
-		CHANGELOG.md = CHANGELOG.md
-		CONTRIBUTING.md = CONTRIBUTING.md
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCraft.NET.DesktopAPI", "CodeCraft.NET.DesktopAPI\CodeCraft.NET.DesktopAPI.csproj", "{57265B76-9097-4AC8-A742-C3F91DF38EA0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -109,18 +107,18 @@ Global
 		{31E9E34E-22B0-4ACD-9F40-11AF06AF38D9}.Release|x64.Build.0 = Release|Any CPU
 		{31E9E34E-22B0-4ACD-9F40-11AF06AF38D9}.Release|x86.ActiveCfg = Release|Any CPU
 		{31E9E34E-22B0-4ACD-9F40-11AF06AF38D9}.Release|x86.Build.0 = Release|Any CPU
-		{A4F6432E-650D-227A-08A0-8733AEB4B29B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A4F6432E-650D-227A-08A0-8733AEB4B29B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A4F6432E-650D-227A-08A0-8733AEB4B29B}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{A4F6432E-650D-227A-08A0-8733AEB4B29B}.Debug|x64.Build.0 = Debug|Any CPU
-		{A4F6432E-650D-227A-08A0-8733AEB4B29B}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{A4F6432E-650D-227A-08A0-8733AEB4B29B}.Debug|x86.Build.0 = Debug|Any CPU
-		{A4F6432E-650D-227A-08A0-8733AEB4B29B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A4F6432E-650D-227A-08A0-8733AEB4B29B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A4F6432E-650D-227A-08A0-8733AEB4B29B}.Release|x64.ActiveCfg = Release|Any CPU
-		{A4F6432E-650D-227A-08A0-8733AEB4B29B}.Release|x64.Build.0 = Release|Any CPU
-		{A4F6432E-650D-227A-08A0-8733AEB4B29B}.Release|x86.ActiveCfg = Release|Any CPU
-		{A4F6432E-650D-227A-08A0-8733AEB4B29B}.Release|x86.Build.0 = Release|Any CPU
+		{57265B76-9097-4AC8-A742-C3F91DF38EA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57265B76-9097-4AC8-A742-C3F91DF38EA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57265B76-9097-4AC8-A742-C3F91DF38EA0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{57265B76-9097-4AC8-A742-C3F91DF38EA0}.Debug|x64.Build.0 = Debug|Any CPU
+		{57265B76-9097-4AC8-A742-C3F91DF38EA0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{57265B76-9097-4AC8-A742-C3F91DF38EA0}.Debug|x86.Build.0 = Debug|Any CPU
+		{57265B76-9097-4AC8-A742-C3F91DF38EA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57265B76-9097-4AC8-A742-C3F91DF38EA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57265B76-9097-4AC8-A742-C3F91DF38EA0}.Release|x64.ActiveCfg = Release|Any CPU
+		{57265B76-9097-4AC8-A742-C3F91DF38EA0}.Release|x64.Build.0 = Release|Any CPU
+		{57265B76-9097-4AC8-A742-C3F91DF38EA0}.Release|x86.ActiveCfg = Release|Any CPU
+		{57265B76-9097-4AC8-A742-C3F91DF38EA0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
