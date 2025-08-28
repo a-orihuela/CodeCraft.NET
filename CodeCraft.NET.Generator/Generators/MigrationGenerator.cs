@@ -119,16 +119,34 @@ namespace CodeCraft.NET.Generator.Generators
 			else
 			{
 				Console.WriteLine($"Migration creation completed with warnings: {migrationName}");
+			
+				// Show the actual command being executed for debugging
+				Console.WriteLine($"   Command executed: dotnet ef migrations add {migrationName} --project \"{infrastructureProjectPath}\" --startup-project \"{serverProjectPath}\" --context {context} --output-dir {outputDir}");
+			
 				if (!string.IsNullOrWhiteSpace(error))
 				{
+					Console.WriteLine("   Error output:");
 					// Filter and show only relevant errors
 					var errorLines = error.Split('\n')
 						.Where(line => !string.IsNullOrWhiteSpace(line) && 
 									  !line.Contains("warning") &&
 									  !line.Contains("Build started"))
-						.Take(3); // Limit error output
-					
+						.Take(5); // Show more error lines for debugging
+				
 					foreach (var line in errorLines)
+					{
+						Console.WriteLine($"   {line.Trim()}");
+					}
+				}
+				
+				if (!string.IsNullOrWhiteSpace(output))
+				{
+					Console.WriteLine("   Standard output:");
+					var outputLines = output.Split('\n')
+						.Where(line => !string.IsNullOrWhiteSpace(line))
+						.Take(5);
+				
+					foreach (var line in outputLines)
 					{
 						Console.WriteLine($"   {line.Trim()}");
 					}

@@ -6,6 +6,7 @@
 using CodeCraft.NET.Application.Contracts.Persistence;
 using CodeCraft.NET.Application.Contracts.Persistence.Base;
 using CodeCraft.NET.Infrastructure.Persistence;
+using CodeCraft.NET.Cross.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

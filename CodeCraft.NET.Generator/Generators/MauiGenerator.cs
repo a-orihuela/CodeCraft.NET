@@ -35,6 +35,7 @@ namespace CodeCraft.NET.Generator.Generators
 			GenerateCommonServices(entities);
 			GenerateServiceRegistration(entities);
 			GenerateShellRouting(entities);
+			GenerateMauiProgram(entities);
 		}
 
 		private void GenerateViewModels(EntityMetadata entity)
@@ -190,6 +191,16 @@ namespace CodeCraft.NET.Generator.Generators
 			_templateRenderer.Render(
 				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.MauiShellRouting)),
 				"CodeCraft.NET.MAUI/AppShell.Generated.cs",
+				context);
+		}
+
+		private void GenerateMauiProgram(IEnumerable<EntityMetadata> entities)
+		{
+			var context = new { entities };
+			
+			_templateRenderer.Render(
+				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.MauiProgram)),
+				CodeCraftConfig.Instance.Files.MauiProgram,
 				context);
 		}
 

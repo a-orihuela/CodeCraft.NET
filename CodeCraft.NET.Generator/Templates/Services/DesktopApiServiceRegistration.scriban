@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using CodeCraft.NET.Infrastructure;
+using CodeCraft.NET.Cross.Enums;
 using PARA.Platform.Application;
 
 namespace {{ DesktopProjectName }}

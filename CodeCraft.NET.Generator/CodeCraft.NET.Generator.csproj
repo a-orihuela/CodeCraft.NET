@@ -84,6 +84,9 @@
     <EmbeddedResource Include="Templates\MAUI\Services\ShellRouting.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.Services.ShellRouting.scriban</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="Templates\MAUI\MauiProgram.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.MauiProgram.scriban</LogicalName>
+    </EmbeddedResource>
     <EmbeddedResource Include="Templates\CQRS\Features\Commands\Create\Create.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Features.Commands.Create.Create.scriban</LogicalName>
     </EmbeddedResource>

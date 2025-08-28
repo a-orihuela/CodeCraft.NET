@@ -25,6 +25,7 @@
 		public string MauiDetailViewModel { get; set; } = string.Empty;
 		public string MauiDetailViewModelCustom { get; set; } = string.Empty;
 		public string MauiServiceRegistration { get; set; } = string.Empty;
+		public string MauiProgram { get; set; } = string.Empty;
 		
 		public string HttpRequest { get; set; } = string.Empty;
 		public string CommandCreate { get; set; } = string.Empty;

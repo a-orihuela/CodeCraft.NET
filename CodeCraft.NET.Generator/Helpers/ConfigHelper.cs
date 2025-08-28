@@ -139,6 +139,7 @@ namespace CodeCraft.NET.Generator.Helpers
 				nameof(Config.Templates.MauiServiceRegistration) => Config.Templates.MauiServiceRegistration,
 				nameof(Config.Templates.MauiShellRouting) => Config.Templates.MauiShellRouting,
 				nameof(Config.Templates.MauiCommonServices) => Config.Templates.MauiCommonServices,
+				nameof(Config.Templates.MauiProgram) => Config.Templates.MauiProgram,
 				
 				nameof(Config.Templates.CommandCreate) => Config.Templates.CommandCreate,
 				nameof(Config.Templates.CommandCreateHandler) => Config.Templates.CommandCreateHandler,

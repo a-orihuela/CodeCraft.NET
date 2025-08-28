@@ -63,7 +63,8 @@
     "MauiEditViewModelCustom": "CodeCraft.NET.MAUI/ViewModels/Custom/{0}/{0}EditViewModel.Custom.cs",
     "MauiDetailViewModel": "CodeCraft.NET.MAUI/ViewModels/{0}/{0}DetailViewModel.cs",
     "MauiDetailViewModelCustom": "CodeCraft.NET.MAUI/ViewModels/Custom/{0}/{0}DetailViewModel.Custom.cs",
-    "MauiServiceRegistration": "CodeCraft.NET.MAUI/MauiServiceRegistration.cs"
+    "MauiServiceRegistration": "CodeCraft.NET.MAUI/MauiServiceRegistration.cs",
+    "MauiProgram": "CodeCraft.NET.MAUI/MauiProgram.cs"
   },
   "Folders": {
     "RootFolder": "CodeCraft.NET",
@@ -105,6 +106,7 @@
     "MauiCustomViewModel": "CodeCraft.NET.Generator.Templates.MAUI.ViewModels.CustomViewModel.scriban",
     "MauiServiceRegistration": "CodeCraft.NET.Generator.Templates.MAUI.Services.MauiServiceRegistration.scriban",
     "MauiShellRouting": "CodeCraft.NET.Generator.Templates.MAUI.Services.ShellRouting.scriban",
+    "MauiProgram": "CodeCraft.NET.Generator.Templates.MAUI.MauiProgram.scriban",
     "MauiCommonServices": "CodeCraft.NET.Generator.Templates.MAUI.Services.CommonServices.scriban",
     "CommandCreate": "CodeCraft.NET.Generator.Templates.CQRS.Features.Commands.Create.Create.scriban",
     "CommandCreateHandler": "CodeCraft.NET.Generator.Templates.CQRS.Features.Commands.Create.CreateHandler.scriban",
