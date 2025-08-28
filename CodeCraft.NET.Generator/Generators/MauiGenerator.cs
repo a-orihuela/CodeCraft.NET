@@ -139,11 +139,11 @@ namespace CodeCraft.NET.Generator.Generators
 					ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.MauiCustomViewModel)),
 					customPath,
 					context);
-				Console.WriteLine($"   Generated: ViewModels/Custom/{entity.Name}{viewType}ViewModel.Custom.cs");
+				Console.WriteLine($"   Generated: ViewModels/Custom/{entity.Name}/{entity.Name}{viewType}ViewModel.Custom.cs");
 			}
 			else
 			{
-				Console.WriteLine($"   Preserved: ViewModels/Custom/{entity.Name}{viewType}ViewModel.Custom.cs - Custom file exists");
+				Console.WriteLine($"   Preserved: ViewModels/Custom/{entity.Name}/{entity.Name}{viewType}ViewModel.Custom.cs - Custom file exists");
 			}
 		}
 
@@ -242,7 +242,7 @@ namespace CodeCraft.NET.Generator.Generators
 			string.Format(CodeCraftConfig.Instance.Files.MauiDetailViewModel, entityName);
 
 		private string GetMauiViewModelCustomPath(string entityName, string viewType) =>
-			$"CodeCraft.NET.MAUI/ViewModels/Custom/{entityName}{viewType}ViewModel.Custom.cs";
+			$"CodeCraft.NET.MAUI/ViewModels/Custom/{entityName}/{entityName}{viewType}ViewModel.Custom.cs";
 
 		private string GetMauiListPageGeneratedPath(string entityName) =>
 			string.Format(CodeCraftConfig.Instance.Files.MauiListPageGenerated, entityName);

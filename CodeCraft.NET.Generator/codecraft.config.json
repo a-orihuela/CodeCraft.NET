@@ -56,13 +56,13 @@
     "MauiDetailPageGenerated": "CodeCraft.NET.MAUI/Views/{0}/{0}DetailPage.Generated.xaml",
     "MauiDetailPage": "CodeCraft.NET.MAUI/Views/Custom/{0}/{0}DetailPage.xaml",
     "MauiListViewModel": "CodeCraft.NET.MAUI/ViewModels/{0}/{0}ListViewModel.cs",
-    "MauiListViewModelCustom": "CodeCraft.NET.MAUI/ViewModels/Custom/{0}ListViewModel.Custom.cs",
+    "MauiListViewModelCustom": "CodeCraft.NET.MAUI/ViewModels/Custom/{0}/{0}ListViewModel.Custom.cs",
     "MauiCreateViewModel": "CodeCraft.NET.MAUI/ViewModels/{0}/{0}CreateViewModel.cs",
-    "MauiCreateViewModelCustom": "CodeCraft.NET.MAUI/ViewModels/Custom/{0}CreateViewModel.Custom.cs",
+    "MauiCreateViewModelCustom": "CodeCraft.NET.MAUI/ViewModels/Custom/{0}/{0}CreateViewModel.Custom.cs",
     "MauiEditViewModel": "CodeCraft.NET.MAUI/ViewModels/{0}/{0}EditViewModel.cs",
-    "MauiEditViewModelCustom": "CodeCraft.NET.MAUI/ViewModels/Custom/{0}EditViewModel.Custom.cs",
+    "MauiEditViewModelCustom": "CodeCraft.NET.MAUI/ViewModels/Custom/{0}/{0}EditViewModel.Custom.cs",
     "MauiDetailViewModel": "CodeCraft.NET.MAUI/ViewModels/{0}/{0}DetailViewModel.cs",
-    "MauiDetailViewModelCustom": "CodeCraft.NET.MAUI/ViewModels/Custom/{0}DetailViewModel.Custom.cs",
+    "MauiDetailViewModelCustom": "CodeCraft.NET.MAUI/ViewModels/Custom/{0}/{0}DetailViewModel.Custom.cs",
     "MauiServiceRegistration": "CodeCraft.NET.MAUI/MauiServiceRegistration.cs"
   },
   "Folders": {
