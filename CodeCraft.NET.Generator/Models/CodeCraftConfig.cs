@@ -41,8 +41,8 @@ namespace CodeCraft.NET.Generator.Models
 			{
 				if (location.Contains("*Generator"))
 				{
-					var solutionRoot = FindSolutionRoot();
-					var generatorDirs = Directory.GetDirectories(solutionRoot, "*Generator", SearchOption.TopDirectoryOnly);
+					var solutionRootPath = FindSolutionRoot();
+					var generatorDirs = Directory.GetDirectories(solutionRootPath, "*Generator", SearchOption.TopDirectoryOnly);
 					foreach (var genDir in generatorDirs)
 					{
 						var configFile = Path.Combine(genDir, "codecraft.config.json");
@@ -63,34 +63,50 @@ namespace CodeCraft.NET.Generator.Models
 			
 			if (configPath == null)
 			{
-				Console.WriteLine("🔍 Searching for codecraft.config.json in these locations:");
+				Console.WriteLine("Searching for codecraft.config.json in these locations:");
 				foreach (var location in locations.Where(l => !l.Contains("*Generator")))
 				{
-					Console.WriteLine($"   ❌ {location}");
+					Console.WriteLine($"   {location}");
 				}
 				
 				// Also show found Generator directories
-				var solutionRoot = FindSolutionRoot();
-				var generatorDirs = Directory.GetDirectories(solutionRoot, "*Generator", SearchOption.TopDirectoryOnly);
+				var solutionRootPath = FindSolutionRoot();
+				var generatorDirs = Directory.GetDirectories(solutionRootPath, "*Generator", SearchOption.TopDirectoryOnly);
 				if (generatorDirs.Any())
 				{
 					Console.WriteLine("   Generator directories found:");
 					foreach (var genDir in generatorDirs)
 					{
 						var configFile = Path.Combine(genDir, "codecraft.config.json");
-						Console.WriteLine($"   ❌ {configFile}");
+						Console.WriteLine($"   {configFile}");
 					}
 				}
 				
 				throw new FileNotFoundException("Configuration file 'codecraft.config.json' not found.");
 			}
 
-			Console.WriteLine($"✅ Found configuration file: {configPath}");
+			Console.WriteLine($"Found configuration file: {configPath}");
 			var json = File.ReadAllText(configPath);
 			var data = JsonSerializer.Deserialize<CodeCraftConfig>(json, new JsonSerializerOptions
 			{
 				PropertyNameCaseInsensitive = true
 			}) ?? throw new InvalidOperationException("Invalid config format.");
+
+			// SAFETY VALIDATION: Ensure we're working in the intended solution
+			var configDirectory = Path.GetDirectoryName(configPath);
+			var solutionRoot = FindSolutionRoot();
+			
+			Console.WriteLine($"Configuration directory: {configDirectory}");
+			Console.WriteLine($"Solution root detected: {solutionRoot}");
+			
+			// Warn if the config and solution don't seem to match
+			if (configDirectory != null && !solutionRoot.StartsWith(configDirectory.Substring(0, Math.Min(configDirectory.Length, solutionRoot.Length))))
+			{
+				Console.WriteLine($"WARNING: Configuration and solution paths seem mismatched!");
+				Console.WriteLine($"   Config: {configDirectory}");
+				Console.WriteLine($"   Solution: {solutionRoot}");
+				Console.WriteLine($"   Ensure you're running from the correct directory.");
+			}
 
 			return data;
 		}
@@ -123,15 +139,12 @@ namespace CodeCraft.NET.Generator.Models
 				currentDir = currentDir.Parent;
 			}
 			
-			// Hard-coded fallback for the specific case
-			var hardcodedPath = @"C:\Repos\CodeCraft.NET";
-			if (Directory.Exists(hardcodedPath) && Directory.GetFiles(hardcodedPath, "*.sln").Any())
-			{
-				return hardcodedPath;
-			}
+			// SAFE FALLBACK: Use current directory instead of hardcoded path
+			var currentDirectory = Directory.GetCurrentDirectory();
+			Console.WriteLine($"Warning: Could not find .sln file. Using current directory: {currentDirectory}");
+			Console.WriteLine("   Make sure you're running the generator from within the solution directory.");
 			
-			// Last fallback to current directory
-			return Directory.GetCurrentDirectory();
+			return currentDirectory;
 		}
 
 		// Public method to access solution root
@@ -142,6 +155,21 @@ namespace CodeCraft.NET.Generator.Models
 		{
 			var solutionRoot = FindSolutionRoot();
 			var result = Path.Combine(solutionRoot, projectName);
+			
+			// SAFETY CHECK: Ensure we're not accidentally working in another solution
+			if (!Directory.Exists(solutionRoot))
+			{
+				throw new DirectoryNotFoundException($"Solution root directory does not exist: {solutionRoot}");
+			}
+			
+			// SAFETY CHECK: Verify this looks like our solution
+			var solutionFiles = Directory.GetFiles(solutionRoot, "*.sln");
+			if (!solutionFiles.Any())
+			{
+				Console.WriteLine($"Warning: No .sln files found in {solutionRoot}");
+				Console.WriteLine("   This might not be the correct solution directory.");
+			}
+			
 			return result;
 		}
 
