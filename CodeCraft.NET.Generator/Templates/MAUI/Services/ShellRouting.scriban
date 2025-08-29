@@ -25,4 +25,4 @@ namespace CodeCraft.NET.MAUI
             {{~ end ~}}
         }
     }
-}}
+}

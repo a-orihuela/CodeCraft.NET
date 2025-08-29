@@ -13,7 +13,7 @@
     "GenerateOnlyIfNotExists": [
       "Views/Custom/**/*.xaml",
       "Views/**/*.Custom.xaml",
-      "ViewModels/Custom/**/*.cs"
+      "ViewModels/Custom Shenanigans/**/**.cs"
     ]
   },
   "Files": {
@@ -64,7 +64,8 @@
     "MauiDetailViewModel": "CodeCraft.NET.MAUI/ViewModels/{0}/{0}DetailViewModel.cs",
     "MauiDetailViewModelCustom": "CodeCraft.NET.MAUI/ViewModels/Custom/{0}/{0}DetailViewModel.Custom.cs",
     "MauiServiceRegistration": "CodeCraft.NET.MAUI/MauiServiceRegistration.cs",
-    "MauiProgram": "CodeCraft.NET.MAUI/MauiProgram.cs"
+    "MauiProgram": "CodeCraft.NET.MAUI/MauiProgram.cs",
+    "EntityDtos": "CodeCraft.NET.Application/DTOs/{0}/{0}Dtos.cs"
   },
   "Folders": {
     "RootFolder": "CodeCraft.NET",
@@ -107,7 +108,7 @@
     "MauiServiceRegistration": "CodeCraft.NET.Generator.Templates.MAUI.Services.MauiServiceRegistration.scriban",
     "MauiShellRouting": "CodeCraft.NET.Generator.Templates.MAUI.Services.ShellRouting.scriban",
     "MauiProgram": "CodeCraft.NET.Generator.Templates.MAUI.MauiProgram.scriban",
-    "MauiCommonServices": "CodeCraft.NET.Generator.Templates.MAUI.Services.CommonServices.scriban",
+    "EntityDtos": "CodeCraft.NET.Generator.Templates.DTOs.EntityDtos.scriban",
     "CommandCreate": "CodeCraft.NET.Generator.Templates.CQRS.Features.Commands.Create.Create.scriban",
     "CommandCreateHandler": "CodeCraft.NET.Generator.Templates.CQRS.Features.Commands.Create.CreateHandler.scriban",
     "CommandCreateValidator": "CodeCraft.NET.Generator.Templates.CQRS.Features.Commands.Create.CreateValidator.scriban",

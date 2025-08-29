@@ -49,5 +49,6 @@
 		public string MauiShellRouting { get; set; } = string.Empty;
 		public string MauiCommonServices { get; set; } = string.Empty;
 		public string MauiProgram { get; set; } = string.Empty;
+		public string EntityDtos { get; set; } = string.Empty;
 	}
 }

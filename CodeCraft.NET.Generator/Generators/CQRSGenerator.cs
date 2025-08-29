@@ -18,6 +18,7 @@ namespace CodeCraft.NET.Generator.Generators
 			GenerateCommands(entity);
 			GenerateQueries(entity);
 			GenerateSpecifications(entity);
+			GenerateEntityDtos(entity);
 		}
 
 		public void GenerateMapping(IEnumerable<EntityMetadata> entities)
@@ -166,31 +167,41 @@ namespace CodeCraft.NET.Generator.Generators
 
 		private void GenerateSpecifications(EntityMetadata entity)
 		{
-			var entityPlural = ConfigHelper.PluralizeName(entity.Name);
+			var context = CreateTemplateContext(entity);
 
-			// Specification
+			// Generate Specification
 			_templateRenderer.Render(
 				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.Specification)),
-				ConfigHelper.GetSpecificationPath(entityPlural, entity.Name),
-				CreateTemplateContext(entity));
+				ConfigHelper.GetSpecificationPath(entity.NamePlural, entity.Name),
+				context);
 
-			// Specification Params
+			// Generate SpecificationParams
 			_templateRenderer.Render(
 				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.SpecificationParams)),
-				ConfigHelper.GetSpecificationParamsPath(entityPlural, entity.Name),
-				CreateTemplateContext(entity));
+				ConfigHelper.GetSpecificationParamsPath(entity.NamePlural, entity.Name),
+				context);
 
-			// WithRelated
+			// Generate WithRelated
 			_templateRenderer.Render(
 				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.WithRelated)),
-				ConfigHelper.GetWithRelatedPath(entityPlural, entity.Name),
-				CreateTemplateContext(entity));
+				ConfigHelper.GetWithRelatedPath(entity.NamePlural, entity.Name),
+				context);
 
-			// WithRelated Specification
+			// Generate WithRelatedSpecification
 			_templateRenderer.Render(
 				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.WithRelatedSpecification)),
-				ConfigHelper.GetWithRelatedSpecificationPath(entityPlural, entity.Name),
-				CreateTemplateContext(entity));
+				ConfigHelper.GetWithRelatedSpecificationPath(entity.NamePlural, entity.Name),
+				context);
+		}
+
+		private void GenerateEntityDtos(EntityMetadata entity)
+		{
+			var context = CreateTemplateContext(entity);
+
+			_templateRenderer.Render(
+				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.EntityDtos)),
+				ConfigHelper.GetEntityDtosPath(entity.Name),
+				context);
 		}
 	}
 }

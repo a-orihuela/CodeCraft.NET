@@ -4,11 +4,11 @@
 // </auto-generated>
 
 using MediatR;
-using {{ DomainProjectName }}.Model;
+using {{ ApplicationProjectName }}.DTOs.{{ Name }};
 
 namespace {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Queries.Get{{ Name }}ById
 {
-	public partial class Get{{ Name }}ByIdQuery : IRequest<{{ Name }}>
+	public partial class Get{{ Name }}ByIdQuery : IRequest<{{ Name }}Dto?>
 	{
 		public int Id { get; set; }
 	}

@@ -105,6 +105,9 @@ namespace CodeCraft.NET.Generator.Helpers
 		public static string GetMappingProfilePath()
 			=> Config.Files.MappingProfile;
 
+		public static string GetEntityDtosPath(string entityName)
+			=> GetFilePath(Config.Files.EntityDtos, entityName);
+
 		// DbContext
 		public static string GetDbContextPath()
 			=> Config.Files.DbContext;
@@ -140,6 +143,7 @@ namespace CodeCraft.NET.Generator.Helpers
 				nameof(Config.Templates.MauiShellRouting) => Config.Templates.MauiShellRouting,
 				nameof(Config.Templates.MauiCommonServices) => Config.Templates.MauiCommonServices,
 				nameof(Config.Templates.MauiProgram) => Config.Templates.MauiProgram,
+				nameof(Config.Templates.EntityDtos) => Config.Templates.EntityDtos,
 				
 				nameof(Config.Templates.CommandCreate) => Config.Templates.CommandCreate,
 				nameof(Config.Templates.CommandCreateHandler) => Config.Templates.CommandCreateHandler,

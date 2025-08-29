@@ -4,13 +4,14 @@
 // </auto-generated>
 
 using MediatR;
-using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Commands.Create;
-using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Commands.Delete;
-using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Commands.Update;
-using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Queries.Get{{ Name }}ById;
-using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Queries.Get{{ Name }}WithRelated;
+using CodeCraft.NET.Application.DTOs.{{ Name }};
+using CodeCraft.NET.Application.CQRS.Features.{{ NamePlural }}.Commands.Create;
+using CodeCraft.NET.Application.CQRS.Features.{{ NamePlural }}.Commands.Delete;
+using CodeCraft.NET.Application.CQRS.Features.{{ NamePlural }}.Commands.Update;
+using CodeCraft.NET.Application.CQRS.Features.{{ NamePlural }}.Queries.Get{{ Name }}ById;
+using CodeCraft.NET.Application.CQRS.Features.{{ NamePlural }}.Queries.Get{{ Name }}WithRelated;
 
-namespace {{ DesktopProjectName }}.Services
+namespace CodeCraft.NET.DesktopAPI.Services
 {
     public partial class {{ Name }}Service
     {

@@ -4,11 +4,12 @@
 // </auto-generated>
 
 using MediatR;
-using {{ DomainProjectName }}.Model;
+using {{ ApplicationProjectName }}.DTOs.{{ Name }};
 
-namespace {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Queries.Get{{ Name }}WithRelated;
-
-public class Get{{ Name }}WithRelatedQuery : IRequest<{{ Name }}>
+namespace {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Queries.Get{{ Name }}WithRelated
 {
-    public int Id { get; set; }
+	public class Get{{ Name }}WithRelatedQuery : IRequest<{{ Name }}WithRelatedDto?>
+	{
+		public int Id { get; set; }
+	}
 }

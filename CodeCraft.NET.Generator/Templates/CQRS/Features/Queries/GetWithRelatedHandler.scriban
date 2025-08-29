@@ -4,27 +4,33 @@
 // </auto-generated>
 
 using MediatR;
+using AutoMapper;
+using {{ ApplicationProjectName }}.DTOs.{{ Name }};
 using {{ DomainProjectName }}.Model;
 using {{ ApplicationProjectName }}.Contracts.Persistence.Repositories;
 using {{ ApplicationProjectName }}.CQRS.Specifications.{{ NamePlural }};
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Queries.Get{{ Name }}WithRelated;
-
-public class Get{{ Name }}WithRelatedHandler : IRequestHandler<Get{{ Name }}WithRelatedQuery, {{ Name }}>
+namespace {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Queries.Get{{ Name }}WithRelated
 {
-    private readonly I{{ Name }}Repository _repository;
+	public class Get{{ Name }}WithRelatedHandler : IRequestHandler<Get{{ Name }}WithRelatedQuery, {{ Name }}WithRelatedDto?>
+	{
+		private readonly I{{ Name }}Repository _repository;
+		private readonly IMapper _mapper;
 
-    public Get{{ Name }}WithRelatedHandler(I{{ Name }}Repository repository)
-    {
-        _repository = repository;
-    }
+		public Get{{ Name }}WithRelatedHandler(I{{ Name }}Repository repository, IMapper mapper)
+		{
+			_repository = repository;
+			_mapper = mapper;
+		}
 
-    public async Task<{{ Name }}> Handle(Get{{ Name }}WithRelatedQuery request, CancellationToken cancellationToken)
-    {
-        var spec = new {{ Name }}WithRelatedSpecification(new {{ Name }}SpecificationParams { Id = request.Id });
-        var entity = await _repository.GetByIdWithSpecifications(spec);
-        return entity;
-    }
+		public async Task<{{ Name }}WithRelatedDto?> Handle(Get{{ Name }}WithRelatedQuery request, CancellationToken cancellationToken)
+		{
+			var spec = new {{ Name }}WithRelatedSpecification(new {{ Name }}SpecificationParams { Id = request.Id });
+			var entity = await _repository.GetByIdWithSpecifications(spec);
+			if (entity == null)
+				return null;
+
+			return _mapper.Map<{{ Name }}WithRelatedDto>(entity);
+		}
+	}
 }

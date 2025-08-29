@@ -4,28 +4,32 @@
 // </auto-generated>
 
 using MediatR;
+using AutoMapper;
 using {{ ApplicationProjectName }}.Contracts.Persistence.Repositories;
+using {{ ApplicationProjectName }}.DTOs.{{ Name }};
 using {{ DomainProjectName }}.Model;
 using {{ ApplicationProjectName }}.Middleware.Exceptions;
 
 namespace {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Queries.Get{{ Name }}ById
 {
-	public partial class Get{{ Name }}ByIdHandler : IRequestHandler<Get{{ Name }}ByIdQuery, {{ Name }}>
+	public partial class Get{{ Name }}ByIdHandler : IRequestHandler<Get{{ Name }}ByIdQuery, {{ Name }}Dto?>
 	{
 		private readonly I{{ Name }}Repository _repository;
+		private readonly IMapper _mapper;
 
-		public Get{{ Name }}ByIdHandler(I{{ Name }}Repository repository)
+		public Get{{ Name }}ByIdHandler(I{{ Name }}Repository repository, IMapper mapper)
 		{
 			_repository = repository;
+			_mapper = mapper;
 		}
 
-		public async Task<{{ Name }}> Handle(Get{{ Name }}ByIdQuery request, CancellationToken cancellationToken)
+		public async Task<{{ Name }}Dto?> Handle(Get{{ Name }}ByIdQuery request, CancellationToken cancellationToken)
 		{
-			var config = await _repository.GetByIdAsync(request.Id);
-			if (config == null)
-				throw new NotFoundException(nameof({{ Name }}), request.Id);
+			var entity = await _repository.GetByIdAsync(request.Id);
+			if (entity == null)
+				return null;
 
-			return config;
+			return _mapper.Map<{{ Name }}Dto>(entity);
 		}
 	}
 }

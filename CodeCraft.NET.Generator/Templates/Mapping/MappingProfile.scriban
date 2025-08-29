@@ -8,6 +8,7 @@ using {{ DomainProjectName }}.Model;
 {{ for entity in entities }}
 using {{ ApplicationProjectName }}.CQRS.Features.{{ entity.NamePlural }}.Commands.Create;
 using {{ ApplicationProjectName }}.CQRS.Features.{{ entity.NamePlural }}.Commands.Update;
+using {{ ApplicationProjectName }}.DTOs.{{ entity.Name }};
 {{ end }}
 
 namespace {{ ApplicationProjectName }}.Mapping
@@ -23,8 +24,10 @@ namespace {{ ApplicationProjectName }}.Mapping
         private void ConfigureGeneratedMappings()
         {
         {{ for entity in entities }}
-        CreateMap<{{ entity.Name }}, {{ entity.Name }}Create>().ReverseMap();
-        CreateMap<{{ entity.Name }}, {{ entity.Name }}Update>().ReverseMap();
+                CreateMap<{{ entity.Name }}, {{ entity.Name }}Create>().ReverseMap();
+                CreateMap<{{ entity.Name }}, {{ entity.Name }}Update>().ReverseMap();
+                CreateMap<{{ entity.Name }}, {{ entity.Name }}Dto>().ReverseMap();
+                CreateMap<{{ entity.Name }}, {{ entity.Name }}WithRelatedDto>().ReverseMap();
         {{ end }}
         }
 
