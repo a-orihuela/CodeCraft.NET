@@ -18,7 +18,11 @@ namespace CodeCraft.NET.Infrastructure
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration, string appConnection)
         {
-            AddDbContext(services, configuration, appConnection);
+{{~ if DatabaseProvider == "SQLite" ~}}
+            AddDbContext(services, configuration, appConnection, DatabaseProvider.SQLite);
+{{~ else ~}}
+            AddDbContext(services, configuration, appConnection, DatabaseProvider.SqlServer);
+{{~ end ~}}
             AddRepositories(services);
 
             return services;
@@ -64,42 +68,52 @@ namespace CodeCraft.NET.Infrastructure
             }
         }
 
-        private static void AddDbContext(IServiceCollection services, IConfiguration configuration, string appConnection)
+        private static void AddDbContext(IServiceCollection services, IConfiguration configuration, string appConnection, DatabaseProvider provider)
         {
-{{~ if DatabaseProvider == "SQLite" ~}}
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(
-                    appConnection,
-                    x => x.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
-                )
-            );
-{{~ else ~}}
-            services.AddDbContext<ApplicationDbContext>(options >
-                options.UseSqlServer(
-                    appConnection,
-                    x => x.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
-                )
-            );
-{{~ end ~}}
+            switch (provider)
+            {
+                case DatabaseProvider.SQLite:
+                    services.AddDbContext<ApplicationDbContext>(options =>
+                        options.UseSqlite(
+                            appConnection,
+                            x => x.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
+                        )
+                    );
+                    break;
+                case DatabaseProvider.SqlServer:
+                default:
+                    services.AddDbContext<ApplicationDbContext>(options =>
+                        options.UseSqlServer(
+                            appConnection,
+                            x => x.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
+                        )
+                    );
+                    break;
+            }
         }
 
         private static void AddDbContext(IServiceCollection services, string connectionString, DatabaseProvider provider)
         {
-{{~ if DatabaseProvider == "SQLite" ~}}
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(
-                    connectionString,
-                    x => x.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
-                )
-            );
-{{~ else ~}}
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    connectionString,
-                    x => x.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
-                )
-            );
-{{~ end ~}}
+            switch (provider)
+            {
+                case DatabaseProvider.SQLite:
+                    services.AddDbContext<ApplicationDbContext>(options =>
+                        options.UseSqlite(
+                            connectionString,
+                            x => x.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
+                        )
+                    );
+                    break;
+                case DatabaseProvider.SqlServer:
+                default:
+                    services.AddDbContext<ApplicationDbContext>(options =>
+                        options.UseSqlServer(
+                            connectionString,
+                            x => x.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
+                        )
+                    );
+                    break;
+            }
         }
     }
 }

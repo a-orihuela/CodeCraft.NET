@@ -15,7 +15,14 @@ namespace CodeCraft.NET.Generator.Generators
 
         public void Generate(string databaseProvider)
         {
+            // Ensure correct NuGet packages are installed
+            NuGetPackageManager.EnsureEntityFrameworkPackage(databaseProvider);
+            
+            // Generate the service registration file
             GenerateInfrastructureServiceRegistration(databaseProvider);
+            
+            // Restore packages if changes were made
+            NuGetPackageManager.RestorePackages();
         }
 
         private void GenerateInfrastructureServiceRegistration(string databaseProvider)
