@@ -5,8 +5,10 @@
 // </auto-generated>
 
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CodeCraft.NET.MAUI.Interfaces;
 using {{ DesktopProjectName }}.Services;
 using {{ ApplicationProjectName }}.DTOs;
 using {{ DomainProjectName }}.Model;

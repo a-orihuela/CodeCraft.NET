@@ -6,6 +6,7 @@
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CodeCraft.NET.MAUI.Interfaces;
 using {{ DesktopProjectName }}.Services;
 using {{ ApplicationProjectName }}.DTOs;
 using {{ DomainProjectName }}.Model;
@@ -172,7 +173,7 @@ namespace {{ MauiProjectName }}.ViewModels.{{ NamePlural }}
         // Property accessors for easy binding
         {{~ for property in Properties ~}}
         {{~ if property.Name != "Id" && !property.IsNavigation ~}}
-        public {{ property.Type | string.downcase }} {{ property.Name }} => entity?.{{ property.Name }} ?? {{~ if property.Type == "string" ~}}string.Empty{{~ else if property.Type == "int" || property.Type == "decimal" || property.Type == "double" || property.Type == "float" ~}}0{{~ else if property.Type == "bool" ~}}false{{~ else if property.Type == "DateTime" ~}}DateTime.MinValue{{~ else ~}}default{{~ end ~}};
+        public {{ property.Type }} {{ property.Name }} => entity?.{{ property.Name }} ?? {{~ if property.Type == "string" ~}}string.Empty{{~ else if property.Type == "int" || property.Type == "decimal" || property.Type == "double" || property.Type == "float" ~}}0{{~ else if property.Type == "bool" ~}}false{{~ else if property.Type == "DateTime" ~}}DateTime.MinValue{{~ else ~}}default{{~ end ~}};
         {{~ end ~}}
         {{~ end ~}}
 

@@ -48,7 +48,7 @@ public static class MauiProgram
 		var app = builder.Build();
 
 		// Register Shell routes
-		MauiServiceRegistration.RegisterRoutes();
+		ShellRouting.RegisterRoutes();
 
 		return app;
 	}

@@ -4,8 +4,10 @@
 //     For customizations, use {{ Name }}CreateViewModel.Custom.cs
 // </auto-generated>
 
+using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CodeCraft.NET.MAUI.Interfaces;
 using {{ DesktopProjectName }}.Services;
 using {{ ApplicationProjectName }}.DTOs;
 using {{ DomainProjectName }}.Model;
@@ -22,7 +24,7 @@ namespace {{ MauiProjectName }}.ViewModels.{{ NamePlural }}
         {{~ for property in Properties ~}}
         {{~ if property.Name != "Id" && !property.IsNavigation ~}}
         [ObservableProperty]
-        private {{ property.Type | string.downcase }} {{ property.Name | string.downcase }}{{~ if property.Type == "string" ~}} = string.Empty{{~ end ~}};
+        private {{ property.Type }} {{ property.Name | string.downcase }}{{~ if property.Type == "string" ~}} = string.Empty{{~ end ~}};
         {{~ end ~}}
         {{~ end ~}}
 
@@ -157,7 +159,7 @@ namespace {{ MauiProjectName }}.ViewModels.{{ NamePlural }}
 
         {{~ for property in Properties ~}}
         {{~ if property.Name != "Id" && !property.IsNavigation ~}}
-        partial void On{{ property.Name }}Changed({{ property.Type | string.downcase }} value)
+        partial void On{{ property.Name }}Changed({{ property.Type }} value)
         {
             // Clear validation errors when user starts typing
             if (HasValidationErrors)

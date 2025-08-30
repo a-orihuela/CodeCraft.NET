@@ -32,7 +32,6 @@ namespace CodeCraft.NET.Generator.Generators
 			}
 			
 			// 4. Generate common services
-			GenerateCommonServices(entities);
 			GenerateServiceRegistration(entities);
 			GenerateShellRouting(entities);
 			GenerateMauiProgram(entities);
@@ -162,16 +161,6 @@ namespace CodeCraft.NET.Generator.Generators
 			{
 				Console.WriteLine($"   Preserved: Views/Custom/{displayName} - Custom file exists");
 			}
-		}
-
-		private void GenerateCommonServices(IEnumerable<EntityMetadata> entities)
-		{
-			var context = new { entities };
-			
-			_templateRenderer.Render(
-				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.MauiCommonServices)),
-				"CodeCraft.NET.MAUI/Services/CommonServices.cs",
-				context);
 		}
 
 		private void GenerateServiceRegistration(IEnumerable<EntityMetadata> entities)

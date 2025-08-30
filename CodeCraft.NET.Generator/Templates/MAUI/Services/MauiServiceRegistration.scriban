@@ -3,6 +3,7 @@
 //     Manual changes to this file may be overwritten.
 // </auto-generated>
 
+using CodeCraft.NET.MAUI.Interfaces;
 using CodeCraft.NET.MAUI.Services;
 {{~ for entity in entities ~}}
 using CodeCraft.NET.MAUI.ViewModels.{{ entity.NamePlural }};
@@ -39,20 +40,6 @@ namespace CodeCraft.NET.MAUI
             {{~ end ~}}
 
             return services;
-        }
-
-        /// <summary>
-        /// Registers Shell routing for all entity pages
-        /// </summary>
-        public static void RegisterRoutes()
-        {
-            {{~ for entity in entities ~}}
-            // {{ entity.Name }} Routes
-            Routing.RegisterRoute("{{ entity.Name }}ListPage", typeof({{ entity.Name }}ListPage));
-            Routing.RegisterRoute("{{ entity.Name }}CreatePage", typeof({{ entity.Name }}CreatePage));
-            Routing.RegisterRoute("{{ entity.Name }}EditPage", typeof({{ entity.Name }}EditPage));
-            Routing.RegisterRoute("{{ entity.Name }}DetailPage", typeof({{ entity.Name }}DetailPage));
-            {{~ end ~}}
         }
     }
 }

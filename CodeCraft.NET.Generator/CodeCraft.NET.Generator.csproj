@@ -75,9 +75,6 @@
     <EmbeddedResource Include="Templates\MAUI\Pages\DetailPage.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.Pages.DetailPage.scriban</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="Templates\MAUI\Services\CommonServices.scriban">
-      <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.Services.CommonServices.scriban</LogicalName>
-    </EmbeddedResource>
     <EmbeddedResource Include="Templates\MAUI\Services\MauiServiceRegistration.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.Services.MauiServiceRegistration.scriban</LogicalName>
     </EmbeddedResource>

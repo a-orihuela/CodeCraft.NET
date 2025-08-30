@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
-namespace {{ MauiProjectName }}.ViewModels.{{ Name }}
+namespace {{ MauiProjectName }}.ViewModels.{{ NamePlural }}
 {
 	/// <summary>
 	/// Custom partial class for {{ Name }}{{ ViewType }}ViewModel

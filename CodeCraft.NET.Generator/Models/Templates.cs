@@ -47,7 +47,6 @@
 		public string MauiCustomViewModel { get; set; } = string.Empty;
 		public string MauiServiceRegistration { get; set; } = string.Empty;
 		public string MauiShellRouting { get; set; } = string.Empty;
-		public string MauiCommonServices { get; set; } = string.Empty;
 		public string MauiProgram { get; set; } = string.Empty;
 		public string EntityDtos { get; set; } = string.Empty;
 	}
