@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="CodeCraft.NET.MAUI.Views.Custom.StyleDemoPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Styles Demonstration">
+
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="24">
+            
+            <!-- Header -->
+            <Label Text="KetoPlanner Styles System" 
+                   Style="{StaticResource PageHeaderStyle}" />
+            
+            <Label Text="Modern, consistent cross-platform design system for .NET MAUI applications" 
+                   Style="{StaticResource PageSubtitleStyle}" />
+
+            <!-- Section: Function-Based Buttons -->
+            <Frame Style="{StaticResource CardStyle}">
+                <StackLayout Spacing="16">
+                    <Label Text="Function-Based Buttons" 
+                           FontSize="20" 
+                           FontFamily="OpenSansSemibold" 
+                           TextColor="{StaticResource Primary}" />
+                    
+                    <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,*" RowSpacing="12" ColumnSpacing="12">
+                        <!-- Row 1 -->
+                        <Button Grid.Row="0" Grid.Column="0" 
+                                Text="Save" 
+                                Style="{StaticResource SaveButtonStyle}" />
+                        <Button Grid.Row="0" Grid.Column="1" 
+                                Text="Edit" 
+                                Style="{StaticResource EditButtonStyle}" />
+                        
+                        <!-- Row 2 -->
+                        <Button Grid.Row="1" Grid.Column="0" 
+                                Text="Delete" 
+                                Style="{StaticResource DeleteButtonStyle}" />
+                        <Button Grid.Row="1" Grid.Column="1" 
+                                Text="Cancel" 
+                                Style="{StaticResource CancelButtonStyle}" />
+                        
+                        <!-- Row 3 -->
+                        <Button Grid.Row="2" Grid.Column="0" 
+                                Text="Create" 
+                                Style="{StaticResource CreateButtonStyle}" />
+                        <Button Grid.Row="2" Grid.Column="1" 
+                                Text="View" 
+                                Style="{StaticResource ViewButtonStyle}" />
+                    </Grid>
+                </StackLayout>
+            </Frame>
+
+            <!-- Section: Outline Buttons -->
+            <Frame Style="{StaticResource CardStyle}">
+                <StackLayout Spacing="16">
+                    <Label Text="Outline Buttons" 
+                           FontSize="20" 
+                           FontFamily="OpenSansSemibold" 
+                           TextColor="{StaticResource Secondary}" />
+                    
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <Button Grid.Column="0" 
+                                Text="Primary" 
+                                Style="{StaticResource OutlinePrimaryButtonStyle}" />
+                        <Button Grid.Column="1" 
+                                Text="Secondary" 
+                                Style="{StaticResource OutlineSecondaryButtonStyle}" />
+                    </Grid>
+                </StackLayout>
+            </Frame>
+
+            <!-- Section: Nutritional Categories -->
+            <Frame Style="{StaticResource CardStyle}">
+                <StackLayout Spacing="16">
+                    <Label Text="Nutritional Categories" 
+                           FontSize="20" 
+                           FontFamily="OpenSansSemibold" 
+                           TextColor="{StaticResource Tertiary}" />
+                    
+                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                        <Button Grid.Column="0" 
+                                Text="Proteins" 
+                                Style="{StaticResource ProteinButtonStyle}" />
+                        <Button Grid.Column="1" 
+                                Text="Carbs" 
+                                Style="{StaticResource CarbButtonStyle}" />
+                        <Button Grid.Column="2" 
+                                Text="Fats" 
+                                Style="{StaticResource FatButtonStyle}" />
+                    </Grid>
+                </StackLayout>
+            </Frame>
+
+            <!-- Section: Card Types -->
+            <StackLayout Spacing="16">
+                <Label Text="Card Types" 
+                       FontSize="20" 
+                       FontFamily="OpenSansSemibold" 
+                       TextColor="{StaticResource Info}" />
+                
+                <!-- Standard Card -->
+                <Frame Style="{StaticResource CardStyle}">
+                    <StackLayout>
+                        <Label Text="Standard Card" FontSize="18" FontFamily="OpenSansSemibold" />
+                        <Label Text="Perfect for general content with standard elevation and padding." />
+                    </StackLayout>
+                </Frame>
+
+                <!-- Elevated Card -->
+                <Frame Style="{StaticResource ElevatedCardStyle}">
+                    <StackLayout>
+                        <Label Text="Elevated Card" FontSize="18" FontFamily="OpenSansSemibold" />
+                        <Label Text="Higher elevation card for highlighting important content." />
+                    </StackLayout>
+                </Frame>
+
+                <!-- Compact Card -->
+                <Frame Style="{StaticResource CompactCardStyle}">
+                    <StackLayout>
+                        <Label Text="Compact Card" FontSize="16" FontFamily="OpenSansSemibold" />
+                        <Label Text="Perfect for lists or secondary content." />
+                    </StackLayout>
+                </Frame>
+
+                <!-- Statistics Card -->
+                <Frame Style="{StaticResource StatCardStyle}">
+                    <StackLayout>
+                        <Label Text="Statistics Card" FontSize="18" FontFamily="OpenSansSemibold" TextColor="{StaticResource PrimaryDark}" />
+                        <Label Text="Ideal for displaying important metrics and KPIs." TextColor="{StaticResource PrimaryDark}" />
+                    </StackLayout>
+                </Frame>
+
+                <!-- Alert Card -->
+                <Frame Style="{StaticResource AlertCardStyle}">
+                    <StackLayout>
+                        <Label Text="Alert Card" FontSize="18" FontFamily="OpenSansSemibold" TextColor="{StaticResource WarningDark}" />
+                        <Label Text="For important notifications and warnings." TextColor="{StaticResource WarningDark}" />
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+
+            <!-- Section: Form Elements -->
+            <Frame Style="{StaticResource CardStyle}">
+                <StackLayout Spacing="16">
+                    <Label Text="Form Elements" 
+                           FontSize="20" 
+                           FontFamily="OpenSansSemibold" 
+                           TextColor="{StaticResource Success}" />
+                    
+                    <!-- Entry Field -->
+                    <StackLayout Style="{StaticResource FormGroupStyle}">
+                        <Label Text="Name:" Style="{StaticResource FormLabelStyle}" />
+                        <Border Style="{StaticResource InputBorderStyle}">
+                            <Entry Placeholder="Enter your name" Style="{StaticResource FormEntryStyle}" />
+                        </Border>
+                    </StackLayout>
+
+                    <!-- Picker Field -->
+                    <StackLayout Style="{StaticResource FormGroupStyle}">
+                        <Label Text="Select an option:" Style="{StaticResource FormLabelStyle}" />
+                        <Border Style="{StaticResource InputBorderStyle}">
+                            <Picker Title="Choose an option" Style="{StaticResource FormPickerStyle}">
+                                <Picker.ItemsSource>
+                                    <x:Array Type="{x:Type x:String}">
+                                        <x:String>Option 1</x:String>
+                                        <x:String>Option 2</x:String>
+                                        <x:String>Option 3</x:String>
+                                    </x:Array>
+                                </Picker.ItemsSource>
+                            </Picker>
+                        </Border>
+                    </StackLayout>
+
+                    <!-- Switch Control -->
+                    <StackLayout Orientation="Horizontal" Spacing="16">
+                        <Label Text="Enable notifications:" Style="{StaticResource FormLabelStyle}" VerticalOptions="Center" />
+                        <Switch IsToggled="True" />
+                    </StackLayout>
+
+                    <!-- CheckBox Control -->
+                    <StackLayout Orientation="Horizontal" Spacing="16">
+                        <CheckBox IsChecked="True" />
+                        <Label Text="I agree to the terms and conditions" VerticalOptions="Center" />
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+
+            <!-- Section: Badges and Status -->
+            <Frame Style="{StaticResource CardStyle}">
+                <StackLayout Spacing="16">
+                    <Label Text="Badges and Status" 
+                           FontSize="20" 
+                           FontFamily="OpenSansSemibold" 
+                           TextColor="{StaticResource Danger}" />
+                    
+                    <StackLayout Orientation="Horizontal" Spacing="12">
+                        <Frame Style="{StaticResource BadgeStyle}" BackgroundColor="{StaticResource Success}">
+                            <Label Text="Active" Style="{StaticResource StatusBadgeStyle}" />
+                        </Frame>
+                        
+                        <Frame Style="{StaticResource BadgeStyle}" BackgroundColor="{StaticResource Warning}">
+                            <Label Text="Pending" Style="{StaticResource StatusBadgeStyle}" />
+                        </Frame>
+                        
+                        <Frame Style="{StaticResource BadgeStyle}" BackgroundColor="{StaticResource Danger}">
+                            <Label Text="Error" Style="{StaticResource StatusBadgeStyle}" />
+                        </Frame>
+                        
+                        <Frame Style="{StaticResource BadgeStyle}" BackgroundColor="{StaticResource Info}">
+                            <Label Text="Info" Style="{StaticResource StatusBadgeStyle}" />
+                        </Frame>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+
+            <!-- Section: Progress Indicators -->
+            <Frame Style="{StaticResource CardStyle}">
+                <StackLayout Spacing="16">
+                    <Label Text="Progress Indicators" 
+                           FontSize="20" 
+                           FontFamily="OpenSansSemibold" />
+                    
+                    <StackLayout Spacing="12">
+                        <Label Text="Protein Goals (75%)" />
+                        <ProgressBar Progress="0.75" HeightRequest="8" />
+                        
+                        <Label Text="Carb Intake (45%)" />
+                        <ProgressBar Progress="0.45" HeightRequest="8" />
+                        
+                        <Label Text="Fat Intake (90%)" />
+                        <ProgressBar Progress="0.90" HeightRequest="8" />
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+
+            <!-- Footer -->
+            <Label Text="All styles are responsive and work across all platforms" 
+                   FontSize="14" 
+                   HorizontalTextAlignment="Center" 
+                   TextColor="{StaticResource Gray500}" 
+                   Margin="0,20,0,40" />
+
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>

@@ -4,42 +4,118 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <!-- Note: For Android please see also Platforms\Android\Resources\values\colors.xml -->
+    <!-- ============================================ -->
+    <!-- MODERN COLOR PALETTE FOR KETOPLANNER -->
+    <!-- ============================================ -->
+    
+    <!-- Primary Colors - Keto Green -->
+    <Color x:Key="Primary">#10B981</Color>         <!-- Main green (Emerald 500) -->
+    <Color x:Key="PrimaryDark">#065F46</Color>     <!-- Dark green (Emerald 800) -->
+    <Color x:Key="PrimaryLight">#D1FAE5</Color>    <!-- Light green (Emerald 100) -->
+    <Color x:Key="PrimaryAccent">#059669</Color>   <!-- Accent green (Emerald 600) -->
 
-    <Color x:Key="Primary">#512BD4</Color>
-    <Color x:Key="PrimaryDark">#ac99ea</Color>
-    <Color x:Key="PrimaryDarkText">#242424</Color>
-    <Color x:Key="Secondary">#DFD8F7</Color>
-    <Color x:Key="SecondaryDarkText">#9880e5</Color>
-    <Color x:Key="Tertiary">#2B0B98</Color>
+    <!-- Secondary Colors - Info Blue -->
+    <Color x:Key="Secondary">#3B82F6</Color>       <!-- Blue (Blue 500) -->
+    <Color x:Key="SecondaryDark">#1E3A8A</Color>   <!-- Dark blue (Blue 800) -->
+    <Color x:Key="SecondaryLight">#DBEAFE</Color>  <!-- Light blue (Blue 100) -->
 
-    <Color x:Key="White">White</Color>
-    <Color x:Key="Black">Black</Color>
-    <Color x:Key="Magenta">#D600AA</Color>
-    <Color x:Key="MidnightBlue">#190649</Color>
-    <Color x:Key="OffBlack">#1f1f1f</Color>
+    <!-- Tertiary Colors - Energy Orange -->
+    <Color x:Key="Tertiary">#F59E0B</Color>        <!-- Orange (Amber 500) -->
+    <Color x:Key="TertiaryDark">#92400E</Color>    <!-- Dark orange (Amber 800) -->
+    <Color x:Key="TertiaryLight">#FEF3C7</Color>   <!-- Light orange (Amber 100) -->
 
-    <Color x:Key="Gray100">#E1E1E1</Color>
-    <Color x:Key="Gray200">#C8C8C8</Color>
-    <Color x:Key="Gray300">#ACACAC</Color>
-    <Color x:Key="Gray400">#919191</Color>
-    <Color x:Key="Gray500">#6E6E6E</Color>
-    <Color x:Key="Gray600">#404040</Color>
-    <Color x:Key="Gray900">#212121</Color>
-    <Color x:Key="Gray950">#141414</Color>
+    <!-- Functional Colors - Action States -->
+    <Color x:Key="Success">#10B981</Color>         <!-- Success green (Emerald 500) -->
+    <Color x:Key="SuccessDark">#047857</Color>     <!-- Dark success green -->
+    <Color x:Key="SuccessLight">#ECFDF5</Color>    <!-- Light success green -->
 
+    <Color x:Key="Warning">#F59E0B</Color>         <!-- Warning orange (Amber 500) -->
+    <Color x:Key="WarningDark">#D97706</Color>     <!-- Dark warning orange -->
+    <Color x:Key="WarningLight">#FFFBEB</Color>    <!-- Light warning orange -->
+
+    <Color x:Key="Danger">#EF4444</Color>          <!-- Danger red (Red 500) -->
+    <Color x:Key="DangerDark">#DC2626</Color>      <!-- Dark danger red -->
+    <Color x:Key="DangerLight">#FEF2F2</Color>     <!-- Light danger red -->
+
+    <Color x:Key="Info">#3B82F6</Color>            <!-- Info blue (Blue 500) -->
+    <Color x:Key="InfoDark">#2563EB</Color>        <!-- Dark info blue -->
+    <Color x:Key="InfoLight">#EFF6FF</Color>       <!-- Light info blue -->
+
+    <!-- Modern Gray Scale -->
+    <Color x:Key="White">#FFFFFF</Color>
+    <Color x:Key="Gray50">#F9FAFB</Color>
+    <Color x:Key="Gray100">#F3F4F6</Color>
+    <Color x:Key="Gray200">#E5E7EB</Color>
+    <Color x:Key="Gray300">#D1D5DB</Color>
+    <Color x:Key="Gray400">#9CA3AF</Color>
+    <Color x:Key="Gray500">#6B7280</Color>
+    <Color x:Key="Gray600">#4B5563</Color>
+    <Color x:Key="Gray700">#374151</Color>
+    <Color x:Key="Gray800">#1F2937</Color>
+    <Color x:Key="Gray900">#111827</Color>
+    <Color x:Key="Black">#000000</Color>
+
+    <!-- Dark Mode Specific Colors -->
+    <Color x:Key="DarkBackground">#0F172A</Color>   <!-- Slate 900 -->
+    <Color x:Key="DarkSurface">#1E293B</Color>      <!-- Slate 800 -->
+    <Color x:Key="DarkBorder">#334155</Color>       <!-- Slate 700 -->
+
+    <!-- Action-Specific Colors -->
+    <Color x:Key="SaveButton">#10B981</Color>       <!-- Green for save -->
+    <Color x:Key="EditButton">#F59E0B</Color>       <!-- Orange for edit -->
+    <Color x:Key="DeleteButton">#EF4444</Color>     <!-- Red for delete -->
+    <Color x:Key="CancelButton">#6B7280</Color>     <!-- Gray for cancel -->
+    <Color x:Key="CreateButton">#3B82F6</Color>     <!-- Blue for create -->
+    <Color x:Key="ViewButton">#8B5CF6</Color>       <!-- Purple for view/details -->
+    <Color x:Key="SearchButton">#06B6D4</Color>     <!-- Cyan for search -->
+    <Color x:Key="FilterButton">#84CC16</Color>     <!-- Lime for filter -->
+
+    <!-- Nutritional Category Colors -->
+    <Color x:Key="ProteinColor">#EF4444</Color>     <!-- Red for proteins -->
+    <Color x:Key="CarbColor">#F59E0B</Color>        <!-- Orange for carbs -->
+    <Color x:Key="FatColor">#10B981</Color>         <!-- Green for fats -->
+    <Color x:Key="FiberColor">#8B5CF6</Color>       <!-- Purple for fiber -->
+
+    <!-- =============================================== -->
+    <!-- SOLID COLOR BRUSHES FOR XAML USAGE -->
+    <!-- =============================================== -->
+    
+    <!-- Primary Brushes -->
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
-    <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
-    <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}"/>
+    <SolidColorBrush x:Key="PrimaryDarkBrush" Color="{StaticResource PrimaryDark}"/>
+    <SolidColorBrush x:Key="PrimaryLightBrush" Color="{StaticResource PrimaryLight}"/>
+    <SolidColorBrush x:Key="PrimaryAccentBrush" Color="{StaticResource PrimaryAccent}"/>
+
+    <!-- Functional Brushes -->
+    <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource Success}"/>
+    <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource Warning}"/>
+    <SolidColorBrush x:Key="DangerBrush" Color="{StaticResource Danger}"/>
+    <SolidColorBrush x:Key="InfoBrush" Color="{StaticResource Info}"/>
+
+    <!-- Action Button Brushes -->
+    <SolidColorBrush x:Key="SaveButtonBrush" Color="{StaticResource SaveButton}"/>
+    <SolidColorBrush x:Key="EditButtonBrush" Color="{StaticResource EditButton}"/>
+    <SolidColorBrush x:Key="DeleteButtonBrush" Color="{StaticResource DeleteButton}"/>
+    <SolidColorBrush x:Key="CancelButtonBrush" Color="{StaticResource CancelButton}"/>
+    <SolidColorBrush x:Key="CreateButtonBrush" Color="{StaticResource CreateButton}"/>
+    <SolidColorBrush x:Key="ViewButtonBrush" Color="{StaticResource ViewButton}"/>
+
+    <!-- Gray Brushes -->
     <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}"/>
     <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource Black}"/>
-
     <SolidColorBrush x:Key="Gray100Brush" Color="{StaticResource Gray100}"/>
     <SolidColorBrush x:Key="Gray200Brush" Color="{StaticResource Gray200}"/>
     <SolidColorBrush x:Key="Gray300Brush" Color="{StaticResource Gray300}"/>
     <SolidColorBrush x:Key="Gray400Brush" Color="{StaticResource Gray400}"/>
     <SolidColorBrush x:Key="Gray500Brush" Color="{StaticResource Gray500}"/>
     <SolidColorBrush x:Key="Gray600Brush" Color="{StaticResource Gray600}"/>
+    <SolidColorBrush x:Key="Gray700Brush" Color="{StaticResource Gray700}"/>
+    <SolidColorBrush x:Key="Gray800Brush" Color="{StaticResource Gray800}"/>
     <SolidColorBrush x:Key="Gray900Brush" Color="{StaticResource Gray900}"/>
-    <SolidColorBrush x:Key="Gray950Brush" Color="{StaticResource Gray950}"/>
+
+    <!-- Dark Mode Brushes -->
+    <SolidColorBrush x:Key="DarkBackgroundBrush" Color="{StaticResource DarkBackground}"/>
+    <SolidColorBrush x:Key="DarkSurfaceBrush" Color="{StaticResource DarkSurface}"/>
+    <SolidColorBrush x:Key="DarkBorderBrush" Color="{StaticResource DarkBorder}"/>
+
 </ResourceDictionary>

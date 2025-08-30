@@ -2,23 +2,38 @@
 {
 	public partial class MainPage : ContentPage
 	{
-		int count = 0;
-
 		public MainPage()
 		{
 			InitializeComponent();
 		}
 
-		private void OnCounterClicked(object? sender, EventArgs e)
+		private async void OnViewStylesDemoClicked(object? sender, EventArgs e)
 		{
-			count++;
+			try
+			{
+				// Navigate to the styles demo page
+				await Shell.Current.GoToAsync("StyleDemoPage");
+			}
+			catch
+			{
+				// Fallback: show alert if navigation fails
+				await DisplayAlert("Navigation",
+					"Styles Demo page will be shown here. " +
+					"Navigation system is being set up.",
+					"OK");
+			}
+		}
 
-			if (count == 1)
-				CounterBtn.Text = $"Clicked {count} time";
-			else
-				CounterBtn.Text = $"Clicked {count} times";
-
-			SemanticScreenReader.Announce(CounterBtn.Text);
+		private async void OnViewDocumentationClicked(object? sender, EventArgs e)
+		{
+			// Show documentation info
+			await DisplayAlert("Documentation",
+				"The complete styles documentation is available in:\n\n" +
+				"• Resources/Styles/README.md\n" +
+				"• Check Colors.xaml for color palette\n" +
+				"• Check ButtonStyles.xaml for button variations\n" +
+				"• Check ComponentStyles.xaml for cards and layouts",
+				"Got it!");
 		}
 	}
 }

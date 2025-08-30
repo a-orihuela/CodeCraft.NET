@@ -4,11 +4,22 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:CodeCraft.NET.MAUI"
+    xmlns:views="clr-namespace:CodeCraft.NET.MAUI.Views.Custom"
     Title="CodeCraft.NET.MAUI">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <!-- Simple TabBar for demo -->
+    <TabBar>
+        <ShellContent
+         Title="Home"
+         ContentTemplate="{DataTemplate local:MainPage}"
+         Route="MainPage" 
+         Icon="home.png" />
+
+        <ShellContent
+         Title="Styles Demo"
+         ContentTemplate="{DataTemplate views:StyleDemoPage}"
+         Route="StyleDemoPage" 
+         Icon="brush.png" />
+    </TabBar>
 
 </Shell>
