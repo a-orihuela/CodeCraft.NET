@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 using CodeCraft.NET.Infrastructure;
 using CodeCraft.NET.DesktopAPI;
-using CodeCraft.NET.Cross.Enums;
 
 namespace CodeCraft.NET.MAUI;
 
@@ -30,11 +30,14 @@ public static class MauiProgram
 		System.Diagnostics.Debug.WriteLine($"SQLite Database Location: {dbPath}");
 #endif
 
+		// Create configuration
+		var configuration = new ConfigurationBuilder().Build();
+
 		// Add Infrastructure services (for data access)
-		builder.Services.AddInfrastructureServices(connectionString, DatabaseProvider.SQLite);
+		builder.Services.AddInfrastructureServices(configuration, connectionString);
 
 		// Add Desktop API services (for business logic)
-		builder.Services.AddDesktopApiServices(connectionString, DatabaseProvider.SQLite);
+		builder.Services.AddDesktopApiServices(configuration, connectionString);
 
 		// Add MAUI-specific services
 		builder.Services.AddMauiServices();

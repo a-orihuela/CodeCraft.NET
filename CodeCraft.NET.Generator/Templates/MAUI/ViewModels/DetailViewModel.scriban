@@ -8,7 +8,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CodeCraft.NET.MAUI.Interfaces;
 using {{ DesktopProjectName }}.Services;
-using {{ ApplicationProjectName }}.DTOs;
+using {{ ApplicationProjectName }}.DTOs.{{ Name }};
 using {{ DomainProjectName }}.Model;
 
 namespace {{ MauiProjectName }}.ViewModels.{{ NamePlural }}

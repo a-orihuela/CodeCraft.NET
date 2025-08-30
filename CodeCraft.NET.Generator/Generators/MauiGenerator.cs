@@ -26,9 +26,12 @@ namespace CodeCraft.NET.Generator.Generators
 				
 				// 2. Generate Pages Generated (always regenerated)
 				GeneratePagesGenerated(entity);
+				
+				// 3. Generate Pages Code-Behind (always regenerated)
+				GeneratePagesCodeBehind(entity);
 			}
 			
-			// 3. Generate common services
+			// 4. Generate common services
 			GenerateServiceRegistration(entities);
 			GenerateShellRouting(entities);
 		}
@@ -63,7 +66,7 @@ namespace CodeCraft.NET.Generator.Generators
 		{
 			var context = CreateTemplateContext(entity);
 			
-			// Generated Pages (always regenerated)
+			// Generated Pages XAML (always regenerated)
 			_templateRenderer.Render(
 				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.MauiListPageGenerated)),
 				GetMauiListPageGeneratedPath(entity.Name),
@@ -85,6 +88,32 @@ namespace CodeCraft.NET.Generator.Generators
 				context);
 		}
 
+		private void GeneratePagesCodeBehind(EntityMetadata entity)
+		{
+			var context = CreateTemplateContext(entity);
+			
+			// Generated Pages Code-Behind (always regenerated)
+			_templateRenderer.Render(
+				"CodeCraft.NET.Generator.Templates.MAUI.Pages.ListPageCodeBehind.scriban",
+				GetMauiListPageGeneratedCodeBehindPath(entity.Name),
+				context);
+
+			_templateRenderer.Render(
+				"CodeCraft.NET.Generator.Templates.MAUI.Pages.CreatePageCodeBehind.scriban",
+				GetMauiCreatePageGeneratedCodeBehindPath(entity.Name),
+				context);
+
+			_templateRenderer.Render(
+				"CodeCraft.NET.Generator.Templates.MAUI.Pages.EditPageCodeBehind.scriban",
+				GetMauiEditPageGeneratedCodeBehindPath(entity.Name),
+				context);
+
+			_templateRenderer.Render(
+				"CodeCraft.NET.Generator.Templates.MAUI.Pages.DetailPageCodeBehind.scriban",
+				GetMauiDetailPageGeneratedCodeBehindPath(entity.Name),
+				context);
+		}
+
 		private void GenerateServiceRegistration(IEnumerable<EntityMetadata> entities)
 		{
 			var context = new { entities };
@@ -101,7 +130,7 @@ namespace CodeCraft.NET.Generator.Generators
 			
 			_templateRenderer.Render(
 				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.MauiShellRouting)),
-				"CodeCraft.NET.MAUI/AppShell.Generated.cs",
+				"CodeCraft.NET.MAUI/ShellRouting.Generated.cs",
 				context);
 		}
 
@@ -146,6 +175,19 @@ namespace CodeCraft.NET.Generator.Generators
 
 		private string GetMauiDetailPageGeneratedPath(string entityName) =>
 			string.Format(CodeCraftConfig.Instance.Files.MauiDetailPageGenerated, entityName);
+
+		// Code-behind paths
+		private string GetMauiListPageGeneratedCodeBehindPath(string entityName) =>
+			$"CodeCraft.NET.MAUI/Views/{entityName}/{entityName}ListPage.Generated.xaml.cs";
+
+		private string GetMauiCreatePageGeneratedCodeBehindPath(string entityName) =>
+			$"CodeCraft.NET.MAUI/Views/{entityName}/{entityName}CreatePage.Generated.xaml.cs";
+
+		private string GetMauiEditPageGeneratedCodeBehindPath(string entityName) =>
+			$"CodeCraft.NET.MAUI/Views/{entityName}/{entityName}EditPage.Generated.xaml.cs";
+
+		private string GetMauiDetailPageGeneratedCodeBehindPath(string entityName) =>
+			$"CodeCraft.NET.MAUI/Views/{entityName}/{entityName}DetailPage.Generated.xaml.cs";
 
 		private string GetMauiServiceRegistrationPath() =>
 			CodeCraftConfig.Instance.Files.MauiServiceRegistration;

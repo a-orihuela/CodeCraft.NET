@@ -60,6 +60,19 @@
     <EmbeddedResource Include="Templates\MAUI\Pages\DetailPageGenerated.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.Pages.DetailPageGenerated.scriban</LogicalName>
     </EmbeddedResource>
+    <!-- MAUI Page Code-Behind Templates -->
+    <EmbeddedResource Include="Templates\MAUI\Pages\ListPageCodeBehind.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.Pages.ListPageCodeBehind.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\MAUI\Pages\CreatePageCodeBehind.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.Pages.CreatePageCodeBehind.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\MAUI\Pages\EditPageCodeBehind.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.Pages.EditPageCodeBehind.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\MAUI\Pages\DetailPageCodeBehind.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.Pages.DetailPageCodeBehind.scriban</LogicalName>
+    </EmbeddedResource>
     <EmbeddedResource Include="Templates\MAUI\Services\MauiServiceRegistration.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.Services.MauiServiceRegistration.scriban</LogicalName>
     </EmbeddedResource>

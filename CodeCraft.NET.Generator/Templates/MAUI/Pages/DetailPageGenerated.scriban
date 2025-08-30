@@ -4,7 +4,7 @@
     Manual changes to this file will be overwritten.
     For customizations, use {{ Name }}DetailPage.xaml
 -->
-<ContentPage x:Class="{{ MauiProjectName }}.Views.{{ NamePlural }}.{{ Name }}DetailPageGenerated"
+<ContentPage x:Class="{{ MauiProjectName }}.Views.{{ Name }}.{{ Name }}DetailPageGenerated"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:{{ MauiProjectName }}.ViewModels.{{ NamePlural }}"

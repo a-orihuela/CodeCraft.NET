@@ -9,7 +9,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CodeCraft.NET.MAUI.Interfaces;
 using {{ DesktopProjectName }}.Services;
-using {{ ApplicationProjectName }}.DTOs;
+using {{ ApplicationProjectName }}.DTOs.{{ Name }};
 using {{ DomainProjectName }}.Model;
 using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Commands.Create;
 
@@ -156,19 +156,5 @@ namespace {{ MauiProjectName }}.ViewModels.{{ NamePlural }}
         }
 
         partial void PerformCustomValidation(List<string> errors);
-
-        {{~ for property in Properties ~}}
-        {{~ if property.Name != "Id" && !property.IsNavigation ~}}
-        partial void On{{ property.Name }}Changed({{ property.Type }} value)
-        {
-            // Clear validation errors when user starts typing
-            if (HasValidationErrors)
-            {
-                HasValidationErrors = false;
-                ValidationSummary = string.Empty;
-            }
-        }
-        {{~ end ~}}
-        {{~ end ~}}
     }
 }

@@ -3,11 +3,12 @@
 //     Manual changes to this file may be overwritten.
 // </auto-generated>
 
+using Microsoft.Extensions.DependencyInjection;
 using CodeCraft.NET.MAUI.Interfaces;
 using CodeCraft.NET.MAUI.Services;
 {{~ for entity in entities ~}}
 using CodeCraft.NET.MAUI.ViewModels.{{ entity.NamePlural }};
-using CodeCraft.NET.MAUI.Views.{{ entity.NamePlural }};
+using CodeCraft.NET.MAUI.Views.{{ entity.Name }};
 {{~ end ~}}
 
 namespace CodeCraft.NET.MAUI

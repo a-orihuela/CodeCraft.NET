@@ -4,7 +4,7 @@
 // </auto-generated>
 
 {{~ for entity in entities ~}}
-using CodeCraft.NET.MAUI.Views.{{ entity.NamePlural }};
+using CodeCraft.NET.MAUI.Views.{{ entity.Name }};
 {{~ end ~}}
 
 namespace CodeCraft.NET.MAUI
