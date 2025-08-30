@@ -3,6 +3,24 @@
 	public class Templates
 	{
 		public string Controller { get; set; } = string.Empty;
+		public string DesktopService { get; set; } = string.Empty;
+		public string DesktopServiceRegistration { get; set; } = string.Empty;
+		public string InfrastructureServiceRegistration { get; set; } = string.Empty;
+		
+		// MAUI Templates
+		public string MauiListPageGenerated { get; set; } = string.Empty;
+		public string MauiCreatePageGenerated { get; set; } = string.Empty;
+		public string MauiEditPageGenerated { get; set; } = string.Empty;
+		public string MauiDetailPageGenerated { get; set; } = string.Empty;
+		public string MauiListViewModel { get; set; } = string.Empty;
+		public string MauiCreateViewModel { get; set; } = string.Empty;
+		public string MauiEditViewModel { get; set; } = string.Empty;
+		public string MauiDetailViewModel { get; set; } = string.Empty;
+		public string MauiServiceRegistration { get; set; } = string.Empty;
+		public string MauiShellRouting { get; set; } = string.Empty;
+		public string EntityDtos { get; set; } = string.Empty;
+		
+		// CQRS Templates
 		public string CommandCreate { get; set; } = string.Empty;
 		public string CommandCreateHandler { get; set; } = string.Empty;
 		public string CommandCreateValidator { get; set; } = string.Empty;
@@ -27,27 +45,5 @@
 		public string RepositoryImplementation { get; set; } = string.Empty;
 		public string UnitOfWorkInterface { get; set; } = string.Empty;
 		public string UnitOfWorkImplementation { get; set; } = string.Empty;
-		public string DesktopService { get; set; } = string.Empty;
-		public string DesktopServiceRegistration { get; set; } = string.Empty;
-		public string InfrastructureServiceRegistration { get; set; } = string.Empty;
-		
-		// MAUI Templates
-		public string MauiListPageGenerated { get; set; } = string.Empty;
-		public string MauiListPage { get; set; } = string.Empty;
-		public string MauiCreatePageGenerated { get; set; } = string.Empty;
-		public string MauiCreatePage { get; set; } = string.Empty;
-		public string MauiEditPageGenerated { get; set; } = string.Empty;
-		public string MauiEditPage { get; set; } = string.Empty;
-		public string MauiDetailPageGenerated { get; set; } = string.Empty;
-		public string MauiDetailPage { get; set; } = string.Empty;
-		public string MauiListViewModel { get; set; } = string.Empty;
-		public string MauiCreateViewModel { get; set; } = string.Empty;
-		public string MauiEditViewModel { get; set; } = string.Empty;
-		public string MauiDetailViewModel { get; set; } = string.Empty;
-		public string MauiCustomViewModel { get; set; } = string.Empty;
-		public string MauiServiceRegistration { get; set; } = string.Empty;
-		public string MauiShellRouting { get; set; } = string.Empty;
-		public string MauiProgram { get; set; } = string.Empty;
-		public string EntityDtos { get; set; } = string.Empty;
 	}
 }

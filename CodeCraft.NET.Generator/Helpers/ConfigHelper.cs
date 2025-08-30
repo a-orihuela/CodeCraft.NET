@@ -127,22 +127,15 @@ namespace CodeCraft.NET.Generator.Helpers
 				
 				// MAUI Templates
 				nameof(Config.Templates.MauiListPageGenerated) => Config.Templates.MauiListPageGenerated,
-				nameof(Config.Templates.MauiListPage) => Config.Templates.MauiListPage,
 				nameof(Config.Templates.MauiCreatePageGenerated) => Config.Templates.MauiCreatePageGenerated,
-				nameof(Config.Templates.MauiCreatePage) => Config.Templates.MauiCreatePage,
 				nameof(Config.Templates.MauiEditPageGenerated) => Config.Templates.MauiEditPageGenerated,
-				nameof(Config.Templates.MauiEditPage) => Config.Templates.MauiEditPage,
 				nameof(Config.Templates.MauiDetailPageGenerated) => Config.Templates.MauiDetailPageGenerated,
-				nameof(Config.Templates.MauiDetailPage) => Config.Templates.MauiDetailPage,
 				nameof(Config.Templates.MauiListViewModel) => Config.Templates.MauiListViewModel,
 				nameof(Config.Templates.MauiCreateViewModel) => Config.Templates.MauiCreateViewModel,
 				nameof(Config.Templates.MauiEditViewModel) => Config.Templates.MauiEditViewModel,
 				nameof(Config.Templates.MauiDetailViewModel) => Config.Templates.MauiDetailViewModel,
-				nameof(Config.Templates.MauiCustomViewModel) => Config.Templates.MauiCustomViewModel,
 				nameof(Config.Templates.MauiServiceRegistration) => Config.Templates.MauiServiceRegistration,
 				nameof(Config.Templates.MauiShellRouting) => Config.Templates.MauiShellRouting,
-				nameof(Config.Templates.MauiCommonServices) => Config.Templates.MauiCommonServices,
-				nameof(Config.Templates.MauiProgram) => Config.Templates.MauiProgram,
 				nameof(Config.Templates.EntityDtos) => Config.Templates.EntityDtos,
 				
 				nameof(Config.Templates.CommandCreate) => Config.Templates.CommandCreate,
