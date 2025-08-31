@@ -8,7 +8,8 @@ using {{ DomainProjectName }}.Model;
 {{ for entity in entities }}
 using {{ ApplicationProjectName }}.CQRS.Features.{{ entity.NamePlural }}.Commands.Create;
 using {{ ApplicationProjectName }}.CQRS.Features.{{ entity.NamePlural }}.Commands.Update;
-using {{ ApplicationProjectName }}.DTOs.{{ entity.Name }};
+using {{ ApplicationProjectName }}.DTOs.{{ entity.NamePlural }};
+using {{ ApplicationProjectName }}.DTOs.Custom.{{ entity.NamePlural }};
 {{ end }}
 
 namespace {{ ApplicationProjectName }}.Mapping

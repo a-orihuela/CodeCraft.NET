@@ -9,7 +9,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CodeCraft.NET.MAUI.Interfaces;
 using {{ DesktopProjectName }}.Services;
-using {{ ApplicationProjectName }}.DTOs.{{ Name }};
+using {{ ApplicationProjectName }}.DTOs.{{ NamePlural }};
+using {{ ApplicationProjectName }}.DTOs.Custom.{{ NamePlural }};
 using {{ DomainProjectName }}.Model;
 using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Commands.Update;
 
@@ -18,12 +19,12 @@ namespace {{ MauiProjectName }}.ViewModels.{{ NamePlural }}
     [QueryProperty(nameof({{ Name }}Id), "{{ Name }}Id")]
     public partial class {{ Name }}EditViewModel : ObservableObject
     {
-        private readonly {{ Name }}Service _{{ name }}Service;
+        private readonly {{ Name }}Service _{{ name | string.downcase }}Service;
         private readonly IDialogService _dialogService;
         private readonly INavigationService _navigationService;
 
         [ObservableProperty]
-        private int {{ name }}Id;
+        private int entityId;
 
         {{~ for property in Properties ~}}
         {{~ if property.Name != "Id" && !property.IsNavigation ~}}
@@ -51,27 +52,33 @@ namespace {{ MauiProjectName }}.ViewModels.{{ NamePlural }}
         private bool hasUnsavedChanges;
 
         public {{ Name }}EditViewModel(
-            {{ Name }}Service {{ name }}Service,
+            {{ Name }}Service {{ name | string.downcase }}Service,
             IDialogService dialogService,
             INavigationService navigationService)
         {
-            _{{ name }}Service = {{ name }}Service;
+            _{{ name | string.downcase }}Service = {{ name | string.downcase }}Service;
             _dialogService = dialogService;
             _navigationService = navigationService;
+        }
+
+        public int {{ Name }}Id
+        {
+            get => entityId;
+            set => SetProperty(ref entityId, value);
         }
 
         [RelayCommand]
         public async Task LoadAsync()
         {
-            if ({{ name }}Id <= 0) return;
+            if (entityId <= 0) return;
 
             IsLoading = true;
             try
             {
-                var {{ name }} = await _{{ name }}Service.GetByIdAsync({{ name }}Id);
-                if ({{ name }} != null)
+                var {{ name | string.downcase }} = await _{{ name | string.downcase }}Service.GetByIdAsync(entityId);
+                if ({{ name | string.downcase }} != null)
                 {
-                    LoadFromDto({{ name }});
+                    LoadFromDto({{ name | string.downcase }});
                     StoreOriginalValues();
                 }
                 else
@@ -82,7 +89,7 @@ namespace {{ MauiProjectName }}.ViewModels.{{ NamePlural }}
             }
             catch (Exception ex)
             {
-                await _dialogService.ShowErrorAsync("Error", $"Failed to load {{ name }}: {ex.Message}");
+                await _dialogService.ShowErrorAsync("Error", $"Failed to load {{ name | string.downcase }}: {ex.Message}");
                 await _navigationService.GoBackAsync();
             }
             finally
@@ -107,7 +114,7 @@ namespace {{ MauiProjectName }}.ViewModels.{{ NamePlural }}
             {
                 var command = new {{ Name }}Update
                 {
-                    Id = {{ name }}Id,
+                    Id = entityId,
                     {{~ for property in Properties ~}}
                     {{~ if property.Name != "Id" && !property.IsNavigation ~}}
                     {{ property.Name }} = {{ property.Name | string.downcase }},
@@ -115,7 +122,7 @@ namespace {{ MauiProjectName }}.ViewModels.{{ NamePlural }}
                     {{~ end ~}}
                 };
 
-                var success = await _{{ name }}Service.UpdateAsync(command);
+                var success = await _{{ name | string.downcase }}Service.UpdateAsync(command);
                 
                 if (success)
                 {
@@ -126,12 +133,12 @@ namespace {{ MauiProjectName }}.ViewModels.{{ NamePlural }}
                 }
                 else
                 {
-                    await _dialogService.ShowErrorAsync("Error", "Failed to update {{ name }}");
+                    await _dialogService.ShowErrorAsync("Error", "Failed to update {{ name | string.downcase }}");
                 }
             }
             catch (Exception ex)
             {
-                await _dialogService.ShowErrorAsync("Error", $"Failed to update {{ name }}: {ex.Message}");
+                await _dialogService.ShowErrorAsync("Error", $"Failed to update {{ name | string.downcase }}: {ex.Message}");
             }
             finally
             {
@@ -225,7 +232,7 @@ namespace {{ MauiProjectName }}.ViewModels.{{ NamePlural }}
 
         partial void PerformCustomValidation(List<string> errors);
 
-        partial void On{{ Name }}IdChanged(int value)
+        partial void OnEntityIdChanged(int value)
         {
             if (value > 0)
             {

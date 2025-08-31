@@ -56,7 +56,8 @@
     "MauiEditViewModel": "CodeCraft.NET.MAUI/ViewModels/{0}/{0}EditViewModel.cs",
     "MauiDetailViewModel": "CodeCraft.NET.MAUI/ViewModels/{0}/{0}DetailViewModel.cs",
     "MauiServiceRegistration": "CodeCraft.NET.MAUI/MauiServiceRegistration.cs",
-    "EntityDtos": "CodeCraft.NET.Application/DTOs/{0}/{0}Dtos.cs"
+    "EntityDtos": "CodeCraft.NET.Application/DTOs/{0}/{0}Dtos.cs",
+    "EntityWithRelatedDto": "CodeCraft.NET.Application/DTOs/Custom/{0}/{0}WithRelatedDto.cs"
   },
   "Folders": {
     "RootFolder": "CodeCraft.NET",
@@ -94,6 +95,7 @@
     "MauiServiceRegistration": "CodeCraft.NET.Generator.Templates.MAUI.Services.MauiServiceRegistration.scriban",
     "MauiShellRouting": "CodeCraft.NET.Generator.Templates.MAUI.Services.ShellRouting.scriban",
     "EntityDtos": "CodeCraft.NET.Generator.Templates.DTOs.EntityDtos.scriban",
+    "EntityWithRelatedDto": "CodeCraft.NET.Generator.Templates.DTOs.EntityWithRelatedDto.scriban",
     "CommandCreate": "CodeCraft.NET.Generator.Templates.CQRS.Features.Commands.Create.Create.scriban",
     "CommandCreateHandler": "CodeCraft.NET.Generator.Templates.CQRS.Features.Commands.Create.CreateHandler.scriban",
     "CommandCreateValidator": "CodeCraft.NET.Generator.Templates.CQRS.Features.Commands.Create.CreateValidator.scriban",

@@ -198,10 +198,34 @@ namespace CodeCraft.NET.Generator.Generators
 		{
 			var context = CreateTemplateContext(entity);
 
+			// Generate main DTOs (always regenerated)
 			_templateRenderer.Render(
 				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.EntityDtos)),
 				ConfigHelper.GetEntityDtosPath(entity.Name),
 				context);
+
+			// Generate WithRelatedDto only if it doesn't exist (customizable)
+			GenerateWithRelatedDtoIfNotExists(entity, context);
+		}
+
+		private void GenerateWithRelatedDtoIfNotExists(EntityMetadata entity, object context)
+		{
+			var outputPath = ConfigHelper.GetEntityWithRelatedDtoPath(entity.Name);
+			var config = CodeCraftConfig.Instance;
+			var fullPath = Path.Combine(config.GetSolutionRoot(), outputPath);
+			
+			if (!File.Exists(fullPath))
+			{
+				_templateRenderer.Render(
+					ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.EntityWithRelatedDto)),
+					outputPath,
+					context);
+				Console.WriteLine($"   ✅ Generated: {entity.Name}WithRelatedDto.cs");
+			}
+			else
+			{
+				Console.WriteLine($"   📁 Preserved: DTOs/Custom/{entity.NamePlural}/{entity.Name}WithRelatedDto.cs - Custom file exists");
+			}
 		}
 	}
 }

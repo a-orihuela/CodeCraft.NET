@@ -6,7 +6,7 @@
 using MediatR;
 using AutoMapper;
 using {{ ApplicationProjectName }}.Contracts.Persistence.Repositories;
-using {{ ApplicationProjectName }}.DTOs.{{ Name }};
+using {{ ApplicationProjectName }}.DTOs.{{ NamePlural }};
 using {{ DomainProjectName }}.Model;
 using {{ ApplicationProjectName }}.Middleware.Exceptions;
 

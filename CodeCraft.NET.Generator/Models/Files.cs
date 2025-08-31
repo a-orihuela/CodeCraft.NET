@@ -27,6 +27,7 @@
 		public string MauiServiceRegistration { get; set; } = string.Empty;
 		public string MauiProgram { get; set; } = string.Empty;
 		public string EntityDtos { get; set; } = string.Empty;
+		public string EntityWithRelatedDto { get; set; } = string.Empty;
 		
 		public string HttpRequest { get; set; } = string.Empty;
 		public string CommandCreate { get; set; } = string.Empty;

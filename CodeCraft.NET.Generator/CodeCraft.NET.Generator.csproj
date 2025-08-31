@@ -82,6 +82,9 @@
     <EmbeddedResource Include="Templates\DTOs\EntityDtos.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.DTOs.EntityDtos.scriban</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="Templates\DTOs\EntityWithRelatedDto.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.DTOs.EntityWithRelatedDto.scriban</LogicalName>
+    </EmbeddedResource>
     <EmbeddedResource Include="Templates\CQRS\Features\Commands\Create\Create.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Features.Commands.Create.Create.scriban</LogicalName>
     </EmbeddedResource>

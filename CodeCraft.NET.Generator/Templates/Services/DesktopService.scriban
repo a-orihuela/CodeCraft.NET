@@ -4,7 +4,8 @@
 // </auto-generated>
 
 using MediatR;
-using CodeCraft.NET.Application.DTOs.{{ Name }};
+using CodeCraft.NET.Application.DTOs.{{ NamePlural }};
+using CodeCraft.NET.Application.DTOs.Custom.{{ NamePlural }};
 using CodeCraft.NET.Application.CQRS.Features.{{ NamePlural }}.Commands.Create;
 using CodeCraft.NET.Application.CQRS.Features.{{ NamePlural }}.Commands.Delete;
 using CodeCraft.NET.Application.CQRS.Features.{{ NamePlural }}.Commands.Update;

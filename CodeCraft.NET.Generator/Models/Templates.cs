@@ -19,6 +19,7 @@
 		public string MauiServiceRegistration { get; set; } = string.Empty;
 		public string MauiShellRouting { get; set; } = string.Empty;
 		public string EntityDtos { get; set; } = string.Empty;
+		public string EntityWithRelatedDto { get; set; } = string.Empty;
 		
 		// CQRS Templates
 		public string CommandCreate { get; set; } = string.Empty;

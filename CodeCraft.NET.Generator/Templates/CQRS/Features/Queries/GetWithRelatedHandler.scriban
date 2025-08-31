@@ -5,7 +5,7 @@
 
 using MediatR;
 using AutoMapper;
-using {{ ApplicationProjectName }}.DTOs.{{ Name }};
+using {{ ApplicationProjectName }}.DTOs.Custom.{{ NamePlural }};
 using {{ DomainProjectName }}.Model;
 using {{ ApplicationProjectName }}.Contracts.Persistence.Repositories;
 using {{ ApplicationProjectName }}.CQRS.Specifications.{{ NamePlural }};
