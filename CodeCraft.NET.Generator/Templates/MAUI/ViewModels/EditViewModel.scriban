@@ -75,15 +75,16 @@ namespace {{ MauiProjectName }}.ViewModels.{{ NamePlural }}
             IsLoading = true;
             try
             {
-                var {{ name | string.downcase }} = await _{{ name | string.downcase }}Service.GetByIdAsync(entityId);
-                if ({{ name | string.downcase }} != null)
+                var result = await _{{ name | string.downcase }}Service.GetByIdAsync(entityId);
+                if (result.IsSuccess && result.Value != null)
                 {
-                    LoadFromDto({{ name | string.downcase }});
+                    LoadFromDto(result.Value);
                     StoreOriginalValues();
                 }
                 else
                 {
-                    await _dialogService.ShowErrorAsync("Error", "{{ Name }} not found");
+                    var errorMsg = result.IsSuccess ? "{{ Name }} not found" : result.ErrorMessage;
+                    await _dialogService.ShowErrorAsync("Error", errorMsg);
                     await _navigationService.GoBackAsync();
                 }
             }
@@ -122,9 +123,9 @@ namespace {{ MauiProjectName }}.ViewModels.{{ NamePlural }}
                     {{~ end ~}}
                 };
 
-                var success = await _{{ name | string.downcase }}Service.UpdateAsync(command);
+                var result = await _{{ name | string.downcase }}Service.UpdateAsync(command);
                 
-                if (success)
+                if (result.IsSuccess)
                 {
                     await _dialogService.ShowInfoAsync("Success", "{{ Name }} updated successfully");
                     StoreOriginalValues(); // Update original values
@@ -133,7 +134,7 @@ namespace {{ MauiProjectName }}.ViewModels.{{ NamePlural }}
                 }
                 else
                 {
-                    await _dialogService.ShowErrorAsync("Error", "Failed to update {{ name | string.downcase }}");
+                    await _dialogService.ShowErrorAsync("Error", $"Failed to update {{ name | string.downcase }}: {result.ErrorMessage}");
                 }
             }
             catch (Exception ex)

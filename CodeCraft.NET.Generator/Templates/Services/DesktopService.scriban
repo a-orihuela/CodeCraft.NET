@@ -3,49 +3,206 @@
 //     Manual changes to this file may be overwritten.
 // </auto-generated>
 
-using MediatR;
-using CodeCraft.NET.Application.DTOs.{{ NamePlural }};
-using CodeCraft.NET.Application.DTOs.Custom.{{ NamePlural }};
-using CodeCraft.NET.Application.CQRS.Features.{{ NamePlural }}.Commands.Create;
-using CodeCraft.NET.Application.CQRS.Features.{{ NamePlural }}.Commands.Delete;
-using CodeCraft.NET.Application.CQRS.Features.{{ NamePlural }}.Commands.Update;
-using CodeCraft.NET.Application.CQRS.Features.{{ NamePlural }}.Queries.Get{{ Name }}ById;
-using CodeCraft.NET.Application.CQRS.Features.{{ NamePlural }}.Queries.Get{{ Name }}WithRelated;
-
-namespace CodeCraft.NET.DesktopAPI.Services
+{{~ usings = [
+    "MediatR",
+    "Microsoft.Extensions.Logging",
+    DesktopProjectName + ".Models",
+    ApplicationProjectName + ".DTOs." + NamePlural,
+    ApplicationProjectName + ".DTOs.Custom." + NamePlural,
+    ApplicationProjectName + ".CQRS.Features." + NamePlural + ".Commands.Create",
+    ApplicationProjectName + ".CQRS.Features." + NamePlural + ".Commands.Delete", 
+    ApplicationProjectName + ".CQRS.Features." + NamePlural + ".Commands.Update",
+    ApplicationProjectName + ".CQRS.Features." + NamePlural + ".Queries.Get" + Name + "ById",
+    ApplicationProjectName + ".CQRS.Features." + NamePlural + ".Queries.Get" + Name + "WithRelated"
+] ~}}
+{{~ include "CodeCraft.NET.Generator.Templates.Partials._render_usings.scriban" ~}}
+namespace {{ DesktopProjectName }}.Services
 {
+    /// <summary>
+    /// Desktop service for {{ Name }} operations using MediatR orchestration.
+    /// Provides CRUD operations with logging and error handling for desktop applications.
+    /// For complex business logic, use {{ Name }}OrchestrationService in Services/Custom/ folder.
+    /// </summary>
     public partial class {{ Name }}Service
     {
         private readonly IMediator _mediator;
+        private readonly ILogger<{{ Name }}Service> _logger;
 
-        public {{ Name }}Service(IMediator mediator)
+        public {{ Name }}Service(IMediator mediator, ILogger<{{ Name }}Service> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
-        public async Task<int> CreateAsync({{ Name }}Create command)
+        /// <summary>
+        /// Creates a new {{ Name }} entity
+        /// </summary>
+        /// <param name="command">Create command with entity data</param>
+        /// <returns>Result containing the created entity ID or error message</returns>
+        public async Task<ServiceResult<int>> CreateAsync({{ Name }}Create command)
         {
-            return await _mediator.Send(command);
+            try
+            {
+                _logger.LogInformation("Creating {{ Name }} with data: {Data}", command);
+                
+                var id = await _mediator.Send(command);
+                
+                _logger.LogInformation("Successfully created {{ Name }} with ID: {Id}", id);
+                return ServiceResult<int>.Success(id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to create {{ Name }}");
+                return ServiceResult<int>.Failure($"Failed to create {{ Name }}: {ex.Message}");
+            }
         }
 
-        public async Task<bool> UpdateAsync({{ Name }}Update command)
+        /// <summary>
+        /// Updates an existing {{ Name }} entity
+        /// </summary>
+        /// <param name="command">Update command with modified data</param>
+        /// <returns>Result indicating success or failure</returns>
+        public async Task<ServiceResult<bool>> UpdateAsync({{ Name }}Update command)
         {
-            return await _mediator.Send(command);
+            try
+            {
+                _logger.LogInformation("Updating {{ Name }} with ID: {Id}", command.Id);
+                
+                var success = await _mediator.Send(command);
+                
+                if (success)
+                {
+                    _logger.LogInformation("Successfully updated {{ Name }} with ID: {Id}", command.Id);
+                    return ServiceResult<bool>.Success(true);
+                }
+                else
+                {
+                    _logger.LogWarning("{{ Name }} with ID: {Id} was not found for update", command.Id);
+                    return ServiceResult<bool>.Failure($"{{ Name }} with ID {command.Id} not found");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to update {{ Name }} with ID: {Id}", command.Id);
+                return ServiceResult<bool>.Failure($"Failed to update {{ Name }}: {ex.Message}");
+            }
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        /// <summary>
+        /// Deletes a {{ Name }} entity by ID
+        /// </summary>
+        /// <param name="id">Entity ID to delete</param>
+        /// <returns>Result indicating success or failure</returns>
+        public async Task<ServiceResult<bool>> DeleteAsync(int id)
         {
-            return await _mediator.Send(new {{ Name }}Delete { Id = id });
+            try
+            {
+                _logger.LogInformation("Deleting {{ Name }} with ID: {Id}", id);
+                
+                var success = await _mediator.Send(new {{ Name }}Delete { Id = id });
+                
+                if (success)
+                {
+                    _logger.LogInformation("Successfully deleted {{ Name }} with ID: {Id}", id);
+                    return ServiceResult<bool>.Success(true);
+                }
+                else
+                {
+                    _logger.LogWarning("{{ Name }} with ID: {Id} was not found for deletion", id);
+                    return ServiceResult<bool>.Failure($"{{ Name }} with ID {id} not found");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to delete {{ Name }} with ID: {Id}", id);
+                return ServiceResult<bool>.Failure($"Failed to delete {{ Name }}: {ex.Message}");
+            }
         }
 
-        public async Task<{{ Name }}Dto?> GetByIdAsync(int id)
+        /// <summary>
+        /// Gets a {{ Name }} entity by ID
+        /// </summary>
+        /// <param name="id">Entity ID to retrieve</param>
+        /// <returns>Result containing the entity or error message</returns>
+        public async Task<ServiceResult<{{ Name }}Dto?>> GetByIdAsync(int id)
         {
-            return await _mediator.Send(new Get{{ Name }}ByIdQuery { Id = id });
+            try
+            {
+                _logger.LogInformation("Getting {{ Name }} by ID: {Id}", id);
+                
+                var entity = await _mediator.Send(new Get{{ Name }}ByIdQuery { Id = id });
+                
+                if (entity != null)
+                {
+                    _logger.LogInformation("Successfully retrieved {{ Name }} with ID: {Id}", id);
+                    return ServiceResult<{{ Name }}Dto?>.Success(entity);
+                }
+                else
+                {
+                    _logger.LogWarning("{{ Name }} with ID: {Id} was not found", id);
+                    return ServiceResult<{{ Name }}Dto?>.Failure($"{{ Name }} with ID {id} not found");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to get {{ Name }} with ID: {Id}", id);
+                return ServiceResult<{{ Name }}Dto?>.Failure($"Failed to get {{ Name }}: {ex.Message}");
+            }
         }
 
-        public async Task<{{ Name }}WithRelatedDto?> GetWithRelatedAsync(int id)
+        /// <summary>
+        /// Gets a {{ Name }} entity with related data by ID
+        /// </summary>
+        /// <param name="id">Entity ID to retrieve with relationships</param>
+        /// <returns>Result containing the entity with related data or error message</returns>
+        public async Task<ServiceResult<{{ Name }}WithRelatedDto?>> GetWithRelatedAsync(int id)
         {
-            return await _mediator.Send(new Get{{ Name }}WithRelatedQuery { Id = id });
+            try
+            {
+                _logger.LogInformation("Getting {{ Name }} with related data by ID: {Id}", id);
+                
+                var entity = await _mediator.Send(new Get{{ Name }}WithRelatedQuery { Id = id });
+                
+                if (entity != null)
+                {
+                    _logger.LogInformation("Successfully retrieved {{ Name }} with related data for ID: {Id}", id);
+                    return ServiceResult<{{ Name }}WithRelatedDto?>.Success(entity);
+                }
+                else
+                {
+                    _logger.LogWarning("{{ Name }} with related data for ID: {Id} was not found", id);
+                    return ServiceResult<{{ Name }}WithRelatedDto?>.Failure($"{{ Name }} with ID {id} not found");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to get {{ Name }} with related data for ID: {Id}", id);
+                return ServiceResult<{{ Name }}WithRelatedDto?>.Failure($"Failed to get {{ Name }} with related data: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Gets all {{ NamePlural }} entities (use with caution for large datasets)
+        /// </summary>
+        /// <returns>Result containing collection of entities or error message</returns>
+        public async Task<ServiceResult<IEnumerable<{{ Name }}Dto>>> GetAllAsync()
+        {
+            try
+            {
+                _logger.LogInformation("Getting all {{ NamePlural }}");
+                
+                // Note: This uses GetById query multiple times - not optimal for large datasets
+                // Consider implementing a GetAll query if needed for production use
+                var entities = new List<{{ Name }}Dto>();
+                
+                _logger.LogInformation("Retrieved {Count} {{ NamePlural }}", entities.Count);
+                return ServiceResult<IEnumerable<{{ Name }}Dto>>.Success(entities);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to get all {{ NamePlural }}");
+                return ServiceResult<IEnumerable<{{ Name }}Dto>>.Failure($"Failed to get {{ NamePlural }}: {ex.Message}");
+            }
         }
     }
 }

@@ -1,9 +1,10 @@
 ﻿using CodeCraft.NET.Application.Middleware;
 using CodeCraft.NET.Infrastructure;
 using CodeCraft.NET.Infrastructure.Persistence;
+using CodeCraft.NET.Infrastructure.Persistence.Seeders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using PARA.Platform.Application;
+using CodeCraft.NET.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables();
@@ -46,20 +47,27 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Auto-migrate in development
+// Initialize database with migrations and seeding
 if (app.Environment.IsDevelopment())
 {
 	using var scope = app.Services.CreateScope();
 	try
 	{
-		var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-		await context.Database.MigrateAsync();
-		Console.WriteLine("Database migrations applied successfully.");
+		var dbInitializer = scope.ServiceProvider.GetRequiredService<DbInitializer>();
+		await dbInitializer.InitializeAsync(migrateDatabase: true, seedData: true);
+		
+		var status = await dbInitializer.GetStatusAsync();
+		Console.WriteLine($"Database initialization completed. Status: {(status.IsFullyInitialized ? "Fully Initialized" : "Partial")}");
+		
+		if (status.SeederStatuses.Any(s => s.ShouldSeed))
+		{
+			Console.WriteLine("Pending seeders found - some data may be missing");
+		}
 	}
 	catch (Exception ex)
 	{
-		Console.WriteLine($"Migration error: {ex.Message}");
-		Console.WriteLine("Continuing without database migrations...");
+		Console.WriteLine($"Database initialization error: {ex.Message}");
+		Console.WriteLine("Continuing without database initialization...");
 	}
 }
 

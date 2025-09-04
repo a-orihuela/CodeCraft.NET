@@ -2,11 +2,11 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using CodeCraft.NET.Infrastructure;
-using PARA.Platform.Application;
+using CodeCraft.NET.Application;
 
 namespace CodeCraft.NET.DesktopAPI
 {
-    public static class DesktopApiServiceRegistration
+    public static partial class DesktopApiServiceRegistration
     {
         /// <summary>
         /// Registers Desktop API services for MAUI/Desktop applications

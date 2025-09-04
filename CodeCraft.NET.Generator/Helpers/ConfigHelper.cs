@@ -4,7 +4,17 @@ namespace CodeCraft.NET.Generator.Helpers
 {
 	public static class ConfigHelper
 	{
-		private static CodeCraftConfig Config => CodeCraftConfig.Instance;
+		private static CodeCraftOptions Config => ConfigurationContext.Options;
+		private static string GetProjectName(string key) => key switch
+		{
+			"Domain" => Config.Shared.ProjectNames["Domain"],
+			"Application" => Config.Shared.ProjectNames["Application"],
+			"Infrastructure" => Config.Shared.ProjectNames["Infrastructure"],
+			"Server" => Config.Shared.ProjectNames["Server"],
+			"Desktop" => Config.Shared.ProjectNames["Desktop"],
+			"Cross" => Config.Shared.ProjectNames["Cross"],
+			_ => throw new ArgumentException($"Unknown project key: {key}")
+		};
 
 		// Methods to get formatted file paths
 		public static string GetFilePath(string filePattern, params object[] args)
@@ -22,160 +32,160 @@ namespace CodeCraft.NET.Generator.Helpers
 
 		// Specific methods for each file type
 		public static string GetControllerPath(string entityName)
-			=> GetFilePath(Config.Files.Controller, entityName);
+			=> GetFilePath(Config.Shared.Files["Controller"], entityName);
 
 		public static string GetDesktopServicePath(string entityName)
-			=> GetFilePath(Config.Files.DesktopService, entityName);
+			=> GetFilePath(Config.Shared.Files["DesktopService"], entityName);
 
 		public static string GetDesktopServiceRegistrationPath()
-			=> Config.Files.DesktopServiceRegistration;
+			=> Config.Shared.Files["DesktopServiceRegistration"];
 
 		public static string GetInfrastructureServiceRegistrationPath()
-			=> Config.Files.InfrastructureServiceRegistration;
+			=> Config.Shared.Files["InfrastructureServiceRegistration"];
 
 		public static string GetHttpRequestPath(string entityName)
-			=> GetFilePath(Config.Files.HttpRequest, entityName);
+			=> GetFilePath(Config.Shared.Files["HttpRequest"], entityName);
 
 		// Commands
 		public static string GetCommandCreatePath(string entityPlural, string entityName)
-			=> GetFilePath(Config.Files.CommandCreate, entityPlural, entityName);
+			=> GetFilePath(Config.Shared.Files["CommandCreate"], entityPlural, entityName);
 
 		public static string GetCommandCreateHandlerPath(string entityPlural, string entityName)
-			=> GetFilePath(Config.Files.CommandCreateHandler, entityPlural, entityName);
+			=> GetFilePath(Config.Shared.Files["CommandCreateHandler"], entityPlural, entityName);
 
 		public static string GetCommandCreateValidatorPath(string entityPlural, string entityName)
-			=> GetFilePath(Config.Files.CommandCreateValidator, entityPlural, entityName);
+			=> GetFilePath(Config.Shared.Files["CommandCreateValidator"], entityPlural, entityName);
 
 		public static string GetCommandUpdatePath(string entityPlural, string entityName)
-			=> GetFilePath(Config.Files.CommandUpdate, entityPlural, entityName);
+			=> GetFilePath(Config.Shared.Files["CommandUpdate"], entityPlural, entityName);
 
 		public static string GetCommandUpdateHandlerPath(string entityPlural, string entityName)
-			=> GetFilePath(Config.Files.CommandUpdateHandler, entityPlural, entityName);
+			=> GetFilePath(Config.Shared.Files["CommandUpdateHandler"], entityPlural, entityName);
 
 		public static string GetCommandUpdateValidatorPath(string entityPlural, string entityName)
-			=> GetFilePath(Config.Files.CommandUpdateValidator, entityPlural, entityName);
+			=> GetFilePath(Config.Shared.Files["CommandUpdateValidator"], entityPlural, entityName);
 
 		public static string GetCommandDeletePath(string entityPlural, string entityName)
-			=> GetFilePath(Config.Files.CommandDelete, entityPlural, entityName);
+			=> GetFilePath(Config.Shared.Files["CommandDelete"], entityPlural, entityName);
 
 		public static string GetCommandDeleteHandlerPath(string entityPlural, string entityName)
-			=> GetFilePath(Config.Files.CommandDeleteHandler, entityPlural, entityName);
+			=> GetFilePath(Config.Shared.Files["CommandDeleteHandler"], entityPlural, entityName);
 
 		// Queries
 		public static string GetQueryGetByIdPath(string entityPlural, string entityName)
-			=> GetFilePath(Config.Files.QueryGetById, entityPlural, entityName);
+			=> GetFilePath(Config.Shared.Files["QueryGetById"], entityPlural, entityName);
 
 		public static string GetQueryGetByIdHandlerPath(string entityPlural, string entityName)
-			=> GetFilePath(Config.Files.QueryGetByIdHandler, entityPlural, entityName);
+			=> GetFilePath(Config.Shared.Files["QueryGetByIdHandler"], entityPlural, entityName);
 
 		public static string GetQueryGetWithRelatedPath(string entityPlural, string entityName)
-			=> GetFilePath(Config.Files.QueryGetWithRelated, entityPlural, entityName);
+			=> GetFilePath(Config.Shared.Files["QueryGetWithRelated"], entityPlural, entityName);
 
 		public static string GetQueryGetWithRelatedHandlerPath(string entityPlural, string entityName)
-			=> GetFilePath(Config.Files.QueryGetWithRelatedHandler, entityPlural, entityName);
+			=> GetFilePath(Config.Shared.Files["QueryGetWithRelatedHandler"], entityPlural, entityName);
 
 		// Specifications
 		public static string GetSpecificationPath(string entityPlural, string entityName)
-			=> GetFilePath(Config.Files.Specification, entityPlural, entityName);
+			=> GetFilePath(Config.Shared.Files["Specification"], entityPlural, entityName);
 
 		public static string GetSpecificationParamsPath(string entityPlural, string entityName)
-			=> GetFilePath(Config.Files.SpecificationParams, entityPlural, entityName);
+			=> GetFilePath(Config.Shared.Files["SpecificationParams"], entityPlural, entityName);
 
 		public static string GetWithRelatedPath(string entityPlural, string entityName)
-			=> GetFilePath(Config.Files.WithRelated, entityPlural, entityName);
+			=> GetFilePath(Config.Shared.Files["WithRelated"], entityPlural, entityName);
 
 		public static string GetWithRelatedSpecificationPath(string entityPlural, string entityName)
-			=> GetFilePath(Config.Files.WithRelatedSpecification, entityPlural, entityName);
+			=> GetFilePath(Config.Shared.Files["WithRelatedSpecification"], entityPlural, entityName);
 
 		// Repository
 		public static string GetRepositoryInterfacePath(string entityName)
-			=> GetFilePath(Config.Files.RepositoryInterface, entityName);
+			=> GetFilePath(Config.Shared.Files["RepositoryInterface"], entityName);
 
 		public static string GetRepositoryImplementationPath(string entityName)
-			=> GetFilePath(Config.Files.RepositoryImplementation, entityName);
+			=> GetFilePath(Config.Shared.Files["RepositoryImplementation"], entityName);
 
 		// Unit of Work
 		public static string GetUnitOfWorkInterfacePath()
-			=> Config.Files.UnitOfWorkInterface;
+			=> Config.Shared.Files["UnitOfWorkInterface"];
 
 		public static string GetUnitOfWorkImplementationPath()
-			=> Config.Files.UnitOfWorkImplementation;
+			=> Config.Shared.Files["UnitOfWorkImplementation"];
 
 		// Mapping
 		public static string GetMappingProfilePath()
-			=> Config.Files.MappingProfile;
+			=> Config.Shared.Files["MappingProfile"];
 
 		public static string GetEntityDtosPath(string entityName)
-			=> GetFilePath(Config.Files.EntityDtos, entityName);
+			=> GetFilePath(Config.Shared.Files["EntityDtos"], entityName);
 
 		public static string GetEntityWithRelatedDtoPath(string entityName)
-			=> GetFilePath(Config.Files.EntityWithRelatedDto, entityName);
+			=> GetFilePath(Config.Shared.Files["EntityWithRelatedDto"], entityName);
 
 		// DbContext
 		public static string GetDbContextPath()
-			=> Config.Files.DbContext;
+			=> Config.Shared.Files["DbContext"];
 
 		public static string GetDbContextFactoryPath()
-			=> Config.Files.DbContextFactory;
+			=> Config.Shared.Files["DbContextFactory"];
 
 		// Get template paths
 		public static string GetTemplatePath(string templateProperty)
 		{
 			var templatePath = templateProperty switch
 			{
-				nameof(Config.Templates.Controller) => Config.Templates.Controller,
-				nameof(Config.Templates.DesktopService) => Config.Templates.DesktopService,
-				nameof(Config.Templates.DesktopServiceRegistration) => Config.Templates.DesktopServiceRegistration,
-				nameof(Config.Templates.InfrastructureServiceRegistration) => Config.Templates.InfrastructureServiceRegistration,
+				"Controller" => Config.Shared.Templates["Controller"],
+				"DesktopService" => Config.Shared.Templates["DesktopService"],
+				"DesktopServiceRegistration" => Config.Shared.Templates["DesktopServiceRegistration"],
+				"InfrastructureServiceRegistration" => Config.Shared.Templates["InfrastructureServiceRegistration"],
 				
 				// MAUI Templates
-				nameof(Config.Templates.MauiListPageGenerated) => Config.Templates.MauiListPageGenerated,
-				nameof(Config.Templates.MauiCreatePageGenerated) => Config.Templates.MauiCreatePageGenerated,
-				nameof(Config.Templates.MauiEditPageGenerated) => Config.Templates.MauiEditPageGenerated,
-				nameof(Config.Templates.MauiDetailPageGenerated) => Config.Templates.MauiDetailPageGenerated,
-				nameof(Config.Templates.MauiListViewModel) => Config.Templates.MauiListViewModel,
-				nameof(Config.Templates.MauiCreateViewModel) => Config.Templates.MauiCreateViewModel,
-				nameof(Config.Templates.MauiEditViewModel) => Config.Templates.MauiEditViewModel,
-				nameof(Config.Templates.MauiDetailViewModel) => Config.Templates.MauiDetailViewModel,
-				nameof(Config.Templates.MauiServiceRegistration) => Config.Templates.MauiServiceRegistration,
-				nameof(Config.Templates.MauiShellRouting) => Config.Templates.MauiShellRouting,
-				nameof(Config.Templates.EntityDtos) => Config.Templates.EntityDtos,
-				nameof(Config.Templates.EntityWithRelatedDto) => Config.Templates.EntityWithRelatedDto,
+				"MauiListPageGenerated" => Config.Shared.Templates["MauiListPageGenerated"],
+				"MauiCreatePageGenerated" => Config.Shared.Templates["MauiCreatePageGenerated"],
+				"MauiEditPageGenerated" => Config.Shared.Templates["MauiEditPageGenerated"],
+				"MauiDetailPageGenerated" => Config.Shared.Templates["MauiDetailPageGenerated"],
+				"MauiListViewModel" => Config.Shared.Templates["MauiListViewModel"],
+				"MauiCreateViewModel" => Config.Shared.Templates["MauiCreateViewModel"],
+				"MauiEditViewModel" => Config.Shared.Templates["MauiEditViewModel"],
+				"MauiDetailViewModel" => Config.Shared.Templates["MauiDetailViewModel"],
+				"MauiServiceRegistration" => Config.Shared.Templates["MauiServiceRegistration"],
+				"MauiShellRouting" => Config.Shared.Templates["MauiShellRouting"],
+				"EntityDtos" => Config.Shared.Templates["EntityDtos"],
+				"EntityWithRelatedDto" => Config.Shared.Templates["EntityWithRelatedDto"],
 				
-				nameof(Config.Templates.CommandCreate) => Config.Templates.CommandCreate,
-				nameof(Config.Templates.CommandCreateHandler) => Config.Templates.CommandCreateHandler,
-				nameof(Config.Templates.CommandCreateValidator) => Config.Templates.CommandCreateValidator,
-				nameof(Config.Templates.CommandUpdate) => Config.Templates.CommandUpdate,
-				nameof(Config.Templates.CommandUpdateHandler) => Config.Templates.CommandUpdateHandler,
-				nameof(Config.Templates.CommandUpdateValidator) => Config.Templates.CommandUpdateValidator,
-				nameof(Config.Templates.CommandDelete) => Config.Templates.CommandDelete,
-				nameof(Config.Templates.CommandDeleteHandler) => Config.Templates.CommandDeleteHandler,
-				nameof(Config.Templates.QueryGetById) => Config.Templates.QueryGetById,
-				nameof(Config.Templates.QueryGetByIdHandler) => Config.Templates.QueryGetByIdHandler,
-				nameof(Config.Templates.QueryGetWithRelated) => Config.Templates.QueryGetWithRelated,
-				nameof(Config.Templates.QueryGetWithRelatedHandler) => Config.Templates.QueryGetWithRelatedHandler,
-				nameof(Config.Templates.Specification) => Config.Templates.Specification,
-				nameof(Config.Templates.SpecificationParams) => Config.Templates.SpecificationParams,
-				nameof(Config.Templates.WithRelated) => Config.Templates.WithRelated,
-				nameof(Config.Templates.WithRelatedSpecification) => Config.Templates.WithRelatedSpecification,
-				nameof(Config.Templates.HttpRequest) => Config.Templates.HttpRequest,
-				nameof(Config.Templates.MappingProfile) => Config.Templates.MappingProfile,
-				nameof(Config.Templates.DbContext) => Config.Templates.DbContext,
-				nameof(Config.Templates.DbContextFactory) => Config.Templates.DbContextFactory,
-				nameof(Config.Templates.RepositoryInterface) => Config.Templates.RepositoryInterface,
-				nameof(Config.Templates.RepositoryImplementation) => Config.Templates.RepositoryImplementation,
-				nameof(Config.Templates.UnitOfWorkInterface) => Config.Templates.UnitOfWorkInterface,
-				nameof(Config.Templates.UnitOfWorkImplementation) => Config.Templates.UnitOfWorkImplementation,
+				"CommandCreate" => Config.Shared.Templates["CommandCreate"],
+				"CommandCreateHandler" => Config.Shared.Templates["CommandCreateHandler"],
+				"CommandCreateValidator" => Config.Shared.Templates["CommandCreateValidator"],
+				"CommandUpdate" => Config.Shared.Templates["CommandUpdate"],
+				"CommandUpdateHandler" => Config.Shared.Templates["CommandUpdateHandler"],
+				"CommandUpdateValidator" => Config.Shared.Templates["CommandUpdateValidator"],
+				"CommandDelete" => Config.Shared.Templates["CommandDelete"],
+				"CommandDeleteHandler" => Config.Shared.Templates["CommandDeleteHandler"],
+				"QueryGetById" => Config.Shared.Templates["QueryGetById"],
+				"QueryGetByIdHandler" => Config.Shared.Templates["QueryGetByIdHandler"],
+				"QueryGetWithRelated" => Config.Shared.Templates["QueryGetWithRelated"],
+				"QueryGetWithRelatedHandler" => Config.Shared.Templates["QueryGetWithRelatedHandler"],
+				"Specification" => Config.Shared.Templates["Specification"],
+				"SpecificationParams" => Config.Shared.Templates["SpecificationParams"],
+				"WithRelated" => Config.Shared.Templates["WithRelated"],
+				"WithRelatedSpecification" => Config.Shared.Templates["WithRelatedSpecification"],
+				"HttpRequest" => Config.Shared.Templates["HttpRequest"],
+				"MappingProfile" => Config.Shared.Templates["MappingProfile"],
+				"DbContext" => Config.Shared.Templates["DbContext"],
+				"DbContextFactory" => Config.Shared.Templates["DbContextFactory"],
+				"RepositoryInterface" => Config.Shared.Templates["RepositoryInterface"],
+				"RepositoryImplementation" => Config.Shared.Templates["RepositoryImplementation"],
+				"UnitOfWorkInterface" => Config.Shared.Templates["UnitOfWorkInterface"],
+				"UnitOfWorkImplementation" => Config.Shared.Templates["UnitOfWorkImplementation"],
 				_ => throw new ArgumentException($"Unknown template property: {templateProperty}")
 			};
 
 			return templatePath;
 		}
 
-		public static string PluralizeName(string name) => Config.PluralizeName(name);
+		public static string PluralizeName(string name) => ConfigurationContext.PluralizeName(name);
 
-		public static string GetInfrastructureRoot() => Config.GetSolutionRelativePath(Config.ProjectNames.Infrastructure);
-		public static string GetServerRoot() => Config.GetSolutionRelativePath(Config.ProjectNames.Server);
-		public static string GetDesktopRoot() => Config.GetSolutionRelativePath(Config.ProjectNames.Desktop);
+		public static string GetInfrastructureRoot() => ConfigurationContext.GetSolutionRelativePath(GetProjectName("Infrastructure"));
+		public static string GetServerRoot() => ConfigurationContext.GetSolutionRelativePath(GetProjectName("Server"));
+		public static string GetDesktopRoot() => ConfigurationContext.GetSolutionRelativePath(GetProjectName("Desktop"));
 	}
 }

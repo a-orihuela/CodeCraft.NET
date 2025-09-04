@@ -1,19 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:CodeCraft.NET.MAUI.Extensions.Localization"
+             xmlns:controls="clr-namespace:CodeCraft.NET.MAUI.Views.Controls"
              x:Class="CodeCraft.NET.MAUI.MainPage">
 
     <ScrollView>
         <StackLayout Padding="20" Spacing="24">
 
+            <!-- Language Selector at the top -->
+            <StackLayout Orientation="Horizontal" HorizontalOptions="End" Spacing="10">
+                <Label Text="{local:Localize Language}" 
+                       VerticalOptions="Center" 
+                       FontSize="14" />
+                <controls:LanguageSelector x:Name="LanguageSelector" />
+            </StackLayout>
+
             <!-- Welcome Header -->
             <Frame Style="{StaticResource ElevatedCardStyle}">
                 <StackLayout Spacing="16">
-                    <Label Text="KetoPlanner Styles System" 
+                    <Label Text="{local:Localize AppName}" 
                        Style="{StaticResource PageHeaderStyle}" 
                        HorizontalOptions="Center" />
 
-                    <Label Text="Modern, consistent cross-platform design system for .NET MAUI applications" 
+                    <Label Text="Modern cross-platform development system for .NET MAUI applications" 
                        Style="{StaticResource PageSubtitleStyle}" 
                        HorizontalTextAlignment="Center" />
 
@@ -82,13 +92,13 @@
 
                     <StackLayout Orientation="Horizontal" Spacing="8">
                         <Frame Style="{StaticResource BadgeStyle}" BackgroundColor="{StaticResource Success}">
-                            <Label Text="Save" Style="{StaticResource StatusBadgeStyle}" />
+                            <Label Text="{local:Localize Save}" Style="{StaticResource StatusBadgeStyle}" />
                         </Frame>
                         <Frame Style="{StaticResource BadgeStyle}" BackgroundColor="{StaticResource Danger}">
-                            <Label Text="Delete" Style="{StaticResource StatusBadgeStyle}" />
+                            <Label Text="{local:Localize Delete}" Style="{StaticResource StatusBadgeStyle}" />
                         </Frame>
                         <Frame Style="{StaticResource BadgeStyle}" BackgroundColor="{StaticResource Warning}">
-                            <Label Text="Edit" Style="{StaticResource StatusBadgeStyle}" />
+                            <Label Text="{local:Localize Edit}" Style="{StaticResource StatusBadgeStyle}" />
                         </Frame>
                     </StackLayout>
                 </StackLayout>
@@ -112,19 +122,49 @@
                 </StackLayout>
             </Frame>
 
+            <!-- Localization Demo -->
+            <Frame Style="{StaticResource CardStyle}">
+                <StackLayout Spacing="12">
+                    <Label Text="Localization Demo" 
+                       FontSize="18" 
+                       FontFamily="OpenSansSemibold" />
+                    <Label Text="Change the language using the selector above to see the localization in action." />
+
+                    <!-- Sample localized content -->
+                    <StackLayout Spacing="8">
+                        <Label Text="{local:Localize Dashboard}" FontSize="16" FontAttributes="Bold" />
+                        <Label Text="{local:Localize Settings}" FontSize="16" FontAttributes="Bold" />
+                        <Label Text="{local:Localize Language}" FontSize="16" FontAttributes="Bold" />
+                        
+                        <!-- Days of week -->
+                        <FlexLayout Direction="Row" Wrap="Wrap" JustifyContent="SpaceAround">
+                            <Frame Style="{StaticResource BadgeStyle}" BackgroundColor="{StaticResource Primary}">
+                                <Label Text="{local:Localize Monday}" Style="{StaticResource StatusBadgeStyle}" />
+                            </Frame>
+                            <Frame Style="{StaticResource BadgeStyle}" BackgroundColor="{StaticResource Primary}">
+                                <Label Text="{local:Localize Tuesday}" Style="{StaticResource StatusBadgeStyle}" />
+                            </Frame>
+                            <Frame Style="{StaticResource BadgeStyle}" BackgroundColor="{StaticResource Primary}">
+                                <Label Text="{local:Localize Wednesday}" Style="{StaticResource StatusBadgeStyle}" />
+                            </Frame>
+                        </FlexLayout>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+
             <!-- Quick Actions -->
             <Label Text="Quick Actions" 
                FontSize="20" 
                FontFamily="OpenSansSemibold" 
                TextColor="{StaticResource Info}" />
 
-            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
-                <Button Grid.Column="0" 
+            <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,*" RowSpacing="12" ColumnSpacing="12">
+                <Button Grid.Row="0" Grid.Column="0" 
                     Text="View Documentation" 
                     Style="{StaticResource OutlinePrimaryButtonStyle}"
                     Clicked="OnViewDocumentationClicked" />
-                <Button Grid.Column="1" 
-                    Text="Style Demo" 
+                <Button Grid.Row="0" Grid.Column="1" 
+                    Text="Design Tokens Demo" 
                     Style="{StaticResource ViewButtonStyle}"
                     Clicked="OnViewStylesDemoClicked" />
             </Grid>

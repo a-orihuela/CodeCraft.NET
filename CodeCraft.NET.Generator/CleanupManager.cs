@@ -1,5 +1,4 @@
 using CodeCraft.NET.Generator.Helpers;
-using CodeCraft.NET.Generator.Models;
 
 namespace CodeCraft.NET.Generator
 {
@@ -23,7 +22,7 @@ namespace CodeCraft.NET.Generator
 
 		private static void CleanGeneratedFiles(bool includeDomainEntities)
 		{
-			var config = CodeCraftConfig.Instance;
+			var config = ConfigurationContext.Options;
 			int filesDeleted = 0;
 			int directoriesDeleted = 0;
 
@@ -31,44 +30,44 @@ namespace CodeCraft.NET.Generator
 			{
 				Console.WriteLine("Cleaning generated files and example entities...");
 				// Clean example entities from Domain
-				filesDeleted += CleanExampleEntities(config);
+				filesDeleted += CleanExampleEntities();
 			}
 
 			// Clean CQRS Features (Application layer)
-			filesDeleted += CleanCQRSFeatures(config);
+			filesDeleted += CleanCQRSFeatures();
 
 			// Clean Repositories (Application contracts)
-			filesDeleted += CleanRepositoryContracts(config);
+			filesDeleted += CleanRepositoryContracts();
 
 			// Clean Repository implementations (Infrastructure)
-			filesDeleted += CleanRepositoryImplementations(config);
+			filesDeleted += CleanRepositoryImplementations();
 
 			// Clean Unit of Work files
-			filesDeleted += CleanUnitOfWorkFiles(config);
+			filesDeleted += CleanUnitOfWorkFiles();
 
 			// Clean Mapping files
-			filesDeleted += CleanMappingFiles(config);
+			filesDeleted += CleanMappingFiles();
 
 			// Clean DbContext files
-			filesDeleted += CleanDbContextFiles(config);
+			filesDeleted += CleanDbContextFiles();
 
 			// Clean Controllers (WebAPI)
-			filesDeleted += CleanControllers(config);
+			filesDeleted += CleanControllers();
 
 			// Clean Desktop Services (DesktopAPI)
-			filesDeleted += CleanDesktopServices(config);
+			filesDeleted += CleanDesktopServices();
 
 			// Clean API Request files
-			filesDeleted += CleanApiRequestFiles(config);
+			filesDeleted += CleanApiRequestFiles();
 
 			// Clean Specifications
-			filesDeleted += CleanSpecifications(config);
+			filesDeleted += CleanSpecifications();
 
 			// Clean migrations
-			directoriesDeleted += CleanMigrations(config);
+			directoriesDeleted += CleanMigrations();
 
 			// Clean empty directories
-			directoriesDeleted += CleanEmptyDirectories(config);
+			directoriesDeleted += CleanEmptyDirectories();
 
 			if (includeDomainEntities)
 			{
@@ -78,12 +77,13 @@ namespace CodeCraft.NET.Generator
 			}
 		}
 
-		private static int CleanExampleEntities(CodeCraftConfig config)
+		private static int CleanExampleEntities()
 		{
 			int count = 0;
 			try
 			{
-				var domainPath = config.GetSolutionRelativePath(config.ProjectNames.Domain);
+				var config = ConfigurationContext.Options;
+				var domainPath = ConfigurationContext.GetSolutionRelativePath(config.Shared.ProjectNames["Domain"]);
 				var modelPath = Path.Combine(domainPath, "Model");
 				
 				if (Directory.Exists(modelPath))
@@ -117,14 +117,15 @@ namespace CodeCraft.NET.Generator
 			return count;
 		}
 
-		private static int CleanCQRSFeatures(CodeCraftConfig config)
+		private static int CleanCQRSFeatures()
 		{
 			int count = 0;
 			try
 			{
+				var config = ConfigurationContext.Options;
 				// Get CQRS Features root directory directly
-				var featuresPath = "CodeCraft.NET.Application/CQRS/Features";
-				var fullFeaturesPath = Path.Combine(config.GetSolutionRoot(), featuresPath);
+				var featuresPath = $"{config.Shared.ProjectNames["Application"]}/CQRS/Features";
+				var fullFeaturesPath = Path.Combine(ConfigurationContext.GetSolutionRoot(), featuresPath);
 
 				if (Directory.Exists(fullFeaturesPath))
 				{
@@ -139,7 +140,7 @@ namespace CodeCraft.NET.Generator
 			return count;
 		}
 
-		private static int CleanRepositoryContracts(CodeCraftConfig config)
+		private static int CleanRepositoryContracts()
 		{
 			int count = 0;
 			try
@@ -149,7 +150,7 @@ namespace CodeCraft.NET.Generator
 				
 				if (!string.IsNullOrEmpty(repositoriesDir))
 				{
-					var fullPath = Path.Combine(config.GetSolutionRoot(), repositoriesDir);
+					var fullPath = Path.Combine(ConfigurationContext.GetSolutionRoot(), repositoriesDir);
 					if (Directory.Exists(fullPath))
 					{
 						// Delete only repository files, not the entire directory
@@ -168,7 +169,7 @@ namespace CodeCraft.NET.Generator
 			return count;
 		}
 
-		private static int CleanRepositoryImplementations(CodeCraftConfig config)
+		private static int CleanRepositoryImplementations()
 		{
 			int count = 0;
 			try
@@ -178,7 +179,7 @@ namespace CodeCraft.NET.Generator
 				
 				if (!string.IsNullOrEmpty(repositoriesDir))
 				{
-					var fullPath = Path.Combine(config.GetSolutionRoot(), repositoriesDir);
+					var fullPath = Path.Combine(ConfigurationContext.GetSolutionRoot(), repositoriesDir);
 					if (Directory.Exists(fullPath))
 					{
 						var repoFiles = Directory.GetFiles(fullPath, "*Repository.cs", SearchOption.AllDirectories);
@@ -198,13 +199,13 @@ namespace CodeCraft.NET.Generator
 			return count;
 		}
 
-		private static int CleanUnitOfWorkFiles(CodeCraftConfig config)
+		private static int CleanUnitOfWorkFiles()
 		{
 			int count = 0;
 			try
 			{
 				// Clean interface
-				var interfacePath = Path.Combine(config.GetSolutionRoot(), ConfigHelper.GetUnitOfWorkInterfacePath());
+				var interfacePath = Path.Combine(ConfigurationContext.GetSolutionRoot(), ConfigHelper.GetUnitOfWorkInterfacePath());
 				if (File.Exists(interfacePath))
 				{
 					File.Delete(interfacePath);
@@ -212,7 +213,7 @@ namespace CodeCraft.NET.Generator
 				}
 
 				// Clean implementation
-				var implementationPath = Path.Combine(config.GetSolutionRoot(), ConfigHelper.GetUnitOfWorkImplementationPath());
+				var implementationPath = Path.Combine(ConfigurationContext.GetSolutionRoot(), ConfigHelper.GetUnitOfWorkImplementationPath());
 				if (File.Exists(implementationPath))
 				{
 					File.Delete(implementationPath);
@@ -226,12 +227,12 @@ namespace CodeCraft.NET.Generator
 			return count;
 		}
 
-		private static int CleanMappingFiles(CodeCraftConfig config)
+		private static int CleanMappingFiles()
 		{
 			int count = 0;
 			try
 			{
-				var mappingPath = Path.Combine(config.GetSolutionRoot(), ConfigHelper.GetMappingProfilePath());
+				var mappingPath = Path.Combine(ConfigurationContext.GetSolutionRoot(), ConfigHelper.GetMappingProfilePath());
 				if (File.Exists(mappingPath))
 				{
 					File.Delete(mappingPath);
@@ -245,13 +246,13 @@ namespace CodeCraft.NET.Generator
 			return count;
 		}
 
-		private static int CleanDbContextFiles(CodeCraftConfig config)
+		private static int CleanDbContextFiles()
 		{
 			int count = 0;
 			try
 			{
 				// Clean DbContext
-				var dbContextPath = Path.Combine(config.GetSolutionRoot(), ConfigHelper.GetDbContextPath());
+				var dbContextPath = Path.Combine(ConfigurationContext.GetSolutionRoot(), ConfigHelper.GetDbContextPath());
 				if (File.Exists(dbContextPath))
 				{
 					File.Delete(dbContextPath);
@@ -259,7 +260,7 @@ namespace CodeCraft.NET.Generator
 				}
 
 				// Clean DbContext Factory
-				var factoryPath = Path.Combine(config.GetSolutionRoot(), ConfigHelper.GetDbContextFactoryPath());
+				var factoryPath = Path.Combine(ConfigurationContext.GetSolutionRoot(), ConfigHelper.GetDbContextFactoryPath());
 				if (File.Exists(factoryPath))
 				{
 					File.Delete(factoryPath);
@@ -273,7 +274,7 @@ namespace CodeCraft.NET.Generator
 			return count;
 		}
 
-		private static int CleanControllers(CodeCraftConfig config)
+		private static int CleanControllers()
 		{
 			int count = 0;
 			try
@@ -283,7 +284,7 @@ namespace CodeCraft.NET.Generator
 				
 				if (!string.IsNullOrEmpty(controllersDir))
 				{
-					var fullPath = Path.Combine(config.GetSolutionRoot(), controllersDir);
+					var fullPath = Path.Combine(ConfigurationContext.GetSolutionRoot(), controllersDir);
 					if (Directory.Exists(fullPath))
 					{
 						var controllerFiles = Directory.GetFiles(fullPath, "*Controller.cs", SearchOption.AllDirectories);
@@ -303,7 +304,7 @@ namespace CodeCraft.NET.Generator
 			return count;
 		}
 
-		private static int CleanDesktopServices(CodeCraftConfig config)
+		private static int CleanDesktopServices()
 		{
 			int count = 0;
 			try
@@ -313,16 +314,25 @@ namespace CodeCraft.NET.Generator
 				
 				if (!string.IsNullOrEmpty(servicesDir))
 				{
-					var fullPath = Path.Combine(config.GetSolutionRoot(), servicesDir);
+					var fullPath = Path.Combine(ConfigurationContext.GetSolutionRoot(), servicesDir);
 					if (Directory.Exists(fullPath))
 					{
-						var serviceFiles = Directory.GetFiles(fullPath, "*Service.cs", SearchOption.AllDirectories);
+						// Get all service files but exclude protected directories
+						var protectedDirs = new[] { "Custom", "Orchestration", "Common", "Shared", "Examples" };
+						var serviceFiles = Directory.GetFiles(fullPath, "*Service.cs", SearchOption.AllDirectories)
+							.Where(file => !protectedDirs.Any(protectedDir => 
+								file.Contains($"{Path.DirectorySeparatorChar}{protectedDir}{Path.DirectorySeparatorChar}") ||
+								file.Contains($"/{protectedDir}/")))
+							.ToArray();
+						
 						count = serviceFiles.Length;
 						
 						foreach (var file in serviceFiles)
 						{
 							File.Delete(file);
 						}
+						
+						Console.WriteLine($"   Cleaned {count} desktop services (protected directories: {string.Join(", ", protectedDirs)})");
 					}
 				}
 			}
@@ -333,7 +343,7 @@ namespace CodeCraft.NET.Generator
 			return count;
 		}
 
-		private static int CleanApiRequestFiles(CodeCraftConfig config)
+		private static int CleanApiRequestFiles()
 		{
 			int count = 0;
 			try
@@ -343,7 +353,7 @@ namespace CodeCraft.NET.Generator
 				
 				if (!string.IsNullOrEmpty(requestsDir))
 				{
-					var fullPath = Path.Combine(config.GetSolutionRoot(), requestsDir);
+					var fullPath = Path.Combine(ConfigurationContext.GetSolutionRoot(), requestsDir);
 					if (Directory.Exists(fullPath))
 					{
 						var requestFiles = Directory.GetFiles(fullPath, "*Requests.http", SearchOption.AllDirectories);
@@ -363,18 +373,19 @@ namespace CodeCraft.NET.Generator
 			return count;
 		}
 
-		private static int CleanSpecifications(CodeCraftConfig config)
+		private static int CleanSpecifications()
 		{
 			int count = 0;
 			try
 			{
+				var config = ConfigurationContext.Options;
 				// Get Specifications root directory
-				var samplePath = string.Format(config.Files.Specification, "Sample", "Sample");
+				var samplePath = string.Format(config.Shared.Files["Specification"], "Sample", "Sample");
 				var specificationsPath = Path.GetDirectoryName(Path.GetDirectoryName(samplePath)); // Go up 2 levels
 				
 				if (!string.IsNullOrEmpty(specificationsPath))
 				{
-					var fullPath = Path.Combine(config.GetSolutionRoot(), specificationsPath.Replace('\\', '/'));
+					var fullPath = Path.Combine(ConfigurationContext.GetSolutionRoot(), specificationsPath.Replace('\\', '/'));
 					if (Directory.Exists(fullPath))
 					{
 						count = Directory.GetFiles(fullPath, "*", SearchOption.AllDirectories).Length;
@@ -389,12 +400,13 @@ namespace CodeCraft.NET.Generator
 			return count;
 		}
 
-		private static int CleanMigrations(CodeCraftConfig config)
+		private static int CleanMigrations()
 		{
 			int count = 0;
 			try
 			{
-				var infrastructurePath = config.GetSolutionRelativePath(config.ProjectNames.Infrastructure);
+				var config = ConfigurationContext.Options;
+				var infrastructurePath = ConfigurationContext.GetSolutionRelativePath(config.Shared.ProjectNames["Infrastructure"]);
 				var migrationsPath = Path.Combine(infrastructurePath, "Migrations");
 				
 				if (Directory.Exists(migrationsPath))
@@ -417,17 +429,18 @@ namespace CodeCraft.NET.Generator
 			return count;
 		}
 
-		private static int CleanEmptyDirectories(CodeCraftConfig config)
+		private static int CleanEmptyDirectories()
 		{
 			int count = 0;
 			try
 			{
+				var config = ConfigurationContext.Options;
 				var projectPaths = new[]
 				{
-					config.GetSolutionRelativePath(config.ProjectNames.Application),
-					config.GetSolutionRelativePath(config.ProjectNames.Infrastructure),
-					config.GetSolutionRelativePath(config.ProjectNames.Server),
-					config.GetSolutionRelativePath(config.ProjectNames.Desktop)
+					ConfigurationContext.GetSolutionRelativePath(config.Shared.ProjectNames["Application"]),
+					ConfigurationContext.GetSolutionRelativePath(config.Shared.ProjectNames["Infrastructure"]),
+					ConfigurationContext.GetSolutionRelativePath(config.Shared.ProjectNames["Server"]),
+					ConfigurationContext.GetSolutionRelativePath(config.Shared.ProjectNames["Desktop"])
 				};
 
 				foreach (var projectPath in projectPaths)

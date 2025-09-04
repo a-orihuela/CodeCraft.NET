@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- ============================================ -->
+    <!-- TOKEN-BASED COMPONENT STYLES -->
+    <!-- All styles use design tokens for consistency -->
+    <!-- ============================================ -->
+
+    <!-- =============================================== -->
+    <!-- UPDATED CARD STYLES USING TOKENS -->
+    <!-- =============================================== -->
+
+    <!-- Base Card using tokens -->
+    <Style x:Key="TokenCardStyle" TargetType="Frame">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource DarkSurface}}" />
+        <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource DarkBorder}}" />
+        <Setter Property="HasShadow" Value="False" />
+        <Setter Property="CornerRadius" Value="{StaticResource RadiusXL}" />
+        <Setter Property="Padding" Value="{StaticResource CardPadding}" />
+        <Setter Property="Margin" Value="{StaticResource SpaceSM}" />
+        <Setter Property="Shadow" Value="{StaticResource ShadowMD}"/>
+    </Style>
+
+    <!-- Elevated Card using tokens -->
+    <Style x:Key="TokenElevatedCardStyle" TargetType="Frame">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource DarkSurface}}" />
+        <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource DarkBorder}}" />
+        <Setter Property="HasShadow" Value="False" />
+        <Setter Property="CornerRadius" Value="{StaticResource RadiusXXL}" />
+        <Setter Property="Padding" Value="{StaticResource PagePadding}" />
+        <Setter Property="Margin" Value="{StaticResource SpaceLG}" />
+        <Setter Property="Shadow" Value="{StaticResource ShadowLG}"/>
+    </Style>
+
+    <!-- Compact Card using tokens -->
+    <Style x:Key="TokenCompactCardStyle" TargetType="Frame">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource DarkSurface}}" />
+        <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource DarkBorder}}" />
+        <Setter Property="HasShadow" Value="False" />
+        <Setter Property="CornerRadius" Value="{StaticResource RadiusLG}" />
+        <Setter Property="Padding" Value="{StaticResource ComponentPadding}" />
+        <Setter Property="Margin" Value="{StaticResource SpaceXS}" />
+        <Setter Property="Shadow" Value="{StaticResource ShadowSM}"/>
+    </Style>
+
+    <!-- =============================================== -->
+    <!-- MODERN BUTTON STYLES USING TOKENS -->
+    <!-- =============================================== -->
+
+    <!-- Base button template -->
+    <Style x:Key="TokenBaseButtonStyle" TargetType="Button">
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFontSemibold}"/>
+        <Setter Property="FontSize" Value="{StaticResource ButtonFontSize}"/>
+        <Setter Property="CornerRadius" Value="{StaticResource ButtonRadius}"/>
+        <Setter Property="Padding" Value="{StaticResource SpaceLG},{StaticResource SpaceLG}"/>
+        <Setter Property="MinimumHeightRequest" Value="{StaticResource ButtonHeight}"/>
+        <Setter Property="MinimumWidthRequest" Value="120"/>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="Opacity" Value="{StaticResource OpacityDisabled}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="Opacity" Value="{StaticResource OpacityPressed}" />
+                            <Setter Property="Scale" Value="0.96" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <!-- Primary Action Button -->
+    <Style x:Key="TokenPrimaryButtonStyle" TargetType="Button" BasedOn="{StaticResource TokenBaseButtonStyle}">
+        <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+        <Setter Property="TextColor" Value="{StaticResource White}" />
+        <Setter Property="Shadow" Value="{StaticResource ShadowMD}"/>
+    </Style>
+
+    <!-- Secondary Action Button -->
+    <Style x:Key="TokenSecondaryButtonStyle" TargetType="Button" BasedOn="{StaticResource TokenBaseButtonStyle}">
+        <Setter Property="BackgroundColor" Value="{StaticResource Secondary}" />
+        <Setter Property="TextColor" Value="{StaticResource White}" />
+        <Setter Property="Shadow" Value="{StaticResource ShadowMD}"/>
+    </Style>
+
+    <!-- Outline Button -->
+    <Style x:Key="TokenOutlineButtonStyle" TargetType="Button" BasedOn="{StaticResource TokenBaseButtonStyle}">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource Primary}" />
+        <Setter Property="BorderColor" Value="{StaticResource Primary}" />
+        <Setter Property="BorderWidth" Value="{StaticResource BorderWidthThick}" />
+    </Style>
+
+    <!-- =============================================== -->
+    <!-- TOKEN-BASED TYPOGRAPHY STYLES -->
+    <!-- =============================================== -->
+
+    <!-- Token-Based Typography Styles -->
+    <Style x:Key="TokenDisplay1" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFontSemibold}"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSize5XL}"/>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
+        <Setter Property="Margin" Value="0,24,0,16"/>
+    </Style>
+
+    <Style x:Key="TokenDisplay2" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFontSemibold}"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSize4XL}"/>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
+        <Setter Property="Margin" Value="0,20,0,12"/>
+    </Style>
+
+    <Style x:Key="TokenHeading" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFontSemibold}"/>
+        <Setter Property="FontSize" Value="{StaticResource HeadingFontSize}"/>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray800}, Dark={StaticResource Gray100}}"/>
+        <Setter Property="Margin" Value="0,20,0,12"/>
+    </Style>
+
+    <Style x:Key="TokenSubheading" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFontSemibold}"/>
+        <Setter Property="FontSize" Value="{StaticResource SubheadingFontSize}"/>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray700}, Dark={StaticResource Gray200}}"/>
+        <Setter Property="Margin" Value="0,16,0,8"/>
+    </Style>
+
+    <Style x:Key="TokenBody" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFont}"/>
+        <Setter Property="FontSize" Value="{StaticResource BodyFontSize}"/>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"/>
+        <Setter Property="Margin" Value="0,8"/>
+    </Style>
+
+    <Style x:Key="TokenCaption" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFont}"/>
+        <Setter Property="FontSize" Value="{StaticResource CaptionFontSize}"/>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray500}}"/>
+        <Setter Property="Margin" Value="0,4"/>
+    </Style>
+
+    <!-- =============================================== -->
+    <!-- TOKEN-BASED INPUT STYLES -->
+    <!-- =============================================== -->
+
+    <!-- Modern Entry -->
+    <Style x:Key="TokenEntryStyle" TargetType="Entry">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray50}, Dark={StaticResource Gray800}}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
+        <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}" />
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFont}"/>
+        <Setter Property="FontSize" Value="{StaticResource BodyFontSize}"/>
+        <Setter Property="MinimumHeightRequest" Value="{StaticResource InputHeight}"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="Opacity" Value="{StaticResource OpacityDisabled}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Focused">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray700}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <!-- Modern Border for inputs -->
+    <Style x:Key="TokenInputBorderStyle" TargetType="Border">
+        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+        <Setter Property="StrokeThickness" Value="1"/>
+        <Setter Property="StrokeShape" Value="RoundRectangle 12"/>
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray50}, Dark={StaticResource Gray800}}" />
+        <Setter Property="Padding" Value="16,16"/>
+        <Setter Property="Margin" Value="4"/>
+    </Style>
+
+    <!-- =============================================== -->
+    <!-- TOKEN-BASED LAYOUT STYLES -->
+    <!-- =============================================== -->
+
+    <!-- Token-Based Layout Styles -->
+    <!-- Form Group -->
+    <Style x:Key="TokenFormGroupStyle" TargetType="StackLayout">
+        <Setter Property="Spacing" Value="8"/>
+        <Setter Property="Margin" Value="0,16,0,0"/>
+    </Style>
+
+    <!-- Form Label -->
+    <Style x:Key="TokenFormLabelStyle" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFontSemibold}"/>
+        <Setter Property="FontSize" Value="{StaticResource BodyFontSize}"/>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray700}, Dark={StaticResource Gray300}}"/>
+        <Setter Property="Margin" Value="4,0,0,4"/>
+    </Style>
+
+    <!-- Page Container -->
+    <Style x:Key="TokenPageContainerStyle" TargetType="StackLayout">
+        <Setter Property="Padding" Value="20"/>
+        <Setter Property="Spacing" Value="24"/>
+    </Style>
+
+    <!-- Content Section -->
+    <Style x:Key="TokenSectionStyle" TargetType="StackLayout">
+        <Setter Property="Spacing" Value="16"/>
+        <Setter Property="Margin" Value="0,24,0,0"/>
+    </Style>
+
+    <!-- =============================================== -->
+    <!-- TOKEN-BASED BADGE STYLES -->
+    <!-- =============================================== -->
+
+    <Style x:Key="TokenBadgeStyle" TargetType="Frame">
+        <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+        <Setter Property="BorderColor" Value="Transparent" />
+        <Setter Property="HasShadow" Value="False" />
+        <Setter Property="CornerRadius" Value="{StaticResource BadgeRadius}" />
+        <Setter Property="Padding" Value="{StaticResource SpaceLG},{StaticResource SpaceSM}" />
+        <Setter Property="Margin" Value="{StaticResource SpaceXS}" />
+        <Setter Property="HorizontalOptions" Value="Start"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+    </Style>
+
+    <Style x:Key="TokenBadgeLabelStyle" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFontSemibold}"/>
+        <Setter Property="FontSize" Value="{StaticResource CaptionFontSize}"/>
+        <Setter Property="TextColor" Value="{StaticResource White}"/>
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="HorizontalTextAlignment" Value="Center"/>
+        <Setter Property="VerticalTextAlignment" Value="Center"/>
+    </Style>
+
+    <!-- =============================================== -->
+    <!-- TOKEN-BASED ICON STYLES -->
+    <!-- =============================================== -->
+
+    <!-- Icon Button -->
+    <Style x:Key="TokenIconButtonStyle" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray700}}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}" />
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFont}"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSM}"/>
+        <Setter Property="CornerRadius" Value="{StaticResource RadiusSM}"/>
+        <Setter Property="Padding" Value="{StaticResource SpaceLG},{StaticResource SpaceSM}"/>
+        <Setter Property="MinimumHeightRequest" Value="40"/>
+        <Setter Property="MinimumWidthRequest" Value="40"/>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="Opacity" Value="{StaticResource OpacityDisabled}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="Opacity" Value="{StaticResource OpacityPressed}" />
+                            <Setter Property="Scale" Value="0.94" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

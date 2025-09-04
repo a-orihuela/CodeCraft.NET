@@ -1,68 +1,83 @@
-using CodeCraft.NET.Generator.Models;
+using CodeCraft.NET.Generator.Helpers;
 
 namespace CodeCraft.NET.Generator.Helpers
 {
 	public static class FileProtectionManager
 	{
-		public static bool ShouldPreserveFile(string filePath)
+		public static bool ShouldProtectFile(string filePath)
 		{
-			var config = CodeCraftConfig.Instance.MauiConfig;
+			var config = ConfigurationContext.Options;
 			
-			// Files that are never regenerated
-			var protectedPatterns = new[]
-			{
-				"**/Custom/**",
-				"**/*.Custom.*",
-				"**/*Override.*",
-				"**/*.xaml" // Customizable XAML files are preserved by default
-			};
+			// Extract relative path from solution root
+			var solutionRoot = ConfigurationContext.GetSolutionRoot();
+			var relativePath = Path.GetRelativePath(solutionRoot, filePath);
 			
-			// Generated files that are always overwritten
-			var generatedPatterns = new[]
-			{
-				"**/*.Generated.*",
-				"**/*Generated.*"
-			};
+			// Check against protection patterns
+			var protectedPatterns = config.Shared.MauiConfig.GenerateOnlyIfNotExists;
 			
-			// If it's a generated file, don't preserve
-			if (generatedPatterns.Any(pattern => FilePathMatches(filePath, pattern)))
+			foreach (var pattern in protectedPatterns)
 			{
-				return false;
+				if (IsPatternMatch(relativePath, pattern))
+				{
+					return true;
+				}
 			}
 			
-			// If it matches protected patterns, preserve
-			return protectedPatterns.Any(pattern => FilePathMatches(filePath, pattern)) ||
-				   config.GenerateOnlyIfNotExists.Any(pattern => FilePathMatches(filePath, pattern));
-		}
-		
-		public static void BackupFileIfExists(string filePath)
-		{
-			if (File.Exists(filePath))
+			// Also protect files with custom suffix
+			var customSuffix = config.Shared.MauiConfig.CustomFilesSuffix;
+			if (!string.IsNullOrEmpty(customSuffix) && filePath.Contains(customSuffix))
 			{
-				var backupPath = $"{filePath}.backup.{DateTime.Now:yyyyMMddHHmmss}";
-				File.Copy(filePath, backupPath);
-				Console.WriteLine($"   Backed up: {Path.GetFileName(backupPath)}");
+				return true;
 			}
-		}
-		
-		public static bool ShouldGenerateOnlyIfNotExists(string filePath)
-		{
-			var config = CodeCraftConfig.Instance.MauiConfig;
-			return config.GenerateOnlyIfNotExists.Any(pattern => FilePathMatches(filePath, pattern));
-		}
-		
-		private static bool FilePathMatches(string filePath, string pattern)
-		{
-			// Convert pattern to simple regex
-			var regexPattern = pattern
-				.Replace("**", ".*")
-				.Replace("*", "[^/\\\\]*")
-				.Replace("/", "[/\\\\]");
 			
-			return System.Text.RegularExpressions.Regex.IsMatch(
-				filePath.Replace('\\', '/'), 
-				regexPattern, 
-				System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+			return false;
+		}
+		
+		public static bool ShouldGenerateFile(string outputPath)
+		{
+			// If file doesn't exist, always generate
+			if (!File.Exists(outputPath))
+			{
+				return true;
+			}
+			
+			// If file exists but is not protected, regenerate based on settings
+			if (!ShouldProtectFile(outputPath))
+			{
+				return true; // Always regenerate non-protected files
+			}
+			
+			// Protected file exists, don't regenerate
+			return false;
+		}
+		
+		private static bool IsPatternMatch(string path, string pattern)
+		{
+			// Simple pattern matching - could be enhanced with regex
+			// For now, handle basic wildcards
+			pattern = pattern.Replace("**", "*"); // Normalize double wildcards
+			
+			if (pattern.Contains('*'))
+			{
+				var parts = pattern.Split('*', StringSplitOptions.RemoveEmptyEntries);
+				var currentIndex = 0;
+				
+				foreach (var part in parts)
+				{
+					var index = path.IndexOf(part, currentIndex, StringComparison.OrdinalIgnoreCase);
+					if (index == -1)
+					{
+						return false;
+					}
+					currentIndex = index + part.Length;
+				}
+				
+				return true;
+			}
+			else
+			{
+				return path.Equals(pattern, StringComparison.OrdinalIgnoreCase);
+			}
 		}
 	}
 }

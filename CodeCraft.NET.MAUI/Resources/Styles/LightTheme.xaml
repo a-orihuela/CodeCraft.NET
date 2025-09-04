@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- ================================================================== -->
+    <!-- LIGHT THEME - SEMANTIC COLOR ASSIGNMENTS -->
+    <!-- This dictionary defines how colors behave in light theme -->
+    <!-- ================================================================== -->
+
+    <!-- ======================== SEMANTIC COLORS ======================== -->
+    
+    <!-- Background colors -->
+    <Color x:Key="BackgroundPrimary">#FFFFFF</Color>
+    <Color x:Key="BackgroundSecondary">#F9FAFB</Color>
+    <Color x:Key="BackgroundTertiary">#F3F4F6</Color>
+    <Color x:Key="BackgroundInverse">#111827</Color>
+
+    <!-- Surface colors (for cards, panels, etc) -->
+    <Color x:Key="SurfacePrimary">#FFFFFF</Color>
+    <Color x:Key="SurfaceSecondary">#F9FAFB</Color>
+    <Color x:Key="SurfaceElevated">#FFFFFF</Color>
+    <Color x:Key="SurfaceInverse">#1F2937</Color>
+
+    <!-- Text colors -->
+    <Color x:Key="TextPrimary">#111827</Color>
+    <Color x:Key="TextSecondary">#4B5563</Color>
+    <Color x:Key="TextTertiary">#6B7280</Color>
+    <Color x:Key="TextInverse">#FFFFFF</Color>
+    <Color x:Key="TextDisabled">#9CA3AF</Color>
+    <Color x:Key="TextPlaceholder">#9CA3AF</Color>
+
+    <!-- Border colors -->
+    <Color x:Key="BorderPrimary">#E5E7EB</Color>
+    <Color x:Key="BorderSecondary">#D1D5DB</Color>
+    <Color x:Key="BorderFocus">#10B981</Color>
+    <Color x:Key="BorderError">#EF4444</Color>
+    <Color x:Key="BorderSuccess">#10B981</Color>
+
+    <!-- Icon colors -->
+    <Color x:Key="IconPrimary">#374151</Color>
+    <Color x:Key="IconSecondary">#6B7280</Color>
+    <Color x:Key="IconTertiary">#9CA3AF</Color>
+    <Color x:Key="IconInverse">#FFFFFF</Color>
+    <Color x:Key="IconDisabled">#D1D5DB</Color>
+
+    <!-- Link colors -->
+    <Color x:Key="LinkPrimary">#10B981</Color>
+    <Color x:Key="LinkHover">#065F46</Color>
+    <Color x:Key="LinkVisited">#8B5CF6</Color>
+
+    <!-- ======================== COMPONENT COLORS ======================= -->
+    
+    <!-- Button colors -->
+    <Color x:Key="ButtonPrimaryBackground">#10B981</Color>
+    <Color x:Key="ButtonPrimaryText">#FFFFFF</Color>
+    <Color x:Key="ButtonSecondaryBackground">#F3F4F6</Color>
+    <Color x:Key="ButtonSecondaryText">#111827</Color>
+    <Color x:Key="ButtonDisabledBackground">#E5E7EB</Color>
+    <Color x:Key="ButtonDisabledText">#9CA3AF</Color>
+
+    <!-- Input colors -->
+    <Color x:Key="InputBackground">#FFFFFF</Color>
+    <Color x:Key="InputBorder">#D1D5DB</Color>
+    <Color x:Key="InputText">#111827</Color>
+    <Color x:Key="InputPlaceholder">#9CA3AF</Color>
+    <Color x:Key="InputFocusBorder">#10B981</Color>
+    <Color x:Key="InputErrorBorder">#EF4444</Color>
+
+    <!-- Card colors -->
+    <Color x:Key="CardBackground">#FFFFFF</Color>
+    <Color x:Key="CardBorder">#E5E7EB</Color>
+    <Color x:Key="CardShadow">#1F000000</Color>
+
+    <!-- Navigation colors -->
+    <Color x:Key="NavigationBackground">#FFFFFF</Color>
+    <Color x:Key="NavigationBorder">#E5E7EB</Color>
+    <Color x:Key="NavigationText">#111827</Color>
+    <Color x:Key="NavigationActiveText">#10B981</Color>
+
+    <!-- Modal/Overlay colors -->
+    <Color x:Key="OverlayBackground">#80000000</Color>  <!-- 50% black -->
+    <Color x:Key="ModalBackground">#FFFFFF</Color>
+    <Color x:Key="ModalBorder">#D1D5DB</Color>
+
+</ResourceDictionary>

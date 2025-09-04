@@ -3,6 +3,7 @@ using CodeCraft.NET.Generator.Helpers;
 using CodeCraft.NET.Generator.Models;
 using Scriban;
 using Scriban.Runtime;
+using Scriban.Parsing;
 
 namespace CodeCraft.NET.Generator.Renderers
 {
@@ -13,8 +14,7 @@ namespace CodeCraft.NET.Generator.Renderers
 			// Ensure outputPath is absolute
 			if (!Path.IsPathRooted(outputPath))
 			{
-				var config = CodeCraftConfig.Instance;
-				var solutionRoot = config.GetSolutionRoot();
+				var solutionRoot = ConfigurationContext.GetSolutionRoot();
 				outputPath = Path.Combine(solutionRoot, outputPath);
 			}
 			
@@ -34,15 +34,23 @@ namespace CodeCraft.NET.Generator.Renderers
 
 		private static TemplateContext CreateContext(object model)
 		{
-			var config = CodeCraftConfig.Instance;
+			var config = ConfigurationContext.Options;
 			var context = new TemplateContext();
+			
+			// Configure template loader for embedded resources
+			context.TemplateLoader = new EmbeddedTemplateLoader();
+			
 			var scriptObject = new ScriptObject
 			{
-				{ "DomainProjectName", config.ProjectNames.Domain },
-				{ "ApplicationProjectName", config.ProjectNames.Application },
-				{ "InfrastructureProjectName", config.ProjectNames.Infrastructure },
-				{ "ServerProjectName", config.ProjectNames.Server },
-				{ "CodeCraftNETCrossName", config.ProjectNames.Cross },
+				{ "DomainProjectName", config.Shared.ProjectNames["Domain"] },
+				{ "ApplicationProjectName", config.Shared.ProjectNames["Application"] },
+				{ "InfrastructureProjectName", config.Shared.ProjectNames["Infrastructure"] },
+				{ "ServerProjectName", config.Shared.ProjectNames["Server"] },
+				{ "DesktopProjectName", config.Shared.ProjectNames["Desktop"] },
+				{ "CrossProjectName", config.Shared.ProjectNames["Cross"] },
+				{ "UnitOfWorkInterfaceName", config.Shared.Files["UnitOfWorkInterfaceName"] },
+				{ "UnitOfWorkImplementationName", config.Shared.Files["UnitOfWorkImplementationName"] },
+				{ "DatabaseProvider", ConfigurationContext.ActiveProfile.DatabaseProvider }
 			};
 
 			scriptObject.Import(model, renamer: member => member.Name);
@@ -62,6 +70,27 @@ namespace CodeCraft.NET.Generator.Renderers
 			if (string.IsNullOrEmpty(input)) return input;
 			if (input.Length == 1) return input.ToLowerInvariant();
 			return char.ToLowerInvariant(input[0]) + input.Substring(1);
+		}
+	}
+	
+	/// <summary>
+	/// Custom template loader for embedded resources
+	/// </summary>
+	public class EmbeddedTemplateLoader : ITemplateLoader
+	{
+		public string GetPath(TemplateContext context, SourceSpan callerSpan, string templateName)
+		{
+			return templateName;
+		}
+
+		public string Load(TemplateContext context, SourceSpan callerSpan, string templatePath)
+		{
+			return EmbeddedResourceHelper.LoadTemplate(templatePath);
+		}
+
+		public ValueTask<string> LoadAsync(TemplateContext context, SourceSpan callerSpan, string templatePath)
+		{
+			return new ValueTask<string>(Load(context, callerSpan, templatePath));
 		}
 	}
 }

@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Contracts\Persistence\Custom\**" />
+    <EmbeddedResource Remove="Contracts\Persistence\Custom\**" />
+    <None Remove="Contracts\Persistence\Custom\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="15.0.1" />
     <PackageReference Include="FluentValidation" Version="12.0.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
@@ -23,7 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Contracts\Persistence\Custom\" />
     <Folder Include="Contracts\Persistence\Repositories\" />
     <Folder Include="CQRS\Custom\Features\" />
     <Folder Include="CQRS\Custom\Specifications\" />

@@ -1,25 +1,51 @@
-﻿namespace CodeCraft.NET.MAUI
+﻿using CodeCraft.NET.MAUI.ViewModels;
+using CodeCraft.NET.MAUI.Views.Examples;
+using Microsoft.Maui.Controls;
+
+namespace CodeCraft.NET.MAUI
 {
 	public partial class MainPage : ContentPage
 	{
 		public MainPage()
 		{
 			InitializeComponent();
+			
+			// Initialize language selector if services are available
+			InitializeLanguageSelector();
+		}
+
+		private void InitializeLanguageSelector()
+		{
+			try
+			{
+				// Get the services from the application - using fully qualified namespace
+				if (Microsoft.Maui.Controls.Application.Current is App app && app.Services != null)
+				{
+					var languageSelectorViewModel = app.Services.GetService(typeof(LanguageSelectorViewModel)) as LanguageSelectorViewModel;
+					if (languageSelectorViewModel != null)
+					{
+						LanguageSelector.BindingContext = languageSelectorViewModel;
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				System.Diagnostics.Debug.WriteLine($"Error initializing language selector: {ex.Message}");
+			}
 		}
 
 		private async void OnViewStylesDemoClicked(object? sender, EventArgs e)
 		{
 			try
 			{
-				// Navigate to the styles demo page
-				await Shell.Current.GoToAsync("StyleDemoPage");
+				// Navigate to the design tokens demo page
+				await Navigation.PushAsync(new TokenDemoPage());
 			}
-			catch
+			catch (Exception ex)
 			{
-				// Fallback: show alert if navigation fails
-				await DisplayAlert("Navigation",
-					"Styles Demo page will be shown here. " +
-					"Navigation system is being set up.",
+				// Show error if navigation fails
+				await DisplayAlert("Navigation Error",
+					$"Could not navigate to Design Tokens Demo: {ex.Message}",
 					"OK");
 			}
 		}
@@ -31,8 +57,10 @@
 				"The complete styles documentation is available in:\n\n" +
 				"• Resources/Styles/README.md\n" +
 				"• Check Colors.xaml for color palette\n" +
-				"• Check ButtonStyles.xaml for button variations\n" +
-				"• Check ComponentStyles.xaml for cards and layouts",
+				"• Check UnifiedStyles.xaml for all component styles\n" +
+				"• Check Tokens.xaml for design tokens\n" +
+				"• Check TokenComponents.xaml for token-based components\n" +
+				"• TokenDemoPage.xaml for complete demonstration",
 				"Got it!");
 		}
 	}

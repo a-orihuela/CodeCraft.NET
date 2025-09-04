@@ -24,7 +24,7 @@ namespace CodeCraft.NET.Generator.Generators
 
 		private object CreateTemplateContext(EntityMetadata entity, object? additionalData = null)
 		{
-			var config = CodeCraftConfig.Instance;
+			var config = ConfigurationContext.Options;
 			var baseContext = new
 			{
 				// Entity data
@@ -34,12 +34,12 @@ namespace CodeCraft.NET.Generator.Generators
 				entity.Usings,
 
 				// Project names
-				ApplicationProjectName = config.ProjectNames.Application,
-				DomainProjectName = config.ProjectNames.Domain,
-				InfrastructureProjectName = config.ProjectNames.Infrastructure,
+				ApplicationProjectName = config.Shared.ProjectNames["Application"],
+				DomainProjectName = config.Shared.ProjectNames["Domain"],
+				InfrastructureProjectName = config.Shared.ProjectNames["Infrastructure"],
 
 				// Interface names
-				UnitOfWorkInterfaceName = config.Files.UnitOfWorkInterfaceName
+				UnitOfWorkInterfaceName = config.Shared.Files["UnitOfWorkInterfaceName"]
 			};
 
 			// If we have additional data, merge it with the base context
@@ -70,40 +70,40 @@ namespace CodeCraft.NET.Generator.Generators
 		{
 			// Repository Interface
 			_templateRenderer.Render(
-				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.RepositoryInterface)),
+				ConfigHelper.GetTemplatePath("RepositoryInterface"),
 				ConfigHelper.GetRepositoryInterfacePath(entity.Name),
 				CreateTemplateContext(entity));
 
 			// Repository Implementation
 			_templateRenderer.Render(
-				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.RepositoryImplementation)),
+				ConfigHelper.GetTemplatePath("RepositoryImplementation"),
 				ConfigHelper.GetRepositoryImplementationPath(entity.Name),
 				CreateTemplateContext(entity));
 		}
 
 		private void GenerateUnitOfWork(IEnumerable<EntityMetadata> entities)
 		{
-			var config = CodeCraftConfig.Instance;
+			var config = ConfigurationContext.Options;
 			var context = new
 			{
 				entities,
-				ApplicationProjectName = config.ProjectNames.Application,
-				DomainProjectName = config.ProjectNames.Domain,
-				InfrastructureProjectName = config.ProjectNames.Infrastructure,
-				UnitOfWorkInterfaceName = config.Files.UnitOfWorkInterfaceName,
-				UnitOfWorkImplementationName = config.Files.UnitOfWorkImplementationName,
-				CodeCraftNETCrossName = config.ProjectNames.Cross
+				ApplicationProjectName = config.Shared.ProjectNames["Application"],
+				DomainProjectName = config.Shared.ProjectNames["Domain"],
+				InfrastructureProjectName = config.Shared.ProjectNames["Infrastructure"],
+				UnitOfWorkInterfaceName = config.Shared.Files["UnitOfWorkInterfaceName"],
+				UnitOfWorkImplementationName = config.Shared.Files["UnitOfWorkImplementationName"],
+				CrossProjectName = config.Shared.ProjectNames["Cross"]
 			};
 
 			// Unit of Work Interface
 			_templateRenderer.Render(
-				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.UnitOfWorkInterface)),
+				ConfigHelper.GetTemplatePath("UnitOfWorkInterface"),
 				ConfigHelper.GetUnitOfWorkInterfacePath(),
 				context);
 
 			// Unit of Work Implementation
 			_templateRenderer.Render(
-				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.UnitOfWorkImplementation)),
+				ConfigHelper.GetTemplatePath("UnitOfWorkImplementation"),
 				ConfigHelper.GetUnitOfWorkImplementationPath(),
 				context);
 		}

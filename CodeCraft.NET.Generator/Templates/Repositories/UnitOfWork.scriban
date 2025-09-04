@@ -3,13 +3,16 @@
 //     Manual changes to this file may be overwritten.
 // </auto-generated>
 
-using System.Collections;
-using Microsoft.EntityFrameworkCore;
-using {{ CodeCraftNETCrossName }}.Domain;
-using {{ ApplicationProjectName }}.Contracts.Persistence;
-using {{ ApplicationProjectName }}.Contracts.Persistence.Repositories;
-using {{ InfrastructureProjectName }}.Persistence.Repositories;
-using {{ ApplicationProjectName }}.Contracts.Persistence.Base;
+{{~ usings = [
+    "System.Collections",
+    "Microsoft.EntityFrameworkCore",
+    CrossProjectName + ".Domain",
+    ApplicationProjectName + ".Contracts.Persistence",
+    ApplicationProjectName + ".Contracts.Persistence.Repositories",
+    InfrastructureProjectName + ".Persistence.Repositories",
+    ApplicationProjectName + ".Contracts.Persistence.Base"
+] ~}}
+{{~ include "CodeCraft.NET.Generator.Templates.Partials._render_usings.scriban" ~}}
 
 namespace {{ InfrastructureProjectName }}.Persistence;
 

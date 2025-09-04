@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using CodeCraft.NET.Application.Behaviours;
 using System.Reflection;
 
-namespace PARA.Platform.Application
+namespace CodeCraft.NET.Application
 {
     public static class ApplicationServiceRegistration
     {

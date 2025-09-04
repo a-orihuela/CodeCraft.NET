@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- ================================================================== -->
+    <!-- DARK THEME - SEMANTIC COLOR ASSIGNMENTS -->
+    <!-- This dictionary defines how colors behave in dark theme -->
+    <!-- ================================================================== -->
+
+    <!-- ======================== SEMANTIC COLORS ======================== -->
+    
+    <!-- Background colors -->
+    <Color x:Key="BackgroundPrimary">#0F172A</Color>     <!-- Dark slate background -->
+    <Color x:Key="BackgroundSecondary">#1E293B</Color>   <!-- Dark surface -->
+    <Color x:Key="BackgroundTertiary">#334155</Color>    <!-- Dark border -->
+    <Color x:Key="BackgroundInverse">#FFFFFF</Color>
+
+    <!-- Surface colors (for cards, panels, etc) -->
+    <Color x:Key="SurfacePrimary">#1E293B</Color>        <!-- Dark surface -->
+    <Color x:Key="SurfaceSecondary">#334155</Color>      <!-- Darker surface -->
+    <Color x:Key="SurfaceElevated">#2D3748</Color>       <!-- Elevated surface -->
+    <Color x:Key="SurfaceInverse">#FFFFFF</Color>
+
+    <!-- Text colors -->
+    <Color x:Key="TextPrimary">#FFFFFF</Color>
+    <Color x:Key="TextSecondary">#D1D5DB</Color>
+    <Color x:Key="TextTertiary">#9CA3AF</Color>
+    <Color x:Key="TextInverse">#111827</Color>
+    <Color x:Key="TextDisabled">#4B5563</Color>
+    <Color x:Key="TextPlaceholder">#6B7280</Color>
+
+    <!-- Border colors -->
+    <Color x:Key="BorderPrimary">#334155</Color>         <!-- Dark border -->
+    <Color x:Key="BorderSecondary">#475569</Color>       <!-- Lighter border -->
+    <Color x:Key="BorderFocus">#10B981</Color>
+    <Color x:Key="BorderError">#EF4444</Color>
+    <Color x:Key="BorderSuccess">#10B981</Color>
+
+    <!-- Icon colors -->
+    <Color x:Key="IconPrimary">#E5E7EB</Color>
+    <Color x:Key="IconSecondary">#9CA3AF</Color>
+    <Color x:Key="IconTertiary">#6B7280</Color>
+    <Color x:Key="IconInverse">#111827</Color>
+    <Color x:Key="IconDisabled">#4B5563</Color>
+
+    <!-- Link colors -->
+    <Color x:Key="LinkPrimary">#D1FAE5</Color>           <!-- Lighter primary for dark -->
+    <Color x:Key="LinkHover">#10B981</Color>
+    <Color x:Key="LinkVisited">#C084FC</Color>           <!-- Purple 400 -->
+
+    <!-- ======================== COMPONENT COLORS ======================= -->
+    
+    <!-- Button colors -->
+    <Color x:Key="ButtonPrimaryBackground">#10B981</Color>
+    <Color x:Key="ButtonPrimaryText">#FFFFFF</Color>
+    <Color x:Key="ButtonSecondaryBackground">#334155</Color>
+    <Color x:Key="ButtonSecondaryText">#FFFFFF</Color>
+    <Color x:Key="ButtonDisabledBackground">#374151</Color>
+    <Color x:Key="ButtonDisabledText">#6B7280</Color>
+
+    <!-- Input colors -->
+    <Color x:Key="InputBackground">#1E293B</Color>       <!-- Dark surface -->
+    <Color x:Key="InputBorder">#334155</Color>          <!-- Dark border -->
+    <Color x:Key="InputText">#FFFFFF</Color>
+    <Color x:Key="InputPlaceholder">#6B7280</Color>
+    <Color x:Key="InputFocusBorder">#10B981</Color>
+    <Color x:Key="InputErrorBorder">#EF4444</Color>
+
+    <!-- Card colors -->
+    <Color x:Key="CardBackground">#1E293B</Color>        <!-- Dark surface -->
+    <Color x:Key="CardBorder">#334155</Color>           <!-- Dark border -->
+    <Color x:Key="CardShadow">#40000000</Color>
+
+    <!-- Navigation colors -->
+    <Color x:Key="NavigationBackground">#1E293B</Color>  <!-- Dark surface -->
+    <Color x:Key="NavigationBorder">#334155</Color>     <!-- Dark border -->
+    <Color x:Key="NavigationText">#FFFFFF</Color>
+    <Color x:Key="NavigationActiveText">#D1FAE5</Color>
+
+    <!-- Modal/Overlay colors -->
+    <Color x:Key="OverlayBackground">#99000000</Color>   <!-- 60% black for dark mode -->
+    <Color x:Key="ModalBackground">#1E293B</Color>
+    <Color x:Key="ModalBorder">#334155</Color>
+
+</ResourceDictionary>

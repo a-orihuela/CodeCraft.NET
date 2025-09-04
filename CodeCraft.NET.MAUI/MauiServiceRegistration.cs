@@ -9,7 +9,7 @@ using CodeCraft.NET.MAUI.Services;
 
 namespace CodeCraft.NET.MAUI
 {
-    public static class MauiServiceRegistration
+    public static partial class MauiServiceRegistration
     {
         /// <summary>
         /// Registers all MAUI-specific services including ViewModels and Pages

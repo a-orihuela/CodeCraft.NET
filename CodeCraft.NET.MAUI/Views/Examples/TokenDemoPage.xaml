@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CodeCraft.NET.MAUI.Views.Examples.TokenDemoPage"
+             Title="Design Tokens Demo">
+
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="24">
+
+            <!-- Header Section -->
+            <Label Text="Design Tokens Demo" 
+                   Style="{StaticResource TokenDisplay1}" />
+            
+            <Label Text="This page demonstrates the centralized design system using tokens for spacing, typography, colors, and components." 
+                   Style="{StaticResource TokenBody}" />
+
+            <!-- Typography Section -->
+            <StackLayout Spacing="16" Margin="0,24,0,0">
+                <Label Text="Typography Scale" 
+                       Style="{StaticResource TokenHeading}" />
+                
+                <Frame Style="{StaticResource TokenCardStyle}">
+                    <StackLayout Spacing="12">
+                        <Label Text="Display 1 - Large titles" 
+                               Style="{StaticResource TokenDisplay1}" />
+                        <Label Text="Display 2 - Medium titles" 
+                               Style="{StaticResource TokenDisplay2}" />
+                        <Label Text="Heading - Section headers" 
+                               Style="{StaticResource TokenHeading}" />
+                        <Label Text="Subheading - Subsection headers" 
+                               Style="{StaticResource TokenSubheading}" />
+                        <Label Text="Body - Regular content text that is readable and comfortable for longer content." 
+                               Style="{StaticResource TokenBody}" />
+                        <Label Text="Caption - Small text for metadata and secondary information" 
+                               Style="{StaticResource TokenCaption}" />
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+
+            <!-- Buttons Section -->
+            <StackLayout Spacing="16" Margin="0,24,0,0">
+                <Label Text="Token-Based Buttons" 
+                       Style="{StaticResource TokenHeading}" />
+                
+                <Frame Style="{StaticResource TokenCardStyle}">
+                    <StackLayout Spacing="16">
+                        <Label Text="All buttons use consistent spacing, typography, and interaction states from design tokens." 
+                               Style="{StaticResource TokenBody}" />
+                        
+                        <!-- Button Row 1 -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                            <Button Grid.Column="0" 
+                                    Text="Primary Action" 
+                                    Style="{StaticResource TokenPrimaryButtonStyle}" />
+                            <Button Grid.Column="1" 
+                                    Text="Secondary" 
+                                    Style="{StaticResource TokenSecondaryButtonStyle}" />
+                        </Grid>
+
+                        <!-- Button Row 2 -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                            <Button Grid.Column="0" 
+                                    Text="Outline Style" 
+                                    Style="{StaticResource TokenOutlineButtonStyle}" />
+                            <Button Grid.Column="1" 
+                                    Text="Icon Button" 
+                                    Style="{StaticResource TokenIconButtonStyle}" />
+                        </Grid>
+
+                        <!-- Traditional function buttons for comparison -->
+                        <Label Text="Traditional Function Buttons:" 
+                               Style="{StaticResource TokenSubheading}" />
+                        
+                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                            <Button Grid.Column="0" 
+                                    Text="Save" 
+                                    Style="{StaticResource SaveButtonStyle}" />
+                            <Button Grid.Column="1" 
+                                    Text="Edit" 
+                                    Style="{StaticResource EditButtonStyle}" />
+                            <Button Grid.Column="2" 
+                                    Text="Delete" 
+                                    Style="{StaticResource DeleteButtonStyle}" />
+                        </Grid>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+
+            <!-- Card Types Section -->
+            <StackLayout Style="{StaticResource TokenSectionStyle}">
+                <Label Text="Token-Based Cards" 
+                       Style="{StaticResource TokenHeading}" />
+                
+                <!-- Standard Card -->
+                <Frame Style="{StaticResource TokenCardStyle}">
+                    <StackLayout>
+                        <Label Text="Standard Token Card" 
+                               Style="{StaticResource TokenSubheading}" />
+                        <Label Text="Uses token-based spacing, radius, shadows, and colors for consistency across the app." 
+                               Style="{StaticResource TokenBody}" />
+                    </StackLayout>
+                </Frame>
+
+                <!-- Elevated Card -->
+                <Frame Style="{StaticResource TokenElevatedCardStyle}">
+                    <StackLayout>
+                        <Label Text="Elevated Token Card" 
+                               Style="{StaticResource TokenSubheading}" />
+                        <Label Text="Higher elevation with larger shadows and padding, perfect for important content." 
+                               Style="{StaticResource TokenBody}" />
+                    </StackLayout>
+                </Frame>
+
+                <!-- Compact Cards in Grid -->
+                <Label Text="Compact Cards:" 
+                       Style="{StaticResource TokenSubheading}" />
+                
+                <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,*" 
+                      RowSpacing="{StaticResource SpaceSM}" 
+                      ColumnSpacing="{StaticResource SpaceSM}">
+                    
+                    <Frame Grid.Row="0" Grid.Column="0" 
+                           Style="{StaticResource TokenCompactCardStyle}">
+                        <StackLayout HorizontalOptions="Center">
+                            <Label Text="24" 
+                                   FontSize="{StaticResource FontSize3XL}" 
+                                   FontFamily="{StaticResource PrimaryFontSemibold}" 
+                                   HorizontalOptions="Center" 
+                                   TextColor="{StaticResource Primary}" />
+                            <Label Text="Tokens Used" 
+                                   Style="{StaticResource TokenCaption}" 
+                                   HorizontalOptions="Center" />
+                        </StackLayout>
+                    </Frame>
+
+                    <Frame Grid.Row="0" Grid.Column="1" 
+                           Style="{StaticResource TokenCompactCardStyle}">
+                        <StackLayout HorizontalOptions="Center">
+                            <Label Text="100%" 
+                                   FontSize="{StaticResource FontSize3XL}" 
+                                   FontFamily="{StaticResource PrimaryFontSemibold}" 
+                                   HorizontalOptions="Center" 
+                                   TextColor="{StaticResource Success}" />
+                            <Label Text="Consistent" 
+                                   Style="{StaticResource TokenCaption}" 
+                                   HorizontalOptions="Center" />
+                        </StackLayout>
+                    </Frame>
+
+                    <Frame Grid.Row="1" Grid.Column="0" 
+                           Style="{StaticResource TokenCompactCardStyle}">
+                        <StackLayout HorizontalOptions="Center">
+                            <Label Text="AUTO" 
+                                   FontSize="{StaticResource FontSize3XL}" 
+                                   FontFamily="{StaticResource PrimaryFontSemibold}" 
+                                   HorizontalOptions="Center" 
+                                   TextColor="{StaticResource Secondary}" />
+                            <Label Text="Dark Mode" 
+                                   Style="{StaticResource TokenCaption}" 
+                                   HorizontalOptions="Center" />
+                        </StackLayout>
+                    </Frame>
+
+                    <Frame Grid.Row="1" Grid.Column="1" 
+                           Style="{StaticResource TokenCompactCardStyle}">
+                        <StackLayout HorizontalOptions="Center">
+                            <Label Text="FAST" 
+                                   FontSize="{StaticResource FontSize3XL}" 
+                                   FontFamily="{StaticResource PrimaryFontSemibold}" 
+                                   HorizontalOptions="Center" 
+                                   TextColor="{StaticResource Info}" />
+                            <Label Text="Performance" 
+                                   Style="{StaticResource TokenCaption}" 
+                                   HorizontalOptions="Center" />
+                        </StackLayout>
+                    </Frame>
+                </Grid>
+            </StackLayout>
+
+            <!-- Forms Section -->
+            <StackLayout Style="{StaticResource TokenSectionStyle}">
+                <Label Text="Token-Based Forms" 
+                       Style="{StaticResource TokenHeading}" />
+                
+                <Frame Style="{StaticResource TokenCardStyle}">
+                    <StackLayout>
+                        <Label Text="All form elements use consistent spacing and styling from design tokens." 
+                               Style="{StaticResource TokenBody}" />
+
+                        <!-- Form Group 1 -->
+                        <StackLayout Style="{StaticResource TokenFormGroupStyle}">
+                            <Label Text="Full Name:" 
+                                   Style="{StaticResource TokenFormLabelStyle}" />
+                            <Border Style="{StaticResource TokenInputBorderStyle}">
+                                <Entry Placeholder="Enter your full name" 
+                                       Style="{StaticResource TokenEntryStyle}" />
+                            </Border>
+                        </StackLayout>
+
+                        <!-- Form Group 2 -->
+                        <StackLayout Style="{StaticResource TokenFormGroupStyle}">
+                            <Label Text="Email Address:" 
+                                   Style="{StaticResource TokenFormLabelStyle}" />
+                            <Border Style="{StaticResource TokenInputBorderStyle}">
+                                <Entry Placeholder="your.email@example.com" 
+                                       Keyboard="Email"
+                                       Style="{StaticResource TokenEntryStyle}" />
+                            </Border>
+                        </StackLayout>
+
+                        <!-- Form Actions -->
+                        <Grid ColumnDefinitions="*,*" 
+                              ColumnSpacing="12"
+                              Margin="0,32,0,0">
+                            <Button Grid.Column="0" 
+                                    Text="Save" 
+                                    Style="{StaticResource TokenPrimaryButtonStyle}" />
+                            <Button Grid.Column="1" 
+                                    Text="Cancel" 
+                                    Style="{StaticResource TokenOutlineButtonStyle}" />
+                        </Grid>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+
+            <!-- Badges Section -->
+            <StackLayout Style="{StaticResource TokenSectionStyle}">
+                <Label Text="Token-Based Badges" 
+                       Style="{StaticResource TokenHeading}" />
+                
+                <Frame Style="{StaticResource TokenCardStyle}">
+                    <StackLayout>
+                        <Label Text="Status indicators using consistent styling:" 
+                               Style="{StaticResource TokenBody}" />
+
+                        <FlexLayout Direction="Row" Wrap="Wrap" JustifyContent="Start">
+                            <Frame Style="{StaticResource TokenBadgeStyle}" 
+                                   BackgroundColor="{StaticResource Success}">
+                                <Label Text="Active" Style="{StaticResource TokenBadgeLabelStyle}" />
+                            </Frame>
+                            
+                            <Frame Style="{StaticResource TokenBadgeStyle}" 
+                                   BackgroundColor="{StaticResource Warning}">
+                                <Label Text="Pending" Style="{StaticResource TokenBadgeLabelStyle}" />
+                            </Frame>
+                            
+                            <Frame Style="{StaticResource TokenBadgeStyle}" 
+                                   BackgroundColor="{StaticResource Danger}">
+                                <Label Text="Error" Style="{StaticResource TokenBadgeLabelStyle}" />
+                            </Frame>
+                            
+                            <Frame Style="{StaticResource TokenBadgeStyle}" 
+                                   BackgroundColor="{StaticResource Info}">
+                                <Label Text="Info" Style="{StaticResource TokenBadgeLabelStyle}" />
+                            </Frame>
+                            
+                            <Frame Style="{StaticResource TokenBadgeStyle}" 
+                                   BackgroundColor="{StaticResource Primary}">
+                                <Label Text="Primary" Style="{StaticResource TokenBadgeLabelStyle}" />
+                            </Frame>
+                        </FlexLayout>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+
+            <!-- Benefits Section -->
+            <StackLayout Style="{StaticResource TokenSectionStyle}">
+                <Label Text="Benefits of Design Tokens" 
+                       Style="{StaticResource TokenHeading}" />
+                
+                <Frame Style="{StaticResource TokenElevatedCardStyle}">
+                    <StackLayout>
+                        <Label Text="Consistency" 
+                               Style="{StaticResource TokenSubheading}" />
+                        <Label Text="All spacing, typography, and colors are centralized. Changing a token updates the entire app." 
+                               Style="{StaticResource TokenBody}" />
+
+                        <Label Text="Maintainability" 
+                               Style="{StaticResource TokenSubheading}" />
+                        <Label Text="Design decisions are documented in one place. No more hunting for hardcoded values." 
+                               Style="{StaticResource TokenBody}" />
+
+                        <Label Text="Scalability" 
+                               Style="{StaticResource TokenSubheading}" />
+                        <Label Text="Easy to add new components that automatically follow the design system." 
+                               Style="{StaticResource TokenBody}" />
+
+                        <Label Text="Dark Mode Support" 
+                               Style="{StaticResource TokenSubheading}" />
+                        <Label Text="Automatic theme switching without duplicating styles or components." 
+                               Style="{StaticResource TokenBody}" />
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+
+            <!-- Footer -->
+            <Frame Style="{StaticResource TokenCompactCardStyle}" 
+                   Margin="0,24,0,48">
+                <StackLayout>
+                    <Label Text="Built with Design Tokens" 
+                           Style="{StaticResource TokenSubheading}" 
+                           HorizontalTextAlignment="Center" />
+                    <Label Text="This entire page uses centralized design tokens for consistent spacing, typography, and theming." 
+                           Style="{StaticResource TokenCaption}" 
+                           HorizontalTextAlignment="Center" />
+                </StackLayout>
+            </Frame>
+
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>

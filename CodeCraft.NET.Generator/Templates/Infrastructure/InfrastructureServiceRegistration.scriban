@@ -3,35 +3,34 @@
 //     Manual changes to this file may be overwritten.
 // </auto-generated>
 
-using CodeCraft.NET.Application.Contracts.Persistence;
-using CodeCraft.NET.Application.Contracts.Persistence.Base;
-using CodeCraft.NET.Infrastructure.Persistence;
-using CodeCraft.NET.Cross.Enums;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-
-namespace CodeCraft.NET.Infrastructure
+{{~ usings = [
+    ApplicationProjectName + ".Contracts.Persistence",
+    ApplicationProjectName + ".Contracts.Persistence.Base",
+    InfrastructureProjectName + ".Persistence",
+    "Microsoft.EntityFrameworkCore",
+    "Microsoft.Extensions.Configuration",
+    "Microsoft.Extensions.DependencyInjection",
+    "Microsoft.Extensions.DependencyInjection.Extensions"
+] ~}}
+{{~ include "CodeCraft.NET.Generator.Templates.Partials._render_usings.scriban" ~}}
+namespace {{ InfrastructureProjectName }}
 {
-    public static class InfrastructureServiceRegistration
+    public static partial class InfrastructureServiceRegistration
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration, string appConnection)
         {
-{{~ if DatabaseProvider == "SQLite" ~}}
-            AddDbContext(services, configuration, appConnection, DatabaseProvider.SQLite);
-{{~ else ~}}
-            AddDbContext(services, configuration, appConnection, DatabaseProvider.SqlServer);
-{{~ end ~}}
+            AddDbContext(services, appConnection);
             AddRepositories(services);
+            AddCustomServices(services);
 
             return services;
         }
 
-        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, string connectionString, DatabaseProvider provider = DatabaseProvider.SqlServer)
+        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, string connectionString)
         {
-            AddDbContext(services, connectionString, provider);
+            AddDbContext(services, connectionString);
             AddRepositories(services);
+            AddCustomServices(services);
 
             return services;
         }
@@ -40,7 +39,7 @@ namespace CodeCraft.NET.Infrastructure
         {
             // Register generic adapter
             services.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepositoryAdapter<>));
-            services.AddScoped<ICodeCraftUnitOfWork, CodeCraftUnitOfWork>();
+            services.AddScoped<{{ UnitOfWorkInterfaceName }}, {{ UnitOfWorkImplementationName }}>();
 
             // Automatically register all repositories in the target namespace
             var assembly = typeof(RepositoryBase<,>).Assembly;
@@ -59,7 +58,7 @@ namespace CodeCraft.NET.Infrastructure
             {
                 var interfaceType = implementationType.GetInterfaces().FirstOrDefault(i =>
                     i.Namespace != null &&
-                    i.Namespace.StartsWith("CodeCraft.NET.Application.Contracts.Persistence.Repositories"));
+                    i.Namespace.StartsWith("{{ ApplicationProjectName }}.Contracts.Persistence.Repositories"));
 
                 if (interfaceType != null)
                 {
@@ -68,52 +67,17 @@ namespace CodeCraft.NET.Infrastructure
             }
         }
 
-        private static void AddDbContext(IServiceCollection services, IConfiguration configuration, string appConnection, DatabaseProvider provider)
+        private static void AddDbContext(IServiceCollection services, string connectionString)
         {
-            switch (provider)
-            {
-                case DatabaseProvider.SQLite:
-                    services.AddDbContext<ApplicationDbContext>(options =>
-                        options.UseSqlite(
-                            appConnection,
-                            x => x.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
-                        )
-                    );
-                    break;
-                case DatabaseProvider.SqlServer:
-                default:
-                    services.AddDbContext<ApplicationDbContext>(options =>
-                        options.UseSqlServer(
-                            appConnection,
-                            x => x.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
-                        )
-                    );
-                    break;
-            }
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlite(
+                    connectionString,
+                    x => x.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
+                )
+            );
         }
 
-        private static void AddDbContext(IServiceCollection services, string connectionString, DatabaseProvider provider)
-        {
-            switch (provider)
-            {
-                case DatabaseProvider.SQLite:
-                    services.AddDbContext<ApplicationDbContext>(options =>
-                        options.UseSqlite(
-                            connectionString,
-                            x => x.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
-                        )
-                    );
-                    break;
-                case DatabaseProvider.SqlServer:
-                default:
-                    services.AddDbContext<ApplicationDbContext>(options =>
-                        options.UseSqlServer(
-                            connectionString,
-                            x => x.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
-                        )
-                    );
-                    break;
-            }
-        }
+        // This method is implemented in the custom partial class
+        static partial void AddCustomServices(IServiceCollection services);
     }
 }

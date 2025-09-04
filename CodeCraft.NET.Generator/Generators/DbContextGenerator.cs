@@ -17,13 +17,13 @@ namespace CodeCraft.NET.Generator.Generators
 		{
 			// DbContext
 			_templateRenderer.Render(
-				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.DbContext)),
+				ConfigHelper.GetTemplatePath("DbContext"),
 				ConfigHelper.GetDbContextPath(),
 				new { entities });
 
 			// DbContext Factory
 			_templateRenderer.Render(
-				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.DbContextFactory)),
+				ConfigHelper.GetTemplatePath("DbContextFactory"),
 				ConfigHelper.GetDbContextFactoryPath(),
 				new { entities });
 		}

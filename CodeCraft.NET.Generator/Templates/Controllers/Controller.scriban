@@ -3,14 +3,16 @@
 //     Manual changes to this file may be overwritten.
 // </auto-generated>
 
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Commands.Create;
-using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Commands.Delete;
-using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Commands.Update;
-using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Queries.Get{{ Name }}ById;
-using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Queries.Get{{ Name }}WithRelated;
-
+{{~ usings = [
+    "MediatR",
+    "Microsoft.AspNetCore.Mvc",
+    ApplicationProjectName + ".CQRS.Features." + NamePlural + ".Commands.Create",
+    ApplicationProjectName + ".CQRS.Features." + NamePlural + ".Commands.Delete", 
+    ApplicationProjectName + ".CQRS.Features." + NamePlural + ".Commands.Update",
+    ApplicationProjectName + ".CQRS.Features." + NamePlural + ".Queries.Get" + Name + "ById",
+    ApplicationProjectName + ".CQRS.Features." + NamePlural + ".Queries.Get" + Name + "WithRelated"
+] ~}}
+{{~ include "CodeCraft.NET.Generator.Templates.Partials._render_usings.scriban" ~}}
 namespace {{ ServerProjectName }}.Controllers
 {
     [Route("api/[controller]")]

@@ -1,6 +1,4 @@
-using CodeCraft.NET.Generator.Models;
 using System.Diagnostics;
-using System.Text.Json;
 
 namespace CodeCraft.NET.Generator.Helpers
 {
@@ -42,16 +40,16 @@ namespace CodeCraft.NET.Generator.Helpers
 		/// </summary>
 		private static bool CheckWithDryRunMigration(string context)
 		{
-			var config = CodeCraftConfig.Instance;
+			var config = ConfigurationContext.Options;
 
 			// Build complete paths to .csproj files
 			var infrastructureProjectPath = Path.Combine(
-				config.GetSolutionRelativePath(config.ProjectNames.Infrastructure),
-				$"{config.ProjectNames.Infrastructure}.csproj");
+				ConfigurationContext.GetSolutionRelativePath(config.Shared.ProjectNames["Infrastructure"]),
+				$"{config.Shared.ProjectNames["Infrastructure"]}.csproj");
 
 			var serverProjectPath = Path.Combine(
-				config.GetSolutionRelativePath(config.ProjectNames.Server),
-				$"{config.ProjectNames.Server}.csproj");
+				ConfigurationContext.GetSolutionRelativePath(config.Shared.ProjectNames["Server"]),
+				$"{config.Shared.ProjectNames["Server"]}.csproj");
 
 			// Create a temporary migration name to test
 			string tempMigrationName = $"TempCheck_{DateTime.UtcNow.Ticks}";
@@ -68,7 +66,7 @@ namespace CodeCraft.NET.Generator.Helpers
 				RedirectStandardError = true,
 				UseShellExecute = false,
 				CreateNoWindow = true,
-				WorkingDirectory = config.GetSolutionRelativePath("")
+				WorkingDirectory = ConfigurationContext.GetSolutionRoot()
 			};
 
 			try
@@ -110,16 +108,16 @@ namespace CodeCraft.NET.Generator.Helpers
 		/// </summary>
 		private static bool CheckWithDatabaseScript(string context)
 		{
-			var config = CodeCraftConfig.Instance;
+			var config = ConfigurationContext.Options;
 
 			// Build complete paths to .csproj files
 			var infrastructureProjectPath = Path.Combine(
-				config.GetSolutionRelativePath(config.ProjectNames.Infrastructure),
-				$"{config.ProjectNames.Infrastructure}.csproj");
+				ConfigurationContext.GetSolutionRelativePath(config.Shared.ProjectNames["Infrastructure"]),
+				$"{config.Shared.ProjectNames["Infrastructure"]}.csproj");
 
 			var serverProjectPath = Path.Combine(
-				config.GetSolutionRelativePath(config.ProjectNames.Server),
-				$"{config.ProjectNames.Server}.csproj");
+				ConfigurationContext.GetSolutionRelativePath(config.Shared.ProjectNames["Server"]),
+				$"{config.Shared.ProjectNames["Server"]}.csproj");
 
 			var startInfo = new ProcessStartInfo
 			{
@@ -132,7 +130,7 @@ namespace CodeCraft.NET.Generator.Helpers
 				RedirectStandardError = true,
 				UseShellExecute = false,
 				CreateNoWindow = true,
-				WorkingDirectory = config.GetSolutionRelativePath("")
+				WorkingDirectory = ConfigurationContext.GetSolutionRoot()
 			};
 
 			try
@@ -172,9 +170,9 @@ namespace CodeCraft.NET.Generator.Helpers
 		/// </summary>
 		public static bool HasRecentMigration(string context, string migrationPrefix, int withinMinutes = 5)
 		{
-			var config = CodeCraftConfig.Instance;
+			var config = ConfigurationContext.Options;
 			var migrationsPath = Path.Combine(
-				config.GetSolutionRelativePath(config.ProjectNames.Infrastructure),
+				ConfigurationContext.GetSolutionRelativePath(config.Shared.ProjectNames["Infrastructure"]),
 				"Migrations");
 
 			if (!Directory.Exists(migrationsPath))
@@ -202,9 +200,9 @@ namespace CodeCraft.NET.Generator.Helpers
 		/// </summary>
 		public static bool HasAnyMigrations(string context)
 		{
-			var config = CodeCraftConfig.Instance;
+			var config = ConfigurationContext.Options;
 			var migrationsPath = Path.Combine(
-				config.GetSolutionRelativePath(config.ProjectNames.Infrastructure),
+				ConfigurationContext.GetSolutionRelativePath(config.Shared.ProjectNames["Infrastructure"]),
 				"Migrations");
 
 			if (!Directory.Exists(migrationsPath))

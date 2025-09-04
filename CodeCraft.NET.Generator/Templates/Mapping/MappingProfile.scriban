@@ -3,15 +3,14 @@
 //     Manual changes to this file may be overwritten.
 // </auto-generated>
 
-using AutoMapper;
-using {{ DomainProjectName }}.Model;
-{{ for entity in entities }}
-using {{ ApplicationProjectName }}.CQRS.Features.{{ entity.NamePlural }}.Commands.Create;
-using {{ ApplicationProjectName }}.CQRS.Features.{{ entity.NamePlural }}.Commands.Update;
-using {{ ApplicationProjectName }}.DTOs.{{ entity.NamePlural }};
-using {{ ApplicationProjectName }}.DTOs.Custom.{{ entity.NamePlural }};
-{{ end }}
-
+{{~ usings = ["AutoMapper", DomainProjectName + ".Model"] ~}}
+{{~ for entity in entities ~}}
+{{~ usings = usings | array.add (ApplicationProjectName + ".CQRS.Features." + entity.NamePlural + ".Commands.Create") ~}}
+{{~ usings = usings | array.add (ApplicationProjectName + ".CQRS.Features." + entity.NamePlural + ".Commands.Update") ~}}
+{{~ usings = usings | array.add (ApplicationProjectName + ".DTOs." + entity.NamePlural) ~}}
+{{~ usings = usings | array.add (ApplicationProjectName + ".DTOs.Custom." + entity.NamePlural) ~}}
+{{~ end ~}}
+{{~ include "CodeCraft.NET.Generator.Templates.Partials._render_usings.scriban" ~}}
 namespace {{ ApplicationProjectName }}.Mapping
 {
     public partial class MappingProfile : Profile

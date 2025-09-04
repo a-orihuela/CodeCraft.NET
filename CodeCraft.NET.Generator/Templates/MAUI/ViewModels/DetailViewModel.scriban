@@ -59,9 +59,10 @@ namespace {{ MauiProjectName }}.ViewModels.{{ NamePlural }}
             IsLoading = true;
             try
             {
-                entity = await _{{ name | string.downcase }}Service.GetWithRelatedAsync(entityId);
-                if (entity != null)
+                var result = await _{{ name | string.downcase }}Service.GetWithRelatedAsync(entityId);
+                if (result.IsSuccess && result.Value != null)
                 {
+                    entity = result.Value;
                     {{~ for property in Properties ~}}
                     {{~ if property.Name != "Id" && !property.IsNavigation && property.Type == "string" ~}}
                     Title = $"{{ Name }} - {entity.{{ property.Name }}}";
@@ -71,7 +72,8 @@ namespace {{ MauiProjectName }}.ViewModels.{{ NamePlural }}
                 }
                 else
                 {
-                    await _dialogService.ShowErrorAsync("Error", "{{ Name }} not found");
+                    var errorMsg = result.IsSuccess ? "{{ Name }} not found" : result.ErrorMessage;
+                    await _dialogService.ShowErrorAsync("Error", errorMsg);
                     await _navigationService.GoBackAsync();
                 }
             }
@@ -114,9 +116,16 @@ namespace {{ MauiProjectName }}.ViewModels.{{ NamePlural }}
             IsDeleting = true;
             try
             {
-                await _{{ name | string.downcase }}Service.DeleteAsync(entity.Id);
-                await _dialogService.ShowInfoAsync("Success", "{{ Name }} deleted successfully");
-                await _navigationService.GoBackAsync();
+                var result = await _{{ name | string.downcase }}Service.DeleteAsync(entity.Id);
+                if (result.IsSuccess)
+                {
+                    await _dialogService.ShowInfoAsync("Success", "{{ Name }} deleted successfully");
+                    await _navigationService.GoBackAsync();
+                }
+                else
+                {
+                    await _dialogService.ShowErrorAsync("Error", $"Failed to delete {{ name | string.downcase }}: {result.ErrorMessage}");
+                }
             }
             catch (Exception ex)
             {

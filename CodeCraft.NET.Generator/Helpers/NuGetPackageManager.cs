@@ -1,4 +1,3 @@
-using CodeCraft.NET.Generator.Models;
 using System.Diagnostics;
 using System.Xml.Linq;
 
@@ -12,11 +11,11 @@ namespace CodeCraft.NET.Generator.Helpers
         /// <param name="databaseProvider">The database provider (SQLite or SqlServer)</param>
         public static void EnsureEntityFrameworkPackage(string databaseProvider)
         {
-            var config = CodeCraftConfig.Instance;
+            var config = ConfigurationContext.Options;
             var infrastructureProjectPath = Path.Combine(
-                config.GetSolutionRoot(),
-                config.ProjectNames.Infrastructure,
-                $"{config.ProjectNames.Infrastructure}.csproj"
+                ConfigurationContext.GetSolutionRoot(),
+                config.Shared.ProjectNames["Infrastructure"],
+                $"{config.Shared.ProjectNames["Infrastructure"]}.csproj"
             );
 
             Console.WriteLine($"   Ensuring Entity Framework packages for {databaseProvider}...");
@@ -34,7 +33,6 @@ namespace CodeCraft.NET.Generator.Helpers
 
                 // Define required packages for each provider
                 var requiredPackages = new Dictionary<string, string>();
-                var optionalPackages = new List<string>();
 
                 if (databaseProvider.Equals("SQLite", StringComparison.OrdinalIgnoreCase))
                 {
@@ -119,10 +117,14 @@ namespace CodeCraft.NET.Generator.Helpers
         {
             try
             {
-                var config = CodeCraftConfig.Instance;
-                var solutionPath = Path.Combine(config.GetSolutionRoot(), config.ProjectNames.SolutionFileName);
+                var config = ConfigurationContext.Options;
+                var solutionFileName = config.Shared.ProjectNames.ContainsKey("SolutionFileName") 
+                    ? config.Shared.ProjectNames["SolutionFileName"] 
+                    : "*.sln";
+                
+                var solutionPath = Path.Combine(ConfigurationContext.GetSolutionRoot(), solutionFileName);
 
-                if (File.Exists(solutionPath))
+                if (File.Exists(solutionPath) || Directory.GetFiles(ConfigurationContext.GetSolutionRoot(), "*.sln").Any())
                 {
                     Console.WriteLine("   Restoring NuGet packages...");
                     
@@ -130,7 +132,7 @@ namespace CodeCraft.NET.Generator.Helpers
                     {
                         FileName = "dotnet",
                         Arguments = "restore",
-                        WorkingDirectory = config.GetSolutionRoot(),
+                        WorkingDirectory = ConfigurationContext.GetSolutionRoot(),
                         RedirectStandardOutput = true,
                         RedirectStandardError = true,
                         UseShellExecute = false,

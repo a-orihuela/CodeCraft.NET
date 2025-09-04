@@ -17,59 +17,30 @@ namespace CodeCraft.NET.Generator.Generators
 		{
 			// Controller
 			_templateRenderer.Render(
-				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.Controller)),
+				ConfigHelper.GetTemplatePath("Controller"),
 				ConfigHelper.GetControllerPath(entity.Name),
 				CreateTemplateContext(entity));
 
-			// HTTP Request
+			// HTTP Request files
 			_templateRenderer.Render(
-				ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.HttpRequest)),
+				ConfigHelper.GetTemplatePath("HttpRequest"),
 				ConfigHelper.GetHttpRequestPath(entity.Name),
 				CreateTemplateContext(entity));
 		}
 
-		private object CreateTemplateContext(EntityMetadata entity, object? additionalData = null)
+		private object CreateTemplateContext(EntityMetadata entity)
 		{
-			var config = CodeCraftConfig.Instance;
-			var baseContext = new
+			var config = ConfigurationContext.Options;
+			return new
 			{
-				// Entity data
 				entity.Name,
 				entity.NamePlural,
 				entity.Properties,
 				entity.Usings,
-
-				// Project names
-				ApplicationProjectName = config.ProjectNames.Application,
-				DomainProjectName = config.ProjectNames.Domain,
-				InfrastructureProjectName = config.ProjectNames.Infrastructure,
-
-				// Interface names
-				UnitOfWorkInterfaceName = config.Files.UnitOfWorkInterfaceName
+				ApplicationProjectName = config.Shared.ProjectNames["Application"],
+				DomainProjectName = config.Shared.ProjectNames["Domain"],
+				ServerProjectName = config.Shared.ProjectNames["Server"]
 			};
-
-			// If we have additional data, merge it with the base context
-			if (additionalData != null)
-			{
-				var additionalProps = additionalData.GetType().GetProperties();
-				var mergedData = new Dictionary<string, object>();
-
-				// Add base context properties
-				foreach (var prop in baseContext.GetType().GetProperties())
-				{
-					mergedData[prop.Name] = prop.GetValue(baseContext)!;
-				}
-
-				// Add additional properties
-				foreach (var prop in additionalProps)
-				{
-					mergedData[prop.Name] = prop.GetValue(additionalData)!;
-				}
-
-				return mergedData;
-			}
-
-			return baseContext;
 		}
 	}
 }

@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- ================================================================== -->
+    <!-- DESIGN SYSTEM COMPONENTS -->
+    <!-- Modern components based on design tokens -->
+    <!-- ================================================================== -->
+
+    <!-- ======================== BUTTON COMPONENTS ====================== -->
+    
+    <!-- Primary Button Style -->
+    <Style x:Key="PrimaryButtonStyle" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="#10B981" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="HeightRequest" Value="44" />
+        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="Padding" Value="16" />
+        <Setter Property="Margin" Value="4" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="Scale" Value="1" />
+                            <Setter Property="Opacity" Value="1" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="Scale" Value="0.96" />
+                            <Setter Property="Opacity" Value="0.6" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="#E5E7EB" />
+                            <Setter Property="TextColor" Value="#9CA3AF" />
+                            <Setter Property="Opacity" Value="0.4" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <!-- Secondary Button Style -->
+    <Style x:Key="SecondaryButtonStyle" TargetType="Button">
+        <Setter Property="BackgroundColor" 
+                Value="{AppThemeBinding Light=#F3F4F6, Dark=#334155}" />
+        <Setter Property="TextColor" 
+                Value="{AppThemeBinding Light=#111827, Dark=White}" />
+        <Setter Property="BorderColor" 
+                Value="{AppThemeBinding Light=#E5E7EB, Dark=#334155}" />
+        <Setter Property="BorderWidth" Value="1" />
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="HeightRequest" Value="44" />
+        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="Padding" Value="16" />
+        <Setter Property="Margin" Value="4" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="Scale" Value="1" />
+                            <Setter Property="Opacity" Value="1" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="Scale" Value="0.96" />
+                            <Setter Property="Opacity" Value="0.6" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <!-- ======================== CARD COMPONENTS ======================== -->
+    
+    <!-- Base Card Style -->
+    <Style x:Key="CardStyle" TargetType="Frame">
+        <Setter Property="BackgroundColor" 
+                Value="{AppThemeBinding Light=White, Dark=#1E293B}" />
+        <Setter Property="BorderColor" 
+                Value="{AppThemeBinding Light=#E5E7EB, Dark=#334155}" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="Padding" Value="16" />
+        <Setter Property="Margin" Value="4" />
+        <Setter Property="HasShadow" Value="True" />
+        <Setter Property="IsClippedToBounds" Value="True" />
+    </Style>
+
+    <!-- Elevated Card -->
+    <Style x:Key="ElevatedCardStyle" TargetType="Frame" BasedOn="{StaticResource CardStyle}">
+        <Setter Property="BackgroundColor" 
+                Value="{AppThemeBinding Light=White, Dark=#2D3748}" />
+    </Style>
+
+    <!-- Compact Card (for lists) -->
+    <Style x:Key="CompactCardStyle" TargetType="Frame" BasedOn="{StaticResource CardStyle}">
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="Margin" Value="2" />
+    </Style>
+
+    <!-- ======================== INPUT COMPONENTS ======================= -->
+    
+    <!-- Modern Entry Style -->
+    <Style x:Key="ModernEntryStyle" TargetType="Entry">
+        <Setter Property="BackgroundColor" 
+                Value="{AppThemeBinding Light=White, Dark=#1E293B}" />
+        <Setter Property="TextColor" 
+                Value="{AppThemeBinding Light=#111827, Dark=White}" />
+        <Setter Property="PlaceholderColor" 
+                Value="{AppThemeBinding Light=#9CA3AF, Dark=#6B7280}" />
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="HeightRequest" Value="44" />
+        <Setter Property="Margin" Value="4" />
+    </Style>
+
+    <!-- Modern Border for Inputs -->
+    <Style x:Key="InputBorderStyle" TargetType="Border">
+        <Setter Property="BackgroundColor" 
+                Value="{AppThemeBinding Light=White, Dark=#1E293B}" />
+        <Setter Property="Stroke" 
+                Value="{AppThemeBinding Light=#E5E7EB, Dark=#334155}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 6" />
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="Margin" Value="4" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Focused">
+                        <VisualState.Setters>
+                            <Setter Property="Stroke" Value="#10B981" />
+                            <Setter Property="StrokeThickness" Value="2" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <!-- ======================== TYPOGRAPHY COMPONENTS ================== -->
+    
+    <!-- Heading Styles -->
+    <Style x:Key="H1Style" TargetType="Label">
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="28" />
+        <Setter Property="TextColor" 
+                Value="{AppThemeBinding Light=#111827, Dark=White}" />
+        <Setter Property="Margin" Value="0,0,0,16" />
+    </Style>
+
+    <Style x:Key="H2Style" TargetType="Label">
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="TextColor" 
+                Value="{AppThemeBinding Light=#111827, Dark=White}" />
+        <Setter Property="Margin" Value="0,0,0,12" />
+    </Style>
+
+    <!-- Body Text Styles -->
+    <Style x:Key="BodyTextStyle" TargetType="Label">
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="TextColor" 
+                Value="{AppThemeBinding Light=#111827, Dark=White}" />
+        <Setter Property="LineHeight" Value="1.5" />
+    </Style>
+
+    <Style x:Key="SecondaryTextStyle" TargetType="Label">
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="TextColor" 
+                Value="{AppThemeBinding Light=#4B5563, Dark=#D1D5DB}" />
+        <Setter Property="LineHeight" Value="1.5" />
+    </Style>
+
+    <Style x:Key="CaptionTextStyle" TargetType="Label">
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="TextColor" 
+                Value="{AppThemeBinding Light=#6B7280, Dark=#9CA3AF}" />
+    </Style>
+
+    <!-- ======================== LAYOUT COMPONENTS ====================== -->
+    
+    <!-- Standard Layout Stack -->
+    <Style x:Key="StandardStackStyle" TargetType="StackLayout">
+        <Setter Property="Spacing" Value="16" />
+        <Setter Property="Padding" Value="20" />
+    </Style>
+
+    <!-- Form Group Style -->
+    <Style x:Key="FormGroupStyle" TargetType="StackLayout">
+        <Setter Property="Spacing" Value="4" />
+        <Setter Property="Margin" Value="0,0,0,12" />
+    </Style>
+
+    <!-- Form Label Style -->
+    <Style x:Key="FormLabelStyle" TargetType="Label">
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="TextColor" 
+                Value="{AppThemeBinding Light=#111827, Dark=White}" />
+        <Setter Property="Margin" Value="0,0,0,2" />
+    </Style>
+
+    <!-- ======================== STATUS COMPONENTS ====================== -->
+    
+    <!-- Badge Style -->
+    <Style x:Key="BadgeStyle" TargetType="Frame">
+        <Setter Property="CornerRadius" Value="999" />
+        <Setter Property="Padding" Value="4,2" />
+        <Setter Property="HasShadow" Value="False" />
+        <Setter Property="BorderColor" Value="Transparent" />
+        <Setter Property="IsClippedToBounds" Value="True" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- Success Badge -->
+    <Style x:Key="SuccessBadgeStyle" TargetType="Frame" BasedOn="{StaticResource BadgeStyle}">
+        <Setter Property="BackgroundColor" Value="#ECFDF5" />
+    </Style>
+
+    <!-- Warning Badge -->
+    <Style x:Key="WarningBadgeStyle" TargetType="Frame" BasedOn="{StaticResource BadgeStyle}">
+        <Setter Property="BackgroundColor" Value="#FFFBEB" />
+    </Style>
+
+    <!-- Danger Badge -->
+    <Style x:Key="DangerBadgeStyle" TargetType="Frame" BasedOn="{StaticResource BadgeStyle}">
+        <Setter Property="BackgroundColor" Value="#FEF2F2" />
+    </Style>
+
+    <!-- Badge Text Style -->
+    <Style x:Key="BadgeTextStyle" TargetType="Label">
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+</ResourceDictionary>

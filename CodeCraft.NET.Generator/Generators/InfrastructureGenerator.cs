@@ -27,14 +27,14 @@ namespace CodeCraft.NET.Generator.Generators
 
         private void GenerateInfrastructureServiceRegistration(string databaseProvider)
         {
-            var templatePath = ConfigHelper.GetTemplatePath(nameof(CodeCraftConfig.Instance.Templates.InfrastructureServiceRegistration));
+            var templatePath = ConfigHelper.GetTemplatePath("InfrastructureServiceRegistration");
             var outputPath = ConfigHelper.GetInfrastructureServiceRegistrationPath();
 
-            var config = CodeCraftConfig.Instance;
+            var config = ConfigurationContext.Options;
             var context = new
             {
                 DatabaseProvider = databaseProvider,
-                InfrastructureProjectName = config.ProjectNames.Infrastructure
+                InfrastructureProjectName = config.Shared.ProjectNames["Infrastructure"]
             };
 
             _templateRenderer.Render(templatePath, outputPath, context);

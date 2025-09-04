@@ -6,7 +6,15 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <!-- DESIGN TOKEN SYSTEM - Foundation first -->
+                <ResourceDictionary Source="Resources/Styles/Tokens.xaml" />
+                <!-- Colors - Uses tokens where possible -->
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <!-- Unified Styles - 100% token-based (replaces ButtonStyles + ComponentStyles) -->
+                <ResourceDictionary Source="Resources/Styles/UnifiedStyles.xaml" />
+                <!-- Token Components - Advanced token-based components -->
+                <ResourceDictionary Source="Resources/Styles/TokenComponents.xaml" />
+                <!-- Base styles - Final overrides if needed -->
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

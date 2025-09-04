@@ -4,18 +4,20 @@
 //     For customizations, use {{ Name }}ListView.Custom.cs
 // </auto-generated>
 
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CodeCraft.NET.MAUI.Interfaces;
-using {{ DesktopProjectName }}.Services;
-using {{ ApplicationProjectName }}.DTOs.{{ NamePlural }};
-using {{ DomainProjectName }}.Model;
-using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Commands.Create;
-using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Commands.Update;
-using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Commands.Delete;
-
+{{~ usings = [
+    "System.Collections.ObjectModel",
+    "System.Collections.Generic",
+    "CommunityToolkit.Mvvm.ComponentModel",
+    "CommunityToolkit.Mvvm.Input",
+    "CodeCraft.NET.MAUI.Interfaces",
+    DesktopProjectName + ".Services",
+    ApplicationProjectName + ".DTOs." + NamePlural,
+    DomainProjectName + ".Model",
+    ApplicationProjectName + ".CQRS.Features." + NamePlural + ".Commands.Create",
+    ApplicationProjectName + ".CQRS.Features." + NamePlural + ".Commands.Update",
+    ApplicationProjectName + ".CQRS.Features." + NamePlural + ".Commands.Delete"
+] ~}}
+{{~ include "CodeCraft.NET.Generator.Templates.Partials._render_usings.scriban" ~}}
 namespace {{ MauiProjectName }}.ViewModels.{{ NamePlural }}
 {
     public partial class {{ Name }}ListViewModel : ObservableObject

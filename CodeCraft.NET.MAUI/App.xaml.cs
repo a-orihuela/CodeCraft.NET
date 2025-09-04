@@ -2,9 +2,16 @@
 {
 	public partial class App : Microsoft.Maui.Controls.Application
 	{
+		public IServiceProvider? Services { get; private set; }
+
 		public App()
 		{
 			InitializeComponent();
+		}
+
+		public App(IServiceProvider services) : this()
+		{
+			Services = services;
 		}
 
 		protected override Window CreateWindow(IActivationState? activationState)

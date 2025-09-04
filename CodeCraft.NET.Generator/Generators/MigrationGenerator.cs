@@ -1,5 +1,4 @@
 ﻿using CodeCraft.NET.Generator.Helpers;
-using CodeCraft.NET.Generator.Models;
 using System.Diagnostics;
 
 namespace CodeCraft.NET.Generator.Generators
@@ -13,6 +12,12 @@ namespace CodeCraft.NET.Generator.Generators
 				outputDir: "Migrations",
 				migrationPrefix: "AutoGen_"
 			);
+		}
+
+		public static void ForceGenerateMigration()
+		{
+			Console.WriteLine("Forcing migration creation...");
+			GenerateMigration("ApplicationDbContext", "Migrations", "AutoGen_Force");
 		}
 
 		/// <summary>
@@ -56,16 +61,16 @@ namespace CodeCraft.NET.Generator.Generators
 				? migrationPrefix 
 				: $"{migrationPrefix}{timestamp}";
 
-			var config = CodeCraftConfig.Instance;
+			var config = ConfigurationContext.Options;
 
 			// Build complete paths to .csproj files
 			var infrastructureProjectPath = Path.Combine(
-				config.GetSolutionRelativePath(config.ProjectNames.Infrastructure),
-				$"{config.ProjectNames.Infrastructure}.csproj");
+				ConfigurationContext.GetSolutionRelativePath(config.Shared.ProjectNames["Infrastructure"]),
+				$"{config.Shared.ProjectNames["Infrastructure"]}.csproj");
 
 			var serverProjectPath = Path.Combine(
-				config.GetSolutionRelativePath(config.ProjectNames.Server),
-				$"{config.ProjectNames.Server}.csproj");
+				ConfigurationContext.GetSolutionRelativePath(config.Shared.ProjectNames["Server"]),
+				$"{config.Shared.ProjectNames["Server"]}.csproj");
 
 			var startInfo = new ProcessStartInfo
 			{
@@ -79,92 +84,44 @@ namespace CodeCraft.NET.Generator.Generators
 				RedirectStandardError = true,
 				UseShellExecute = false,
 				CreateNoWindow = true,
-				WorkingDirectory = config.GetSolutionRelativePath("")
+				WorkingDirectory = ConfigurationContext.GetSolutionRoot()
 			};
 
-			using var process = new Process { StartInfo = startInfo };
-			process.Start();
+			Console.WriteLine($"Command executed: {startInfo.FileName} {startInfo.Arguments}");
 
-			string output = process.StandardOutput.ReadToEnd();
-			string error = process.StandardError.ReadToEnd();
-			process.WaitForExit();
-
-			if (process.ExitCode == 0)
+			try
 			{
-				// Check if the migration was actually created or if no changes were detected
-				if (output.Contains("No changes were detected") || output.Contains("No model changes"))
+				using var process = Process.Start(startInfo);
+				if (process != null)
 				{
-					Console.WriteLine("   No model changes detected by EF Core");
-				}
-				else
-				{
-					Console.WriteLine($"Migration created successfully: {migrationName}");
-				}
-				
-				if (!string.IsNullOrWhiteSpace(output) && !output.Contains("No changes"))
-				{
-					// Only show output if it's meaningful
-					var relevantLines = output.Split('\n')
-						.Where(line => !string.IsNullOrWhiteSpace(line) && 
-									  !line.Contains("Build started") && 
-									  !line.Contains("Build succeeded"))
-						.Take(5); // Limit output
-					
-					foreach (var line in relevantLines)
+					var output = process.StandardOutput.ReadToEnd();
+					var error = process.StandardError.ReadToEnd();
+
+					process.WaitForExit();
+
+					Console.WriteLine("Standard output:");
+					Console.WriteLine(output);
+
+					if (!string.IsNullOrEmpty(error))
 					{
-						Console.WriteLine($"   {line.Trim()}");
+						Console.WriteLine("Standard error:");
+						Console.WriteLine(error);
+					}
+
+					if (process.ExitCode == 0)
+					{
+						Console.WriteLine($"Migration '{migrationName}' created successfully!");
+					}
+					else
+					{
+						Console.WriteLine($"Migration creation failed with exit code: {process.ExitCode}");
 					}
 				}
 			}
-			else
+			catch (Exception ex)
 			{
-				Console.WriteLine($"Migration creation completed with warnings: {migrationName}");
-			
-				// Show the actual command being executed for debugging
-				Console.WriteLine($"   Command executed: dotnet ef migrations add {migrationName} --project \"{infrastructureProjectPath}\" --startup-project \"{serverProjectPath}\" --context {context} --output-dir {outputDir}");
-			
-				if (!string.IsNullOrWhiteSpace(error))
-				{
-					Console.WriteLine("   Error output:");
-					// Filter and show only relevant errors
-					var errorLines = error.Split('\n')
-						.Where(line => !string.IsNullOrWhiteSpace(line) && 
-									  !line.Contains("warning") &&
-									  !line.Contains("Build started"))
-						.Take(5); // Show more error lines for debugging
-				
-					foreach (var line in errorLines)
-					{
-						Console.WriteLine($"   {line.Trim()}");
-					}
-				}
-				
-				if (!string.IsNullOrWhiteSpace(output))
-				{
-					Console.WriteLine("   Standard output:");
-					var outputLines = output.Split('\n')
-						.Where(line => !string.IsNullOrWhiteSpace(line))
-						.Take(5);
-				
-					foreach (var line in outputLines)
-					{
-						Console.WriteLine($"   {line.Trim()}");
-					}
-				}
+				Console.WriteLine($"Error running migration command: {ex.Message}");
 			}
-		}
-
-		/// <summary>
-		/// Forces migration generation without checks (for backward compatibility)
-		/// </summary>
-		public static void ForceGenerateMigration()
-		{
-			Console.WriteLine("Forcing migration creation...");
-			GenerateMigration(
-				context: "ApplicationDbContext",
-				outputDir: "Migrations",
-				migrationPrefix: "AutoGen_"
-			);
 		}
 	}
 }

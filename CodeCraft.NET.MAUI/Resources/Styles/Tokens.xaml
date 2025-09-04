@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- ================================================================== -->
+    <!-- DESIGN TOKENS - CENTRALIZED DESIGN DECISIONS -->
+    <!-- This file contains all design tokens that control the visual -->
+    <!-- appearance of the application. Changes here affect globally. -->
+    <!-- ================================================================== -->
+
+    <!-- ======================== SPACING TOKENS ======================== -->
+    
+    <!-- Base spacing unit: 4px -->
+    <x:Double x:Key="SpaceXXS">2</x:Double>        <!-- 2px -->
+    <x:Double x:Key="SpaceXS">4</x:Double>         <!-- 4px -->
+    <x:Double x:Key="SpaceSM">8</x:Double>         <!-- 8px -->
+    <x:Double x:Key="SpaceMD">12</x:Double>        <!-- 12px -->
+    <x:Double x:Key="SpaceLG">16</x:Double>        <!-- 16px -->
+    <x:Double x:Key="SpaceXL">20</x:Double>        <!-- 20px -->
+    <x:Double x:Key="SpaceXXL">24</x:Double>       <!-- 24px -->
+    <x:Double x:Key="Space3XL">32</x:Double>       <!-- 32px -->
+    <x:Double x:Key="Space4XL">40</x:Double>       <!-- 40px -->
+    <x:Double x:Key="Space5XL">48</x:Double>       <!-- 48px -->
+    <x:Double x:Key="Space6XL">64</x:Double>       <!-- 64px -->
+
+    <!-- Semantic spacing -->
+    <x:Double x:Key="ComponentPadding">16</x:Double>
+    <x:Double x:Key="CardPadding">16</x:Double>
+    <x:Double x:Key="PagePadding">20</x:Double>
+    <x:Double x:Key="SectionSpacing">24</x:Double>
+    <x:Double x:Key="ListItemSpacing">12</x:Double>
+
+    <!-- ======================== TYPOGRAPHY TOKENS ===================== -->
+    
+    <!-- Font sizes -->
+    <x:Double x:Key="FontSizeXS">10</x:Double>
+    <x:Double x:Key="FontSizeSM">12</x:Double>
+    <x:Double x:Key="FontSizeMD">14</x:Double>
+    <x:Double x:Key="FontSizeLG">16</x:Double>
+    <x:Double x:Key="FontSizeXL">18</x:Double>
+    <x:Double x:Key="FontSizeXXL">20</x:Double>
+    <x:Double x:Key="FontSize3XL">24</x:Double>
+    <x:Double x:Key="FontSize4XL">28</x:Double>
+    <x:Double x:Key="FontSize5XL">32</x:Double>
+    <x:Double x:Key="FontSize6XL">36</x:Double>
+
+    <!-- Semantic font sizes -->
+    <x:Double x:Key="HeadingFontSize">28</x:Double>
+    <x:Double x:Key="SubheadingFontSize">20</x:Double>
+    <x:Double x:Key="BodyFontSize">16</x:Double>
+    <x:Double x:Key="CaptionFontSize">12</x:Double>
+    <x:Double x:Key="ButtonFontSize">16</x:Double>
+
+    <!-- Font families -->
+    <x:String x:Key="PrimaryFont">OpenSansRegular</x:String>
+    <x:String x:Key="PrimaryFontSemibold">OpenSansSemibold</x:String>
+    <x:String x:Key="MonospaceFont">Consolas</x:String>
+
+    <!-- Line heights (multipliers) -->
+    <x:Double x:Key="LineHeightTight">1.25</x:Double>
+    <x:Double x:Key="LineHeightNormal">1.5</x:Double>
+    <x:Double x:Key="LineHeightRelaxed">1.75</x:Double>
+
+    <!-- ======================== BORDER RADIUS TOKENS ================== -->
+    
+    <x:Double x:Key="RadiusNone">0</x:Double>
+    <x:Double x:Key="RadiusSM">4</x:Double>
+    <x:Double x:Key="RadiusMD">6</x:Double>
+    <x:Double x:Key="RadiusLG">8</x:Double>
+    <x:Double x:Key="RadiusXL">12</x:Double>
+    <x:Double x:Key="RadiusXXL">16</x:Double>
+    <x:Double x:Key="RadiusFull">999</x:Double>
+
+    <!-- Semantic radius -->
+    <x:Double x:Key="CardRadius">8</x:Double>
+    <x:Double x:Key="ButtonRadius">6</x:Double>
+    <x:Double x:Key="InputRadius">6</x:Double>
+    <x:Double x:Key="BadgeRadius">999</x:Double>
+
+    <!-- ======================== SHADOW TOKENS ========================== -->
+    
+    <!-- Shadow blur radius -->
+    <x:Double x:Key="ShadowSM">2</x:Double>
+    <x:Double x:Key="ShadowMD">4</x:Double>
+    <x:Double x:Key="ShadowLG">8</x:Double>
+    <x:Double x:Key="ShadowXL">16</x:Double>
+
+    <!-- Shadow offsets -->
+    <x:Double x:Key="ShadowOffset">2</x:Double>
+
+    <!-- Shadow colors -->
+    <Color x:Key="ShadowColor">#1F000000</Color>        <!-- 12% black -->
+    <Color x:Key="ShadowColorDark">#40000000</Color>    <!-- 25% black for dark mode -->
+
+    <!-- ======================== SIZING TOKENS ========================== -->
+    
+    <!-- Component heights -->
+    <x:Double x:Key="ButtonHeight">44</x:Double>        <!-- Touch-friendly 44px -->
+    <x:Double x:Key="InputHeight">44</x:Double>
+    <x:Double x:Key="NavigationBarHeight">56</x:Double>
+    <x:Double x:Key="TabBarHeight">60</x:Double>
+    <x:Double x:Key="ListItemHeight">56</x:Double>
+
+    <!-- Component widths -->
+    <x:Double x:Key="SidebarWidth">280</x:Double>
+    <x:Double x:Key="DialogMaxWidth">400</x:Double>
+    <x:Double x:Key="CardMaxWidth">600</x:Double>
+
+    <!-- Icon sizes -->
+    <x:Double x:Key="IconSizeXS">12</x:Double>
+    <x:Double x:Key="IconSizeSM">16</x:Double>
+    <x:Double x:Key="IconSizeMD">20</x:Double>
+    <x:Double x:Key="IconSizeLG">24</x:Double>
+    <x:Double x:Key="IconSizeXL">32</x:Double>
+    <x:Double x:Key="IconSizeXXL">48</x:Double>
+
+    <!-- ======================== OPACITY TOKENS ========================= -->
+    
+    <x:Double x:Key="OpacityDisabled">0.4</x:Double>
+    <x:Double x:Key="OpacityHover">0.8</x:Double>
+    <x:Double x:Key="OpacityPressed">0.6</x:Double>
+    <x:Double x:Key="OpacityOverlay">0.5</x:Double>
+
+    <!-- ======================== ANIMATION TOKENS ======================= -->
+    
+    <!-- Duration in milliseconds -->
+    <x:Int32 x:Key="AnimationFast">150</x:Int32>
+    <x:Int32 x:Key="AnimationNormal">300</x:Int32>
+    <x:Int32 x:Key="AnimationSlow">500</x:Int32>
+
+    <!-- Easing functions (as strings for use in Storyboards) -->
+    <x:String x:Key="EaseOut">0.25,0.46,0.45,0.94</x:String>
+    <x:String x:Key="EaseIn">0.55,0.055,0.675,0.19</x:String>
+    <x:String x:Key="EaseInOut">0.645,0.045,0.355,1</x:String>
+
+    <!-- ======================== BORDER TOKENS ========================== -->
+    
+    <!-- Border widths -->
+    <x:Double x:Key="BorderWidthThin">1</x:Double>
+    <x:Double x:Key="BorderWidthThick">2</x:Double>
+    <x:Double x:Key="BorderWidthFocus">3</x:Double>
+
+    <!-- Focus outline -->
+    <x:Double x:Key="FocusOutlineWidth">3</x:Double>
+
+    <!-- ======================== SEMANTIC COLOR TOKENS ================== -->
+    
+    <!-- Function-specific semantic tokens that map to existing colors -->
+    <!-- These provide semantic meaning while using the design token system -->
+    
+    <!-- Action-specific tokens - using direct color values -->
+    <Color x:Key="ActionSaveColor">#10B981</Color>      <!-- SaveButton green -->
+    <Color x:Key="ActionEditColor">#F59E0B</Color>      <!-- EditButton orange -->
+    <Color x:Key="ActionDeleteColor">#EF4444</Color>    <!-- DeleteButton red -->
+    <Color x:Key="ActionCancelColor">#6B7280</Color>    <!-- CancelButton gray -->
+    <Color x:Key="ActionCreateColor">#3B82F6</Color>    <!-- CreateButton blue -->
+    <Color x:Key="ActionViewColor">#8B5CF6</Color>      <!-- ViewButton purple -->
+    <Color x:Key="ActionSearchColor">#06B6D4</Color>    <!-- SearchButton cyan -->
+    <Color x:Key="ActionFilterColor">#84CC16</Color>    <!-- FilterButton lime -->
+
+    <!-- Nutritional category tokens -->
+    <Color x:Key="NutritionProteinColor">#EF4444</Color>  <!-- ProteinColor red -->
+    <Color x:Key="NutritionCarbColor">#F59E0B</Color>     <!-- CarbColor orange -->
+    <Color x:Key="NutritionFatColor">#10B981</Color>      <!-- FatColor green -->
+    <Color x:Key="NutritionFiberColor">#8B5CF6</Color>    <!-- FiberColor purple -->
+
+    <!-- State-specific tokens -->
+    <Color x:Key="StateSuccessColor">#10B981</Color>      <!-- Success green -->
+    <Color x:Key="StateWarningColor">#F59E0B</Color>      <!-- Warning orange -->
+    <Color x:Key="StateDangerColor">#EF4444</Color>       <!-- Danger red -->
+    <Color x:Key="StateInfoColor">#3B82F6</Color>         <!-- Info blue -->
+
+    <!-- ======================== SEMANTIC BUTTON TOKENS ================ -->
+    
+    <!-- Button heights by importance -->
+    <x:Double x:Key="ButtonHeightPrimary">48</x:Double>
+    <x:Double x:Key="ButtonHeightSecondary">44</x:Double>
+    <x:Double x:Key="ButtonHeightCompact">40</x:Double>
+    <x:Double x:Key="ButtonHeightIcon">36</x:Double>
+
+    <!-- Button corner radius by type -->
+    <x:Double x:Key="ButtonRadiusPrimary">12</x:Double>
+    <x:Double x:Key="ButtonRadiusSecondary">8</x:Double>
+    <x:Double x:Key="ButtonRadiusIcon">6</x:Double>
+    <x:Double x:Key="ButtonRadiusPill">999</x:Double>
+
+    <!-- ======================== SEMANTIC SPACING TOKENS =============== -->
+    
+    <!-- Layout-specific spacing -->
+    <x:Double x:Key="LayoutContainerPadding">20</x:Double>
+    <x:Double x:Key="LayoutSectionSpacing">24</x:Double>
+    <x:Double x:Key="LayoutItemSpacing">16</x:Double>
+    <x:Double x:Key="LayoutCompactSpacing">12</x:Double>
+    <x:Double x:Key="LayoutInlineSpacing">8</x:Double>
+
+    <!-- Component-specific spacing -->
+    <x:Double x:Key="ComponentCardPadding">20</x:Double>
+    <x:Double x:Key="ComponentButtonPadding">24</x:Double>
+    <x:Double x:Key="ComponentInputPadding">16</x:Double>
+    <x:Double x:Key="ComponentBadgePadding">12</x:Double>
+
+</ResourceDictionary>

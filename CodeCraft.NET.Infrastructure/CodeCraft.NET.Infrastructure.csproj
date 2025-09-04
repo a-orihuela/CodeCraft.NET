@@ -1,37 +1,37 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
   <ItemGroup>
+    <Compile Remove="Persistence\Configuration\**" />
+    <Compile Remove="Persistence\Custom\**" />
     <Compile Remove="Services\**" />
+    <EmbeddedResource Remove="Persistence\Configuration\**" />
+    <EmbeddedResource Remove="Persistence\Custom\**" />
     <EmbeddedResource Remove="Services\**" />
+    <None Remove="Persistence\Configuration\**" />
+    <None Remove="Persistence\Custom\**" />
     <None Remove="Services\**" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.7" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.7" />
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="9.0.7" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.7" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.7" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\CodeCraft.NET.Application\CodeCraft.NET.Application.csproj" />
     <ProjectReference Include="..\CodeCraft.NET.Cross\CodeCraft.NET.Cross.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="Persistence\Configuration\" />
-    <Folder Include="Persistence\Custom\Repositories\" />
     <Folder Include="Persistence\Factories\" />
     <Folder Include="Persistence\Repositories\" />
   </ItemGroup>
-
 </Project>

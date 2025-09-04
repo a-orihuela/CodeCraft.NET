@@ -12,7 +12,7 @@ namespace CodeCraft.NET.MAUI
         /// </summary>
         public static void RegisterRoutes()
         {
-
+           
         }
     }
 }

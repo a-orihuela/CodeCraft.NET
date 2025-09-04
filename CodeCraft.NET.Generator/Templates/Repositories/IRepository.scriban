@@ -3,9 +3,11 @@
 //     Manual changes to this file may be overwritten.
 // </auto-generated>
 
-using {{ ApplicationProjectName }}.Contracts.Persistence.Base;
-using {{ DomainProjectName }}.Model;
-
+{{~ usings = [
+    ApplicationProjectName + ".Contracts.Persistence.Base",
+    DomainProjectName + ".Model"
+] ~}}
+{{~ include "CodeCraft.NET.Generator.Templates.Partials._render_usings.scriban" ~}}
 namespace {{ ApplicationProjectName }}.Contracts.Persistence.Repositories
 {
     public partial interface I{{ Name }}Repository : IAsyncRepository<{{ Name }}>

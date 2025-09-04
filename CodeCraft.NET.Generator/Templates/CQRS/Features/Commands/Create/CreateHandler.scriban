@@ -3,12 +3,14 @@
 //     Manual changes to this file may be overwritten.
 // </auto-generated>
 
-using Microsoft.Extensions.Logging;
-using AutoMapper;
-using {{ ApplicationProjectName }}.CQRS.Base.Features;
-using {{ ApplicationProjectName }}.Contracts.Persistence;
-using {{ DomainProjectName }}.Model;
-
+{{~ usings = [
+    "Microsoft.Extensions.Logging",
+    "AutoMapper",
+    ApplicationProjectName + ".CQRS.Base.Features",
+    ApplicationProjectName + ".Contracts.Persistence",
+    DomainProjectName + ".Model"
+] ~}}
+{{~ include "CodeCraft.NET.Generator.Templates.Partials._render_usings.scriban" ~}}
 namespace {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Commands.Create;
 
 internal partial class {{ Name }}CreateHandler : CreateHandler<{{ Name }}Create, {{ Name }}, {{ UnitOfWorkInterfaceName }}>

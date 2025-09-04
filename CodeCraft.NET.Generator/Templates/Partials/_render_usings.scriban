@@ -1,0 +1,13 @@
+{{~ # Partial template for rendering using statements
+# Expects: usings (array of namespace strings)
+# Output: Deduplicated and sorted using statements
+~}}
+{{~ if usings && usings.size > 0 ~}}
+{{~ usings_set = usings | array.uniq | array.sort ~}}
+{{~ for namespace in usings_set ~}}
+using {{ namespace }};
+{{~ end ~}}
+{{~ if usings_set.size > 0 ~}}
+
+{{~ end ~}}
+{{~ end ~}}

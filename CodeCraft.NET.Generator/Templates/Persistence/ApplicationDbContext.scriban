@@ -3,12 +3,12 @@
 //     Manual changes to this file may be overwritten.
 // </auto-generated>
 
-using {{ CodeCraftNETCrossName }}.Domain;
-{{~ for entity in entities ~}}
-using {{ DomainProjectName }}.Model;
-{{~ end ~}}
-using Microsoft.EntityFrameworkCore;
-
+{{~ usings = [
+    CrossProjectName + ".Domain",
+    DomainProjectName + ".Model", 
+    "Microsoft.EntityFrameworkCore"
+] ~}}
+{{~ include "CodeCraft.NET.Generator.Templates.Partials._render_usings.scriban" ~}}
 namespace {{ InfrastructureProjectName }}.Persistence
 {
     public class ApplicationDbContext : DbContext
@@ -24,20 +24,7 @@ namespace {{ InfrastructureProjectName }}.Persistence
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            foreach (var entry in base.ChangeTracker.Entries<BaseDomainModel>())
-            {
-                switch (entry.State)
-                {
-                    case EntityState.Added:
-                        entry.Entity.CreatedDate = DateTime.Now;
-                        entry.Entity.CreatedBy = "system";
-                        break;
-                    case EntityState.Modified:
-                        entry.Entity.LastModifiedDate = DateTime.Now;
-                        entry.Entity.LastModifiedBy = "system";
-                        break;
-                }
-            }
+            ApplyAuditInfo();
             return base.SaveChangesAsync(cancellationToken);
         }
 
@@ -48,5 +35,28 @@ namespace {{ InfrastructureProjectName }}.Persistence
             // Apply all configurations from assembly
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         }
+
+        private void ApplyAuditInfo()
+        {
+            var now = DateTime.UtcNow;
+            foreach (var entry in ChangeTracker.Entries())
+            {
+                if(entry == null)
+                    continue;
+				if (entry.Entity is IAuditable auditable)
+                {
+                    if (entry.State == EntityState.Added)
+                    {
+                        if (auditable.CreatedOn == default) auditable.CreatedOn = now;
+                    }
+
+                    if (entry.State == EntityState.Modified)
+                    {
+                        auditable.ModifiedOn = now;
+                    }
+                }
+            }
+        }
+
     }
 }

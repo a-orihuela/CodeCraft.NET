@@ -96,17 +96,43 @@ namespace CodeCraft.NET.Generator
 
 		private static List<Type> LoadTypesFromDomainAssembly()
 		{
-			var config = CodeCraftConfig.Instance;
-			var domainProjectName = config.ProjectNames.Domain;
+			// Get the domain project name from the new configuration
+			var domainProjectName = "CodeCraft.NET.Domain"; // Default fallback
+			
+			try 
+			{
+				var config = ConfigurationContext.Options;
+				if (config?.Shared?.ProjectNames?.ContainsKey("Domain") == true && 
+					!string.IsNullOrEmpty(config.Shared.ProjectNames["Domain"]))
+				{
+					domainProjectName = config.Shared.ProjectNames["Domain"];
+				}
+			}
+			catch
+			{
+				// Use default if config loading fails
+			}
 
 			var domainAssembly = AppDomain.CurrentDomain.GetAssemblies()
 				.FirstOrDefault(a => a.GetName().Name == domainProjectName);
 
 			if (domainAssembly == null)
-				domainAssembly = Assembly.Load(domainProjectName);
+			{
+				try
+				{
+					domainAssembly = Assembly.Load(domainProjectName);
+				}
+				catch (Exception ex)
+				{
+					throw new InvalidOperationException($"Could not load domain assembly '{domainProjectName}'. " +
+						$"Make sure the Domain project is compiled before running the generator. " +
+						$"Try running 'dotnet build {domainProjectName}' first. Error: {ex.Message}");
+				}
+			}
 
 			return domainAssembly.GetTypes()
 				.Where(t => t.IsClass && t.IsPublic && !t.IsAbstract)
+				.Where(t => t.Namespace?.Contains(".Model") == true) // Only include entities from Model namespace
 				.ToList();
 		}
 
