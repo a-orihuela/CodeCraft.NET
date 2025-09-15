@@ -5,7 +5,6 @@ using CodeCraft.NET.Generator.Models;
 using CodeCraft.NET.Generator.Renderers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 
 try
@@ -23,14 +22,14 @@ try
 	var services = new ServiceCollection();
 	services.Configure<CodeCraftOptions>(configuration);
 	services.AddSingleton<IConfiguration>(configuration);
-	
+
 	var serviceProvider = services.BuildServiceProvider();
 	var options = serviceProvider.GetRequiredService<IOptions<CodeCraftOptions>>().Value;
 
 	// Determine active profile
 	var activeProfileName = GetActiveProfile(args);
 	var activeProfile = options.GetActiveProfile(activeProfileName);
-	
+
 	Console.WriteLine($"Using profile: {activeProfileName}");
 	Console.WriteLine($"Database Provider: {activeProfile.DatabaseProvider}");
 	Console.WriteLine($"Components to generate:");
@@ -74,7 +73,7 @@ try
 	EnvLoader.LoadEnvFile(envPath);
 
 	var entitiesMetadata = EntityAnalyzer.AnalyzeDomainEntities();
-	
+
 	Console.WriteLine($"Found {entitiesMetadata.Count} entities:");
 	foreach (var entity in entitiesMetadata)
 	{
@@ -114,13 +113,13 @@ try
 	{
 		Console.WriteLine($"   Generating files for {entity.Name}...");
 		cqrsGenerator.Generate(entity);
-		
+
 		// Generate Web API Controllers (CONDITIONAL)
 		if (activeProfile.GenerateWebApi)
 		{
 			controllerGenerator.Generate(entity);
 		}
-		
+
 		// Generate Desktop API Services (CONDITIONAL)
 		if (activeProfile.GenerateDesktopApi)
 		{
@@ -131,7 +130,7 @@ try
 	// 4. Generate common components
 	cqrsGenerator.GenerateMapping(entitiesMetadata);
 	repoGenerator.Generate(entitiesMetadata);
-	
+
 	if (activeProfile.GenerateDesktopApi)
 	{
 		desktopApiGenerator.GenerateServiceRegistration(entitiesMetadata);
@@ -164,13 +163,13 @@ try
 
 	Console.WriteLine("Code generation completed successfully!");
 	Console.WriteLine($"Generated for {activeProfile.DatabaseProvider} database provider using '{activeProfileName}' profile");
-	
+
 	// Summary
 	var generatedComponents = new List<string>();
 	if (activeProfile.GenerateWebApi) generatedComponents.Add("Web API Controllers");
 	if (activeProfile.GenerateDesktopApi) generatedComponents.Add("Desktop API Services");
 	if (activeProfile.GenerateMaui) generatedComponents.Add("MAUI Components");
-	
+
 	Console.WriteLine($"Generated: {string.Join(", ", generatedComponents)}");
 }
 catch (Exception ex)
@@ -190,14 +189,14 @@ static string GetActiveProfile(string[] args)
 			return args[i + 1];
 		}
 	}
-	
+
 	// Check for environment variable
 	var envProfile = Environment.GetEnvironmentVariable("CODECRAFT_PROFILE");
 	if (!string.IsNullOrEmpty(envProfile))
 	{
 		return envProfile;
 	}
-	
+
 	// Default profile
 	return "dev";
 }

@@ -98,11 +98,11 @@ namespace CodeCraft.NET.Generator
 		{
 			// Get the domain project name from the new configuration
 			var domainProjectName = "CodeCraft.NET.Domain"; // Default fallback
-			
-			try 
+
+			try
 			{
 				var config = ConfigurationContext.Options;
-				if (config?.Shared?.ProjectNames?.ContainsKey("Domain") == true && 
+				if (config?.Shared?.ProjectNames?.ContainsKey("Domain") == true &&
 					!string.IsNullOrEmpty(config.Shared.ProjectNames["Domain"]))
 				{
 					domainProjectName = config.Shared.ProjectNames["Domain"];
