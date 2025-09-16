@@ -5,33 +5,13 @@ namespace CodeCraft.NET.Generator
 	public static class CleanupManager
 	{
 		/// <summary>
-		/// Cleans all generated files including example entities from Domain project
-		/// </summary>
-		public static void CleanAll()
-		{
-			CleanGeneratedFiles(includeDomainEntities: true);
-		}
-
-		/// <summary>
 		/// Cleans only generated files without touching Domain entities
 		/// </summary>
 		public static void CleanGeneratedFilesOnly()
 		{
-			CleanGeneratedFiles(includeDomainEntities: false);
-		}
-
-		private static void CleanGeneratedFiles(bool includeDomainEntities)
-		{
 			var config = ConfigurationContext.Options;
 			int filesDeleted = 0;
 			int directoriesDeleted = 0;
-
-			if (includeDomainEntities)
-			{
-				Console.WriteLine("Cleaning generated files and example entities...");
-				// Clean example entities from Domain
-				filesDeleted += CleanExampleEntities();
-			}
 
 			// Clean CQRS Features (Application layer)
 			filesDeleted += CleanCQRSFeatures();
@@ -68,53 +48,6 @@ namespace CodeCraft.NET.Generator
 
 			// Clean empty directories
 			directoriesDeleted += CleanEmptyDirectories();
-
-			if (includeDomainEntities)
-			{
-				Console.WriteLine("Cleanup completed:");
-				Console.WriteLine($"   Files deleted: {filesDeleted}");
-				Console.WriteLine($"   Directories cleaned: {directoriesDeleted}");
-			}
-		}
-
-		private static int CleanExampleEntities()
-		{
-			int count = 0;
-			try
-			{
-				var config = ConfigurationContext.Options;
-				var domainPath = ConfigurationContext.GetSolutionRelativePath(config.Shared.ProjectNames["Domain"]);
-				var modelPath = Path.Combine(domainPath, "Model");
-				
-				if (Directory.Exists(modelPath))
-				{
-					// Delete example entities like Product.cs
-					var exampleEntities = new[] { "Product.cs", "User.cs", "Customer.cs", "Order.cs" };
-					
-					foreach (var entityFile in exampleEntities)
-					{
-						var filePath = Path.Combine(modelPath, entityFile);
-						if (File.Exists(filePath))
-						{
-							File.Delete(filePath);
-							count++;
-							Console.WriteLine($"   Deleted example entity: {entityFile}");
-						}
-					}
-
-					// Also clean the Model directory if it's empty
-					if (Directory.GetFiles(modelPath).Length == 0 && Directory.GetDirectories(modelPath).Length == 0)
-					{
-						Directory.Delete(modelPath);
-						Console.WriteLine("   Deleted empty Model directory");
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine($"   Could not clean example entities: {ex.Message}");
-			}
-			return count;
 		}
 
 		private static int CleanCQRSFeatures()

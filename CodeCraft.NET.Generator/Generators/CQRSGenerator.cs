@@ -223,7 +223,7 @@ namespace CodeCraft.NET.Generator.Generators
 			}
 			else
 			{
-				Console.WriteLine($"   📁 Preserved: DTOs/Custom/{entity.NamePlural}/{entity.Name}WithRelatedDto.cs - Custom file exists");
+				Console.WriteLine($"   📁 Preserved: DTOs/{entity.NamePlural}/{entity.Name}WithRelatedDto.cs - Custom file exists");
 			}
 		}
 	}

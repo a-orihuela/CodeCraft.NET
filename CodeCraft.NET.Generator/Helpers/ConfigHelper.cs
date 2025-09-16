@@ -128,6 +128,18 @@ namespace CodeCraft.NET.Generator.Helpers
 		public static string GetDbContextFactoryPath()
 			=> Config.Shared.Files["DbContextFactory"];
 
+		public static string GetMauiServiceRegistrationPath()
+			=> Config.Shared.Files["MauiServiceRegistration"];
+
+		public static string GetMauiMapperHelperPath(string entityName)
+			=> GetFilePath(Config.Shared.Files["MauiMapperHelper"], entityName);
+
+		public static string GetMauiValidationHelperPath(string entityName)
+			=> GetFilePath(Config.Shared.Files["MauiValidationHelper"], entityName);
+
+		public static string GetMauiServiceHelperPath(string entityName)
+			=> GetFilePath(Config.Shared.Files["MauiServiceHelper"], entityName);
+
 		// Get template paths
 		public static string GetTemplatePath(string templateProperty)
 		{
@@ -138,17 +150,11 @@ namespace CodeCraft.NET.Generator.Helpers
 				"DesktopServiceRegistration" => Config.Shared.Templates["DesktopServiceRegistration"],
 				"InfrastructureServiceRegistration" => Config.Shared.Templates["InfrastructureServiceRegistration"],
 				
-				// MAUI Templates
-				"MauiListPageGenerated" => Config.Shared.Templates["MauiListPageGenerated"],
-				"MauiCreatePageGenerated" => Config.Shared.Templates["MauiCreatePageGenerated"],
-				"MauiEditPageGenerated" => Config.Shared.Templates["MauiEditPageGenerated"],
-				"MauiDetailPageGenerated" => Config.Shared.Templates["MauiDetailPageGenerated"],
-				"MauiListViewModel" => Config.Shared.Templates["MauiListViewModel"],
-				"MauiCreateViewModel" => Config.Shared.Templates["MauiCreateViewModel"],
-				"MauiEditViewModel" => Config.Shared.Templates["MauiEditViewModel"],
-				"MauiDetailViewModel" => Config.Shared.Templates["MauiDetailViewModel"],
+				"MauiServiceHelper" => Config.Shared.Templates["MauiServiceHelper"],
+				"MauiMapper" => Config.Shared.Templates["MauiMapper"],
+				"MauiValidationHelper" => Config.Shared.Templates["MauiValidationHelper"],
 				"MauiServiceRegistration" => Config.Shared.Templates["MauiServiceRegistration"],
-				"MauiShellRouting" => Config.Shared.Templates["MauiShellRouting"],
+				
 				"EntityDtos" => Config.Shared.Templates["EntityDtos"],
 				"EntityWithRelatedDto" => Config.Shared.Templates["EntityWithRelatedDto"],
 				

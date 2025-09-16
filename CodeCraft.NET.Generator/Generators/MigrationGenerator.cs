@@ -14,12 +14,6 @@ namespace CodeCraft.NET.Generator.Generators
 			);
 		}
 
-		public static void ForceGenerateMigration()
-		{
-			Console.WriteLine("Forcing migration creation...");
-			GenerateMigration("ApplicationDbContext", "Migrations", "AutoGen_Force");
-		}
-
 		/// <summary>
 		/// Generates a migration only if there are actual model changes
 		/// </summary>

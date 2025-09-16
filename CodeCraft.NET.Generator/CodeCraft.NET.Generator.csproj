@@ -46,48 +46,9 @@
       <LogicalName>CodeCraft.NET.Generator.Templates.Infrastructure.InfrastructureServiceRegistration.scriban</LogicalName>
     </EmbeddedResource>
     <!-- MAUI Templates -->
-    <EmbeddedResource Include="Templates\MAUI\ViewModels\ListViewModel.scriban">
-      <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.ViewModels.ListViewModel.scriban</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\MAUI\ViewModels\CreateViewModel.scriban">
-      <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.ViewModels.CreateViewModel.scriban</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\MAUI\ViewModels\EditViewModel.scriban">
-      <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.ViewModels.EditViewModel.scriban</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\MAUI\ViewModels\DetailViewModel.scriban">
-      <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.ViewModels.DetailViewModel.scriban</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\MAUI\Pages\ListPageGenerated.scriban">
-      <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.Pages.ListPageGenerated.scriban</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\MAUI\Pages\CreatePageGenerated.scriban">
-      <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.Pages.CreatePageGenerated.scriban</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\MAUI\Pages\EditPageGenerated.scriban">
-      <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.Pages.EditPageGenerated.scriban</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\MAUI\Pages\DetailPageGenerated.scriban">
-      <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.Pages.DetailPageGenerated.scriban</LogicalName>
-    </EmbeddedResource>
     <!-- MAUI Page Code-Behind Templates -->
-    <EmbeddedResource Include="Templates\MAUI\Pages\ListPageCodeBehind.scriban">
-      <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.Pages.ListPageCodeBehind.scriban</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\MAUI\Pages\CreatePageCodeBehind.scriban">
-      <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.Pages.CreatePageCodeBehind.scriban</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\MAUI\Pages\EditPageCodeBehind.scriban">
-      <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.Pages.EditPageCodeBehind.scriban</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\MAUI\Pages\DetailPageCodeBehind.scriban">
-      <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.Pages.DetailPageCodeBehind.scriban</LogicalName>
-    </EmbeddedResource>
     <EmbeddedResource Include="Templates\MAUI\Services\MauiServiceRegistration.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.Services.MauiServiceRegistration.scriban</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\MAUI\Services\ShellRouting.scriban">
-      <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.Services.ShellRouting.scriban</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Templates\Application\DTOs\EntityDtos.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.DTOs.EntityDtos.scriban</LogicalName>

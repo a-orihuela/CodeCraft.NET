@@ -1,6 +1,5 @@
 ﻿using CodeCraft.NET.Generator.Contracts;
 using CodeCraft.NET.Generator.Helpers;
-using CodeCraft.NET.Generator.Models;
 using Scriban;
 using Scriban.Runtime;
 using Scriban.Parsing;

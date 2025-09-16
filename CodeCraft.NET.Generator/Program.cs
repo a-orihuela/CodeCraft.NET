@@ -22,14 +22,14 @@ try
 	var services = new ServiceCollection();
 	services.Configure<CodeCraftOptions>(configuration);
 	services.AddSingleton<IConfiguration>(configuration);
-
+	
 	var serviceProvider = services.BuildServiceProvider();
 	var options = serviceProvider.GetRequiredService<IOptions<CodeCraftOptions>>().Value;
 
 	// Determine active profile
 	var activeProfileName = GetActiveProfile(args);
 	var activeProfile = options.GetActiveProfile(activeProfileName);
-
+	
 	Console.WriteLine($"Using profile: {activeProfileName}");
 	Console.WriteLine($"Database Provider: {activeProfile.DatabaseProvider}");
 	Console.WriteLine($"Components to generate:");
@@ -40,25 +40,6 @@ try
 
 	// Initialize the new config helper with our options
 	ConfigurationContext.Initialize(options, activeProfile);
-
-	// Check for command line commands
-	if (args.Length > 0 && args[0].Equals("cleanAll", StringComparison.OrdinalIgnoreCase))
-	{
-		Console.WriteLine("Clean mode activated - Removing all generated files...");
-		CleanupManager.CleanAll();
-		Console.WriteLine("Template cleaned successfully!");
-		Console.WriteLine("You can now use the template as a clean base or add your own entities to the Domain project.");
-		return;
-	}
-
-	if (args.Length > 0 && args[0].Equals("clean", StringComparison.OrdinalIgnoreCase))
-	{
-		Console.WriteLine("Clean mode activated - Removing all generated files...");
-		CleanupManager.CleanGeneratedFilesOnly();
-		Console.WriteLine("Template cleaned successfully!");
-		Console.WriteLine("You can now use the template as a clean base or add your own entities to the Domain project.");
-		return;
-	}
 
 	// Show available commands
 	if (args.Length > 0 && (args[0].Equals("help", StringComparison.OrdinalIgnoreCase) || args[0].Equals("--help", StringComparison.OrdinalIgnoreCase) || args[0].Equals("-h", StringComparison.OrdinalIgnoreCase)))
@@ -73,19 +54,15 @@ try
 	EnvLoader.LoadEnvFile(envPath);
 
 	var entitiesMetadata = EntityAnalyzer.AnalyzeDomainEntities();
-
-	Console.WriteLine($"Found {entitiesMetadata.Count} entities:");
-	foreach (var entity in entitiesMetadata)
-	{
-		Console.WriteLine($"   - {entity.Name} ({entity.Properties.Count} properties)");
-	}
-
 	if (entitiesMetadata.Count == 0)
 	{
 		Console.WriteLine("No entities found in Domain project.");
 		Console.WriteLine("Add entities to CodeCraft.NET.Domain/Model/ and run the generator again.");
-		Console.WriteLine("Or run 'dotnet run clean' to clean all generated files.");
 		return;
+	}
+	else
+	{
+		Console.WriteLine($"Found {entitiesMetadata.Count} entities:");
 	}
 
 	// Clean previously generated files (without touching Domain entities)
@@ -102,44 +79,45 @@ try
 
 	Console.WriteLine("Generating code files...");
 
-	// 1. Generate Infrastructure services with selected database provider (ALWAYS)
-	infrastructureGenerator.Generate(activeProfile.DatabaseProvider);
-
-	// 2. Generate DbContext first (ALWAYS)
-	dbContextGenerator.Generate(entitiesMetadata);
-
-	// 3. Generate CQRS components for each entity (ALWAYS)
+	// 1. Application
 	foreach (var entity in entitiesMetadata)
 	{
-		Console.WriteLine($"   Generating files for {entity.Name}...");
 		cqrsGenerator.Generate(entity);
+	}
+	cqrsGenerator.GenerateMapping(entitiesMetadata);
 
-		// Generate Web API Controllers (CONDITIONAL)
-		if (activeProfile.GenerateWebApi)
+	// 2. Infrastructure
+	infrastructureGenerator.Generate(activeProfile.DatabaseProvider);
+	dbContextGenerator.Generate(entitiesMetadata);
+	repoGenerator.Generate(entitiesMetadata);
+
+	// 3. Web API
+	if (activeProfile.GenerateWebApi)
+	{
+		foreach (var entity in entitiesMetadata)
 		{
 			controllerGenerator.Generate(entity);
 		}
+	}
 
-		// Generate Desktop API Services (CONDITIONAL)
-		if (activeProfile.GenerateDesktopApi)
+	// 4. Desktop API
+	if (activeProfile.GenerateDesktopApi)
+	{
+		foreach (var entity in entitiesMetadata)
 		{
 			desktopApiGenerator.Generate(entity);
 		}
-	}
-
-	// 4. Generate common components
-	cqrsGenerator.GenerateMapping(entitiesMetadata);
-	repoGenerator.Generate(entitiesMetadata);
-
-	if (activeProfile.GenerateDesktopApi)
-	{
 		desktopApiGenerator.GenerateServiceRegistration(entitiesMetadata);
 	}
 
-	// 5. Generate MAUI components (CONDITIONAL)
+	// 5. MAUI
 	if (activeProfile.GenerateMaui)
 	{
-		mauiGenerator.Generate(entitiesMetadata);
+		foreach (var entity in entitiesMetadata)
+		{
+			mauiGenerator.Generate(entity);
+		}
+		mauiGenerator.GenerateMAUIServiceRegistration(entitiesMetadata);
 	}
 
 	Console.WriteLine("Creating database migrations...");
@@ -147,30 +125,15 @@ try
 	// 6. Generate migrations after DbContext is created
 	if (activeProfile.ForceMigrations)
 	{
-		Console.WriteLine("   Forcing migration creation...");
-		MigrationGenerator.ForceGenerateMigration();
-	}
-	else
-	{
 		MigrationGenerator.GenerateAllMigrations();
 	}
-
-	if (!activeProfile.ForceMigrations)
+	else 
 	{
-		// 7. Check for pending migrations
 		MigrationChecker.CheckPendingMigrations("ApplicationDbContext");
 	}
 
 	Console.WriteLine("Code generation completed successfully!");
 	Console.WriteLine($"Generated for {activeProfile.DatabaseProvider} database provider using '{activeProfileName}' profile");
-
-	// Summary
-	var generatedComponents = new List<string>();
-	if (activeProfile.GenerateWebApi) generatedComponents.Add("Web API Controllers");
-	if (activeProfile.GenerateDesktopApi) generatedComponents.Add("Desktop API Services");
-	if (activeProfile.GenerateMaui) generatedComponents.Add("MAUI Components");
-
-	Console.WriteLine($"Generated: {string.Join(", ", generatedComponents)}");
 }
 catch (Exception ex)
 {
@@ -189,14 +152,14 @@ static string GetActiveProfile(string[] args)
 			return args[i + 1];
 		}
 	}
-
+	
 	// Check for environment variable
 	var envProfile = Environment.GetEnvironmentVariable("CODECRAFT_PROFILE");
 	if (!string.IsNullOrEmpty(envProfile))
 	{
 		return envProfile;
 	}
-
+	
 	// Default profile
 	return "dev";
 }
@@ -212,8 +175,6 @@ static void ShowHelp()
 	Console.WriteLine("  dotnet run                       - Generate code for all entities using default profile");
 	Console.WriteLine("  dotnet run -- --profile dev      - Generate using 'dev' profile");
 	Console.WriteLine("  dotnet run -- --profile ci       - Generate using 'ci' profile");
-	Console.WriteLine("  dotnet run clean                 - Clean generated files (keep Domain entities)");
-	Console.WriteLine("  dotnet run cleanAll              - Clean all generated files and example entities");
 	Console.WriteLine("  dotnet run help                  - Show this help message");
 	Console.WriteLine();
 	Console.WriteLine("Profile Selection:");
@@ -228,8 +189,6 @@ static void ShowHelp()
 	Console.WriteLine("Examples:");
 	Console.WriteLine("  dotnet run                       # Use default 'dev' profile");
 	Console.WriteLine("  dotnet run -- --profile ci       # Use CI profile for automated builds");
-	Console.WriteLine("  dotnet run clean                 # Remove generated files, keep your entities");
-	Console.WriteLine("  dotnet run cleanAll              # Complete reset, remove everything");
 	Console.WriteLine();
 	Console.WriteLine("CUSTOMIZATION:");
 	Console.WriteLine("  Edit codecraft.config.json to:");
