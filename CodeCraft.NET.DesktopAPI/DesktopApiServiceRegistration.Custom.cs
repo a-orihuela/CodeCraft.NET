@@ -1,6 +1,3 @@
-// Custom extensions for DesktopAPI service registration
-// This file contains manual extensions and will NOT be overwritten by the generator
-
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CodeCraft.NET.DesktopAPI
@@ -14,6 +11,8 @@ namespace CodeCraft.NET.DesktopAPI
         /// </summary>
         public static IServiceCollection AddOrchestrationServices(this IServiceCollection services)
         {
+            // Chart services and orchestration
+            
             return services;
         }
     }

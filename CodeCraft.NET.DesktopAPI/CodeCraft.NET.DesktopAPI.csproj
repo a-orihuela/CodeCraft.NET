@@ -17,4 +17,8 @@
     <ProjectReference Include="..\CodeCraft.NET.Infrastructure\CodeCraft.NET.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\Custom\" />
+  </ItemGroup>
+
 </Project>
