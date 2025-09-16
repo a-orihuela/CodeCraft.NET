@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CodeCraft.NET.MAUI.Views.Controls.UserProfileEditControl"
+             x:Name="UserProfileEditRoot">
+
+    <StackLayout Spacing="20">
+        
+        <!-- Profile Header -->
+        <StackLayout x:Name="ProfileHeaderSection" Spacing="16" Orientation="Horizontal">
+            <Border WidthRequest="80" 
+                   HeightRequest="80"
+                   BackgroundColor="{StaticResource Primary}"
+                   StrokeShape="RoundRectangle 40">
+                <Label x:Name="UserInitialsLabel" 
+                       Text="JD"
+                       FontFamily="{StaticResource PrimaryFontSemibold}"
+                       FontSize="24"
+                       TextColor="White"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+            </Border>
+            
+            <StackLayout Spacing="4" VerticalOptions="Center">
+                <Label x:Name="UserNameLabel" 
+                       Text="John Doe"
+                       FontFamily="{StaticResource PrimaryFontSemibold}"
+                       FontSize="20"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
+                <Label x:Name="UserEmailLabel" 
+                       Text="john.doe@example.com"
+                       FontFamily="{StaticResource PrimaryFont}"
+                       FontSize="14"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"/>
+                <Label x:Name="UserRoleLabel" 
+                       Text="Administrator"
+                       FontFamily="{StaticResource PrimaryFont}"
+                       FontSize="12"
+                       TextColor="{StaticResource Primary}"
+                       FontAttributes="Bold"/>
+            </StackLayout>
+        </StackLayout>
+        
+        <!-- Basic User Information -->
+        <Frame Style="{StaticResource CardStyle}">
+            <StackLayout Spacing="16">
+                <Label Text="Basic Information" 
+                       FontFamily="{StaticResource PrimaryFontSemibold}"
+                       FontSize="18"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
+                
+                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" 
+                      ColumnDefinitions="120,*"
+                      RowSpacing="12"
+                      ColumnSpacing="16">
+                    
+                    <!-- Full Name -->
+                    <Label Grid.Row="0" Grid.Column="0" Text="Full Name:" FontAttributes="Bold"/>
+                    <Entry Grid.Row="0" Grid.Column="1" x:Name="FullNameEntry" Text="John Doe"/>
+                    
+                    <!-- Email -->
+                    <Label Grid.Row="1" Grid.Column="0" Text="Email:" FontAttributes="Bold"/>
+                    <Entry Grid.Row="1" Grid.Column="1" x:Name="EmailEntry" Text="john.doe@example.com" Keyboard="Email"/>
+                    
+                    <!-- Phone -->
+                    <Label Grid.Row="2" Grid.Column="0" Text="Phone:" FontAttributes="Bold"/>
+                    <Entry Grid.Row="2" Grid.Column="1" x:Name="PhoneEntry" Text="+1 (555) 123-4567" Keyboard="Telephone"/>
+                    
+                    <!-- Date of Birth -->
+                    <Label Grid.Row="3" Grid.Column="0" Text="Date of Birth:" FontAttributes="Bold"/>
+                    <DatePicker Grid.Row="3" Grid.Column="1" x:Name="DateOfBirthPicker" Date="1985-06-15"/>
+                    
+                    <!-- Time Zone -->
+                    <Label Grid.Row="4" Grid.Column="0" Text="Time Zone:" FontAttributes="Bold"/>
+                    <Picker Grid.Row="4" Grid.Column="1" x:Name="TimeZonePicker" Title="Select Time Zone">
+                        <Picker.Items>
+                            <x:String>UTC-12:00 (Baker Island)</x:String>
+                            <x:String>UTC-08:00 (Pacific Time)</x:String>
+                            <x:String>UTC-05:00 (Eastern Time)</x:String>
+                            <x:String>UTC+00:00 (GMT)</x:String>
+                            <x:String>UTC+01:00 (Central European Time)</x:String>
+                            <x:String>UTC+09:00 (Japan Standard Time)</x:String>
+                        </Picker.Items>
+                    </Picker>
+                    
+                    <!-- Language -->
+                    <Label Grid.Row="5" Grid.Column="0" Text="Language:" FontAttributes="Bold"/>
+                    <Picker Grid.Row="5" Grid.Column="1" x:Name="LanguagePicker" Title="Select Language">
+                        <Picker.Items>
+                            <x:String>en-US (English)</x:String>
+                            <x:String>es-ES (Spanish)</x:String>
+                            <x:String>fr-FR (French)</x:String>
+                            <x:String>de-DE (German)</x:String>
+                            <x:String>it-IT (Italian)</x:String>
+                        </Picker.Items>
+                    </Picker>
+                    
+                </Grid>
+            </StackLayout>
+        </Frame>
+        
+        <!-- Physical Profile Information -->
+        <Frame Style="{StaticResource CardStyle}">
+            <StackLayout Spacing="16">
+                <Label Text="Physical Profile" 
+                       FontFamily="{StaticResource PrimaryFontSemibold}"
+                       FontSize="18"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
+                
+                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" 
+                      ColumnDefinitions="120,*"
+                      RowSpacing="12"
+                      ColumnSpacing="16">
+                    
+                    <!-- Gender -->
+                    <Label Grid.Row="0" Grid.Column="0" Text="Gender:" FontAttributes="Bold"/>
+                    <Picker Grid.Row="0" Grid.Column="1" x:Name="GenderPicker" Title="Select Gender">
+                        <Picker.Items>
+                            <x:String>M</x:String>
+                            <x:String>F</x:String>
+                        </Picker.Items>
+                    </Picker>
+                    
+                    <!-- Age -->
+                    <Label Grid.Row="1" Grid.Column="0" Text="Age:" FontAttributes="Bold"/>
+                    <Entry Grid.Row="1" Grid.Column="1" x:Name="AgeEntry" Text="38" Keyboard="Numeric"/>
+                    
+                    <!-- Weight -->
+                    <Label Grid.Row="2" Grid.Column="0" Text="Weight (kg):" FontAttributes="Bold"/>
+                    <Entry Grid.Row="2" Grid.Column="1" x:Name="WeightEntry" Text="75.5" Keyboard="Numeric"/>
+                    
+                    <!-- Height -->
+                    <Label Grid.Row="3" Grid.Column="0" Text="Height (cm):" FontAttributes="Bold"/>
+                    <Entry Grid.Row="3" Grid.Column="1" x:Name="HeightEntry" Text="178" Keyboard="Numeric"/>
+                    
+                    <!-- Activity Level -->
+                    <Label Grid.Row="4" Grid.Column="0" Text="Activity Level:" FontAttributes="Bold"/>
+                    <Picker Grid.Row="4" Grid.Column="1" x:Name="ActivityLevelPicker" Title="Select Activity Level">
+                        <Picker.Items>
+                            <x:String>Sedentary</x:String>
+                            <x:String>Lightly Active</x:String>
+                            <x:String>Moderately Active</x:String>
+                            <x:String>Very Active</x:String>
+                            <x:String>Extra Active</x:String>
+                        </Picker.Items>
+                    </Picker>
+                    
+                    <!-- Goal -->
+                    <Label Grid.Row="5" Grid.Column="0" Text="Goal:" FontAttributes="Bold"/>
+                    <Picker Grid.Row="5" Grid.Column="1" x:Name="GoalPicker" Title="Select Goal">
+                        <Picker.Items>
+                            <x:String>Weight Loss</x:String>
+                            <x:String>Weight Gain</x:String>
+                            <x:String>Maintenance</x:String>
+                            <x:String>Muscle Gain</x:String>
+                            <x:String>Fat Loss</x:String>
+                        </Picker.Items>
+                    </Picker>
+                    
+                </Grid>
+            </StackLayout>
+        </Frame>
+        
+        <!-- Food Preferences Section -->
+        <Frame Style="{StaticResource CardStyle}">
+            <StackLayout Spacing="16">
+                <Label Text="Food Preferences and Restrictions" 
+                       FontFamily="{StaticResource PrimaryFontSemibold}"
+                       FontSize="18"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
+                
+                <!-- Allergens -->
+                <StackLayout Spacing="8">
+                    <Label Text="Allergens" FontAttributes="Bold"/>
+                    <Entry x:Name="AllergensEntry" 
+                           Placeholder="e.g., Nuts, Dairy, Gluten (comma separated)"/>
+                </StackLayout>
+                
+                <!-- Excluded Food Subgroups -->
+                <StackLayout Spacing="8">
+                    <Label Text="Excluded Food Subgroups" FontAttributes="Bold"/>
+                    <Entry x:Name="ExcludedSubgroupsEntry" 
+                           Placeholder="e.g., Red Meat, Processed Foods (comma separated)"/>
+                </StackLayout>
+                
+                <!-- Excluded Foods -->
+                <StackLayout Spacing="8">
+                    <Label Text="Excluded Foods" FontAttributes="Bold"/>
+                    <Entry x:Name="ExcludedFoodsEntry" 
+                           Placeholder="e.g., Spinach, Mushrooms (comma separated)"/>
+                </StackLayout>
+                
+                <!-- Favorite Foods -->
+                <StackLayout Spacing="8">
+                    <Label Text="Favorite Foods" FontAttributes="Bold"/>
+                    <Entry x:Name="FavoriteFoodsEntry" 
+                           Placeholder="e.g., Chicken, Broccoli (comma separated)"/>
+                </StackLayout>
+                
+                <!-- Disliked Foods -->
+                <StackLayout Spacing="8">
+                    <Label Text="Disliked Foods" FontAttributes="Bold"/>
+                    <Entry x:Name="DislikedFoodsEntry" 
+                           Placeholder="e.g., Brussels Sprouts (comma separated)"/>
+                </StackLayout>
+                
+            </StackLayout>
+        </Frame>
+        
+        <!-- App Preferences Section (Only for current user) -->
+        <Frame x:Name="AppPreferencesFrame" Style="{StaticResource CardStyle}" IsVisible="False">
+            <StackLayout Spacing="16">
+                <Label Text="App Preferences" 
+                       FontFamily="{StaticResource PrimaryFontSemibold}"
+                       FontSize="18"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
+                
+                <!-- Theme Preference -->
+                <StackLayout Spacing="8">
+                    <Label Text="Theme" FontAttributes="Bold"/>
+                    <Picker x:Name="ThemePicker" Title="Select Theme">
+                        <Picker.Items>
+                            <x:String>Light</x:String>
+                            <x:String>Dark</x:String>
+                            <x:String>System</x:String>
+                        </Picker.Items>
+                    </Picker>
+                </StackLayout>
+                
+                <!-- Notifications -->
+                <StackLayout Spacing="8">
+                    <Label Text="Notifications" FontAttributes="Bold"/>
+                    <StackLayout Orientation="Horizontal" Spacing="12">
+                        <Switch x:Name="NotificationsSwitch" IsToggled="True"/>
+                        <Label Text="Enable push notifications" VerticalOptions="Center"/>
+                    </StackLayout>
+                </StackLayout>
+                
+            </StackLayout>
+        </Frame>
+        
+        <!-- Action Buttons -->
+        <StackLayout x:Name="ActionButtonsSection" Orientation="Horizontal" Spacing="16">
+            <Button x:Name="SaveButton"
+                   Text="Save Changes" 
+                   BackgroundColor="{StaticResource Primary}"
+                   TextColor="White"
+                   HorizontalOptions="FillAndExpand"
+                   Clicked="OnSaveClicked"/>
+                   
+            <Button x:Name="DeleteButton"
+                   Text="Delete User" 
+                   BackgroundColor="{StaticResource DeleteButton}"
+                   TextColor="White"
+                   HorizontalOptions="End"
+                   IsVisible="False"
+                   Clicked="OnDeleteClicked"/>
+        </StackLayout>
+        
+    </StackLayout>
+
+</ContentView>

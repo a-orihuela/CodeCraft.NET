@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:layout="clr-namespace:CodeCraft.NET.MAUI.Views.Layout"
+             x:Class="CodeCraft.NET.MAUI.Views.Layout.MainLayoutPage"
+             x:Name="MainLayout"
+             Title="KetoPlanner"
+             BackgroundColor="{AppThemeBinding Light={StaticResource Gray50}, Dark={StaticResource DarkBackground}}">
+
+    <Grid x:Name="MainGrid">
+        
+        <!-- Define columns: Sidebar + Content -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="SidebarColumn" 
+                             Width="{Binding SidebarWidth, Source={x:Reference MainLayout}}"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>  <!-- Header -->
+            <RowDefinition Height="*"/>     <!-- Content -->
+        </Grid.RowDefinitions>
+
+        <!-- SIDEBAR (spans full height) -->
+        <layout:SidebarMenuView x:Name="SidebarMenu"
+                               Grid.Column="0" 
+                               Grid.Row="0" 
+                               Grid.RowSpan="2"
+                               ZIndex="100"/>
+
+        <!-- HEADER (top of content area) -->
+        <layout:AppHeaderView x:Name="AppHeader"
+                             Grid.Column="1" 
+                             Grid.Row="0"/>
+
+        <!-- MAIN CONTENT AREA -->
+        <Border Grid.Column="1" 
+                Grid.Row="1"
+                BackgroundColor="{AppThemeBinding Light={StaticResource Gray50}, Dark={StaticResource DarkBackground}}">
+            
+            <!-- Content will be dynamically loaded here -->
+            <ContentView x:Name="ContentArea" 
+                        Padding="{StaticResource LayoutContainerPadding}">
+                
+                <!-- Default/Demo Content -->
+                <ScrollView>
+                    <StackLayout Spacing="{StaticResource LayoutSectionSpacing}">
+                        
+                        <!-- Welcome Section -->
+                        <Frame Style="{StaticResource ElevatedCardStyle}">
+                            <StackLayout Spacing="{StaticResource LayoutItemSpacing}">
+                                <Label Text="Welcome to KetoPlanner!" 
+                                       Style="{StaticResource PageHeaderStyle}" 
+                                       Margin="0"/>
+                                <Label Text="Your comprehensive keto diet companion with advanced nutrition planning and tracking capabilities." 
+                                       Style="{StaticResource PageSubtitleStyle}" 
+                                       Margin="0"/>
+                                
+                                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="{StaticResource LayoutItemSpacing}">
+                                    <Button Grid.Column="0" 
+                                            Text="Create Plan" 
+                                            Style="{StaticResource CreateButtonStyle}"/>
+                                    <Button Grid.Column="1" 
+                                            Text="View Foods" 
+                                            Style="{StaticResource ViewButtonStyle}"/>
+                                    <Button Grid.Column="2" 
+                                            Text="Setup Profile" 
+                                            Style="{StaticResource EditButtonStyle}"/>
+                                </Grid>
+                            </StackLayout>
+                        </Frame>
+
+                        <!-- Quick Stats -->
+                        <Label Text="Quick Stats" 
+                               Style="{StaticResource PageHeaderStyle}" 
+                               Margin="0,24,0,16"/>
+                        
+                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="{StaticResource LayoutItemSpacing}">
+                            <!-- Total Plans -->
+                            <Frame Grid.Column="0" Style="{StaticResource StatCardStyle}">
+                                <StackLayout HorizontalOptions="Center" Spacing="{StaticResource SpaceXS}">
+                                    <Label Text="15" 
+                                           FontSize="{StaticResource FontSize3XL}" 
+                                           FontFamily="{StaticResource PrimaryFontSemibold}" 
+                                           TextColor="{StaticResource White}"
+                                           HorizontalOptions="Center" />
+                                    <Label Text="Total Plans" 
+                                           FontSize="{StaticResource FontSizeSM}" 
+                                           TextColor="{StaticResource White}"
+                                           HorizontalOptions="Center" />
+                                </StackLayout>
+                            </Frame>
+
+                            <!-- Foods Catalog -->
+                            <Frame Grid.Column="1" Style="{StaticResource StatCardStyle}">
+                                <StackLayout HorizontalOptions="Center" Spacing="{StaticResource SpaceXS}">
+                                    <Label Text="1.2K" 
+                                           FontSize="{StaticResource FontSize3XL}" 
+                                           FontFamily="{StaticResource PrimaryFontSemibold}" 
+                                           TextColor="{StaticResource White}"
+                                           HorizontalOptions="Center" />
+                                    <Label Text="Foods Available" 
+                                           FontSize="{StaticResource FontSizeSM}" 
+                                           TextColor="{StaticResource White}"
+                                           HorizontalOptions="Center" />
+                                </StackLayout>
+                            </Frame>
+
+                            <!-- User Profile -->
+                            <Frame Grid.Column="2" Style="{StaticResource StatCardStyle}">
+                                <StackLayout HorizontalOptions="Center" Spacing="{StaticResource SpaceXS}">
+                                    <Label Text="85%" 
+                                           FontSize="{StaticResource FontSize3XL}" 
+                                           FontFamily="{StaticResource PrimaryFontSemibold}" 
+                                           TextColor="{StaticResource White}"
+                                           HorizontalOptions="Center" />
+                                    <Label Text="Profile Complete" 
+                                           FontSize="{StaticResource FontSizeSM}" 
+                                           TextColor="{StaticResource White}"
+                                           HorizontalOptions="Center" />
+                                </StackLayout>
+                            </Frame>
+                        </Grid>
+
+                        <!-- Recent Activity -->
+                        <Label Text="Recent Activity" 
+                               Style="{StaticResource PageHeaderStyle}" 
+                               Margin="0,24,0,16"/>
+
+                        <Frame Style="{StaticResource CardStyle}">
+                            <StackLayout Spacing="{StaticResource LayoutItemSpacing}">
+                                
+                                <!-- Activity Item -->
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource LayoutItemSpacing}">
+                                    <Border Grid.Column="0" 
+                                            Style="{StaticResource ProfileAvatarBorderStyle}"
+                                            BackgroundColor="{StaticResource ActionCreateColor}">
+                                        <Label Text="??" 
+                                               Style="{StaticResource ProfileAvatarTextStyle}"/>
+                                    </Border>
+                                    <StackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                        <Label Text="Created new meal plan" 
+                                               FontFamily="{StaticResource PrimaryFontSemibold}"
+                                               FontSize="{StaticResource FontSizeMD}"
+                                               TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
+                                        <Label Text="Mediterranean Keto Week 1" 
+                                               FontSize="{StaticResource FontSizeSM}"
+                                               TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"/>
+                                    </StackLayout>
+                                    <Label Grid.Column="2" 
+                                           Text="2 hrs ago" 
+                                           FontSize="{StaticResource FontSizeXS}"
+                                           TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray500}}"
+                                           VerticalOptions="Center"/>
+                                </Grid>
+
+                                <BoxView BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}" 
+                                         HeightRequest="1"/>
+
+                                <!-- Activity Item -->
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource LayoutItemSpacing}">
+                                    <Border Grid.Column="0" 
+                                            Style="{StaticResource ProfileAvatarBorderStyle}"
+                                            BackgroundColor="{StaticResource ActionEditColor}">
+                                        <Label Text="??" 
+                                               Style="{StaticResource ProfileAvatarTextStyle}"/>
+                                    </Border>
+                                    <StackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                        <Label Text="Updated profile information" 
+                                               FontFamily="{StaticResource PrimaryFontSemibold}"
+                                               FontSize="{StaticResource FontSizeMD}"
+                                               TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
+                                        <Label Text="Added weight goal and activity level" 
+                                               FontSize="{StaticResource FontSizeSM}"
+                                               TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"/>
+                                    </StackLayout>
+                                    <Label Grid.Column="2" 
+                                           Text="5 hrs ago" 
+                                           FontSize="{StaticResource FontSizeXS}"
+                                           TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray500}}"
+                                           VerticalOptions="Center"/>
+                                </Grid>
+
+                            </StackLayout>
+                        </Frame>
+
+                        <!-- Call to Action -->
+                        <Frame Style="{StaticResource CardStyle}">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource LayoutItemSpacing}">
+                                <StackLayout Grid.Column="0" VerticalOptions="Center">
+                                    <Label Text="Ready to get started?" 
+                                           FontFamily="{StaticResource PrimaryFontSemibold}"
+                                           FontSize="{StaticResource FontSizeXL}"
+                                           TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
+                                    <Label Text="Configure your profile for personalized nutrition recommendations" 
+                                           FontSize="{StaticResource FontSizeMD}"
+                                           TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"/>
+                                </StackLayout>
+                                <Button Grid.Column="1" 
+                                        Text="Setup Now" 
+                                        Style="{StaticResource CreateButtonStyle}"
+                                        VerticalOptions="Center"/>
+                            </Grid>
+                        </Frame>
+
+                    </StackLayout>
+                </ScrollView>
+                
+            </ContentView>
+            
+        </Border>
+
+        <!-- Mobile Overlay (when sidebar is open in mobile mode) -->
+        <Grid x:Name="MobileOverlay" 
+              Grid.Column="0" 
+              Grid.ColumnSpan="2" 
+              Grid.Row="0" 
+              Grid.RowSpan="2"
+              BackgroundColor="#80000000"
+              IsVisible="{Binding IsMobileOverlayVisible, Source={x:Reference MainLayout}}"
+              ZIndex="90">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding CloseSidebarCommand, Source={x:Reference MainLayout}}"/>
+            </Grid.GestureRecognizers>
+        </Grid>
+
+    </Grid>
+
+</ContentPage>

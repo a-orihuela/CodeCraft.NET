@@ -378,4 +378,134 @@
         </Setter>
     </Style>
 
+    <!-- =============================================== -->
+    <!-- NAVIGATION AND LAYOUT STYLES -->
+    <!-- =============================================== -->
+
+    <!-- Sidebar Styles -->
+    <Style x:Key="SidebarBorderStyle" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource NavigationBackgroundColor}, Dark={StaticResource NavigationBackgroundColorDark}}" />
+        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource DarkBorder}}" />
+        <Setter Property="StrokeThickness" Value="0"/>
+        <Setter Property="MinimumWidthRequest" Value="{StaticResource SidebarWidthCollapsed}"/>
+        <Setter Property="Shadow">
+            <Shadow Brush="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Black}}" 
+                    Offset="2,0" 
+                    Radius="8" 
+                    Opacity="0.1"/>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SidebarHeaderBorderStyle" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+        <Setter Property="MinimumHeightRequest" Value="{StaticResource HeaderHeight}"/>
+    </Style>
+
+    <Style x:Key="SidebarFooterBorderStyle" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray50}, Dark={StaticResource Gray800}}" />
+        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}" />
+        <Setter Property="StrokeThickness" Value="1"/>
+        <Setter Property="StrokeShape" Value="Rectangle 0"/>
+    </Style>
+
+    <!-- App Logo Styles -->
+    <Style x:Key="AppLogoBorderStyle" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PrimaryLight}}" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 8"/>
+        <Setter Property="WidthRequest" Value="36"/>
+        <Setter Property="HeightRequest" Value="36"/>
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+    </Style>
+
+    <Style x:Key="AppLogoTextStyle" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFontSemibold}"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"/>
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="HorizontalTextAlignment" Value="Center"/>
+        <Setter Property="VerticalTextAlignment" Value="Center"/>
+    </Style>
+
+    <Style x:Key="AppNameStyle" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFontSemibold}"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeLG}"/>
+        <Setter Property="TextColor" Value="{StaticResource White}"/>
+        <Setter Property="VerticalOptions" Value="End"/>
+    </Style>
+
+    <Style x:Key="AppSubtitleStyle" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFont}"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSM}"/>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource Gray300}}"/>
+        <Setter Property="VerticalOptions" Value="Start"/>
+        <Setter Property="Opacity" Value="0.9"/>
+    </Style>
+
+    <!-- Navigation Items -->
+    <Style x:Key="NavigationItemBorderStyle" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeThickness" Value="0"/>
+        <Setter Property="Margin" Value="0,1"/>
+    </Style>
+
+    <Style x:Key="NavigationSectionHeaderStyle" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource DarkSurface}}" />
+        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource DarkBorder}}" />
+        <Setter Property="StrokeThickness" Value="1"/>
+        <Setter Property="Margin" Value="0,2"/>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}" />
+                            <Setter Property="Scale" Value="0.98" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <!-- Navigation Section Border -->
+    <Style x:Key="NavigationSectionBorderStyle" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeThickness" Value="0"/>
+        <Setter Property="Margin" Value="0,2"/>
+    </Style>
+
+    <!-- Navigation Section Header Border -->
+    <Style x:Key="NavigationSectionHeaderBorderStyle" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeThickness" Value="0"/>
+        <Setter Property="Margin" Value="0"/>
+    </Style>
+
+    <!-- Navigation Section Title with color bar -->
+    <Style x:Key="NavigationSectionTitleStyle" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFont}"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray800}, Dark={StaticResource Gray200}}"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="FontAttributes" Value="None"/>
+        <Setter Property="Padding" Value="12,8"/>
+    </Style>
+
+    <!-- Expand Icon Style -->
+    <Style x:Key="ExpandIconStyle" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFont}"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="Padding" Value="8"/>
+    </Style>
+
 </ResourceDictionary>

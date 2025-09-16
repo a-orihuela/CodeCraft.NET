@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CodeCraft.NET.MAUI.Views.Layout.AppHeaderView"
+             x:Name="AppHeader">
+
+    <Border Style="{StaticResource HeaderBorderStyle}">
+        <Grid ColumnDefinitions="Auto,*,Auto,Auto" 
+              ColumnSpacing="12"
+              Padding="12"
+              MinimumHeightRequest="64">
+
+            <!-- Hamburger Menu Button (Mobile) -->
+            <Button Grid.Column="0" 
+                    Style="{StaticResource HamburgerButtonStyle}"
+                    Command="{Binding ToggleSidebarCommand}"
+                    IsVisible="{Binding IsMobileMode}">
+                <Button.Text>?</Button.Text>
+            </Button>
+
+            <!-- Page Title -->
+            <StackLayout Grid.Column="1" 
+                         VerticalOptions="Center"
+                         Spacing="2">
+                <Label Text="{Binding CurrentPageTitle}" 
+                       Style="{StaticResource HeaderTitleStyle}"/>
+                <Label Text="{Binding CurrentPageSubtitle}" 
+                       Style="{StaticResource HeaderSubtitleStyle}"
+                       IsVisible="{Binding HasSubtitle}"/>
+            </StackLayout>
+
+            <!-- Search Button -->
+            <Button Grid.Column="2" 
+                    Style="{StaticResource HeaderActionButtonStyle}"
+                    Command="{Binding OpenSearchCommand}"
+                    ToolTipProperties.Text="Search">
+                <Button.Text>??</Button.Text>
+            </Button>
+
+            <!-- User Profile Menu -->
+            <Border Grid.Column="3" 
+                    Style="{StaticResource ProfileMenuBorderStyle}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenProfileMenuCommand}"/>
+                </Border.GestureRecognizers>
+                
+                <Grid ColumnDefinitions="Auto,Auto" 
+                      ColumnSpacing="4"
+                      Padding="4">
+                    
+                    <!-- Profile Avatar -->
+                    <Border Grid.Column="0" 
+                            Style="{StaticResource ProfileAvatarBorderStyle}">
+                        <Label Text="{Binding UserInitials}" 
+                               Style="{StaticResource ProfileAvatarTextStyle}"/>
+                    </Border>
+                    
+                    <!-- User Info (Desktop only) -->
+                    <StackLayout Grid.Column="1" 
+                                 VerticalOptions="Center"
+                                 IsVisible="{Binding IsDesktopMode}">
+                        <Label Text="{Binding CurrentUserName}" 
+                               Style="{StaticResource ProfileNameStyle}"/>
+                        <Label Text="{Binding CurrentUserRole}" 
+                               Style="{StaticResource ProfileRoleStyle}"/>
+                    </StackLayout>
+                    
+                </Grid>
+                
+            </Border>
+
+        </Grid>
+    </Border>
+
+    <!-- Profile Dropdown Menu (overlay when clicked) -->
+    <Grid x:Name="ProfileOverlay" 
+          IsVisible="{Binding IsProfileMenuOpen}"
+          BackgroundColor="#4C000000">
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding CloseProfileMenuCommand}"/>
+        </Grid.GestureRecognizers>
+        
+        <!-- Dropdown positioned in top-right -->
+        <Border Style="{StaticResource ProfileDropdownBorderStyle}"
+                HorizontalOptions="End" 
+                VerticalOptions="Start"
+                Margin="0,64,20,0">
+            
+            <StackLayout Spacing="{StaticResource SpaceXS}"
+                        Padding="12">
+                
+                <!-- User Info Header -->
+                <StackLayout Spacing="2">
+                    <Label Text="{Binding CurrentUserName}" 
+                           Style="{StaticResource ProfileDropdownNameStyle}"/>
+                    <Label Text="{Binding CurrentUserEmail}" 
+                           Style="{StaticResource ProfileDropdownEmailStyle}"/>
+                </StackLayout>
+                
+                <BoxView Style="{StaticResource ProfileDropdownSeparatorStyle}"/>
+                
+                <!-- Menu Options -->
+                <Border Style="{StaticResource ProfileMenuItemBorderStyle}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToProfileCommand}"/>
+                    </Border.GestureRecognizers>
+                    <Label Text="?? My Profile" 
+                           Style="{StaticResource ProfileMenuItemStyle}"/>
+                </Border>
+                
+                <Border Style="{StaticResource ProfileMenuItemBorderStyle}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToSettingsCommand}"/>
+                    </Border.GestureRecognizers>
+                    <Label Text="?? Settings" 
+                           Style="{StaticResource ProfileMenuItemStyle}"/>
+                </Border>
+                
+                <Border Style="{StaticResource ProfileMenuItemBorderStyle}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ToggleThemeCommand}"/>
+                    </Border.GestureRecognizers>
+                    <Label Text="{Binding ThemeToggleText}" 
+                           Style="{StaticResource ProfileMenuItemStyle}"/>
+                </Border>
+                
+                <BoxView Style="{StaticResource ProfileDropdownSeparatorStyle}"/>
+                
+                <Border Style="{StaticResource ProfileMenuItemBorderStyle}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding LogoutCommand}"/>
+                    </Border.GestureRecognizers>
+                    <Label Text="?? Sign Out" 
+                           Style="{StaticResource ProfileMenuItemDangerStyle}"/>
+                </Border>
+                
+            </StackLayout>
+            
+        </Border>
+        
+    </Grid>
+
+</ContentView>

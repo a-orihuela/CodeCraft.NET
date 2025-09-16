@@ -1,4 +1,7 @@
-﻿namespace CodeCraft.NET.MAUI
+﻿using Microsoft.Maui;
+using Microsoft.Maui.Controls;
+
+namespace CodeCraft.NET.MAUI
 {
 	public partial class App : Microsoft.Maui.Controls.Application
 	{

@@ -13,7 +13,7 @@
                 <Label Text="{local:Localize Language}" 
                        VerticalOptions="Center" 
                        FontSize="14" />
-                <controls:LanguageSelector x:Name="LanguageSelector" />
+                <Label Text="ES" FontSize="14" VerticalOptions="Center" />
             </StackLayout>
 
             <!-- Welcome Header -->
@@ -28,8 +28,7 @@
                        HorizontalTextAlignment="Center" />
 
                     <Button Text="View Styles Demo" 
-                        Style="{StaticResource CreateButtonStyle}"
-                        Clicked="OnViewStylesDemoClicked" />
+                        Style="{StaticResource CreateButtonStyle}" />
                 </StackLayout>
             </Frame>
 
@@ -161,12 +160,10 @@
             <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,*" RowSpacing="12" ColumnSpacing="12">
                 <Button Grid.Row="0" Grid.Column="0" 
                     Text="View Documentation" 
-                    Style="{StaticResource OutlinePrimaryButtonStyle}"
-                    Clicked="OnViewDocumentationClicked" />
+                    Style="{StaticResource OutlinePrimaryButtonStyle}" />
                 <Button Grid.Row="0" Grid.Column="1" 
                     Text="Design Tokens Demo" 
-                    Style="{StaticResource ViewButtonStyle}"
-                    Clicked="OnViewStylesDemoClicked" />
+                    Style="{StaticResource ViewButtonStyle}" />
             </Grid>
 
             <!-- Footer -->

@@ -5,6 +5,22 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <!-- ============================================ -->
+    <!-- MENU SECTION COLORS - MUTED PALETTE -->
+    <!-- ============================================ -->
+
+    <!-- Primary,Secondary and Tertiary Menu Colors -->
+    <Color x:Key="MenuColor1">#5cb6df</Color>
+    <Color x:Key="MenuColor2">#ffdb5c</Color>
+    <Color x:Key="MenuColor3">#c95555</Color>
+    <Color x:Key="MenuColor4">#5cbd6e</Color>
+    <Color x:Key="MenuColor5">#b84c82</Color>
+    <Color x:Key="MenuColor6">#ff915c</Color>
+    <Color x:Key="MenuColor7">#b4eb5c</Color>
+    <Color x:Key="MenuColor8">#ff915c</Color>
+    <Color x:Key="MenuColor9">#84659d</Color>
+    <Color x:Key="MenuColorBackground">#f5f5f5</Color>
+
+    <!-- ============================================ -->
     <!-- MODERN COLOR PALETTE FOR KETOPLANNER -->
     <!-- ============================================ -->
     
@@ -76,6 +92,30 @@
     <Color x:Key="FatColor">#10B981</Color>         <!-- Green for fats -->
     <Color x:Key="FiberColor">#8B5CF6</Color>       <!-- Purple for fiber -->
 
+    <!-- Extended Nutrition Colors (for all possible references) -->
+    <Color x:Key="NutritionColors">#8B5CF6</Color>          <!-- Fallback color -->
+    <Color x:Key="NutritionProteinColor">#EF4444</Color>    <!-- Red for proteins -->
+    <Color x:Key="NutritionCarbsColor">#F59E0B</Color>      <!-- Orange for carbs -->
+    <Color x:Key="NutritionCarbColor">#F59E0B</Color>       <!-- Alternative carbs -->
+    <Color x:Key="NutritionFatColor">#10B981</Color>        <!-- Green for fats -->
+    <Color x:Key="NutritionFatsColor">#10B981</Color>       <!-- Alternative fats -->
+    <Color x:Key="NutritionFiberColor">#8B5CF6</Color>      <!-- Purple for fiber -->
+    <Color x:Key="NutritionCalorieColor">#F97316</Color>    <!-- Orange for calories -->
+    <Color x:Key="NutritionCaloriesColor">#F97316</Color>   <!-- Alternative calories -->
+    <Color x:Key="NutritionSodiumColor">#E11D48</Color>     <!-- Rose for sodium -->
+    <Color x:Key="NutritionSugarColor">#EC4899</Color>      <!-- Pink for sugar -->
+    <Color x:Key="NutritionCholesterolColor">#7C2D12</Color> <!-- Brown for cholesterol -->
+
+    <!-- Macro Ratios Colors -->
+    <Color x:Key="MacroProteinColor">#DC2626</Color>        <!-- Deep red -->
+    <Color x:Key="MacroCarbColor">#EA580C</Color>           <!-- Deep orange -->
+    <Color x:Key="MacroFatColor">#059669</Color>            <!-- Deep green -->
+
+    <!-- Keto-Specific Colors -->
+    <Color x:Key="KetoGreenColor">#10B981</Color>           <!-- Keto approved -->
+    <Color x:Key="KetoYellowColor">#F59E0B</Color>          <!-- Keto caution -->
+    <Color x:Key="KetoRedColor">#EF4444</Color>             <!-- Not keto -->
+
     <!-- =============================================== -->
     <!-- SOLID COLOR BRUSHES FOR XAML USAGE -->
     <!-- =============================================== -->
@@ -117,5 +157,35 @@
     <SolidColorBrush x:Key="DarkBackgroundBrush" Color="{StaticResource DarkBackground}"/>
     <SolidColorBrush x:Key="DarkSurfaceBrush" Color="{StaticResource DarkSurface}"/>
     <SolidColorBrush x:Key="DarkBorderBrush" Color="{StaticResource DarkBorder}"/>
+
+    <!-- Nutrition Color Brushes (Basic) -->
+    <SolidColorBrush x:Key="ProteinColorBrush" Color="{StaticResource ProteinColor}"/>
+    <SolidColorBrush x:Key="CarbColorBrush" Color="{StaticResource CarbColor}"/>
+    <SolidColorBrush x:Key="FatColorBrush" Color="{StaticResource FatColor}"/>
+    <SolidColorBrush x:Key="FiberColorBrush" Color="{StaticResource FiberColor}"/>
+
+    <!-- Extended Nutrition Color Brushes -->
+    <SolidColorBrush x:Key="NutritionColorsBrush" Color="{StaticResource NutritionColors}"/>
+    <SolidColorBrush x:Key="NutritionProteinColorBrush" Color="{StaticResource NutritionProteinColor}"/>
+    <SolidColorBrush x:Key="NutritionCarbsColorBrush" Color="{StaticResource NutritionCarbsColor}"/>
+    <SolidColorBrush x:Key="NutritionCarbColorBrush" Color="{StaticResource NutritionCarbColor}"/>
+    <SolidColorBrush x:Key="NutritionFatColorBrush" Color="{StaticResource NutritionFatColor}"/>
+    <SolidColorBrush x:Key="NutritionFatsColorBrush" Color="{StaticResource NutritionFatsColor}"/>
+    <SolidColorBrush x:Key="NutritionFiberColorBrush" Color="{StaticResource NutritionFiberColor}"/>
+    <SolidColorBrush x:Key="NutritionCalorieColorBrush" Color="{StaticResource NutritionCalorieColor}"/>
+    <SolidColorBrush x:Key="NutritionCaloriesColorBrush" Color="{StaticResource NutritionCaloriesColor}"/>
+    <SolidColorBrush x:Key="NutritionSodiumColorBrush" Color="{StaticResource NutritionSodiumColor}"/>
+    <SolidColorBrush x:Key="NutritionSugarColorBrush" Color="{StaticResource NutritionSugarColor}"/>
+    <SolidColorBrush x:Key="NutritionCholesterolColorBrush" Color="{StaticResource NutritionCholesterolColor}"/>
+
+    <!-- Macro Ratio Color Brushes -->
+    <SolidColorBrush x:Key="MacroProteinColorBrush" Color="{StaticResource MacroProteinColor}"/>
+    <SolidColorBrush x:Key="MacroCarbColorBrush" Color="{StaticResource MacroCarbColor}"/>
+    <SolidColorBrush x:Key="MacroFatColorBrush" Color="{StaticResource MacroFatColor}"/>
+
+    <!-- Keto-Specific Color Brushes -->
+    <SolidColorBrush x:Key="KetoGreenColorBrush" Color="{StaticResource KetoGreenColor}"/>
+    <SolidColorBrush x:Key="KetoYellowColorBrush" Color="{StaticResource KetoYellowColor}"/>
+    <SolidColorBrush x:Key="KetoRedColorBrush" Color="{StaticResource KetoRedColor}"/>
 
 </ResourceDictionary>

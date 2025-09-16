@@ -77,6 +77,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="App.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="AppShell.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MainPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\ButtonStyles.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -89,18 +98,31 @@
 	  <MauiXaml Update="Resources\Styles\UnifiedStyles.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Custom\StyleDemoPage.xaml">
+	  <MauiXaml Update="Views\Controls\ExpansionView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Controls\UserProfileEditControl.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\DesignSystemDemo.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Examples\StyleSystemDemoPage.xaml">
+	  <MauiXaml Update="Views\Layout\AppHeaderView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Examples\TokenDemoPage.xaml">
+	  <MauiXaml Update="Views\Layout\MainLayoutPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Layout\PrincipalPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Layout\SidebarMenuView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Mappers\" />
 	</ItemGroup>
 	<!-- Resource files for localization -->
 

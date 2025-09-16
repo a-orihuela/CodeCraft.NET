@@ -201,4 +201,34 @@
     <x:Double x:Key="ComponentInputPadding">16</x:Double>
     <x:Double x:Key="ComponentBadgePadding">12</x:Double>
 
+    <!-- ======================== RESPONSIVE LAYOUT TOKENS ================= -->
+    
+    <!-- Breakpoints for responsive design -->
+    <x:Double x:Key="BreakpointMobile">768</x:Double>        <!-- Mobile breakpoint -->
+    <x:Double x:Key="BreakpointTablet">1024</x:Double>       <!-- Tablet breakpoint -->
+    <x:Double x:Key="BreakpointDesktop">1200</x:Double>      <!-- Desktop breakpoint -->
+    
+    <!-- Application layout dimensions -->
+    <x:Double x:Key="AppMinWidth">320</x:Double>             <!-- Minimum app width -->
+    <x:Double x:Key="AppDesktopMinWidth">1024</x:Double>     <!-- Configurable desktop min width -->
+    <x:Double x:Key="SidebarWidthExpanded">280</x:Double>    <!-- Expanded sidebar -->
+    <x:Double x:Key="SidebarWidthCollapsed">60</x:Double>    <!-- Collapsed sidebar -->
+    <x:Double x:Key="HeaderHeight">64</x:Double>             <!-- Header bar height -->
+    
+    <!-- Navigation tokens -->
+    <x:Double x:Key="NavigationItemHeight">48</x:Double>     <!-- Nav item touch target -->
+    <x:Double x:Key="NavigationItemPadding">16</x:Double>    <!-- Nav item padding -->
+    <x:Double x:Key="NavigationIconSize">24</x:Double>       <!-- Nav icon size -->
+    <x:Double x:Key="NavigationGroupSpacing">8</x:Double>    <!-- Space between nav groups -->
+    
+    <!-- Menu section colors -->
+    <Color x:Key="NavigationBackgroundColor">#F8FAFC</Color>           <!-- Light mode nav bg -->
+    <Color x:Key="NavigationBackgroundColorDark">#1E293B</Color>       <!-- Dark mode nav bg -->
+    <Color x:Key="NavigationItemSelectedColor">#EFF6FF</Color>          <!-- Selected item bg -->
+    <Color x:Key="NavigationItemSelectedColorDark">#1E40AF</Color>      <!-- Selected item bg dark -->
+    <Color x:Key="NavigationItemHoverColor">#F1F5F9</Color>            <!-- Hover bg -->
+    <Color x:Key="NavigationItemHoverColorDark">#334155</Color>         <!-- Hover bg dark -->
+    <Color x:Key="NavigationSectionColor">#64748B</Color>              <!-- Section header color -->
+    <Color x:Key="NavigationSectionColorDark">#94A3B8</Color>          <!-- Section header dark -->
+
 </ResourceDictionary>

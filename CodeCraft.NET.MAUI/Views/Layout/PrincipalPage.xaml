@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:layout="clr-namespace:CodeCraft.NET.MAUI.Views.Layout"
+             x:Class="CodeCraft.NET.MAUI.Views.Layout.PrincipalPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{AppThemeBinding Light={StaticResource Gray50}, Dark={StaticResource DarkBackground}}">
+
+    <Grid x:Name="MainGrid" Margin="0" Padding="0">
+        
+        <!-- Define columns: Sidebar + Content -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="SidebarColumn" Width="280"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>  <!-- Header -->
+            <RowDefinition Height="*"/>     <!-- Content -->
+        </Grid.RowDefinitions>
+
+        <!-- HEADER BAR (Full Width) -->
+        <Border Grid.Column="0" 
+                Grid.ColumnSpan="2"
+                Grid.Row="0"
+                BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource DarkSurface}}"
+                Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource DarkBorder}}"
+                StrokeThickness="1"
+                Margin="0"
+                Padding="0"
+                HeightRequest="64">
+            
+            <Grid ColumnDefinitions="Auto,Auto,*" 
+                  ColumnSpacing="12"
+                  Padding="16">
+                
+                <!-- Hamburger Menu Button -->
+                <Button x:Name="HamburgerMenuButton"
+                        Grid.Column="0" 
+                        Text="≡"
+                        BackgroundColor="Transparent"
+                        TextColor="{AppThemeBinding Light={StaticResource Gray700}, Dark={StaticResource Gray300}}"
+                        FontSize="20"
+                        CornerRadius="6"
+                        WidthRequest="44"
+                        HeightRequest="44"
+                        Padding="0"
+                        Margin="0"
+                        Clicked="OnHamburgerMenuClicked"/>
+
+                <!-- App Name -->
+                <Label Grid.Column="1"
+                       Text="KetoPlanner" 
+                       FontFamily="{StaticResource PrimaryFontSemibold}"
+                       FontSize="18"
+                       TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryLight}}"
+                       VerticalOptions="Center"/>
+                
+            </Grid>
+            
+        </Border>
+
+        <!-- SIDEBAR NAVIGATION -->
+        <Border x:Name="SidebarBorder"
+                Grid.Column="0" 
+                Grid.Row="1"
+                BackgroundColor="{StaticResource White}"
+                Stroke="Transparent"
+                StrokeThickness="0"
+                Margin="0"
+                Padding="0">
+            
+            <!-- Using SidebarMenuView -->
+            <layout:SidebarMenuView x:Name="SidebarMenu" />
+            
+        </Border>
+
+        <!-- MAIN CONTENT AREA -->
+        <Border Grid.Column="1" 
+                Grid.Row="1"
+                BackgroundColor="{AppThemeBinding Light={StaticResource Gray50}, Dark={StaticResource DarkBackground}}"
+                Margin="0"
+                Padding="0">
+            
+            <!-- Dynamic Content Area -->
+            <ContentView x:Name="DynamicContentArea" 
+                        Padding="24">
+                
+                <!-- Default Dashboard Content -->
+                <ScrollView>
+                    <StackLayout x:Name="DefaultContentArea" Spacing="24">
+                        
+                        <!-- Welcome Section -->
+                        <StackLayout Spacing="8">
+                            <Label Text="Dashboard" 
+                                   FontFamily="{StaticResource PrimaryFontSemibold}"
+                                   FontSize="28"
+                                   TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
+                            <Label Text="Overview and quick actions" 
+                                   FontFamily="{StaticResource PrimaryFont}"
+                                   FontSize="16"
+                                   TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"/>
+                        </StackLayout>
+                        
+                        <!-- Welcome Card -->
+                        <Frame Style="{StaticResource ElevatedCardStyle}">
+                            <StackLayout Spacing="16">
+                                <Label Text="Welcome to KetoPlanner!" 
+                                       FontFamily="{StaticResource PrimaryFontSemibold}"
+                                       FontSize="24"
+                                       TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"
+                                       Margin="0"/>
+                                <Label Text="Your comprehensive keto diet companion with advanced nutrition planning and tracking capabilities." 
+                                       FontFamily="{StaticResource PrimaryFont}"
+                                       FontSize="16"
+                                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"
+                                       Margin="0"/>
+                            </StackLayout>
+                        </Frame>
+
+                        <!-- Dashboard placeholder -->
+                        <Frame Style="{StaticResource CardStyle}">
+                            <StackLayout Spacing="12">
+                                <Label Text="Dashboard Content Coming Soon" 
+                                       FontFamily="{StaticResource PrimaryFontSemibold}"
+                                       FontSize="20"
+                                       TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
+                                <Label Text="This dashboard will be populated with real content in future iterations. For now, you can navigate through the different sections using the sidebar menu." 
+                                       FontSize="16"
+                                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"/>
+                            </StackLayout>
+                        </Frame>
+
+                    </StackLayout>
+                </ScrollView>
+                
+            </ContentView>
+            
+        </Border>
+
+        <!-- Mobile Overlay (when sidebar is open in mobile mode) -->
+        <Grid x:Name="MobileOverlay" 
+              Grid.Column="0" 
+              Grid.ColumnSpan="2" 
+              Grid.Row="0" 
+              Grid.RowSpan="2"
+              BackgroundColor="#80000000"
+              IsVisible="False"
+              ZIndex="100">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnMobileOverlayTapped"/>
+            </Grid.GestureRecognizers>
+            
+            <!-- Mobile Sidebar Menu using SidebarMenuView -->
+            <Border BackgroundColor="Transparent"
+                    WidthRequest="280"
+                    HorizontalOptions="Start"
+                    ZIndex="101">
+                
+                <layout:SidebarMenuView x:Name="MobileSidebarMenu" />
+                
+            </Border>
+            
+        </Grid>
+
+    </Grid>
+
+</ContentPage>

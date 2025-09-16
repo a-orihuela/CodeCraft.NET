@@ -1,73 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:CodeCraft.NET.MAUI.Extensions.Localization"
-             xmlns:vm="clr-namespace:CodeCraft.NET.MAUI.ViewModels"
-             x:Class="CodeCraft.NET.MAUI.Views.Controls.LanguageSelector"
-             x:DataType="vm:LanguageSelectorViewModel">
-
-    <StackLayout Spacing="10" BackgroundColor="LightBlue">
-        
-        <!-- Debug Info -->
-        <Label Text="{Binding AvailableLanguages.Count, StringFormat='Languages: {0}'}" 
-               FontSize="12" 
-               TextColor="Red" />
-        
-        <Label Text="{Binding SelectedLanguage.FlagCode, StringFormat='Selected: {0}', FallbackValue='None Selected'}" 
-               FontSize="12" 
-               TextColor="Blue" />
-        
-        <!-- Language Button -->
-        <Button x:Name="LanguageButton"
-                Text="{Binding SelectedLanguage.FlagCode, FallbackValue='??'}"
-                Command="{Binding ToggleLanguageSelectionCommand}"
-                BackgroundColor="Orange"
-                TextColor="White"
-                WidthRequest="80"
-                HeightRequest="50"
-                FontSize="16"
-                FontFamily="OpenSansSemibold" />
-
-        <!-- Language Selection Dropdown -->
-        <StackLayout IsVisible="{Binding IsLanguageSelectionVisible}"
-                     BackgroundColor="LightGreen"
-                     Padding="10">
-            
-            <Label Text="Dropdown is visible!" 
-                   FontSize="14" 
-                   TextColor="DarkGreen" />
-            
-            <CollectionView ItemsSource="{Binding AvailableLanguages}"
-                            BackgroundColor="White"
-                            HeightRequest="150">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="vm:LanguageOption">
-                        <StackLayout Padding="10"
-                                     BackgroundColor="LightYellow">
-                            <StackLayout.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:LanguageSelectorViewModel}}, Path=SelectLanguageCommand}"
-                                                      CommandParameter="{Binding .}" />
-                            </StackLayout.GestureRecognizers>
-                            
-                            <StackLayout Orientation="Horizontal" Spacing="10">
-                                <!-- Flag Code -->
-                                <Label Text="{Binding FlagCode}"
-                                       FontSize="16"
-                                       FontAttributes="Bold"
-                                       TextColor="Blue"
-                                       VerticalOptions="Center" />
-                                
-                                <!-- Language Name -->
-                                <Label Text="{Binding DisplayName}"
-                                       FontSize="16"
-                                       VerticalOptions="Center"
-                                       TextColor="Black" />
-                            </StackLayout>
-                        </StackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </StackLayout>
+             x:Class="CodeCraft.NET.MAUI.Views.Controls.LanguageSelector">
+    
+    <StackLayout Orientation="Horizontal" Spacing="10">
+        <Label Text="Language:" VerticalOptions="Center" />
+        <Picker x:Name="LanguagePicker" 
+                Title="Select Language"
+                VerticalOptions="Center" />
     </StackLayout>
-
+    
 </ContentView>

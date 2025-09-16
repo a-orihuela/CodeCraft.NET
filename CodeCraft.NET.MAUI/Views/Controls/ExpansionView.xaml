@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CodeCraft.NET.MAUI.Views.Controls.ExpansionView"
+             x:Name="ExpansionControl">
+
+    <StackLayout Spacing="0" Margin="0,4">
+        
+        <!-- Header with expand/collapse functionality and color bar -->
+        <Border x:Name="HeaderBorder"
+                BackgroundColor="Transparent"
+                Padding="0">
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnHeaderTapped" />
+                <PointerGestureRecognizer PointerEntered="OnPointerEntered" PointerExited="OnPointerExited" />
+            </Border.GestureRecognizers>
+            
+            <Grid ColumnDefinitions="4,*,Auto" 
+                  ColumnSpacing="0"
+                  Padding="0"
+                  MinimumHeightRequest="40">
+                
+                <!-- Color Bar (left side) -->
+                <Border Grid.Column="0"
+                        x:Name="ColorBar"
+                        WidthRequest="4"
+                        BackgroundColor="{Binding ColorBarColor, Source={x:Reference ExpansionControl}}"
+                        VerticalOptions="Fill"/>
+                
+                <!-- Section Title -->
+                <Label Grid.Column="1" 
+                       Text="{Binding Title, Source={x:Reference ExpansionControl}}" 
+                       FontSize="15"
+                       FontAttributes="None"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray800}, Dark={StaticResource Gray200}}"
+                       VerticalOptions="Center"
+                       Padding="12,8"/>
+                
+                <!-- Expand/Collapse Icon -->
+                <Label Grid.Column="2" 
+                       x:Name="ExpandIconLabel"
+                       Text="{Binding ExpandIcon, Source={x:Reference ExpansionControl}}" 
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       Padding="8"/>
+                
+            </Grid>
+        </Border>
+
+        <!-- Content Area -->
+        <StackLayout x:Name="ContentContainer"
+                    IsVisible="{Binding IsContentVisible, Source={x:Reference ExpansionControl}}"
+                    Spacing="0"
+                    Padding="16,4,0,8">
+            <!-- Content will be populated programmatically -->
+        </StackLayout>
+        
+    </StackLayout>
+
+</ContentView>
