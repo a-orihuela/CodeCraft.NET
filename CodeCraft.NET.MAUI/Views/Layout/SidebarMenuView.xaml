@@ -14,42 +14,6 @@
                                   ColorBarColor="{StaticResource MenuColor1}"
                                   x:Name="DashboardSection" />
 
-            <!-- USER MANAGEMENT SECTION -->
-            <controls:ExpansionView Title="USER MANAGEMENT" 
-                                  IsExpanded="False"
-                                  ColorBarColor="{StaticResource MenuColor2}"
-                                  x:Name="UserManagementSection" />
-
-            <!-- NUTRITION PLANNING SECTION -->
-            <controls:ExpansionView Title="NUTRITION PLANNING" 
-                                  IsExpanded="False"
-                                  ColorBarColor="{StaticResource MenuColor3}"
-                                  x:Name="NutritionPlanningSection" />
-
-            <!-- FOOD RESOURCES SECTION -->
-            <controls:ExpansionView Title="FOOD RESOURCES" 
-                                  IsExpanded="False"
-                                  ColorBarColor="{StaticResource MenuColor4}"
-                                  x:Name="FoodResourcesSection" />
-
-            <!-- CONFIGURATION SECTION (EXPANDED with System Management features) -->
-            <controls:ExpansionView Title="CONFIGURATION" 
-                                  IsExpanded="False"
-                                  ColorBarColor="{StaticResource MenuColor5}"
-                                  x:Name="ConfigurationSection" />
-
-            <!-- ANALYTICS SECTION -->
-            <controls:ExpansionView Title="ANALYTICS" 
-                                  IsExpanded="False"
-                                  ColorBarColor="{StaticResource MenuColor6}"
-                                  x:Name="AnalyticsSection" />
-
-            <!-- EXAMPLES SECTION -->
-            <controls:ExpansionView Title="EXAMPLES" 
-                                  IsExpanded="False"
-                                  ColorBarColor="{StaticResource MenuColor7}"
-                                  x:Name="ExamplesSection" />
-
         </StackLayout>
     </ScrollView>
 

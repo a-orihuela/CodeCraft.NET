@@ -20,6 +20,7 @@ namespace CodeCraft.NET.MAUI
             
             // Layout components
             services.AddTransient<MainLayoutPage>();
+            services.AddTransient<PrincipalPage>();
             services.AddTransient<SidebarMenuView>();
             services.AddTransient<AppHeaderView>();
 
