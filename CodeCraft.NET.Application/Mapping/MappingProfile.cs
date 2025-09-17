@@ -4,8 +4,19 @@
 // </auto-generated>
 
 using AutoMapper;
+using CodeCraft.NET.Application.CQRS.Features.LogConfigurations.Commands.Create;
+using CodeCraft.NET.Application.CQRS.Features.LogConfigurations.Commands.Update;
+using CodeCraft.NET.Application.CQRS.Features.LogEntries.Commands.Create;
+using CodeCraft.NET.Application.CQRS.Features.LogEntries.Commands.Update;
+using CodeCraft.NET.Application.CQRS.Features.LogSummaries.Commands.Create;
+using CodeCraft.NET.Application.CQRS.Features.LogSummaries.Commands.Update;
+using CodeCraft.NET.Application.DTOs.Custom.LogConfigurations;
+using CodeCraft.NET.Application.DTOs.Custom.LogEntries;
+using CodeCraft.NET.Application.DTOs.Custom.LogSummaries;
+using CodeCraft.NET.Application.DTOs.LogConfigurations;
+using CodeCraft.NET.Application.DTOs.LogEntries;
+using CodeCraft.NET.Application.DTOs.LogSummaries;
 using CodeCraft.NET.Domain.Model;
-
 
 namespace CodeCraft.NET.Application.Mapping
 {
@@ -20,6 +31,20 @@ namespace CodeCraft.NET.Application.Mapping
         private void ConfigureGeneratedMappings()
         {
         
+                        CreateMap<LogConfiguration, LogConfigurationCreate>().ReverseMap();
+                        CreateMap<LogConfiguration, LogConfigurationUpdate>().ReverseMap();
+                        CreateMap<LogConfiguration, LogConfigurationDto>().ReverseMap();
+                        CreateMap<LogConfiguration, LogConfigurationWithRelatedDto>().ReverseMap();
+                
+                        CreateMap<LogEntry, LogEntryCreate>().ReverseMap();
+                        CreateMap<LogEntry, LogEntryUpdate>().ReverseMap();
+                        CreateMap<LogEntry, LogEntryDto>().ReverseMap();
+                        CreateMap<LogEntry, LogEntryWithRelatedDto>().ReverseMap();
+                
+                        CreateMap<LogSummary, LogSummaryCreate>().ReverseMap();
+                        CreateMap<LogSummary, LogSummaryUpdate>().ReverseMap();
+                        CreateMap<LogSummary, LogSummaryDto>().ReverseMap();
+                        CreateMap<LogSummary, LogSummaryWithRelatedDto>().ReverseMap();
                 
         }
 

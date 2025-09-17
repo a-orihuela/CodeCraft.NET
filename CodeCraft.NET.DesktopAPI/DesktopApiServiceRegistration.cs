@@ -4,7 +4,9 @@
 // </auto-generated>
 
 using CodeCraft.NET.Application;
+using CodeCraft.NET.DesktopAPI.Services;
 using CodeCraft.NET.Infrastructure;
+using CodeCraft.NET.Services;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +29,9 @@ namespace CodeCraft.NET.DesktopAPI
             
             // Add Application services (CQRS, MediatR, etc.)
             services.AddApplicationServices();
+            
+            // Add Services layer (business logic)
+            services.AddServicesLayer(configuration);
             
             // Register all generated desktop services automatically
             RegisterDesktopServices(services);
@@ -51,6 +56,9 @@ namespace CodeCraft.NET.DesktopAPI
             // Add Application services (CQRS, MediatR, etc.)
             services.AddApplicationServices();
             
+            // Add Services layer (business logic)
+            services.AddServicesLayer(null!);
+            
             // Register all generated desktop services automatically
             RegisterDesktopServices(services);
             
@@ -61,11 +69,14 @@ namespace CodeCraft.NET.DesktopAPI
         }
         
         /// <summary>
-        /// Registers all generated Desktop API services
+        /// Registers all generated Desktop API services (facades)
         /// </summary>
         private static void RegisterDesktopServices(IServiceCollection services)
         {
-            // Generated services registration
+            // Generated Desktop API facade services registration
+            services.AddScoped<LogConfigurationDesktopService>();
+            services.AddScoped<LogEntryDesktopService>();
+            services.AddScoped<LogSummaryDesktopService>();
         }
     }
 }

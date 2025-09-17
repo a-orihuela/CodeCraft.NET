@@ -34,6 +34,7 @@ try
 	Console.WriteLine($"Database Provider: {activeProfile.DatabaseProvider}");
 	Console.WriteLine($"Components to generate:");
 	Console.WriteLine($"  Infrastructure & CQRS: Always generated");
+	Console.WriteLine($"  Services Layer: Always generated");
 	Console.WriteLine($"  {(activeProfile.GenerateWebApi ? "✓" : "✗")} Web API Controllers: {activeProfile.GenerateWebApi}");
 	Console.WriteLine($"  {(activeProfile.GenerateDesktopApi ? "✓" : "✗")} Desktop API Services: {activeProfile.GenerateDesktopApi}");
 	Console.WriteLine($"  {(activeProfile.GenerateMaui ? "✓" : "✗")} MAUI Components: {activeProfile.GenerateMaui}");
@@ -71,6 +72,7 @@ try
 	var renderer = new ScribanTemplateRenderer();
 	var cqrsGenerator = new CQRSGenerator(renderer);
 	var repoGenerator = new RepositoryGenerator(renderer);
+	var servicesGenerator = new ServicesGenerator(renderer);
 	var controllerGenerator = new ControllerGenerator(renderer);
 	var desktopApiGenerator = new DesktopApiGenerator(renderer);
 	var dbContextGenerator = new DbContextGenerator(renderer);
@@ -91,7 +93,14 @@ try
 	dbContextGenerator.Generate(entitiesMetadata);
 	repoGenerator.Generate(entitiesMetadata);
 
-	// 3. Web API
+	// 3. Services Layer (always generated)
+	foreach (var entity in entitiesMetadata)
+	{
+		servicesGenerator.Generate(entity);
+	}
+	servicesGenerator.GenerateServiceRegistration(entitiesMetadata);
+
+	// 4. Web API (acts as facade over Services)
 	if (activeProfile.GenerateWebApi)
 	{
 		foreach (var entity in entitiesMetadata)
@@ -100,7 +109,7 @@ try
 		}
 	}
 
-	// 4. Desktop API
+	// 5. Desktop API (acts as facade over Services)
 	if (activeProfile.GenerateDesktopApi)
 	{
 		foreach (var entity in entitiesMetadata)
@@ -110,7 +119,7 @@ try
 		desktopApiGenerator.GenerateServiceRegistration(entitiesMetadata);
 	}
 
-	// 5. MAUI
+	// 6. MAUI
 	if (activeProfile.GenerateMaui)
 	{
 		foreach (var entity in entitiesMetadata)
@@ -122,7 +131,7 @@ try
 
 	Console.WriteLine("Creating database migrations...");
 
-	// 6. Generate migrations after DbContext is created
+	// 7. Generate migrations after DbContext is created
 	if (activeProfile.ForceMigrations)
 	{
 		MigrationGenerator.GenerateAllMigrations();
@@ -189,6 +198,11 @@ static void ShowHelp()
 	Console.WriteLine("Examples:");
 	Console.WriteLine("  dotnet run                       # Use default 'dev' profile");
 	Console.WriteLine("  dotnet run -- --profile ci       # Use CI profile for automated builds");
+	Console.WriteLine();
+	Console.WriteLine("ARCHITECTURE:");
+	Console.WriteLine("  Services Layer  - Business logic and orchestration (always generated)");
+	Console.WriteLine("  Web API        - HTTP facade over Services layer");
+	Console.WriteLine("  Desktop API    - Direct facade over Services layer");
 	Console.WriteLine();
 	Console.WriteLine("CUSTOMIZATION:");
 	Console.WriteLine("  Edit codecraft.config.json to:");

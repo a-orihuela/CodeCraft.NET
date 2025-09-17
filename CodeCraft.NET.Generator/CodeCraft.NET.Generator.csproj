@@ -36,26 +36,48 @@
     <EmbeddedResource Include="Templates\WebAPI\Controllers\Controller.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.Controllers.Controller.scriban</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="Templates\WebAPI\Controllers\ControllerWithServices.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.WebAPI.Controllers.ControllerWithServices.scriban</LogicalName>
+    </EmbeddedResource>
+    
+    <!-- Services -->
+    <EmbeddedResource Include="Templates\Services\Service.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.Services.Service.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\Services\ServicesServiceRegistration.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.Services.ServicesServiceRegistration.scriban</LogicalName>
+    </EmbeddedResource>
+    
+    <!-- Desktop API -->
     <EmbeddedResource Include="Templates\DesktopAPI\Services\DesktopService.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.Services.DesktopService.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\DesktopAPI\Services\DesktopServiceWithServices.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.DesktopAPI.Services.DesktopServiceWithServices.scriban</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Templates\DesktopAPI\Services\DesktopApiServiceRegistration.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.Services.DesktopApiServiceRegistration.scriban</LogicalName>
     </EmbeddedResource>
+    
+    <!-- Infrastructure -->
     <EmbeddedResource Include="Templates\Infrastructure\InfrastructureServiceRegistration.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.Infrastructure.InfrastructureServiceRegistration.scriban</LogicalName>
     </EmbeddedResource>
+    
     <!-- MAUI Templates -->
-    <!-- MAUI Page Code-Behind Templates -->
     <EmbeddedResource Include="Templates\MAUI\Services\MauiServiceRegistration.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.Services.MauiServiceRegistration.scriban</LogicalName>
     </EmbeddedResource>
+    
+    <!-- DTOs -->
     <EmbeddedResource Include="Templates\Application\DTOs\EntityDtos.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.DTOs.EntityDtos.scriban</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Templates\Application\DTOs\EntityWithRelatedDto.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.DTOs.EntityWithRelatedDto.scriban</LogicalName>
     </EmbeddedResource>
+    
+    <!-- CQRS Commands -->
     <EmbeddedResource Include="Templates\Application\CQRS\Features\Commands\Create\Create.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Features.Commands.Create.Create.scriban</LogicalName>
     </EmbeddedResource>
@@ -65,10 +87,10 @@
     <EmbeddedResource Include="Templates\Application\CQRS\Features\Commands\Create\CreateValidator.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Features.Commands.Create.CreateValidator.scriban</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="Templates\Application\CQRS\Features\Commands\Delete\Delete.scriban">
+    <EmbeddedResource Include="Templates\application\CQRS\Features\Commands\Delete\Delete.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Features.Commands.Delete.Delete.scriban</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="Templates\Application\CQRS\Features\Commands\Delete\DeleteHandler.scriban">
+    <EmbeddedResource Include="Templates\application\CQRS\Features\Commands\Delete\DeleteHandler.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Features.Commands.Delete.DeleteHandler.scriban</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Templates\Application\CQRS\Features\Commands\Update\Update.scriban">
@@ -80,6 +102,8 @@
     <EmbeddedResource Include="Templates\Application\CQRS\Features\Commands\Update\UpdateValidator.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Features.Commands.Update.UpdateValidator.scriban</LogicalName>
     </EmbeddedResource>
+    
+    <!-- CQRS Queries -->
     <EmbeddedResource Include="Templates\Application\CQRS\Features\Queries\GetByIdHandler.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Features.Queries.GetByIdHandler.scriban</LogicalName>
     </EmbeddedResource>
@@ -92,6 +116,8 @@
     <EmbeddedResource Include="Templates\Application\CQRS\Features\Queries\GetWithRelatedQuery.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Features.Queries.GetWithRelatedQuery.scriban</LogicalName>
     </EmbeddedResource>
+    
+    <!-- CQRS Specifications -->
     <EmbeddedResource Include="Templates\Application\CQRS\Specifications\Specification.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Specifications.Specification.scriban</LogicalName>
     </EmbeddedResource>
@@ -104,14 +130,22 @@
     <EmbeddedResource Include="Templates\Application\CQRS\Specifications\WithRelatedSpecification.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.CQRS.Specifications.WithRelatedSpecification.scriban</LogicalName>
     </EmbeddedResource>
+    
+    <!-- HTTP Requests -->
     <EmbeddedResource Include="Templates\WebAPI\HttpRequests\Requests.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.HttpRequests.Requests.scriban</LogicalName>
     </EmbeddedResource>
+    
+    <!-- Mapping -->
     <EmbeddedResource Include="Templates\Application\Mapping\MappingProfile.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.Mapping.MappingProfile.scriban</LogicalName>
     </EmbeddedResource>
+    
+    <!-- Infrastructure -->
     <EmbeddedResource Include="Templates\Infrastructure\Persistence\ApplicationDbContext.scriban" />
     <EmbeddedResource Include="Templates\Infrastructure\Persistence\ApplicationDbContextFactory.scriban" />
+    
+    <!-- Repositories -->
     <EmbeddedResource Include="Templates\Infrastructure\Repositories\IRepository.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.Repositories.IRepository.scriban</LogicalName>
     </EmbeddedResource>

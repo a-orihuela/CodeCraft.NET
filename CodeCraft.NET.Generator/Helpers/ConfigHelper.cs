@@ -12,6 +12,7 @@ namespace CodeCraft.NET.Generator.Helpers
 			"Infrastructure" => Config.Shared.ProjectNames["Infrastructure"],
 			"Server" => Config.Shared.ProjectNames["Server"],
 			"Desktop" => Config.Shared.ProjectNames["Desktop"],
+			"Services" => Config.Shared.ProjectNames["Services"],
 			"Cross" => Config.Shared.ProjectNames["Cross"],
 			_ => throw new ArgumentException($"Unknown project key: {key}")
 		};
@@ -37,8 +38,14 @@ namespace CodeCraft.NET.Generator.Helpers
 		public static string GetDesktopServicePath(string entityName)
 			=> GetFilePath(Config.Shared.Files["DesktopService"], entityName);
 
+		public static string GetServicePath(string entityName)
+			=> GetFilePath(Config.Shared.Files["Service"], entityName);
+
 		public static string GetDesktopServiceRegistrationPath()
 			=> Config.Shared.Files["DesktopServiceRegistration"];
+
+		public static string GetServicesServiceRegistrationPath()
+			=> Config.Shared.Files["ServicesServiceRegistration"];
 
 		public static string GetInfrastructureServiceRegistrationPath()
 			=> Config.Shared.Files["InfrastructureServiceRegistration"];
@@ -146,8 +153,12 @@ namespace CodeCraft.NET.Generator.Helpers
 			var templatePath = templateProperty switch
 			{
 				"Controller" => Config.Shared.Templates["Controller"],
+				"ControllerWithServices" => Config.Shared.Templates["ControllerWithServices"],
 				"DesktopService" => Config.Shared.Templates["DesktopService"],
+				"DesktopServiceWithServices" => Config.Shared.Templates["DesktopServiceWithServices"],
+				"Service" => Config.Shared.Templates["Service"],
 				"DesktopServiceRegistration" => Config.Shared.Templates["DesktopServiceRegistration"],
+				"ServicesServiceRegistration" => Config.Shared.Templates["ServicesServiceRegistration"],
 				"InfrastructureServiceRegistration" => Config.Shared.Templates["InfrastructureServiceRegistration"],
 				
 				"MauiServiceHelper" => Config.Shared.Templates["MauiServiceHelper"],
@@ -193,5 +204,6 @@ namespace CodeCraft.NET.Generator.Helpers
 		public static string GetInfrastructureRoot() => ConfigurationContext.GetSolutionRelativePath(GetProjectName("Infrastructure"));
 		public static string GetServerRoot() => ConfigurationContext.GetSolutionRelativePath(GetProjectName("Server"));
 		public static string GetDesktopRoot() => ConfigurationContext.GetSolutionRelativePath(GetProjectName("Desktop"));
+		public static string GetServicesRoot() => ConfigurationContext.GetSolutionRelativePath(GetProjectName("Services"));
 	}
 }

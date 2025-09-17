@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CodeCraft.NET.Application\CodeCraft.NET.Application.csproj" />
     <ProjectReference Include="..\CodeCraft.NET.Infrastructure\CodeCraft.NET.Infrastructure.csproj" />
+    <ProjectReference Include="..\CodeCraft.NET.Services\CodeCraft.NET.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>

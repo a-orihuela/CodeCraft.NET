@@ -9,7 +9,8 @@
     "Microsoft.Extensions.Configuration",
     InfrastructureProjectName,
     DesktopProjectName + ".Services",
-    ApplicationProjectName
+    ApplicationProjectName,
+    ServicesProjectName
 ] ~}}
 {{~ include "CodeCraft.NET.Generator.Templates.Partials._render_usings.scriban" ~}}
 namespace {{ DesktopProjectName }}
@@ -30,6 +31,9 @@ namespace {{ DesktopProjectName }}
             
             // Add Application services (CQRS, MediatR, etc.)
             services.AddApplicationServices();
+            
+            // Add Services layer (business logic)
+            services.AddServicesLayer(configuration);
             
             // Register all generated desktop services automatically
             RegisterDesktopServices(services);
@@ -54,6 +58,9 @@ namespace {{ DesktopProjectName }}
             // Add Application services (CQRS, MediatR, etc.)
             services.AddApplicationServices();
             
+            // Add Services layer (business logic)
+            services.AddServicesLayer(null!);
+            
             // Register all generated desktop services automatically
             RegisterDesktopServices(services);
             
@@ -64,13 +71,13 @@ namespace {{ DesktopProjectName }}
         }
         
         /// <summary>
-        /// Registers all generated Desktop API services
+        /// Registers all generated Desktop API services (facades)
         /// </summary>
         private static void RegisterDesktopServices(IServiceCollection services)
         {
-            // Generated services registration
+            // Generated Desktop API facade services registration
 {{~ for entity in entities ~}}
-            services.AddScoped<{{ entity.Name }}Service>();
+            services.AddScoped<{{ entity.Name }}DesktopService>();
 {{~ end ~}}
         }
     }

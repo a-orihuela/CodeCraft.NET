@@ -1,0 +1,57 @@
+using CodeCraft.NET.Generator.Contracts;
+using CodeCraft.NET.Generator.Helpers;
+using CodeCraft.NET.Generator.Models;
+
+namespace CodeCraft.NET.Generator.Generators
+{
+    public class ServicesGenerator
+    {
+        private readonly ITemplateRenderer _templateRenderer;
+
+        public ServicesGenerator(ITemplateRenderer templateRenderer)
+        {
+            _templateRenderer = templateRenderer;
+        }
+
+        public void Generate(EntityMetadata entity)
+        {
+            // Entity Service
+            _templateRenderer.Render(
+                ConfigHelper.GetTemplatePath("Service"),
+                ConfigHelper.GetServicePath(entity.Name),
+                CreateTemplateContext(entity));
+        }
+
+        public void GenerateServiceRegistration(IEnumerable<EntityMetadata> entities)
+        {
+            var templatePath = ConfigHelper.GetTemplatePath("ServicesServiceRegistration");
+            var outputPath = ConfigHelper.GetServicesServiceRegistrationPath();
+
+            var config = ConfigurationContext.Options;
+            var context = new
+            {
+                entities,
+                ApplicationProjectName = config.Shared.ProjectNames["Application"],
+                DomainProjectName = config.Shared.ProjectNames["Domain"],
+                ServicesProjectName = config.Shared.ProjectNames["Services"]
+            };
+
+            _templateRenderer.Render(templatePath, outputPath, context);
+        }
+
+        private object CreateTemplateContext(EntityMetadata entity)
+        {
+            var config = ConfigurationContext.Options;
+            return new
+            {
+                entity.Name,
+                entity.NamePlural,
+                entity.Properties,
+                entity.Usings,
+                ApplicationProjectName = config.Shared.ProjectNames["Application"],
+                DomainProjectName = config.Shared.ProjectNames["Domain"],
+                ServicesProjectName = config.Shared.ProjectNames["Services"]
+            };
+        }
+    }
+}

@@ -15,9 +15,9 @@ namespace CodeCraft.NET.Generator.Generators
 
 		public void Generate(EntityMetadata entity)
 		{
-			// Controller
+			// Controller (using Services layer)
 			_templateRenderer.Render(
-				ConfigHelper.GetTemplatePath("Controller"),
+				ConfigHelper.GetTemplatePath("ControllerWithServices"),
 				ConfigHelper.GetControllerPath(entity.Name),
 				CreateTemplateContext(entity));
 
@@ -37,9 +37,11 @@ namespace CodeCraft.NET.Generator.Generators
 				entity.NamePlural,
 				entity.Properties,
 				entity.Usings,
+				name = entity.Name.ToLowerInvariant(),
 				ApplicationProjectName = config.Shared.ProjectNames["Application"],
 				DomainProjectName = config.Shared.ProjectNames["Domain"],
-				ServerProjectName = config.Shared.ProjectNames["Server"]
+				ServerProjectName = config.Shared.ProjectNames["Server"],
+				ServicesProjectName = config.Shared.ProjectNames["Services"]
 			};
 		}
 	}

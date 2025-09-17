@@ -15,9 +15,9 @@ namespace CodeCraft.NET.Generator.Generators
 
 		public void Generate(EntityMetadata entity)
 		{
-			// Desktop Service
+			// Desktop Service (using Services layer)
 			_templateRenderer.Render(
-				ConfigHelper.GetTemplatePath("DesktopService"),
+				ConfigHelper.GetTemplatePath("DesktopServiceWithServices"),
 				ConfigHelper.GetDesktopServicePath(entity.Name),
 				CreateTemplateContext(entity));
 		}
@@ -33,7 +33,8 @@ namespace CodeCraft.NET.Generator.Generators
 				entities,
 				ApplicationProjectName = config.Shared.ProjectNames["Application"],
 				DomainProjectName = config.Shared.ProjectNames["Domain"],
-				DesktopProjectName = config.Shared.ProjectNames["Desktop"]
+				DesktopProjectName = config.Shared.ProjectNames["Desktop"],
+				ServicesProjectName = config.Shared.ProjectNames["Services"]
 			};
 
 			_templateRenderer.Render(templatePath, outputPath, context);
@@ -48,9 +49,11 @@ namespace CodeCraft.NET.Generator.Generators
 				entity.NamePlural,
 				entity.Properties,
 				entity.Usings,
+				name = entity.Name.ToLowerInvariant(),
 				ApplicationProjectName = config.Shared.ProjectNames["Application"],
 				DomainProjectName = config.Shared.ProjectNames["Domain"],
-				DesktopProjectName = config.Shared.ProjectNames["Desktop"]
+				DesktopProjectName = config.Shared.ProjectNames["Desktop"],
+				ServicesProjectName = config.Shared.ProjectNames["Services"]
 			};
 		}
 	}

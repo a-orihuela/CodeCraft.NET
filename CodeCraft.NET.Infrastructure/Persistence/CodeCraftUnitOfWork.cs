@@ -3,11 +3,14 @@
 //     Manual changes to this file may be overwritten.
 // </auto-generated>
 
-using System.Collections;
-using Microsoft.EntityFrameworkCore;
-using CodeCraft.NET.Cross.Domain;
 using CodeCraft.NET.Application.Contracts.Persistence;
 using CodeCraft.NET.Application.Contracts.Persistence.Base;
+using CodeCraft.NET.Application.Contracts.Persistence.Repositories;
+using CodeCraft.NET.Cross.Domain;
+using CodeCraft.NET.Infrastructure.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
+using System.Collections;
+
 
 namespace CodeCraft.NET.Infrastructure.Persistence;
 
@@ -20,6 +23,13 @@ public partial class CodeCraftUnitOfWork : ICodeCraftUnitOfWork
     {
         _context = context;
     }
+
+    private ILogConfigurationRepository _LogConfigurationRepository { get; set; }
+    public ILogConfigurationRepository LogConfigurationRepository => _LogConfigurationRepository ??= new LogConfigurationRepository(_context);
+    private ILogEntryRepository _LogEntryRepository { get; set; }
+    public ILogEntryRepository LogEntryRepository => _LogEntryRepository ??= new LogEntryRepository(_context);
+    private ILogSummaryRepository _LogSummaryRepository { get; set; }
+    public ILogSummaryRepository LogSummaryRepository => _LogSummaryRepository ??= new LogSummaryRepository(_context);
 
 	public async Task<int> Complete()
     {

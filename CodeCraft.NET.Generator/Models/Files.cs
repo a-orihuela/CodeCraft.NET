@@ -4,7 +4,9 @@
 	{
 		public string Controller { get; set; } = string.Empty;
 		public string DesktopService { get; set; } = string.Empty;
+		public string Service { get; set; } = string.Empty;
 		public string DesktopServiceRegistration { get; set; } = string.Empty;
+		public string ServicesServiceRegistration { get; set; } = string.Empty;
 		public string InfrastructureServiceRegistration { get; set; } = string.Empty;
 		
 		// MAUI Files

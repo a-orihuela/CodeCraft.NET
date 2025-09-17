@@ -23,13 +23,13 @@ namespace CodeCraft.NET.Infrastructure.Persistence.Seeders
         /// <summary>
         /// Determines if the seeder should run based on current database state
         /// </summary>
-        Task<bool> ShouldSeedAsync(ApplicationDbContext context, CancellationToken cancellationToken = default);
+        Task<bool> ShouldSeedAsync(DbContext context, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Executes the seeding operation
         /// Must be idempotent - safe to run multiple times
         /// </summary>
-        Task SeedAsync(ApplicationDbContext context, CancellationToken cancellationToken = default);
+        Task SeedAsync(DbContext context, CancellationToken cancellationToken = default);
     }
 
     /// <summary>
@@ -40,13 +40,13 @@ namespace CodeCraft.NET.Infrastructure.Persistence.Seeders
         public abstract string SeederName { get; }
         public abstract int Order { get; }
 
-        public abstract Task<bool> ShouldSeedAsync(ApplicationDbContext context, CancellationToken cancellationToken = default);
-        public abstract Task SeedAsync(ApplicationDbContext context, CancellationToken cancellationToken = default);
+        public abstract Task<bool> ShouldSeedAsync(DbContext context, CancellationToken cancellationToken = default);
+        public abstract Task SeedAsync(DbContext context, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Helper method to check if any records exist for a given entity type
         /// </summary>
-        protected async Task<bool> HasAnyRecordsAsync<TEntity>(ApplicationDbContext context, CancellationToken cancellationToken = default)
+        protected async Task<bool> HasAnyRecordsAsync<TEntity>(DbContext context, CancellationToken cancellationToken = default)
             where TEntity : class
         {
             return await context.Set<TEntity>().AnyAsync(cancellationToken);
@@ -55,7 +55,7 @@ namespace CodeCraft.NET.Infrastructure.Persistence.Seeders
         /// <summary>
         /// Helper method to get the count of records for a given entity type
         /// </summary>
-        protected async Task<int> GetRecordCountAsync<TEntity>(ApplicationDbContext context, CancellationToken cancellationToken = default)
+        protected async Task<int> GetRecordCountAsync<TEntity>(DbContext context, CancellationToken cancellationToken = default)
             where TEntity : class
         {
             return await context.Set<TEntity>().CountAsync(cancellationToken);
@@ -65,7 +65,7 @@ namespace CodeCraft.NET.Infrastructure.Persistence.Seeders
         /// Helper method to safely add entity if it doesn't exist based on a condition
         /// </summary>
         protected async Task<TEntity> AddIfNotExistsAsync<TEntity>(
-            ApplicationDbContext context, 
+            DbContext context, 
             TEntity entity, 
             Expression<Func<TEntity, bool>> existsCondition,
             CancellationToken cancellationToken = default) 

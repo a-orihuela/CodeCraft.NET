@@ -3,10 +3,18 @@
 //     Manual changes to this file may be overwritten.
 // </auto-generated>
 
+using CodeCraft.NET.Application.Contracts.Persistence.Repositories;
 using CodeCraft.NET.Application.Contracts.Persistence.Base;
 
 namespace CodeCraft.NET.Application.Contracts.Persistence;
 
 public partial interface ICodeCraftUnitOfWork : IUnitOfWork
 {
+
+    ILogConfigurationRepository LogConfigurationRepository { get; }
+
+    ILogEntryRepository LogEntryRepository { get; }
+
+    ILogSummaryRepository LogSummaryRepository { get; }
+
 }

@@ -6,6 +6,7 @@
 using CodeCraft.NET.Application.Contracts.Persistence;
 using CodeCraft.NET.Application.Contracts.Persistence.Base;
 using CodeCraft.NET.Infrastructure.Persistence;
+using CodeCraft.NET.Infrastructure.Persistence.Seeders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,7 @@ namespace CodeCraft.NET.Infrastructure
         {
             AddDbContext(services, appConnection);
             AddRepositories(services);
+            AddSeeders(services);
             AddCustomServices(services);
 
             return services;
@@ -28,6 +30,7 @@ namespace CodeCraft.NET.Infrastructure
         {
             AddDbContext(services, connectionString);
             AddRepositories(services);
+            AddSeeders(services);
             AddCustomServices(services);
 
             return services;
@@ -63,6 +66,12 @@ namespace CodeCraft.NET.Infrastructure
                     services.TryAddScoped(interfaceType, implementationType);
                 }
             }
+        }
+
+        private static void AddSeeders(IServiceCollection services)
+        {
+            // Register database initializer for migrations and seeding
+            services.AddScoped<DbInitializer>();
         }
 
         private static void AddDbContext(IServiceCollection services, string connectionString)
