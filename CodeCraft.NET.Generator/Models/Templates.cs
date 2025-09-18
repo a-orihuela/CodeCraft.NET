@@ -50,5 +50,17 @@
 		public string RepositoryImplementation { get; set; } = string.Empty;
 		public string UnitOfWorkInterface { get; set; } = string.Empty;
 		public string UnitOfWorkImplementation { get; set; } = string.Empty;
+		
+		// Test Templates
+		public string ServiceTest { get; set; } = string.Empty;
+		public string CommandCreateHandlerTest { get; set; } = string.Empty;
+		public string CommandUpdateHandlerTest { get; set; } = string.Empty;
+		public string CommandDeleteHandlerTest { get; set; } = string.Empty;
+		public string QueryGetByIdHandlerTest { get; set; } = string.Empty;
+		public string QueryGetWithRelatedHandlerTest { get; set; } = string.Empty;
+		public string RepositoryTest { get; set; } = string.Empty;
+		public string BaseServiceTest { get; set; } = string.Empty;
+		public string BaseRepositoryTest { get; set; } = string.Empty;
+		public string TestDbContext { get; set; } = string.Empty;
 	}
 }

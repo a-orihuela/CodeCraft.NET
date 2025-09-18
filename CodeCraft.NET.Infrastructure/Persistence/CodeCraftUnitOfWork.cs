@@ -9,6 +9,7 @@ using CodeCraft.NET.Application.Contracts.Persistence.Repositories;
 using CodeCraft.NET.Cross.Domain;
 using CodeCraft.NET.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections;
 
 
@@ -18,10 +19,12 @@ public partial class CodeCraftUnitOfWork : ICodeCraftUnitOfWork
 {
     private Hashtable _repositories;
     private readonly ApplicationDbContext _context;
+    private readonly IServiceProvider _serviceProvider;
 
-    public CodeCraftUnitOfWork(ApplicationDbContext context)
+    public CodeCraftUnitOfWork(ApplicationDbContext context, IServiceProvider serviceProvider)
     {
         _context = context;
+        _serviceProvider = serviceProvider;
     }
 
     private ILogConfigurationRepository _LogConfigurationRepository { get; set; }
@@ -54,17 +57,6 @@ public partial class CodeCraftUnitOfWork : ICodeCraftUnitOfWork
 
     public IAsyncRepository<TEntity> Repository<TEntity>() where TEntity : BaseDomainModel
     {
-        _repositories ??= [];
-
-        string type = typeof(TEntity).Name;
-
-        if (!_repositories.ContainsKey(type))
-        {
-            Type repositoryType = typeof(RepositoryBase<,>);
-            object? repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), _context);
-            _repositories.Add(type, repositoryInstance);
-        }
-
-        return (IAsyncRepository<TEntity>)_repositories[type];
+        return _serviceProvider.GetRequiredService<IAsyncRepository<TEntity>>();
     }
 }

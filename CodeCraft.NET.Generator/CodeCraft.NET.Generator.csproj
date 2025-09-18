@@ -158,6 +158,17 @@
     <EmbeddedResource Include="Templates\Infrastructure\Repositories\UnitOfWork.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.Repositories.UnitOfWork.scriban</LogicalName>
     </EmbeddedResource>
+    
+    <!-- Test Templates -->
+    <EmbeddedResource Include="Templates\Tests\Infrastructure\RepositoryTest.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.Tests.Infrastructure.RepositoryTest.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\Tests\Infrastructure\UnitOfWorkTest.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.Tests.Infrastructure.UnitOfWorkTest.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\Tests\Infrastructure\DbContextTest.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.Tests.Infrastructure.DbContextTest.scriban</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

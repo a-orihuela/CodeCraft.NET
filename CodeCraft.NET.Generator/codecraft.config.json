@@ -38,7 +38,19 @@
       "MauiServiceRegistration": "CodeCraft.NET.Generator.Templates.MAUI.Services.MauiServiceRegistration.scriban",
       "MauiServiceHelper": "CodeCraft.NET.Generator.Templates.MAUI.Helpers.ServiceHelper.scriban",
       "MauiMapperHelper": "CodeCraft.NET.Generator.Templates.MAUI.Helpers.Mapper.scriban",
-      "MauiValidationHelper": "CodeCraft.NET.Generator.Templates.MAUI.Helpers.ValidationHelper.scriban"
+      "MauiValidationHelper": "CodeCraft.NET.Generator.Templates.MAUI.Helpers.ValidationHelper.scriban",
+      
+      "_comment_tests": "Test Templates - Infrastructure & Application Focus",
+      "RepositoryTest": "CodeCraft.NET.Generator.Templates.Tests.Infrastructure.RepositoryTest.scriban",
+      "UnitOfWorkTest": "CodeCraft.NET.Generator.Templates.Tests.Infrastructure.UnitOfWorkTest.scriban",
+      "DbContextTest": "CodeCraft.NET.Generator.Templates.Tests.Infrastructure.DbContextTest.scriban",
+      "CommandCreateHandlerTest": "CodeCraft.NET.Generator.Templates.Tests.Application.CommandCreateHandlerTest.scriban",
+      "CommandUpdateHandlerTest": "CodeCraft.NET.Generator.Templates.Tests.Application.CommandUpdateHandlerTest.scriban",
+      "CommandDeleteHandlerTest": "CodeCraft.NET.Generator.Templates.Tests.Application.CommandDeleteHandlerTest.scriban",
+      "QueryGetByIdHandlerTest": "CodeCraft.NET.Generator.Templates.Tests.Application.QueryGetByIdHandlerTest.scriban",
+      "QueryGetWithRelatedHandlerTest": "CodeCraft.NET.Generator.Templates.Tests.Application.QueryGetWithRelatedHandlerTest.scriban",
+      "ValidatorTest": "CodeCraft.NET.Generator.Templates.Tests.Application.ValidatorTest.scriban",
+      "MappingProfileTest": "CodeCraft.NET.Generator.Templates.Tests.Application.MappingProfileTest.scriban"
     },
     "Files": {
       "Controller": "CodeCraft.NET.WebAPI/Controllers/{0}Controller.cs",
@@ -78,7 +90,19 @@
       "MauiServiceHelper": "CodeCraft.NET.MAUI/Helpers/Services/Generated/{0}ServiceHelper.cs",
       "MauiValidationHelper": "CodeCraft.NET.MAUI/Helpers/Validation/Generated/{0}ValidationHelper.cs",
       "EntityDtos": "CodeCraft.NET.Application/DTOs/{0}/{0}Dtos.cs",
-      "EntityWithRelatedDto": "CodeCraft.NET.Application/DTOs/{0}/{0}WithRelatedDto.cs"
+      "EntityWithRelatedDto": "CodeCraft.NET.Application/DTOs/{0}/{0}WithRelatedDto.cs",
+      
+      "_comment_test_files": "Test Files - Infrastructure & Application Focus",
+      "RepositoryTest": "CodeCraft.NET.Test.Infrastructure/Repositories/{0}RepositoryTests.cs",
+      "UnitOfWorkTest": "CodeCraft.NET.Test.Infrastructure/Persistence/UnitOfWorkTests.cs",
+      "DbContextTest": "CodeCraft.NET.Test.Infrastructure/Persistence/DbContextTests.cs",
+      "CommandCreateHandlerTest": "CodeCraft.NET.Test.Application/CQRS/Features/{0}/Commands/Create/{1}CreateHandlerTests.cs",
+      "CommandUpdateHandlerTest": "CodeCraft.NET.Test.Application/CQRS/Features/{0}/Commands/Update/{1}UpdateHandlerTests.cs",
+      "CommandDeleteHandlerTest": "CodeCraft.NET.Test.Application/CQRS/Features/{0}/Commands/Delete/{1}DeleteHandlerTests.cs",
+      "QueryGetByIdHandlerTest": "CodeCraft.NET.Test.Application/CQRS/Features/{0}/Queries/Get{1}ByIdHandlerTests.cs",
+      "QueryGetWithRelatedHandlerTest": "CodeCraft.NET.Test.Application/CQRS/Features/{0}/Queries/Get{1}WithRelatedHandlerTests.cs",
+      "ValidatorTest": "CodeCraft.NET.Test.Application/CQRS/Features/{0}/Validators/{1}ValidatorTests.cs",
+      "MappingProfileTest": "CodeCraft.NET.Test.Application/Mapping/MappingProfileTests.cs"
     },
     "Folders": {
       "RootFolder": "CodeCraft.NET",

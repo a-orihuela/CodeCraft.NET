@@ -193,6 +193,19 @@ namespace CodeCraft.NET.Generator.Helpers
 				"RepositoryImplementation" => Config.Shared.Templates["RepositoryImplementation"],
 				"UnitOfWorkInterface" => Config.Shared.Templates["UnitOfWorkInterface"],
 				"UnitOfWorkImplementation" => Config.Shared.Templates["UnitOfWorkImplementation"],
+				
+				// Test Templates
+				"RepositoryTest" => Config.Shared.Templates["RepositoryTest"],
+				"UnitOfWorkTest" => Config.Shared.Templates["UnitOfWorkTest"],
+				"DbContextTest" => Config.Shared.Templates["DbContextTest"],
+				"CommandCreateHandlerTest" => Config.Shared.Templates["CommandCreateHandlerTest"],
+				"CommandUpdateHandlerTest" => Config.Shared.Templates["CommandUpdateHandlerTest"],
+				"CommandDeleteHandlerTest" => Config.Shared.Templates["CommandDeleteHandlerTest"],
+				"QueryGetByIdHandlerTest" => Config.Shared.Templates["QueryGetByIdHandlerTest"],
+				"QueryGetWithRelatedHandlerTest" => Config.Shared.Templates["QueryGetWithRelatedHandlerTest"],
+				"ValidatorTest" => Config.Shared.Templates["ValidatorTest"],
+				"MappingProfileTest" => Config.Shared.Templates["MappingProfileTest"],
+				
 				_ => throw new ArgumentException($"Unknown template property: {templateProperty}")
 			};
 
@@ -205,5 +218,36 @@ namespace CodeCraft.NET.Generator.Helpers
 		public static string GetServerRoot() => ConfigurationContext.GetSolutionRelativePath(GetProjectName("Server"));
 		public static string GetDesktopRoot() => ConfigurationContext.GetSolutionRelativePath(GetProjectName("Desktop"));
 		public static string GetServicesRoot() => ConfigurationContext.GetSolutionRelativePath(GetProjectName("Services"));
+
+		// Test path methods
+		public static string GetRepositoryTestPath(string entityName)
+			=> GetFilePath(Config.Shared.Files["RepositoryTest"], entityName);
+
+		public static string GetUnitOfWorkTestPath()
+			=> Config.Shared.Files["UnitOfWorkTest"];
+
+		public static string GetDbContextTestPath()
+			=> Config.Shared.Files["DbContextTest"];
+
+		public static string GetCommandCreateHandlerTestPath(string entityPlural, string entityName)
+			=> GetFilePath(Config.Shared.Files["CommandCreateHandlerTest"], entityPlural, entityName);
+
+		public static string GetCommandUpdateHandlerTestPath(string entityPlural, string entityName)
+			=> GetFilePath(Config.Shared.Files["CommandUpdateHandlerTest"], entityPlural, entityName);
+
+		public static string GetCommandDeleteHandlerTestPath(string entityPlural, string entityName)
+			=> GetFilePath(Config.Shared.Files["CommandDeleteHandlerTest"], entityPlural, entityName);
+
+		public static string GetQueryGetByIdHandlerTestPath(string entityPlural, string entityName)
+			=> GetFilePath(Config.Shared.Files["QueryGetByIdHandlerTest"], entityPlural, entityName);
+
+		public static string GetQueryGetWithRelatedHandlerTestPath(string entityPlural, string entityName)
+			=> GetFilePath(Config.Shared.Files["QueryGetWithRelatedHandlerTest"], entityPlural, entityName);
+
+		public static string GetValidatorTestPath(string entityPlural, string entityName)
+			=> GetFilePath(Config.Shared.Files["ValidatorTest"], entityPlural, entityName);
+
+		public static string GetMappingProfileTestPath()
+			=> Config.Shared.Files["MappingProfileTest"];
 	}
 }

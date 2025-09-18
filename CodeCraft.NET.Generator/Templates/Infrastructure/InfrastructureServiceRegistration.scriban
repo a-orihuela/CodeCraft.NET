@@ -7,6 +7,7 @@
     ApplicationProjectName + ".Contracts.Persistence",
     ApplicationProjectName + ".Contracts.Persistence.Base",
     InfrastructureProjectName + ".Persistence",
+    InfrastructureProjectName + ".Persistence.Seeders",
     "Microsoft.EntityFrameworkCore",
     "Microsoft.Extensions.Configuration",
     "Microsoft.Extensions.DependencyInjection",
@@ -21,6 +22,7 @@ namespace {{ InfrastructureProjectName }}
         {
             AddDbContext(services, appConnection);
             AddRepositories(services);
+            AddSeeders(services);
             AddCustomServices(services);
 
             return services;
@@ -30,6 +32,7 @@ namespace {{ InfrastructureProjectName }}
         {
             AddDbContext(services, connectionString);
             AddRepositories(services);
+            AddSeeders(services);
             AddCustomServices(services);
 
             return services;
@@ -65,6 +68,12 @@ namespace {{ InfrastructureProjectName }}
                     services.TryAddScoped(interfaceType, implementationType);
                 }
             }
+        }
+
+        private static void AddSeeders(IServiceCollection services)
+        {
+            // Register database initializer for migrations and seeding
+            services.AddScoped<DbInitializer>();
         }
 
         private static void AddDbContext(IServiceCollection services, string connectionString)
