@@ -203,6 +203,11 @@
     <EmbeddedResource Include="Templates\Tests\Application\MappingProfileTest.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.Tests.Application.MappingProfileTest.scriban</LogicalName>
     </EmbeddedResource>
+    
+    <!-- Services Test Templates -->
+    <EmbeddedResource Include="Templates\Tests\Services\ServiceTest.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.Tests.Services.ServiceTest.scriban</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

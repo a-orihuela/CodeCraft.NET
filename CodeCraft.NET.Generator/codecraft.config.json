@@ -50,7 +50,8 @@
       "QueryGetByIdHandlerTest": "CodeCraft.NET.Generator.Templates.Tests.Application.QueryGetByIdHandlerTest.scriban",
       "QueryGetWithRelatedHandlerTest": "CodeCraft.NET.Generator.Templates.Tests.Application.QueryGetWithRelatedHandlerTest.scriban",
       "ValidatorTest": "CodeCraft.NET.Generator.Templates.Tests.Application.ValidatorTest.scriban",
-      "MappingProfileTest": "CodeCraft.NET.Generator.Templates.Tests.Application.MappingProfileTest.scriban"
+      "MappingProfileTest": "CodeCraft.NET.Generator.Templates.Tests.Application.MappingProfileTest.scriban",
+      "ServiceTest": "CodeCraft.NET.Generator.Templates.Tests.Services.ServiceTest.scriban"
     },
     "Files": {
       "Controller": "CodeCraft.NET.WebAPI/Controllers/{0}Controller.cs",
@@ -102,7 +103,8 @@
       "QueryGetByIdHandlerTest": "CodeCraft.NET.Test.Application/CQRS/Features/{0}/Queries/Get{1}ByIdHandlerTests.cs",
       "QueryGetWithRelatedHandlerTest": "CodeCraft.NET.Test.Application/CQRS/Features/{0}/Queries/Get{1}WithRelatedHandlerTests.cs",
       "ValidatorTest": "CodeCraft.NET.Test.Application/CQRS/Features/{0}/Validators/{1}ValidatorTests.cs",
-      "MappingProfileTest": "CodeCraft.NET.Test.Application/Mapping/MappingProfileTests.cs"
+      "MappingProfileTest": "CodeCraft.NET.Test.Application/Mapping/MappingProfileTests.cs",
+      "ServiceTest": "CodeCraft.NET.Test.Services/Services/{0}ServiceTests.cs"
     },
     "Folders": {
       "RootFolder": "CodeCraft.NET",

@@ -205,6 +205,7 @@ namespace CodeCraft.NET.Generator.Helpers
 				"QueryGetWithRelatedHandlerTest" => Config.Shared.Templates["QueryGetWithRelatedHandlerTest"],
 				"ValidatorTest" => Config.Shared.Templates["ValidatorTest"],
 				"MappingProfileTest" => Config.Shared.Templates["MappingProfileTest"],
+				"ServiceTest" => Config.Shared.Templates["ServiceTest"],
 				
 				_ => throw new ArgumentException($"Unknown template property: {templateProperty}")
 			};
@@ -249,5 +250,8 @@ namespace CodeCraft.NET.Generator.Helpers
 
 		public static string GetMappingProfileTestPath()
 			=> Config.Shared.Files["MappingProfileTest"];
+
+		public static string GetServiceTestPath(string entityName)
+			=> GetFilePath(Config.Shared.Files["ServiceTest"], entityName);
 	}
 }

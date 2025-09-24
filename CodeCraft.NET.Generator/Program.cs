@@ -79,6 +79,7 @@ try
 	var infrastructureGenerator = new InfrastructureGenerator(renderer);
 	var infrastructureTestGenerator = new InfrastructureTestGenerator(renderer);
 	var applicationTestGenerator = new ApplicationTestGenerator(renderer);
+	var servicesTestGenerator = new ServicesTestGenerator(renderer);
 	var mauiGenerator = new MauiGenerator(renderer);
 
 	Console.WriteLine("Generating code files...");
@@ -118,6 +119,13 @@ try
 		servicesGenerator.Generate(entity);
 	}
 	servicesGenerator.GenerateServiceRegistration(entitiesMetadata);
+
+	// 5.1. Services Tests (always generated to ensure quality)
+	Console.WriteLine("Generating Services tests...");
+	foreach (var entity in entitiesMetadata)
+	{
+		servicesTestGenerator.Generate(entity);
+	}
 
 	// 6. Web API (acts as facade over Services)
 	if (activeProfile.GenerateWebApi)
