@@ -69,6 +69,17 @@
       <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.Services.MauiServiceRegistration.scriban</LogicalName>
     </EmbeddedResource>
     
+    <!-- MAUI Helpers -->
+    <EmbeddedResource Include="Templates\MAUI\Helpers\ServiceHelper.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.Helpers.ServiceHelper.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\MAUI\Helpers\Mapper.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.Helpers.Mapper.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\MAUI\Helpers\ValidationHelper.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.MAUI.Helpers.ValidationHelper.scriban</LogicalName>
+    </EmbeddedResource>
+    
     <!-- DTOs -->
     <EmbeddedResource Include="Templates\Application\DTOs\EntityDtos.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.DTOs.EntityDtos.scriban</LogicalName>
@@ -168,6 +179,29 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Templates\Tests\Infrastructure\DbContextTest.scriban">
       <LogicalName>CodeCraft.NET.Generator.Templates.Tests.Infrastructure.DbContextTest.scriban</LogicalName>
+    </EmbeddedResource>
+    
+    <!-- Application Test Templates -->
+    <EmbeddedResource Include="Templates\Tests\Application\CommandCreateHandlerTest.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.Tests.Application.CommandCreateHandlerTest.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\Tests\Application\CommandUpdateHandlerTest.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.Tests.Application.CommandUpdateHandlerTest.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\Tests\Application\CommandDeleteHandlerTest.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.Tests.Application.CommandDeleteHandlerTest.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\Tests\Application\QueryGetByIdHandlerTest.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.Tests.Application.QueryGetByIdHandlerTest.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\Tests\Application\QueryGetWithRelatedHandlerTest.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.Tests.Application.QueryGetWithRelatedHandlerTest.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\Tests\Application\ValidatorTest.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.Tests.Application.ValidatorTest.scriban</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\Tests\Application\MappingProfileTest.scriban">
+      <LogicalName>CodeCraft.NET.Generator.Templates.Tests.Application.MappingProfileTest.scriban</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
 

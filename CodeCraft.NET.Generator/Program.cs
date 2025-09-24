@@ -78,6 +78,7 @@ try
 	var dbContextGenerator = new DbContextGenerator(renderer);
 	var infrastructureGenerator = new InfrastructureGenerator(renderer);
 	var infrastructureTestGenerator = new InfrastructureTestGenerator(renderer);
+	var applicationTestGenerator = new ApplicationTestGenerator(renderer);
 	var mauiGenerator = new MauiGenerator(renderer);
 
 	Console.WriteLine("Generating code files...");
@@ -103,14 +104,22 @@ try
 	infrastructureTestGenerator.GenerateUnitOfWorkTests();
 	infrastructureTestGenerator.GenerateDbContextTests();
 
-	// 4. Services Layer (always generated)
+	// 4. Application Tests (always generated to ensure quality)
+	Console.WriteLine("Generating Application tests...");
+	foreach (var entity in entitiesMetadata)
+	{
+		applicationTestGenerator.Generate(entity);
+	}
+	applicationTestGenerator.GenerateMappingProfileTests();
+
+	// 5. Services Layer (always generated)
 	foreach (var entity in entitiesMetadata)
 	{
 		servicesGenerator.Generate(entity);
 	}
 	servicesGenerator.GenerateServiceRegistration(entitiesMetadata);
 
-	// 5. Web API (acts as facade over Services)
+	// 6. Web API (acts as facade over Services)
 	if (activeProfile.GenerateWebApi)
 	{
 		foreach (var entity in entitiesMetadata)
@@ -119,7 +128,7 @@ try
 		}
 	}
 
-	// 6. Desktop API (acts as facade over Services)
+	// 7. Desktop API (acts as facade over Services)
 	if (activeProfile.GenerateDesktopApi)
 	{
 		foreach (var entity in entitiesMetadata)
@@ -129,7 +138,7 @@ try
 		desktopApiGenerator.GenerateServiceRegistration(entitiesMetadata);
 	}
 
-	// 7. MAUI
+	// 8. MAUI
 	if (activeProfile.GenerateMaui)
 	{
 		foreach (var entity in entitiesMetadata)
@@ -141,7 +150,7 @@ try
 
 	Console.WriteLine("Creating database migrations...");
 
-	// 8. Generate migrations after DbContext is created
+	// 9. Generate migrations after DbContext is created
 	if (activeProfile.ForceMigrations)
 	{
 		MigrationGenerator.GenerateAllMigrations();
