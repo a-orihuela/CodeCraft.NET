@@ -7,38 +7,38 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.Logging;
-using {{ ApplicationProjectName }}.DTOs.{{ NamePlural }};
-using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Commands.Create;
-using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Commands.Update;
+using CodeCraft.NET.Application.DTOs.LogConfigurations;
+using CodeCraft.NET.Application.CQRS.Features.LogConfigurations.Commands.Create;
+using CodeCraft.NET.Application.CQRS.Features.LogConfigurations.Commands.Update;
 using CodeCraft.NET.Services.Services;
 using CodeCraft.NET.MAUI.Services.Generated;
 
-namespace {{ MauiProjectName }}.Helpers.Services.Generated
+namespace CodeCraft.NET.MAUI.Helpers.Services.Generated
 {
     /// <summary>
-    /// Service helper for {{ Name }} operations optimized for MAUI UI
+    /// Service helper for LogConfiguration operations optimized for MAUI UI
     /// Provides loading states, error handling, and UI-friendly methods
     /// </summary>
-    public partial class {{ Name }}ServiceHelper
+    public partial class LogConfigurationServiceHelper
     {
-        private readonly {{ Name }}Service _service;
-        private readonly ILogger<{{ Name }}ServiceHelper> _logger;
+        private readonly LogConfigurationService _service;
+        private readonly ILogger<LogConfigurationServiceHelper> _logger;
 
-        public {{ Name }}ServiceHelper({{ Name }}Service service, ILogger<{{ Name }}ServiceHelper> logger)
+        public LogConfigurationServiceHelper(LogConfigurationService service, ILogger<LogConfigurationServiceHelper> logger)
         {
             _service = service;
             _logger = logger;
         }
 
         /// <summary>
-        /// Load all {{ NamePlural }} with UI loading states
+        /// Load all LogConfigurations with UI loading states
         /// </summary>
-        public async Task<MauiServiceResult<ObservableCollection<{{ Name }}Dto>>> LoadAllForUIAsync(
+        public async Task<MauiServiceResult<ObservableCollection<LogConfigurationDto>>> LoadAllForUIAsync(
             INotifyPropertyChanged viewModel = null)
         {
             try
             {
-                _logger.LogInformation("Loading all {{ NamePlural }} for UI");
+                _logger.LogInformation("Loading all LogConfigurations for UI");
                 
                 // Set loading state if ViewModel supports it
                 SetLoadingState(viewModel, true);
@@ -47,24 +47,24 @@ namespace {{ MauiProjectName }}.Helpers.Services.Generated
                 
                 if (result.IsSuccess)
                 {
-                    var collection = new ObservableCollection<{{ Name }}Dto>(result.Data);
-                    _logger.LogInformation("Successfully loaded {Count} {{ NamePlural }}", collection.Count);
-                    return MauiServiceResult<ObservableCollection<{{ Name }}Dto>>.Success(collection);
+                    var collection = new ObservableCollection<LogConfigurationDto>(result.Data);
+                    _logger.LogInformation("Successfully loaded {Count} LogConfigurations", collection.Count);
+                    return MauiServiceResult<ObservableCollection<LogConfigurationDto>>.Success(collection);
                 }
                 else
                 {
-                    _logger.LogWarning("Failed to load {{ NamePlural }}: {Error}", result.ErrorMessage);
-                    return MauiServiceResult<ObservableCollection<{{ Name }}Dto>>.Failure(
+                    _logger.LogWarning("Failed to load LogConfigurations: {Error}", result.ErrorMessage);
+                    return MauiServiceResult<ObservableCollection<LogConfigurationDto>>.Failure(
                         result.ErrorMessage, 
-                        "Failed to load {{ NamePlural }}. Please check your connection and try again.");
+                        "Failed to load LogConfigurations. Please check your connection and try again.");
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Exception while loading {{ NamePlural }} for UI");
-                return MauiServiceResult<ObservableCollection<{{ Name }}Dto>>.Failure(
+                _logger.LogError(ex, "Exception while loading LogConfigurations for UI");
+                return MauiServiceResult<ObservableCollection<LogConfigurationDto>>.Failure(
                     ex.Message,
-                    "An unexpected error occurred while loading {{ NamePlural }}.");
+                    "An unexpected error occurred while loading LogConfigurations.");
             }
             finally
             {
@@ -73,15 +73,15 @@ namespace {{ MauiProjectName }}.Helpers.Services.Generated
         }
 
         /// <summary>
-        /// Create {{ Name }} with UI validation and feedback
+        /// Create LogConfiguration with UI validation and feedback
         /// </summary>
         public async Task<MauiServiceResult<int>> CreateWithUIFeedbackAsync(
-            {{ Name }}Create command,
+            LogConfigurationCreate command,
             INotifyPropertyChanged viewModel = null)
         {
             try
             {
-                _logger.LogInformation("Creating {{ Name }} via UI");
+                _logger.LogInformation("Creating LogConfiguration via UI");
                 
                 SetSavingState(viewModel, true);
                 
@@ -89,25 +89,25 @@ namespace {{ MauiProjectName }}.Helpers.Services.Generated
                 
                 if (result.IsSuccess)
                 {
-                    _logger.LogInformation("Successfully created {{ Name }} with ID: {Id}", result.Data);
+                    _logger.LogInformation("Successfully created LogConfiguration with ID: {Id}", result.Data);
                     return MauiServiceResult<int>.Success(
                         result.Data,
-                        "{{ Name }} created successfully!");
+                        "LogConfiguration created successfully!");
                 }
                 else
                 {
-                    _logger.LogWarning("Failed to create {{ Name }}: {Error}", result.ErrorMessage);
+                    _logger.LogWarning("Failed to create LogConfiguration: {Error}", result.ErrorMessage);
                     return MauiServiceResult<int>.Failure(
                         result.ErrorMessage,
-                        "Failed to create {{ Name }}. Please check your input and try again.");
+                        "Failed to create LogConfiguration. Please check your input and try again.");
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Exception while creating {{ Name }} via UI");
+                _logger.LogError(ex, "Exception while creating LogConfiguration via UI");
                 return MauiServiceResult<int>.Failure(
                     ex.Message,
-                    "An unexpected error occurred while creating the {{ Name }}.");
+                    "An unexpected error occurred while creating the LogConfiguration.");
             }
             finally
             {
@@ -116,15 +116,15 @@ namespace {{ MauiProjectName }}.Helpers.Services.Generated
         }
 
         /// <summary>
-        /// Update {{ Name }} with optimistic UI updates
+        /// Update LogConfiguration with optimistic UI updates
         /// </summary>
         public async Task<MauiServiceResult<bool>> UpdateWithUIFeedbackAsync(
-            {{ Name }}Update command,
+            LogConfigurationUpdate command,
             INotifyPropertyChanged viewModel = null)
         {
             try
             {
-                _logger.LogInformation("Updating {{ Name }} {Id} via UI", command.Id);
+                _logger.LogInformation("Updating LogConfiguration {Id} via UI", command.Id);
                 
                 SetSavingState(viewModel, true);
                 
@@ -132,25 +132,25 @@ namespace {{ MauiProjectName }}.Helpers.Services.Generated
                 
                 if (result.IsSuccess)
                 {
-                    _logger.LogInformation("Successfully updated {{ Name }} {Id}", command.Id);
+                    _logger.LogInformation("Successfully updated LogConfiguration {Id}", command.Id);
                     return MauiServiceResult<bool>.Success(
                         true,
-                        "{{ Name }} updated successfully!");
+                        "LogConfiguration updated successfully!");
                 }
                 else
                 {
-                    _logger.LogWarning("Failed to update {{ Name }} {Id}: {Error}", command.Id, result.ErrorMessage);
+                    _logger.LogWarning("Failed to update LogConfiguration {Id}: {Error}", command.Id, result.ErrorMessage);
                     return MauiServiceResult<bool>.Failure(
                         result.ErrorMessage,
-                        "Failed to update {{ Name }}. Please check your input and try again.");
+                        "Failed to update LogConfiguration. Please check your input and try again.");
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Exception while updating {{ Name }} {Id} via UI", command.Id);
+                _logger.LogError(ex, "Exception while updating LogConfiguration {Id} via UI", command.Id);
                 return MauiServiceResult<bool>.Failure(
                     ex.Message,
-                    "An unexpected error occurred while updating the {{ Name }}.");
+                    "An unexpected error occurred while updating the LogConfiguration.");
             }
             finally
             {
@@ -159,7 +159,7 @@ namespace {{ MauiProjectName }}.Helpers.Services.Generated
         }
 
         /// <summary>
-        /// Delete {{ Name }} with confirmation handling
+        /// Delete LogConfiguration with confirmation handling
         /// </summary>
         public async Task<MauiServiceResult<bool>> DeleteWithConfirmationAsync(
             int id,
@@ -167,7 +167,7 @@ namespace {{ MauiProjectName }}.Helpers.Services.Generated
         {
             try
             {
-                _logger.LogInformation("Deleting {{ Name }} {Id} via UI", id);
+                _logger.LogInformation("Deleting LogConfiguration {Id} via UI", id);
                 
                 SetLoadingState(viewModel, true);
                 
@@ -175,25 +175,25 @@ namespace {{ MauiProjectName }}.Helpers.Services.Generated
                 
                 if (result.IsSuccess)
                 {
-                    _logger.LogInformation("Successfully deleted {{ Name }} {Id}", id);
+                    _logger.LogInformation("Successfully deleted LogConfiguration {Id}", id);
                     return MauiServiceResult<bool>.Success(
                         true,
-                        "{{ Name }} deleted successfully!");
+                        "LogConfiguration deleted successfully!");
                 }
                 else
                 {
-                    _logger.LogWarning("Failed to delete {{ Name }} {Id}: {Error}", id, result.ErrorMessage);
+                    _logger.LogWarning("Failed to delete LogConfiguration {Id}: {Error}", id, result.ErrorMessage);
                     return MauiServiceResult<bool>.Failure(
                         result.ErrorMessage,
-                        "Failed to delete {{ Name }}. It may have been already removed.");
+                        "Failed to delete LogConfiguration. It may have been already removed.");
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Exception while deleting {{ Name }} {Id} via UI", id);
+                _logger.LogError(ex, "Exception while deleting LogConfiguration {Id} via UI", id);
                 return MauiServiceResult<bool>.Failure(
                     ex.Message,
-                    "An unexpected error occurred while deleting the {{ Name }}.");
+                    "An unexpected error occurred while deleting the LogConfiguration.");
             }
             finally
             {
@@ -202,15 +202,15 @@ namespace {{ MauiProjectName }}.Helpers.Services.Generated
         }
 
         /// <summary>
-        /// Get {{ Name }} by ID with UI error handling
+        /// Get LogConfiguration by ID with UI error handling
         /// </summary>
-        public async Task<MauiServiceResult<{{ Name }}Dto>> GetByIdForUIAsync(
+        public async Task<MauiServiceResult<LogConfigurationDto>> GetByIdForUIAsync(
             int id,
             INotifyPropertyChanged viewModel = null)
         {
             try
             {
-                _logger.LogInformation("Loading {{ Name }} {Id} for UI", id);
+                _logger.LogInformation("Loading LogConfiguration {Id} for UI", id);
                 
                 SetLoadingState(viewModel, true);
                 
@@ -218,23 +218,23 @@ namespace {{ MauiProjectName }}.Helpers.Services.Generated
                 
                 if (result.IsSuccess && result.Data != null)
                 {
-                    _logger.LogInformation("Successfully loaded {{ Name }} {Id}", id);
-                    return MauiServiceResult<{{ Name }}Dto>.Success(result.Data);
+                    _logger.LogInformation("Successfully loaded LogConfiguration {Id}", id);
+                    return MauiServiceResult<LogConfigurationDto>.Success(result.Data);
                 }
                 else
                 {
-                    _logger.LogWarning("{{ Name }} {Id} not found", id);
-                    return MauiServiceResult<{{ Name }}Dto>.Failure(
+                    _logger.LogWarning("LogConfiguration {Id} not found", id);
+                    return MauiServiceResult<LogConfigurationDto>.Failure(
                         "Entity not found",
-                        "The requested {{ Name }} could not be found.");
+                        "The requested LogConfiguration could not be found.");
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Exception while loading {{ Name }} {Id} for UI", id);
-                return MauiServiceResult<{{ Name }}Dto>.Failure(
+                _logger.LogError(ex, "Exception while loading LogConfiguration {Id} for UI", id);
+                return MauiServiceResult<LogConfigurationDto>.Failure(
                     ex.Message,
-                    "An unexpected error occurred while loading the {{ Name }}.");
+                    "An unexpected error occurred while loading the LogConfiguration.");
             }
             finally
             {

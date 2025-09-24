@@ -38,7 +38,7 @@ namespace CodeCraft.NET.Application.CQRS.Base.Features
 			}
 			int id = (int)idProperty.GetValue(entity);
 
-			_logger.LogInformation(string.Format(SUCCESS_MESSAGE, typeof(TEntity).Name), id);
+			_logger.LogInformation(string.Format(SUCCESS_MESSAGE, typeof(TEntity).Name, id));
 			return id;
 		}
 

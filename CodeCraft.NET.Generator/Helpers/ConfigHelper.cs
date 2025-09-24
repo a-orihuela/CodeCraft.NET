@@ -162,7 +162,7 @@ namespace CodeCraft.NET.Generator.Helpers
 				"InfrastructureServiceRegistration" => Config.Shared.Templates["InfrastructureServiceRegistration"],
 				
 				"MauiServiceHelper" => Config.Shared.Templates["MauiServiceHelper"],
-				"MauiMapper" => Config.Shared.Templates["MauiMapper"],
+				"MauiMapperHelper" => Config.Shared.Templates["MauiMapperHelper"],
 				"MauiValidationHelper" => Config.Shared.Templates["MauiValidationHelper"],
 				"MauiServiceRegistration" => Config.Shared.Templates["MauiServiceRegistration"],
 				

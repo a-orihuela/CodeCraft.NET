@@ -7,38 +7,38 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.Logging;
-using {{ ApplicationProjectName }}.DTOs.{{ NamePlural }};
-using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Commands.Create;
-using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Commands.Update;
+using CodeCraft.NET.Application.DTOs.LogEntries;
+using CodeCraft.NET.Application.CQRS.Features.LogEntries.Commands.Create;
+using CodeCraft.NET.Application.CQRS.Features.LogEntries.Commands.Update;
 using CodeCraft.NET.Services.Services;
 using CodeCraft.NET.MAUI.Services.Generated;
 
-namespace {{ MauiProjectName }}.Helpers.Services.Generated
+namespace CodeCraft.NET.MAUI.Helpers.Services.Generated
 {
     /// <summary>
-    /// Service helper for {{ Name }} operations optimized for MAUI UI
+    /// Service helper for LogEntry operations optimized for MAUI UI
     /// Provides loading states, error handling, and UI-friendly methods
     /// </summary>
-    public partial class {{ Name }}ServiceHelper
+    public partial class LogEntryServiceHelper
     {
-        private readonly {{ Name }}Service _service;
-        private readonly ILogger<{{ Name }}ServiceHelper> _logger;
+        private readonly LogEntryService _service;
+        private readonly ILogger<LogEntryServiceHelper> _logger;
 
-        public {{ Name }}ServiceHelper({{ Name }}Service service, ILogger<{{ Name }}ServiceHelper> logger)
+        public LogEntryServiceHelper(LogEntryService service, ILogger<LogEntryServiceHelper> logger)
         {
             _service = service;
             _logger = logger;
         }
 
         /// <summary>
-        /// Load all {{ NamePlural }} with UI loading states
+        /// Load all LogEntries with UI loading states
         /// </summary>
-        public async Task<MauiServiceResult<ObservableCollection<{{ Name }}Dto>>> LoadAllForUIAsync(
+        public async Task<MauiServiceResult<ObservableCollection<LogEntryDto>>> LoadAllForUIAsync(
             INotifyPropertyChanged viewModel = null)
         {
             try
             {
-                _logger.LogInformation("Loading all {{ NamePlural }} for UI");
+                _logger.LogInformation("Loading all LogEntries for UI");
                 
                 // Set loading state if ViewModel supports it
                 SetLoadingState(viewModel, true);
@@ -47,24 +47,24 @@ namespace {{ MauiProjectName }}.Helpers.Services.Generated
                 
                 if (result.IsSuccess)
                 {
-                    var collection = new ObservableCollection<{{ Name }}Dto>(result.Data);
-                    _logger.LogInformation("Successfully loaded {Count} {{ NamePlural }}", collection.Count);
-                    return MauiServiceResult<ObservableCollection<{{ Name }}Dto>>.Success(collection);
+                    var collection = new ObservableCollection<LogEntryDto>(result.Data);
+                    _logger.LogInformation("Successfully loaded {Count} LogEntries", collection.Count);
+                    return MauiServiceResult<ObservableCollection<LogEntryDto>>.Success(collection);
                 }
                 else
                 {
-                    _logger.LogWarning("Failed to load {{ NamePlural }}: {Error}", result.ErrorMessage);
-                    return MauiServiceResult<ObservableCollection<{{ Name }}Dto>>.Failure(
+                    _logger.LogWarning("Failed to load LogEntries: {Error}", result.ErrorMessage);
+                    return MauiServiceResult<ObservableCollection<LogEntryDto>>.Failure(
                         result.ErrorMessage, 
-                        "Failed to load {{ NamePlural }}. Please check your connection and try again.");
+                        "Failed to load LogEntries. Please check your connection and try again.");
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Exception while loading {{ NamePlural }} for UI");
-                return MauiServiceResult<ObservableCollection<{{ Name }}Dto>>.Failure(
+                _logger.LogError(ex, "Exception while loading LogEntries for UI");
+                return MauiServiceResult<ObservableCollection<LogEntryDto>>.Failure(
                     ex.Message,
-                    "An unexpected error occurred while loading {{ NamePlural }}.");
+                    "An unexpected error occurred while loading LogEntries.");
             }
             finally
             {
@@ -73,15 +73,15 @@ namespace {{ MauiProjectName }}.Helpers.Services.Generated
         }
 
         /// <summary>
-        /// Create {{ Name }} with UI validation and feedback
+        /// Create LogEntry with UI validation and feedback
         /// </summary>
         public async Task<MauiServiceResult<int>> CreateWithUIFeedbackAsync(
-            {{ Name }}Create command,
+            LogEntryCreate command,
             INotifyPropertyChanged viewModel = null)
         {
             try
             {
-                _logger.LogInformation("Creating {{ Name }} via UI");
+                _logger.LogInformation("Creating LogEntry via UI");
                 
                 SetSavingState(viewModel, true);
                 
@@ -89,25 +89,25 @@ namespace {{ MauiProjectName }}.Helpers.Services.Generated
                 
                 if (result.IsSuccess)
                 {
-                    _logger.LogInformation("Successfully created {{ Name }} with ID: {Id}", result.Data);
+                    _logger.LogInformation("Successfully created LogEntry with ID: {Id}", result.Data);
                     return MauiServiceResult<int>.Success(
                         result.Data,
-                        "{{ Name }} created successfully!");
+                        "LogEntry created successfully!");
                 }
                 else
                 {
-                    _logger.LogWarning("Failed to create {{ Name }}: {Error}", result.ErrorMessage);
+                    _logger.LogWarning("Failed to create LogEntry: {Error}", result.ErrorMessage);
                     return MauiServiceResult<int>.Failure(
                         result.ErrorMessage,
-                        "Failed to create {{ Name }}. Please check your input and try again.");
+                        "Failed to create LogEntry. Please check your input and try again.");
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Exception while creating {{ Name }} via UI");
+                _logger.LogError(ex, "Exception while creating LogEntry via UI");
                 return MauiServiceResult<int>.Failure(
                     ex.Message,
-                    "An unexpected error occurred while creating the {{ Name }}.");
+                    "An unexpected error occurred while creating the LogEntry.");
             }
             finally
             {
@@ -116,15 +116,15 @@ namespace {{ MauiProjectName }}.Helpers.Services.Generated
         }
 
         /// <summary>
-        /// Update {{ Name }} with optimistic UI updates
+        /// Update LogEntry with optimistic UI updates
         /// </summary>
         public async Task<MauiServiceResult<bool>> UpdateWithUIFeedbackAsync(
-            {{ Name }}Update command,
+            LogEntryUpdate command,
             INotifyPropertyChanged viewModel = null)
         {
             try
             {
-                _logger.LogInformation("Updating {{ Name }} {Id} via UI", command.Id);
+                _logger.LogInformation("Updating LogEntry {Id} via UI", command.Id);
                 
                 SetSavingState(viewModel, true);
                 
@@ -132,25 +132,25 @@ namespace {{ MauiProjectName }}.Helpers.Services.Generated
                 
                 if (result.IsSuccess)
                 {
-                    _logger.LogInformation("Successfully updated {{ Name }} {Id}", command.Id);
+                    _logger.LogInformation("Successfully updated LogEntry {Id}", command.Id);
                     return MauiServiceResult<bool>.Success(
                         true,
-                        "{{ Name }} updated successfully!");
+                        "LogEntry updated successfully!");
                 }
                 else
                 {
-                    _logger.LogWarning("Failed to update {{ Name }} {Id}: {Error}", command.Id, result.ErrorMessage);
+                    _logger.LogWarning("Failed to update LogEntry {Id}: {Error}", command.Id, result.ErrorMessage);
                     return MauiServiceResult<bool>.Failure(
                         result.ErrorMessage,
-                        "Failed to update {{ Name }}. Please check your input and try again.");
+                        "Failed to update LogEntry. Please check your input and try again.");
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Exception while updating {{ Name }} {Id} via UI", command.Id);
+                _logger.LogError(ex, "Exception while updating LogEntry {Id} via UI", command.Id);
                 return MauiServiceResult<bool>.Failure(
                     ex.Message,
-                    "An unexpected error occurred while updating the {{ Name }}.");
+                    "An unexpected error occurred while updating the LogEntry.");
             }
             finally
             {
@@ -159,7 +159,7 @@ namespace {{ MauiProjectName }}.Helpers.Services.Generated
         }
 
         /// <summary>
-        /// Delete {{ Name }} with confirmation handling
+        /// Delete LogEntry with confirmation handling
         /// </summary>
         public async Task<MauiServiceResult<bool>> DeleteWithConfirmationAsync(
             int id,
@@ -167,7 +167,7 @@ namespace {{ MauiProjectName }}.Helpers.Services.Generated
         {
             try
             {
-                _logger.LogInformation("Deleting {{ Name }} {Id} via UI", id);
+                _logger.LogInformation("Deleting LogEntry {Id} via UI", id);
                 
                 SetLoadingState(viewModel, true);
                 
@@ -175,25 +175,25 @@ namespace {{ MauiProjectName }}.Helpers.Services.Generated
                 
                 if (result.IsSuccess)
                 {
-                    _logger.LogInformation("Successfully deleted {{ Name }} {Id}", id);
+                    _logger.LogInformation("Successfully deleted LogEntry {Id}", id);
                     return MauiServiceResult<bool>.Success(
                         true,
-                        "{{ Name }} deleted successfully!");
+                        "LogEntry deleted successfully!");
                 }
                 else
                 {
-                    _logger.LogWarning("Failed to delete {{ Name }} {Id}: {Error}", id, result.ErrorMessage);
+                    _logger.LogWarning("Failed to delete LogEntry {Id}: {Error}", id, result.ErrorMessage);
                     return MauiServiceResult<bool>.Failure(
                         result.ErrorMessage,
-                        "Failed to delete {{ Name }}. It may have been already removed.");
+                        "Failed to delete LogEntry. It may have been already removed.");
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Exception while deleting {{ Name }} {Id} via UI", id);
+                _logger.LogError(ex, "Exception while deleting LogEntry {Id} via UI", id);
                 return MauiServiceResult<bool>.Failure(
                     ex.Message,
-                    "An unexpected error occurred while deleting the {{ Name }}.");
+                    "An unexpected error occurred while deleting the LogEntry.");
             }
             finally
             {
@@ -202,15 +202,15 @@ namespace {{ MauiProjectName }}.Helpers.Services.Generated
         }
 
         /// <summary>
-        /// Get {{ Name }} by ID with UI error handling
+        /// Get LogEntry by ID with UI error handling
         /// </summary>
-        public async Task<MauiServiceResult<{{ Name }}Dto>> GetByIdForUIAsync(
+        public async Task<MauiServiceResult<LogEntryDto>> GetByIdForUIAsync(
             int id,
             INotifyPropertyChanged viewModel = null)
         {
             try
             {
-                _logger.LogInformation("Loading {{ Name }} {Id} for UI", id);
+                _logger.LogInformation("Loading LogEntry {Id} for UI", id);
                 
                 SetLoadingState(viewModel, true);
                 
@@ -218,23 +218,23 @@ namespace {{ MauiProjectName }}.Helpers.Services.Generated
                 
                 if (result.IsSuccess && result.Data != null)
                 {
-                    _logger.LogInformation("Successfully loaded {{ Name }} {Id}", id);
-                    return MauiServiceResult<{{ Name }}Dto>.Success(result.Data);
+                    _logger.LogInformation("Successfully loaded LogEntry {Id}", id);
+                    return MauiServiceResult<LogEntryDto>.Success(result.Data);
                 }
                 else
                 {
-                    _logger.LogWarning("{{ Name }} {Id} not found", id);
-                    return MauiServiceResult<{{ Name }}Dto>.Failure(
+                    _logger.LogWarning("LogEntry {Id} not found", id);
+                    return MauiServiceResult<LogEntryDto>.Failure(
                         "Entity not found",
-                        "The requested {{ Name }} could not be found.");
+                        "The requested LogEntry could not be found.");
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Exception while loading {{ Name }} {Id} for UI", id);
-                return MauiServiceResult<{{ Name }}Dto>.Failure(
+                _logger.LogError(ex, "Exception while loading LogEntry {Id} for UI", id);
+                return MauiServiceResult<LogEntryDto>.Failure(
                     ex.Message,
-                    "An unexpected error occurred while loading the {{ Name }}.");
+                    "An unexpected error occurred while loading the LogEntry.");
             }
             finally
             {

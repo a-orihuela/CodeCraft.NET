@@ -4,19 +4,19 @@
 // </auto-generated>
 
 using System.ComponentModel.DataAnnotations;
-using {{ ApplicationProjectName }}.DTOs.{{ NamePlural }};
+using CodeCraft.NET.Application.DTOs.LogSummaries;
 using CodeCraft.NET.MAUI.Validation.Generated;
 
-namespace {{ MauiProjectName }}.Helpers.Validation.Generated
+namespace CodeCraft.NET.MAUI.Helpers.Validation.Generated
 {
     /// <summary>
-    /// Validation helper for {{ Name }} entity
+    /// Validation helper for LogSummary entity
     /// Provides UI-friendly validation
     /// </summary>
-    public static class {{ Name }}ValidationHelper
+    public static class LogSummaryValidationHelper
     {
         /// <summary>
-        /// Validate {{ Name }} for creation
+        /// Validate LogSummary for creation
         /// </summary>
         public static MauiValidationResult ValidateForCreate(object model)
         {
@@ -33,7 +33,7 @@ namespace {{ MauiProjectName }}.Helpers.Validation.Generated
         }
 
         /// <summary>
-        /// Validate {{ Name }} for update
+        /// Validate LogSummary for update
         /// </summary>
         public static MauiValidationResult ValidateForUpdate(object model)
         {
@@ -71,7 +71,7 @@ namespace {{ MauiProjectName }}.Helpers.Validation.Generated
         /// </summary>
         public static string GetDisplayName(string propertyName)
         {
-            // TODO: Add property display name mappings for {{ Name }}
+            // TODO: Add property display name mappings for LogSummary
             return propertyName;
         }
 
@@ -80,7 +80,7 @@ namespace {{ MauiProjectName }}.Helpers.Validation.Generated
         /// </summary>
         public static bool IsRequired(string propertyName)
         {
-            // TODO: Add required field logic for {{ Name }}
+            // TODO: Add required field logic for LogSummary
             return false;
         }
 
@@ -89,7 +89,7 @@ namespace {{ MauiProjectName }}.Helpers.Validation.Generated
         /// </summary>
         public static string GetValidationHint(string propertyName)
         {
-            // TODO: Add validation hints for {{ Name }} properties
+            // TODO: Add validation hints for LogSummary properties
             return $"Enter {propertyName.ToLowerInvariant()}";
         }
 
@@ -98,7 +98,7 @@ namespace {{ MauiProjectName }}.Helpers.Validation.Generated
         /// </summary>
         public static int? GetMaxLength(string propertyName)
         {
-            // TODO: Add max length logic for {{ Name }} string properties
+            // TODO: Add max length logic for LogSummary string properties
             return null;
         }
     }

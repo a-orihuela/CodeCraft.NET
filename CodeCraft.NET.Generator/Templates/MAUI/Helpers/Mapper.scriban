@@ -6,242 +6,51 @@
 using {{ ApplicationProjectName }}.DTOs.{{ NamePlural }};
 using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Commands.Create;
 using {{ ApplicationProjectName }}.CQRS.Features.{{ NamePlural }}.Commands.Update;
-using CodeCraft.NET.MAUI.ViewModels.Base;
-using System.Collections.ObjectModel;
 
-namespace {{ MauiProjectName }}.Mappers.Generated
+namespace {{ MauiProjectName }}.Helpers.Mappers.Generated
 {
     /// <summary>
     /// Mapper for {{ Name }} entity conversions
-    /// Provides mapping between DTOs, Commands, and ViewModels
+    /// Generated helper for MAUI ViewModels
     /// </summary>
-    public static class {{ Name }}Mapper
+    public static class {{ Name }}MapperHelper
     {
         /// <summary>
-        /// Convert {{ Name }}Dto to ViewModel-friendly format
+        /// Convert {{ Name }}Dto to Create command
         /// </summary>
-        public static {{ Name }}ViewModel ToViewModel(this {{ Name }}Dto dto)
+        public static {{ Name }}Create ToCreateCommand({{ Name }}Dto dto)
         {
-            if (dto == null) return null;
-            
-            return new {{ Name }}ViewModel
-            {
-                Id = dto.Id,
-{{~ for property in Properties ~}}
-    {{~ if property.Name != "Id" && !IsComplexType(property.Type) ~}}
-                {{ property.Name }} = dto.{{ property.Name }},
-    {{~ end ~}}
-{{~ end ~}}
-                // Audit fields
-                CreatedOn = dto.CreatedOn,
-                CreatedBy = dto.CreatedBy,
-                ModifiedOn = dto.ModifiedOn,
-                ModifiedBy = dto.ModifiedBy,
-                Active = dto.Active
-            };
-        }
-
-        /// <summary>
-        /// Convert ViewModel to {{ Name }}Create command
-        /// </summary>
-        public static {{ Name }}Create ToCreateCommand(this {{ Name }}CreateViewModel viewModel)
-        {
-            if (viewModel == null) return null;
+            if (dto == null) return new {{ Name }}Create();
             
             return new {{ Name }}Create
             {
-{{~ for property in Properties ~}}
-    {{~ if property.Name != "Id" && !IsAuditField(property.Name) && !IsComplexType(property.Type) ~}}
-                {{ property.Name }} = viewModel.{{ property.Name }},
-    {{~ end ~}}
-{{~ end ~}}
+                // TODO: Map properties from {{ Name }}Dto to {{ Name }}Create
+                // Add specific property mappings here
             };
         }
 
         /// <summary>
-        /// Convert ViewModel to {{ Name }}Update command
+        /// Convert {{ Name }}Dto to Update command
         /// </summary>
-        public static {{ Name }}Update ToUpdateCommand(this {{ Name }}EditViewModel viewModel)
+        public static {{ Name }}Update ToUpdateCommand({{ Name }}Dto dto)
         {
-            if (viewModel == null) return null;
+            if (dto == null) return new {{ Name }}Update();
             
             return new {{ Name }}Update
             {
-                Id = viewModel.Id,
-{{~ for property in Properties ~}}
-    {{~ if property.Name != "Id" && !IsAuditField(property.Name) && !IsComplexType(property.Type) ~}}
-                {{ property.Name }} = viewModel.{{ property.Name }},
-    {{~ end ~}}
-{{~ end ~}}
+                Id = dto.Id
+                // TODO: Map properties from {{ Name }}Dto to {{ Name }}Update
+                // Add specific property mappings here
             };
         }
 
         /// <summary>
-        /// Update ViewModel from DTO (for edit scenarios)
+        /// Get display string for {{ Name }}
         /// </summary>
-        public static void UpdateFromDto(this {{ Name }}EditViewModel viewModel, {{ Name }}Dto dto)
-        {
-            if (viewModel == null || dto == null) return;
-            
-            viewModel.Id = dto.Id;
-{{~ for property in Properties ~}}
-    {{~ if property.Name != "Id" && !IsAuditField(property.Name) && !IsComplexType(property.Type) ~}}
-            viewModel.{{ property.Name }} = dto.{{ property.Name }};
-    {{~ end ~}}
-{{~ end ~}}
-        }
-
-        /// <summary>
-        /// Create a copy of DTO for optimistic updates
-        /// </summary>
-        public static {{ Name }}Dto Clone(this {{ Name }}Dto dto)
-        {
-            if (dto == null) return null;
-            
-            return new {{ Name }}Dto
-            {
-{{~ for property in Properties ~}}
-    {{~ if !IsComplexType(property.Type) ~}}
-                {{ property.Name }} = dto.{{ property.Name }},
-    {{~ end ~}}
-{{~ end ~}}
-            };
-        }
-
-        /// <summary>
-        /// Check if ViewModel has changes compared to original DTO
-        /// </summary>
-        public static bool HasChanges(this {{ Name }}EditViewModel viewModel, {{ Name }}Dto originalDto)
-        {
-            if (viewModel == null || originalDto == null) return true;
-            
-            return viewModel.Id != originalDto.Id
-{{~ for property in Properties ~}}
-    {{~ if property.Name != "Id" && !IsAuditField(property.Name) && !IsComplexType(property.Type) ~}}
-                || !Equals(viewModel.{{ property.Name }}, originalDto.{{ property.Name }})
-    {{~ end ~}}
-{{~ end ~}};
-        }
-
-        /// <summary>
-        /// Convert collection of DTOs to ViewModels
-        /// </summary>
-        public static ObservableCollection<{{ Name }}ViewModel> ToViewModelCollection(this IEnumerable<{{ Name }}Dto> dtos)
-        {
-            if (dtos == null) return new ObservableCollection<{{ Name }}ViewModel>();
-            
-            return new ObservableCollection<{{ Name }}ViewModel>(dtos.Select(dto => dto.ToViewModel()));
-        }
-
-        /// <summary>
-        /// Convert DTO to display string for UI
-        /// </summary>
-        public static string ToDisplayString(this {{ Name }}Dto dto)
+        public static string GetDisplayString({{ Name }}Dto dto)
         {
             if (dto == null) return "Unknown {{ Name }}";
-            
-{{~ 
-# Find the best display property
-displayProperty = null
-for property in Properties
-    if property.Name == "Name"
-        displayProperty = property.Name
-        break
-    end
-    if property.Name == "Title"
-        displayProperty = property.Name
-        break
-    end
-    if property.Name == "Description"
-        displayProperty = property.Name
-        break
-    end
-end
-
-if displayProperty == null
-    displayProperty = "Id"
-end
-~}}
-            return dto.{{ displayProperty }}?.ToString() ?? $"{{ Name }} {dto.Id}";
+            return $"{{ Name }} {dto.Id}";
         }
     }
-
-    #region Simple ViewModel Placeholder Classes
-    // These are simple placeholder classes for generated code
-    // Implement actual ViewModels in ViewModels/[Entity]/ folder for real functionality
-
-    public class {{ Name }}ViewModel : BaseViewModel
-    {
-        public int Id { get; set; }
-{{~ for property in Properties ~}}
-    {{~ if property.Name != "Id" && !IsComplexType(property.Type) ~}}
-        public {{ GetSimpleType(property.Type) }} {{ property.Name }} { get; set; }
-    {{~ end ~}}
-{{~ end ~}}
-        
-        // Audit properties for display
-        public DateTime CreatedOn { get; set; }
-        public string CreatedBy { get; set; }
-        public DateTime? ModifiedOn { get; set; }
-        public string ModifiedBy { get; set; }
-        public bool Active { get; set; }
-    }
-
-    public class {{ Name }}CreateViewModel : BaseViewModel
-    {
-{{~ for property in Properties ~}}
-    {{~ if property.Name != "Id" && !IsAuditField(property.Name) && !IsComplexType(property.Type) ~}}
-        public {{ GetSimpleType(property.Type) }} {{ property.Name }} { get; set; }
-    {{~ end ~}}
-{{~ end ~}}
-    }
-
-    public class {{ Name }}EditViewModel : BaseViewModel
-    {
-        public int Id { get; set; }
-{{~ for property in Properties ~}}
-    {{~ if property.Name != "Id" && !IsAuditField(property.Name) && !IsComplexType(property.Type) ~}}
-        public {{ GetSimpleType(property.Type) }} {{ property.Name }} { get; set; }
-    {{~ end ~}}
-{{~ end ~}}
-    }
-
-    #endregion
 }
-
-{{~ 
-# Helper functions for the template
-func IsComplexType(type)
-    return type == "User" || 
-           type == "UserProfile" || 
-           type == "UserPreferences" || 
-           type == "NutritionRules" ||
-           type == "GeneratedPlan" ||
-           type == "PlanWeek" ||
-           type == "PlanDay" ||
-           type == "PlanMeal" ||
-           type == "SystemComponentReference" || 
-           type == "LogLevelReference" || 
-           type == "SubscriptionStatus" ||
-           type == "UserRole" ||
-           type == "TrainerClientRelationship" ||
-           string.starts_with(type, "ICollection") ||
-           string.starts_with(type, "List") ||
-           string.starts_with(type, "IEnumerable")
-end
-
-func IsAuditField(name)
-    return name == "CreatedOn" || 
-           name == "CreatedBy" || 
-           name == "ModifiedOn" || 
-           name == "ModifiedBy" ||
-           name == "Active"
-end
-
-func GetSimpleType(type)
-    if string.starts_with(type, "ICollection") || string.starts_with(type, "List")
-        return "string" # Simplified for UI
-    end
-    return type
-end
-~}

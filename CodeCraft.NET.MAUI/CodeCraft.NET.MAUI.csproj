@@ -74,6 +74,7 @@
 	  <ProjectReference Include="..\CodeCraft.NET.Cross\CodeCraft.NET.Cross.csproj" />
 	  <ProjectReference Include="..\CodeCraft.NET.DesktopAPI\CodeCraft.NET.DesktopAPI.csproj" />
 	  <ProjectReference Include="..\CodeCraft.NET.Infrastructure\CodeCraft.NET.Infrastructure.csproj" />
+	  <ProjectReference Include="..\CodeCraft.NET.Services\CodeCraft.NET.Services.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
